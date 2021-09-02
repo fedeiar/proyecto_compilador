@@ -13,7 +13,7 @@ public class TokenPalabrasReservadas {
         map.put("dynamic", TipoDeToken.pr_dynamic);
         map.put("void", TipoDeToken.pr_void);
         map.put("boolean", TipoDeToken.pr_boolean);
-        map.put("char", TipoDeToken.pr_boolean);
+        map.put("char", TipoDeToken.pr_char);
         map.put("int", TipoDeToken.pr_int);
         map.put("String", TipoDeToken.pr_String);
         map.put("public", TipoDeToken.pr_public);

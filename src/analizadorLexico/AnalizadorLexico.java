@@ -142,7 +142,12 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e1();
         }else{
-            return new Token(TipoDeToken.id_clase, lexema, gestor.nroLinea());
+            TipoDeToken tipoDeToken = token_pr.getTipoDeToken(lexema);
+            if (tipoDeToken == null){
+                return new Token(TipoDeToken.id_clase, lexema, gestor.nroLinea());
+            } else{
+                return new Token(tipoDeToken, lexema, gestor.nroLinea());
+            }
         }
     }
 
