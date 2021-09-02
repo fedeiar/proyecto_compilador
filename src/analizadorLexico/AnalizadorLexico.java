@@ -470,5 +470,4 @@ public class AnalizadorLexico {
         return new Token(TipoDeToken.EOF, lexema, gestor.nroLinea());
     }
 
-    
 }
