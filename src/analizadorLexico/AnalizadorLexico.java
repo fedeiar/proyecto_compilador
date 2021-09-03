@@ -386,7 +386,6 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_and, lexema, gestor.nroLinea());
         } else{
-            actualizarLexema();
             throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido");
         }
     }
@@ -397,7 +396,6 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_or, lexema, gestor.nroLinea());
         } else{
-            actualizarLexema();
             throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido");
         }
         

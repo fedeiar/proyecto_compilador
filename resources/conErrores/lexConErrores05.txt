@@ -1,0 +1,5 @@
+///[Error:||5]
+
+id1 id2
+123
+Class1 .""|, Class2
