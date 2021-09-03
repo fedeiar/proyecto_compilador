@@ -27,7 +27,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager" selected="JUnit.TesterDeCasosConErrores">
+  <component name="RunManager" selected="JUnit.TesterDeCasosSinErrores">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="moduloPrincipal.Main" />
       <module name="proyecto_compilador" />
@@ -73,8 +73,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores" />
+        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>

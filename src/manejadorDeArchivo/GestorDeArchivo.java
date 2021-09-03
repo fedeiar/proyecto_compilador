@@ -6,9 +6,10 @@ public class GestorDeArchivo {
 
     private final char EOF = '\u001a';
 
-    BufferedReader reader;
+    private BufferedReader reader;
     private boolean abierto;
-    String linea;
+
+    private String linea;
     private int char_pos;
 
     private int nroLineaActual;
@@ -31,6 +32,10 @@ public class GestorDeArchivo {
         }else{
             return nroLineaActual;
         }
+    }
+
+    public int nroColumna(){
+        return char_pos + 1;
     }
 
     public char proximoCaracter() throws IOException{
