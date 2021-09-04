@@ -20,14 +20,12 @@ public class AnalizadorLexico {
 
     public Token proximoToken() throws IOException, ExcepcionLexica{
         lexema = "";
-        comienzoColLexema = gestor.nroColumna() - 1;
         return e0();
     }
 
     public Token proximoTokenDespuesDeError() throws IOException, ExcepcionLexica{
         lexema = "";
         actualizarCaracterActual();
-        comienzoColLexema = gestor.nroColumna() - 1;
         return e0();
     }
 
@@ -40,6 +38,8 @@ public class AnalizadorLexico {
     }
     
     private Token e0() throws ExcepcionLexica, IOException{
+        comienzoColLexema = gestor.nroColumna() - 1;
+        
         if(Character.isWhitespace(caracterActual)){
             if(caracterActual == '\n'){
                 comienzoColLexema = 1;
@@ -144,7 +144,7 @@ public class AnalizadorLexico {
             return e9();
         } else{
             actualizarLexema();
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -192,7 +192,7 @@ public class AnalizadorLexico {
         } else if(lexema.length() < 10){
             return new Token(TipoDeToken.lit_entero, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "el entero "+lexema+" contiene más de 9 dígitos", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "el entero "+lexema+" contiene más de 9 dígitos", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -204,7 +204,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e4_1();
         } else if (caracterActual == '\n' || caracterActual == '\'' ||gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
@@ -214,7 +214,7 @@ public class AnalizadorLexico {
 
     private Token e4_1() throws ExcepcionLexica, IOException{
         if(caracterActual == '\n' || gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
@@ -228,7 +228,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e4_3();
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "literal caracter invalido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -248,7 +248,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e5_1();
         } else if(caracterActual == '\n' || gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "Literal String sin cerrar apropiadamente", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "Literal String sin cerrar apropiadamente", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
@@ -258,7 +258,7 @@ public class AnalizadorLexico {
 
     private Token e5_1() throws ExcepcionLexica, IOException{
         if(caracterActual == '\n' || gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "Literal String sin cerrar apropiadamente", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "Literal String sin cerrar apropiadamente", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else if (caracterActual == '\\'){
             actualizarLexema();
             actualizarCaracterActual();
@@ -400,7 +400,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_and, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -410,7 +410,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_or, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema);
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
         
     }
@@ -458,7 +458,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e8_3();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema);
+            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
@@ -476,7 +476,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e0();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema);
+            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();

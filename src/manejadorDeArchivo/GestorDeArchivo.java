@@ -9,7 +9,8 @@ public class GestorDeArchivo {
     private BufferedReader reader;
     private boolean abierto;
 
-    private String linea;
+    private String lineaActual;
+    private String lineaAnterior;
     private int char_pos;
 
     private int nroLineaActual;
@@ -22,12 +23,11 @@ public class GestorDeArchivo {
         
         reader = new BufferedReader(new FileReader(file));
         abierto = true;
-        linea = reader.readLine();
+        lineaActual = reader.readLine();
     }
 
     public int nroLinea(){
-        if (salteDeLinea == true){
-            salteDeLinea = false;
+        if (salteDeLinea == true && lineaActual != null){
             return nroLineaActual - 1;
         }else{
             return nroLineaActual;
@@ -38,19 +38,27 @@ public class GestorDeArchivo {
         return char_pos + 1;
     }
 
+    public String lineaCaracterAnterior(){
+        if(salteDeLinea){
+            return lineaAnterior;
+        }
+        return lineaActual;
+    }
+
     public char proximoCaracter() throws IOException{
         char character = EOF;
         salteDeLinea = false;
         
-        if(linea != null){
-            if(char_pos < linea.length()){
-                character = linea.charAt(char_pos);
+        if(lineaActual != null){
+            if(char_pos < lineaActual.length()){
+                character = lineaActual.charAt(char_pos);
                 char_pos++;
             }
             else{
-                linea = reader.readLine();
-                if(linea != null){
-                    salteDeLinea = true;
+                lineaAnterior = lineaActual;
+                lineaActual = reader.readLine();
+                salteDeLinea = true;
+                if(lineaActual != null){
                     nroLineaActual++;
                     char_pos = 0;
                     character = '\n';
