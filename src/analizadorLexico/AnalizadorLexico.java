@@ -24,6 +24,13 @@ public class AnalizadorLexico {
         return e0();
     }
 
+    public Token proximoTokenDespuesDeError() throws IOException, ExcepcionLexica{
+        lexema = "";
+        actualizarCaracterActual();
+        comienzoColLexema = gestor.nroColumna() - 1;
+        return e0();
+    }
+
     private void actualizarLexema(){
         lexema = lexema + caracterActual;
     }
