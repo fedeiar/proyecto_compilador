@@ -67,7 +67,7 @@ public class AnalizadorLexico {
         } else if(caracterActual == '"'){
             actualizarLexema();
             actualizarCaracterActual();
-            return e5();
+            return eL5();
         } else if(caracterActual == '('){
             actualizarLexema();
             actualizarCaracterActual();
@@ -237,6 +237,124 @@ public class AnalizadorLexico {
     }
 
     //Literales String
+
+    private int comienzoStringMultilinea;
+    private String primerLineaStringMultilinea;
+
+    private Token eL5() throws ExcepcionLexica, IOException{
+        comienzoStringMultilinea = gestor.nroLinea();
+        primerLineaStringMultilinea = gestor.lineaCaracterAnterior();
+        if(caracterActual == '\"'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_1();
+        } else if(caracterActual == '\n' || gestor.esEOF(caracterActual)){
+            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+        } else{
+            return e5();
+        }
+    }
+
+    private Token eL5_1() throws ExcepcionLexica, IOException{
+        if(caracterActual == '\"'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_2();
+        } else{
+            return new Token(TipoDeToken.lit_string, lexema, comienzoStringMultilinea);
+        }
+    }
+
+    private Token eL5_2() throws ExcepcionLexica, IOException{
+        if(gestor.esEOF(caracterActual)){
+            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+        } else if(caracterActual == '\\'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_3();
+        } else if(caracterActual == '\n'){
+            lexema = lexema + '\\' + 'n';
+            actualizarCaracterActual();
+            return eL5_2();
+        } else if(caracterActual == '\"'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_4();
+        } else{
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_2();
+        }
+    }
+
+    private Token eL5_3() throws ExcepcionLexica, IOException{
+        if(gestor.esEOF(caracterActual)){
+            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+        } else if(caracterActual == '\\'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_3();
+        } else if(caracterActual == '\n'){
+            lexema = lexema + '\\' + 'n';
+            actualizarCaracterActual();
+            return eL5_2();
+        } else{
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_2();
+        }
+    }
+
+    private Token eL5_4() throws ExcepcionLexica, IOException{
+        if(gestor.esEOF(caracterActual)){
+            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+        } else if (caracterActual == '\\'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_3();
+        } else if (caracterActual == '\n'){
+            lexema = lexema + '\\' + 'n';
+            actualizarCaracterActual();
+            return eL5_2();
+        } else if(caracterActual == '\"'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_5();
+        }
+        else{
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_2();
+        }
+    }
+
+    private Token eL5_5() throws ExcepcionLexica, IOException{
+        if(gestor.esEOF(caracterActual)){
+            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+        } else if (caracterActual == '\\'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_3();
+        } else if (caracterActual == '\n'){
+            lexema = lexema + '\\' + 'n';
+            actualizarCaracterActual();
+            return eL5_2();
+        } else if(caracterActual == '\"'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_6();
+        }
+        else{
+            actualizarLexema();
+            actualizarCaracterActual();
+            return eL5_2();
+        }
+    }
+
+    private Token eL5_6() throws ExcepcionLexica, IOException{
+        return new Token(TipoDeToken.lit_string, lexema, comienzoStringMultilinea);
+    }
+
 
     private Token e5() throws ExcepcionLexica, IOException{
         if(caracterActual == '\"'){

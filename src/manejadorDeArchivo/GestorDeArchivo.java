@@ -27,7 +27,7 @@ public class GestorDeArchivo {
     }
 
     public int nroLinea(){
-        if (salteDeLinea == true && lineaActual != null){
+        if (salteDeLinea){
             return nroLineaActual - 1;
         }else{
             return nroLineaActual;
@@ -58,8 +58,8 @@ public class GestorDeArchivo {
                 lineaAnterior = lineaActual;
                 lineaActual = reader.readLine();
                 salteDeLinea = true;
+                nroLineaActual++;
                 if(lineaActual != null){
-                    nroLineaActual++;
                     char_pos = 0;
                     character = '\n';
                 }
