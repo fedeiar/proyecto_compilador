@@ -546,11 +546,9 @@ public class AnalizadorLexico {
         comienzoDeComentario = gestor.nroLinea();
         primerLineaComentario = gestor.lineaCaracterAnterior();
         if (caracterActual == '/'){
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_1();
         } else if(caracterActual == '*'){
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_2();
         } else {
@@ -574,13 +572,11 @@ public class AnalizadorLexico {
 
     private Token e8_2() throws ExcepcionLexica, IOException{
         if (caracterActual == '*'){
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_3();
         } else if(gestor.esEOF(caracterActual)){
             throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, primerLineaComentario);
         } else{
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_2();
         }
@@ -588,7 +584,6 @@ public class AnalizadorLexico {
 
     private Token e8_3() throws ExcepcionLexica, IOException{
         if (caracterActual == '*'){
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_3();
         } else if(caracterActual == '/'){
@@ -598,7 +593,6 @@ public class AnalizadorLexico {
         } else if(gestor.esEOF(caracterActual)){
             throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, primerLineaComentario);
         } else{
-            //actualizarLexema();
             actualizarCaracterActual();
             return e8_2();
         }
