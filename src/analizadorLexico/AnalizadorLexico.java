@@ -238,18 +238,18 @@ public class AnalizadorLexico {
 
     //Literales String
 
-    private int comienzoStringMultilinea;
+    private int comienzoString;
     private String primerLineaStringMultilinea;
 
     private Token eL5() throws ExcepcionLexica, IOException{
-        comienzoStringMultilinea = gestor.nroLinea();
+        comienzoString = gestor.nroLinea();
         primerLineaStringMultilinea = gestor.lineaCaracterAnterior();
         if(caracterActual == '\"'){
             actualizarLexema();
             actualizarCaracterActual();
             return eL5_1();
         } else if(caracterActual == '\n' || gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+            throw new ExcepcionLexica(lexema, comienzoString, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
         } else{
             return e5();
         }
@@ -261,13 +261,13 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return eL5_2();
         } else{
-            return new Token(TipoDeToken.lit_string, lexema, comienzoStringMultilinea);
+            return new Token(TipoDeToken.lit_string, lexema, comienzoString);
         }
     }
 
     private Token eL5_2() throws ExcepcionLexica, IOException{
         if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+            throw new ExcepcionLexica(lexema, comienzoString, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
         } else if(caracterActual == '\\'){
             actualizarLexema();
             actualizarCaracterActual();
@@ -289,7 +289,7 @@ public class AnalizadorLexico {
 
     private Token eL5_3() throws ExcepcionLexica, IOException{
         if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+            throw new ExcepcionLexica(lexema, comienzoString, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
         } else if(caracterActual == '\\'){
             actualizarLexema();
             actualizarCaracterActual();
@@ -307,7 +307,7 @@ public class AnalizadorLexico {
 
     private Token eL5_4() throws ExcepcionLexica, IOException{
         if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+            throw new ExcepcionLexica(lexema, comienzoString, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
         } else if (caracterActual == '\\'){
             actualizarLexema();
             actualizarCaracterActual();
@@ -330,7 +330,7 @@ public class AnalizadorLexico {
 
     private Token eL5_5() throws ExcepcionLexica, IOException{
         if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica(lexema, comienzoStringMultilinea, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
+            throw new ExcepcionLexica(lexema, comienzoString, "Literal String sin cerrar apropiadamente", comienzoColLexema, primerLineaStringMultilinea);
         } else if (caracterActual == '\\'){
             actualizarLexema();
             actualizarCaracterActual();
@@ -352,7 +352,7 @@ public class AnalizadorLexico {
     }
 
     private Token eL5_6() throws ExcepcionLexica, IOException{
-        return new Token(TipoDeToken.lit_string, lexema, comienzoStringMultilinea);
+        return new Token(TipoDeToken.lit_string, lexema, comienzoString);
     }
 
 
@@ -539,15 +539,15 @@ public class AnalizadorLexico {
     
     //comentarios (y el operador /)
 
-    private int comienzoDeMultilinea;
+    private int comienzoDeComentario;
 
     private Token e8() throws ExcepcionLexica, IOException{
+        comienzoDeComentario = gestor.nroLinea();
         if (caracterActual == '/'){
             actualizarLexema();
             actualizarCaracterActual();
             return e8_1();
         } else if(caracterActual == '*'){
-            comienzoDeMultilinea = gestor.nroLinea();
             actualizarLexema();
             actualizarCaracterActual();
             return e8_2();
@@ -576,7 +576,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e8_3();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
@@ -594,7 +594,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e0();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeMultilinea, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
         } else{
             actualizarLexema();
             actualizarCaracterActual();
