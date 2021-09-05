@@ -540,9 +540,11 @@ public class AnalizadorLexico {
     //comentarios (y el operador /)
 
     private int comienzoDeComentario;
+    private String primerLineaComentario;
 
     private Token e8() throws ExcepcionLexica, IOException{
         comienzoDeComentario = gestor.nroLinea();
+        primerLineaComentario = gestor.lineaCaracterAnterior();
         if (caracterActual == '/'){
             //actualizarLexema();
             actualizarCaracterActual();
@@ -576,7 +578,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e8_3();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, primerLineaComentario);
         } else{
             //actualizarLexema();
             actualizarCaracterActual();
@@ -594,7 +596,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e0();
         } else if(gestor.esEOF(caracterActual)){
-            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica("", comienzoDeComentario, "comentario multi-linea sin cerrar", comienzoColLexema, primerLineaComentario);
         } else{
             //actualizarLexema();
             actualizarCaracterActual();
