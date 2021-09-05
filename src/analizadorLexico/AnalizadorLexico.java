@@ -518,7 +518,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_and, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "operador incompleto", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -528,7 +528,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return new Token(TipoDeToken.op_or, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "operador incompleto", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
         
     }
