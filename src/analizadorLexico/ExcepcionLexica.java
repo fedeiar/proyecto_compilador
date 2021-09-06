@@ -19,7 +19,7 @@ public class ExcepcionLexica extends Exception {
         }
         cursor += '^';
 
-        return "Error léxico en linea "+nroLinea+": "+mensaje+" comenzando en la columna "+nroColumna+"\n"+full_detalle+"\n"+cursor+"\n[Error:"+lexema+"|"+nroLinea+"]\n";
+        return "Error lexico en linea "+nroLinea+": "+mensaje+" comenzando en la columna "+nroColumna+"\n"+full_detalle+"\n"+cursor+"\n[Error:"+lexema+"|"+nroLinea+"]\n";
 
     }
 }

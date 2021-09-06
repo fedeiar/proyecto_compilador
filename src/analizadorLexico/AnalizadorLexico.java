@@ -138,7 +138,7 @@ public class AnalizadorLexico {
             return e9();
         } else{
             actualizarLexema();
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un simbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
@@ -186,7 +186,7 @@ public class AnalizadorLexico {
         } else if(lexema.length() < 10){
             return new Token(TipoDeToken.lit_entero, lexema, gestor.nroLinea());
         } else{
-            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "el entero "+lexema+" contiene más de 9 dígitos", comienzoColLexema, gestor.lineaCaracterAnterior());
+            throw new ExcepcionLexica(lexema, gestor.nroLinea(), "el entero "+lexema+" contiene mas de 9 dígitos", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }
 
