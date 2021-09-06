@@ -27,7 +27,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager" selected="JUnit.TesterDeCasosConErrores">
+  <component name="RunManager" selected="JUnit.TesterDeCasosSinErrores">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="moduloPrincipal.Main" />
       <module name="proyecto_compilador" />
@@ -52,6 +52,22 @@
       <option name="PACKAGE_NAME" value="moduloPrincipal" />
       <option name="MAIN_CLASS_NAME" value="moduloPrincipal.TesterDeCasosConErrores" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TesterDeCasosConErrores.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyecto_compilador" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="moduloPrincipal.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="moduloPrincipal" />
+      <option name="MAIN_CLASS_NAME" value="moduloPrincipal.TesterDeCasosConErrores" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -89,8 +105,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TesterDeCasosConErrores" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores" />
+        <item itemvalue="JUnit.TesterDeCasosConErrores" />
+        <item itemvalue="JUnit.TesterDeCasosConErrores.test1" />
         <item itemvalue="JUnit.TesterDeCasosSinErrores.testIterado" />
         <item itemvalue="Application.Main" />
       </list>

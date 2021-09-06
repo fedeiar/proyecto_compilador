@@ -1,0 +1,5 @@
+///[Error:"ab|4]
+
+asd 'c\
+wdwd 23 { "ab
+bb #
