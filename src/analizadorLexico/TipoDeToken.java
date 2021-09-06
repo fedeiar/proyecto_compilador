@@ -57,5 +57,7 @@ public enum TipoDeToken{
     op_incremento,
     op_decremento,
     
-    EOF
+    EOF,
+
+    DUMMY
 }

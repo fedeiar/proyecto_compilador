@@ -144,6 +144,7 @@ public class AnalizadorLexico {
             return e9();
         } else{
             actualizarLexema();
+            //TODO: consumir el caracter aca y asi evitar usar el metodo proximoTokenDespDeError()
             throw new ExcepcionLexica(lexema, gestor.nroLinea(), lexema+" no es un símbolo valido", comienzoColLexema, gestor.lineaCaracterAnterior());
         }
     }

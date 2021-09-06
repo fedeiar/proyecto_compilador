@@ -18,12 +18,12 @@ public class Main {
             
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
-                Token token = null;
+                Token token = new Token(TipoDeToken.DUMMY, "", 0);
                 do{
                     try{
                         if(errorReciente){
                             errorReciente = false;
-                            token = analizadorLexico.proximoTokenDespuesDeError(); //TODO: preguntar si esto esta bien.
+                            token = analizadorLexico.proximoTokenDespuesDeError();
                         } else{
                             token = analizadorLexico.proximoToken();
                         }
@@ -35,7 +35,7 @@ public class Main {
                         errorReciente = true;
                         System.out.println(e.getMessage());
                     }
-                } while(token == null || token.getTipoDeToken() != TipoDeToken.EOF); //TODO: preg si esta muy mal esa condicion ya que null da true solo la primera vez en determinados casos y nunca mas
+                } while(token.getTipoDeToken() != TipoDeToken.EOF);
                 
                 if(sinErrores){
                     System.out.println("\n[SinErrores]");
