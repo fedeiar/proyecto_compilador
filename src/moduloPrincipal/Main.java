@@ -14,26 +14,20 @@ public class Main {
             String filename = args[0];
 
             boolean sinErrores = true;
-            boolean errorReciente = false;
             
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
                 Token token = new Token(TipoDeToken.DUMMY, "", 0);
                 do{
                     try{
-                        if(errorReciente){
-                            errorReciente = false;
-                            token = analizadorLexico.proximoTokenDespuesDeError();
-                        } else{
-                            token = analizadorLexico.proximoToken();
-                        }
+                        token = analizadorLexico.proximoToken();
                         System.out.println("("+token.getTipoDeToken().toString()+", "+token.getLexema()+", "+token.getNroLinea()+")");
                     } catch (IOException e){
                         e.printStackTrace();
                     } catch (ExcepcionLexica e){
                         sinErrores = false;
-                        errorReciente = true;
                         System.out.println(e.getMessage());
+                        analizadorLexico.actualizarCaracterActual();
                     }
                 } while(token.getTipoDeToken() != TipoDeToken.EOF);
                 
