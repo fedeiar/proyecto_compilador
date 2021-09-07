@@ -1,7 +1,0 @@
-///[Error:|4]
-
-ab 12
-asd    "asd"       /* *
-c
-a
-b
