@@ -10,6 +10,7 @@ public class ExcepcionSintactica extends Exception {
     }
 
     private static String armarMensaje(Token tokenActual, String nombreTokenEsperado){
-        return "se encontro "+tokenActual.getLexema()+" y se esperaba "+ nombreTokenEsperado;
+        return "Error sintactico en linea "+tokenActual.getNroLinea()+": se encontro "+tokenActual.getLexema()+" y se esperaba "+ 
+        nombreTokenEsperado+"\n\n[Error:"+tokenActual.getLexema()+"|"+tokenActual.getNroLinea()+"]";
     }
 }
