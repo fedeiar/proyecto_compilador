@@ -3,8 +3,6 @@ import java.io.*;
 
 import analizadorLexico.AnalizadorLexico;
 import analizadorLexico.ExcepcionLexica;
-import analizadorLexico.TipoDeToken;
-import analizadorLexico.Token;
 import analizadorSintactico.AnalizadorSintactico;
 import analizadorSintactico.ExcepcionSintactica;
 import manejadorDeArchivo.*;

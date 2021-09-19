@@ -1,0 +1,24 @@
+// prueba una clase con constructores y metodos con parmaetros y bloque vacio
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+	public boolean boo1, boo2, boo3;
+	private char ch1;
+	public String str1;
+	public A cla1, cla2;
+	private B cla1;
+
+	Prueba(){
+	
+	}
+
+	static void met1(){
+
+	}
+
+	dynamic int met2(){
+
+	}
+}

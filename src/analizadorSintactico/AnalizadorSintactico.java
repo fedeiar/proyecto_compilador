@@ -18,7 +18,7 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_listaArgsFormales = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
     private final List<TipoDeToken> primeros_sentencia = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new,
                                                          TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, 
-                                                         TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveDer);
+                                                         TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq);
     private final List<TipoDeToken> primeros_acceso = Arrays.asList(TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_varLocal = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
     private final List<TipoDeToken> primeros_tipoDeAsignacion = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento);
@@ -119,6 +119,7 @@ public class AnalizadorSintactico {
         visibilidad();
         tipo();
         listaDecAtrs();
+        match(TipoDeToken.punt_puntoYComa, ";");
     }
 
     private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{

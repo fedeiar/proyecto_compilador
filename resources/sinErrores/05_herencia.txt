@@ -1,0 +1,8 @@
+// prueba una clase con herencia y un bloque vacio dentro
+
+class Prueba extends PruebaPadre{
+
+	static void met1(){
+
+	}
+}
