@@ -1,4 +1,0 @@
-///[Error:" dead_end \"|4]
-
-id1 'a' '\b'
-" ho la \"" " dead_end \"

@@ -1,6 +1,5 @@
 package analizadorSintactico;
 
-import analizadorLexico.TipoDeToken;
 import analizadorLexico.*;
 
 public class ExcepcionSintactica extends Exception {
