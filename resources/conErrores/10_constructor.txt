@@ -1,0 +1,12 @@
+///[Error:{|6]
+// error en el constructor
+
+class Clase{
+	
+	Clase{
+	}
+}
+
+
+
+

@@ -1,0 +1,14 @@
+///[Error:int|6]
+// error en declaración de metodo, falta su formaMetodo.
+
+class Clase{
+	
+	int met1(int a){
+
+	}
+
+}
+
+
+
+

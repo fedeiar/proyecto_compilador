@@ -13,7 +13,6 @@ public class Main {
         try{
             String filename = args[0];
 
-
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
                 AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico(analizadorLexico);

@@ -1,0 +1,14 @@
+///[Error:*|9]
+// error en la sentencia, expresion mal formada.
+
+
+class Clase{
+	
+	dynamic void met1(){
+		hola.a();
+		ClassA var = * 5;
+		int a = 3 + 4;
+		
+	}
+	
+}

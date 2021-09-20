@@ -1,0 +1,12 @@
+///[Error:(|9]
+// error en la sentencia, acceso mal formado
+
+class Clase{
+	
+	dynamic void met1(){
+		int b = 3;
+		Class e = new Class();
+		(3+2)(Cast).f();
+	}
+	
+}

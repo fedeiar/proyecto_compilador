@@ -1,0 +1,10 @@
+///[Error:=|7]
+// error en la sentencia, acceso mal formado: Hola no es primario por ende no puede venir luego una asignacion.
+
+class Clase{
+	
+	dynamic void met1(){
+		Hola = 3;
+	}
+	
+}

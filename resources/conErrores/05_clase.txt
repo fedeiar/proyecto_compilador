@@ -1,0 +1,12 @@
+///[Error:class|5]
+// tiene una clase anidada
+
+class Clasesita{
+	class Anidada{
+
+	}
+}
+
+
+
+

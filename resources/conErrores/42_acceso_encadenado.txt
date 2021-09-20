@@ -1,4 +1,4 @@
-///[Error:(|9]
+///[Error:this|9]
 // error en la sentencia, en un encadenado despues de . solo puede ir un idMetVar.
 
 
@@ -6,7 +6,7 @@ class Clase{
 	
 	dynamic void met1(){
 		this.a().b(1);
-		b.()a;
+		a.this();
 	}
 	
 }

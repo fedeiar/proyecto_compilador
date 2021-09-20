@@ -1,0 +1,13 @@
+///[Error:*|10]
+// error en la sentencia, expresion de la asignacion mal formada.
+
+
+class Clase{
+	
+	dynamic void met1(){
+		hola.a();
+		int a = 3 + 4;
+		c = 3 * * 4;
+	}
+	
+}

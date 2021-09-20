@@ -1,0 +1,10 @@
+///[Error:int|5]
+// atributo mal declarado
+
+class Clase{
+	int a;
+}
+
+
+
+

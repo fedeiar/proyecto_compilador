@@ -1,0 +1,10 @@
+///[Error:==|7]
+// error en la sentencia, asignación mal formada
+
+class Clase{
+	
+	dynamic void met1(){
+		this.var == 3;
+	}
+	
+}

@@ -1,0 +1,12 @@
+///[Error:(|9]
+// error en la sentencia, acceso mal formado: falta IdClase.
+
+
+class Clase{
+	
+	dynamic void met1(){
+		hola.a();
+		new (exp1);
+	}
+	
+}

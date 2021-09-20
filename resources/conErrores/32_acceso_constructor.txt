@@ -1,0 +1,12 @@
+///[Error:hola|9]
+// error en la sentencia, acceso mal formado: hola no es un IdClase.
+
+
+class Clase{
+	
+	dynamic void met1(){
+		hola.a();
+		new hola();
+	}
+	
+}

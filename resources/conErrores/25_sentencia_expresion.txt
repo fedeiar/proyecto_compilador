@@ -1,0 +1,11 @@
+///[Error:;|8]
+// error en la sentencia, expresion parentizada sin cerrar
+
+class Clase{
+	
+	dynamic void met1(){
+		a = 3;
+		(3 + 4 ;
+	}
+	
+}

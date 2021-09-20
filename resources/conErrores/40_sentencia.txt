@@ -1,0 +1,15 @@
+///[Error:7|10]
+// error en la sentencia, una literal no puede ser el comienzo de una sentencia.
+
+
+class Clase{
+	
+	dynamic void met1(){
+		hola.a();
+		this++;
+		7 == 9;
+		int a = 3 + 4;
+		
+	}
+	
+}

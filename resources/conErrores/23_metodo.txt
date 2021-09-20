@@ -1,0 +1,12 @@
+///[Error:claseA|6]
+// error en declaración de metodo, el tipo de var1 no es un idClase
+
+class Clase{
+	
+	dynamic void met1(claseA var1){
+
+	}
+	
+	
+
+}

@@ -1,0 +1,16 @@
+///[Error:)|6]
+// error en declaración de metodo, en la declaracion de sus argumentos.
+
+class Clase{
+	
+	dynamic void met1(int b, int){
+	
+	}
+
+	
+
+}
+
+
+
+

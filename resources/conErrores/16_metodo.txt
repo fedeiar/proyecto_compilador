@@ -1,0 +1,14 @@
+///[Error:{|6]
+// error en declaración de metodo, faltan los argsFormales.
+
+class Clase{
+	
+	dynamic void met1{
+
+	}
+
+}
+
+
+
+

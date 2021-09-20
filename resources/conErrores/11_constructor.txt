@@ -1,0 +1,11 @@
+///[Error:}|7]
+// error en el constructor
+
+class Clase{
+	
+	Clase(int a)
+}
+
+
+
+

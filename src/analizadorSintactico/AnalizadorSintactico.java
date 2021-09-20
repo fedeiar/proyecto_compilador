@@ -152,7 +152,7 @@ public class AnalizadorSintactico {
         } else if (tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
             match(TipoDeToken.id_clase, "identificador de clase");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "class o tipo primitivo");
+            throw new ExcepcionSintactica(tokenActual, "identificador de clase o tipo primitivo");
         }
     }
 
@@ -333,7 +333,6 @@ public class AnalizadorSintactico {
     }
 
     private void if_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        //TODO: ver el tema de la ambiguedad del if. Hay que hacer algo o ya está resuelto?
         match(TipoDeToken.pr_if, "if");
         match(TipoDeToken.punt_parentIzq, "(");
         expresion();

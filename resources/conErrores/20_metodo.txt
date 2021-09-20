@@ -1,0 +1,10 @@
+///[Error:|10]
+// error en declaración de metodo, no se cerro el bloque y se encontro con EOF.
+
+class Clase{
+	
+	dynamic void met1(int b){
+	
+	
+
+}

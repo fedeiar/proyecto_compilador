@@ -1,0 +1,11 @@
+///[Error:.|8]
+// error en la sentencia, acceso mal formado: Hola no es primario por ende no puede venir un encadenado
+//ATENCION: esto es solo un error si no tenemos implementado a full static.
+
+class Clase{
+	
+	dynamic void met1(){
+		Hola.a();
+	}
+	
+}

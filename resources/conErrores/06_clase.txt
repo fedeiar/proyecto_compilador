@@ -1,0 +1,10 @@
+///[Error:{|4]
+// hereda mal
+
+class Clasesita extends{
+
+}
+
+
+
+
