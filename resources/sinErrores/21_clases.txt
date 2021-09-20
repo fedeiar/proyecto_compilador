@@ -1,0 +1,33 @@
+// prueba multiples clases
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		
+	}
+
+	dynamic int met2(char c1, char c2){
+		
+	}
+
+	dynamic boolean met2(){
+	
+	}
+
+
+}
+
+
+class Prueba2{
+
+	public int a;
+	private char b;
+}
+
+class Pru_eba3 extends Prueba2{
+
+}

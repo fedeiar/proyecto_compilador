@@ -1,0 +1,24 @@
+// prueba sentencias con distintas asignaciones de distinto tipo sin encadenados y expresiones.
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		
+	}
+
+	static void met1(boolean b1, char c1){
+		
+	}
+
+	dynamic int met2(char c1, char c2){
+		a++;
+		this++;
+		(3)--;
+		('a'*false)++;
+		(7+2) = true;
+	}
+}

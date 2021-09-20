@@ -1,4 +1,4 @@
-// prueba miembros intercalados
+// prueba multiples constructores
 
 class Prueba extends PruebaPadre{
 
@@ -10,21 +10,9 @@ class Prueba extends PruebaPadre{
 		
 	}
 
-	dynamic boolean met2(){
-	
-	}
-
-	static void met3(){
-
-	}
-
-	private boolean b1;
-
 	Prueba(int a){
 
 	}
-
-	public String str1, str2;
 
 	Prueba(int b){
 
@@ -38,7 +26,13 @@ class Prueba extends PruebaPadre{
 		
 	}
 
+	dynamic boolean met2(){
 	
+	}
+
+	static void met3(){
+
+	}
 
 
 }

@@ -1,0 +1,24 @@
+// prueba sentencias con distintas asignaciones de distinto tipo con castings y expresiones.
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		
+	}
+
+	dynamic int met2(char c1, char c2){
+		
+	}
+
+	dynamic boolean met2(){
+		(ClaseA)var1 = !4;
+		(A)(3+2) = -'c' + !'a' - -b;
+		(B) new C(a,(2+3),!null, -"a") = 4 && 0 % (hO_la / (('a' * 9) <= (u < (8))));
+		(C)this = a;
+		var1(a, 3+2, (7<4)+4) = (E) a(8, 3+4);
+	}
+}

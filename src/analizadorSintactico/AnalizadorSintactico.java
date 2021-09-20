@@ -427,8 +427,8 @@ public class AnalizadorSintactico {
             match(TipoDeToken.op_suma, "+");
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_resta){
             match(TipoDeToken.op_resta, "-");
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_notIgual){
-            match(TipoDeToken.op_notIgual, "!");
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_not){
+            match(TipoDeToken.op_not, "!");
         } else{
             throw new ExcepcionSintactica(tokenActual, "operador unario");
         }
@@ -551,7 +551,7 @@ public class AnalizadorSintactico {
     }
 
     private void listaExpsFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
+        if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
             listaExps();
         } else{

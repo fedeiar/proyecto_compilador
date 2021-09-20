@@ -1,0 +1,26 @@
+// prueba sentencias con distintas asignaciones de distinto tipo con encadenados, con casting y expresiones.
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		
+	}
+
+	dynamic int met2(char c1, char c2){
+		(C_a)a.b()++;
+		(Class)a.b().c = 3 + (Class)a.b() + e.f;
+		(Cast)id1(7).e("a",((-9 + 4) - ("b")),!'c')--;
+		(Ca_st)a().b.c(a) = (Cast)new Object(3, 7 < !"c");
+		(Cast)this.e().f(4,true) = (Cast)this.var1.met1().met2(a,b);
+	}
+
+	dynamic boolean met2(){
+	
+	}
+
+
+}

@@ -1,0 +1,30 @@
+// prueba for
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		
+	}
+
+	dynamic int met2(char c1, char c2){
+		for(int var1; (!b % -('c' * "str")); new A() = !(9 - 'b')){
+			if( 3 < 5 ){
+				int b = 7;
+			} else{
+				a++;
+			}
+			(7+4);
+			('c').b();
+		}
+	}
+
+	dynamic boolean met2(){
+	
+	}
+
+
+}

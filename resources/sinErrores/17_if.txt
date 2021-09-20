@@ -1,0 +1,31 @@
+// prueba if
+
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1){
+		if( (3+2) - 5 / (4 <= 2) && ((true) != null)){
+			int a = 3;
+			;
+		}
+	}
+
+	dynamic int met2(char c1, char c2){
+		if( ("a" % b) || 'b'){
+			(Cast)this = a.b.c().d(3);
+			(new A(c));
+		} else{
+			Class var;
+			(4).c(7+2);
+		}
+	}
+
+	dynamic boolean met2(){
+	
+	}
+
+
+}
