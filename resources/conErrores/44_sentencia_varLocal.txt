@@ -1,0 +1,10 @@
+///[Error:int|7]
+// error en la sentencia, se esperaba idVar y se encontro un tipo.
+
+class Clase{
+	
+	dynamic void met1(){
+		char int b;
+	}
+	
+}

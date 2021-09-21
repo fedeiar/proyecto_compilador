@@ -1,4 +1,4 @@
-///[Error++|10]
+///[Error:++|10]
 // error en la sentencia, asignacion mal formada: se esta realizando una asignacion dentro de una asignacion.
 
 

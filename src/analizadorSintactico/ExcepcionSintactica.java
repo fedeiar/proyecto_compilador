@@ -4,12 +4,12 @@ import analizadorLexico.*;
 
 public class ExcepcionSintactica extends Exception {
     
-    public ExcepcionSintactica(Token tokenActual, String nombreTokenEsperado){
-        super(armarMensaje(tokenActual, nombreTokenEsperado));
+    public ExcepcionSintactica(String nombreTokenEsperado, Token tokenActual){
+        super(armarMensaje(nombreTokenEsperado, tokenActual));
     }
 
-    private static String armarMensaje(Token tokenActual, String nombreTokenEsperado){
-        return "Error sintactico en linea "+tokenActual.getNroLinea()+": se encontro "+tokenActual.getLexema()+" y se esperaba "+ 
-        nombreTokenEsperado+"\n\n[Error:"+tokenActual.getLexema()+"|"+tokenActual.getNroLinea()+"]";
+    private static String armarMensaje(String nombreTokenEsperado, Token tokenActual){
+        return "Error sintactico en linea "+tokenActual.getNroLinea()+": se esperaba "+nombreTokenEsperado+" y se encontro "+ 
+        tokenActual.getLexema()+"\n\n[Error:"+tokenActual.getLexema()+"|"+tokenActual.getNroLinea()+"]";
     }
 }

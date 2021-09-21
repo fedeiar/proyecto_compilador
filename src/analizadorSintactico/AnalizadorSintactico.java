@@ -49,11 +49,11 @@ public class AnalizadorSintactico {
         inicial();
     }
 
-    private void match(TipoDeToken nombreToken, String tokenQueSeEsperaba) throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        if(nombreToken == tokenActual.getTipoDeToken()){
+    private void match(TipoDeToken nombreTokenEsperado, String tokenQueSeEsperaba) throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        if(nombreTokenEsperado == tokenActual.getTipoDeToken()){
             tokenActual = analizadorLexico.proximoToken();
         } else{
-            throw new ExcepcionSintactica(tokenActual, tokenQueSeEsperaba);
+            throw new ExcepcionSintactica(tokenQueSeEsperaba, tokenActual);
         }
     }
 
@@ -111,7 +111,7 @@ public class AnalizadorSintactico {
         }else if(primeros_metodo.contains(tokenActual.getTipoDeToken())){
             metodo();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "el comienzo de una declaración de un miembro (Metodo|Constructor|Atributo)");
+            throw new ExcepcionSintactica("el comienzo de una declaración de un miembro (Metodo|Constructor|Atributo)", tokenActual);
         }
     }
 
@@ -142,7 +142,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_private){
             match(TipoDeToken.pr_private, "private");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "public o private");
+            throw new ExcepcionSintactica("public o private", tokenActual);
         }
     }
 
@@ -152,7 +152,7 @@ public class AnalizadorSintactico {
         } else if (tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
             match(TipoDeToken.id_clase, "identificador de clase");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "identificador de clase o tipo primitivo");
+            throw new ExcepcionSintactica("identificador de clase o tipo primitivo", tokenActual);
         }
     }
 
@@ -166,7 +166,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_String){
             match(TipoDeToken.pr_String, "String");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un tipo primitivo");
+            throw new ExcepcionSintactica("un tipo primitivo", tokenActual);
         }
     }
 
@@ -190,7 +190,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_dynamic){
             match(TipoDeToken.pr_dynamic, "dynamic");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "static o dynamic");
+            throw new ExcepcionSintactica("static o dynamic", tokenActual);
         }
     }
 
@@ -200,7 +200,7 @@ public class AnalizadorSintactico {
         } else if(TipoDeToken.pr_void == tokenActual.getTipoDeToken()){
             match(TipoDeToken.pr_void, "void");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un tipo o void");
+            throw new ExcepcionSintactica("un tipo o void", tokenActual);
         }
     }
 
@@ -271,7 +271,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_llaveIzq){
             bloque();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un ; o el comienzo de una sentencia");
+            throw new ExcepcionSintactica("un ; o el comienzo de una sentencia", tokenActual);
         }
     }
 
@@ -282,7 +282,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "tipo de asignación o ;");
+            throw new ExcepcionSintactica("tipo de asignación o ;", tokenActual);
         }
     }
 
@@ -300,7 +300,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_decremento){
             match(TipoDeToken.op_decremento, "--");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "asignacion, incremento o decremento");
+            throw new ExcepcionSintactica("asignacion, incremento o decremento", tokenActual);
         }
     }
 
@@ -405,7 +405,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_modulo){
             match(TipoDeToken.op_modulo, "%");
         } else {
-            throw new ExcepcionSintactica(tokenActual, "un operador binario");
+            throw new ExcepcionSintactica("un operador binario", tokenActual);
         }
         
     }
@@ -417,7 +417,7 @@ public class AnalizadorSintactico {
         } else if(primeros_operando.contains(tokenActual.getTipoDeToken())){
             operando();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "operador unario u operando");
+            throw new ExcepcionSintactica("operador unario u operando", tokenActual);
         }
     }
 
@@ -429,7 +429,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_not){
             match(TipoDeToken.op_not, "!");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "operador unario");
+            throw new ExcepcionSintactica("operador unario", tokenActual);
         }
     }
 
@@ -439,7 +439,7 @@ public class AnalizadorSintactico {
         } else if(primeros_acceso.contains(tokenActual.getTipoDeToken())){
             acceso();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un literal o el comienzo de un acceso");
+            throw new ExcepcionSintactica("un literal o el comienzo de un acceso", tokenActual);
         }
     }
 
@@ -457,7 +457,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.lit_string){
             match(TipoDeToken.lit_string, "literal String");
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un literal");
+            throw new ExcepcionSintactica("un literal", tokenActual);
         }
     }
 
@@ -469,7 +469,7 @@ public class AnalizadorSintactico {
             primario();
             encadenado();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "el comienzo de un primario o casting");
+            throw new ExcepcionSintactica("el comienzo de un primario o casting", tokenActual);
         }
     }
 
@@ -483,7 +483,7 @@ public class AnalizadorSintactico {
             expresionParentizada();
             encadenado();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un identificador de clase o una expresion");
+            throw new ExcepcionSintactica("un identificador de clase o una expresion", tokenActual);
         }
     }
 
@@ -496,7 +496,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_new){
             accesoConstructor();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "un primario");
+            throw new ExcepcionSintactica("un primario", tokenActual);
         }
     }
 
@@ -507,7 +507,7 @@ public class AnalizadorSintactico {
             match(TipoDeToken.punt_parentIzq, "(");
             expresionParentizada();
         } else{
-            throw new ExcepcionSintactica(tokenActual, "el comienzo de un primario");
+            throw new ExcepcionSintactica("el comienzo de un primario", tokenActual);
         }
     }
 
