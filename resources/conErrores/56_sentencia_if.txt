@@ -1,0 +1,12 @@
+///[Error:)|7]
+// error en la sentencia, expresion mal formada: se esperaba un literal u operador unario y se encontro )
+	
+class Clase{
+	
+	dynamic void met1(){
+		if(3 +){
+			a = 3;
+		}
+	}
+	
+}

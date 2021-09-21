@@ -1,0 +1,11 @@
+///[Error:++|8]
+// error en la sentencia, se esperaba un ; y se encontro ++.
+	
+class Clase{
+	
+	dynamic void met1(){
+		a = 3;
+		return a++;
+	}
+	
+}

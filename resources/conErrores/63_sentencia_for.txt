@@ -1,0 +1,12 @@
+///[Error:7|7]
+// error en la sentencia, for mal formado: se esperaba una asignacion y se encontro un 7;
+	
+class Clase{
+	
+	dynamic void met1(){
+		for(int a = 3; 3 + 5 ; 7 + 8){
+		}
+		
+	}
+	
+}

@@ -1,0 +1,15 @@
+///[Error:|15]
+// error en la sentencia, falta un } entonces nunca se cierra la clase.
+	
+class Clase{
+	
+	dynamic void met1(){
+		for(int a; a < 9; b++){
+			a = 3;
+			b = 4;
+			
+		
+		
+	}
+	
+}

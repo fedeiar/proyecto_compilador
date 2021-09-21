@@ -1,0 +1,10 @@
+///[Error:int|7]
+// error en la sentencia, se esperaba una asignacion y se encontro int.
+
+class Clase{
+	
+	dynamic void met1(){
+		a int b;
+	}
+	
+}

@@ -1,0 +1,12 @@
+///[Error:++|7]
+// error en la sentencia, for mal formado: se esperaba una expresion y se encontro un ++ (una asignacion);
+	
+class Clase{
+	
+	dynamic void met1(){
+		for(int a = 3; b++ ; a = 7 + 8){
+		}
+		
+	}
+	
+}

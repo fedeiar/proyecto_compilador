@@ -1,0 +1,12 @@
+///[Error:b|7]
+// error en la sentencia, for mal formado: se esperaba una declaracion de tipo y se encontro b (el comienzo de una expresion)
+	
+class Clase{
+	
+	dynamic void met1(){
+		for(b = 3; b < 10; b++){
+		}
+		
+	}
+	
+}

@@ -1,0 +1,16 @@
+///[Error:else|9]
+// error en la sentencia, if-else mal formado, se esperaba una sentencia y se encontro else.
+	
+class Clase{
+	
+	dynamic void met1(){
+		if(3 + 5 < 9)
+			
+		else{
+			b = 3;
+		}
+			
+		
+	}
+	
+}
