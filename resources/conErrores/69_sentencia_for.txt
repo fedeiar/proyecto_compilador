@@ -1,4 +1,4 @@
-///[Error:}|11]
+///[Error:;|7]
 // error en la sentencia, for mal formado: se esperaba una expresion y se encontro ;
 	
 class Clase{

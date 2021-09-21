@@ -1,4 +1,4 @@
-///[Error:int|7]
+///[Error:Var|7]
 // error en la sentencia, se esperaba un idVar y se encontro un idClass.
 
 class Clase{
