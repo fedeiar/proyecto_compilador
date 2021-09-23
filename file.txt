@@ -4,6 +4,6 @@
 class Prueba1{
 
     dynamic int metodo1() {
-        
+        a.v1(v3, v4);
     }
 }

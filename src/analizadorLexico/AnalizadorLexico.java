@@ -480,7 +480,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e7_5_1();
         } else{
-            return new Token(TipoDeToken.op_suma, lexema, gestor.nroLinea());
+            return new Token(TipoDeToken.op_mas, lexema, gestor.nroLinea());
         }
     }
 
@@ -494,7 +494,7 @@ public class AnalizadorLexico {
             actualizarCaracterActual();
             return e7_6_1();
         } else{
-            return new Token(TipoDeToken.op_resta, lexema, gestor.nroLinea());
+            return new Token(TipoDeToken.op_menos, lexema, gestor.nroLinea());
         }
     }
 

@@ -10,6 +10,7 @@ public class AnalizadorSintactico {
     private AnalizadorLexico analizadorLexico;
     private Token tokenActual;
 
+    //primeros
     private final List<TipoDeToken> primeros_miembro = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.id_clase, TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
     private final List<TipoDeToken> primeros_atributo = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
     private final List<TipoDeToken> primeros_metodo = Arrays.asList(TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
@@ -22,26 +23,56 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_acceso = Arrays.asList(TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_varLocal = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
     private final List<TipoDeToken> primeros_tipoDeAsignacion = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento);
-    private final List<TipoDeToken> primeros_expresion = Arrays.asList(TipoDeToken.op_suma, TipoDeToken.op_resta, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
+    private final List<TipoDeToken> primeros_expresion = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
                                                          TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
                                                          TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_operadorBinario = Arrays.asList(TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, 
-                                                               TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_suma, TipoDeToken.op_resta,
+                                                               TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos,
                                                                TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo);
-    private final List<TipoDeToken> primeros_operadorUnario = Arrays.asList(TipoDeToken.op_suma, TipoDeToken.op_resta, TipoDeToken.op_not);
+    private final List<TipoDeToken> primeros_operadorUnario = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not);
     private final List<TipoDeToken> primeros_operando = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter,
                                                         TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_literal = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, 
                                                        TipoDeToken.lit_string);
     private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
-    private final List<TipoDeToken> primeros_expresionParentizada = Arrays.asList(TipoDeToken.op_suma, TipoDeToken.op_resta, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, 
+    private final List<TipoDeToken> primeros_expresionParentizada = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, 
                                                                     TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq,
                                                                     TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_argsActuales = Arrays.asList(TipoDeToken.punt_parentIzq);
-    private final List<TipoDeToken> primeros_listaExps = Arrays.asList(TipoDeToken.op_suma, TipoDeToken.op_resta, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
+    private final List<TipoDeToken> primeros_listaExps = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
                                                          TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
                                                          TipoDeToken.pr_this, TipoDeToken.pr_new);
 
+    //siguientes
+    private final List<TipoDeToken> siguientes_listaClasesFactorizada = Arrays.asList(TipoDeToken.EOF);
+    private final List<TipoDeToken> siguientes_herencia = Arrays.asList(TipoDeToken.punt_llaveIzq);
+    private final List<TipoDeToken> siguientes_listaMiembros = Arrays.asList(TipoDeToken.punt_llaveDer);
+    private final List<TipoDeToken> siguientes_listaDecAtrsFactorizada = Arrays.asList(TipoDeToken.punt_puntoYComa);
+    private final List<TipoDeToken> siguientes_listaArgsFormalesOVacio = Arrays.asList(TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_listaArgsFormalesFactorizada = Arrays.asList(TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_listaSentencias = Arrays.asList(TipoDeToken.punt_llaveDer);
+    private final List<TipoDeToken> siguientes_varLocalFactorizada = Arrays.asList(TipoDeToken.punt_puntoYComa);
+    private final List<TipoDeToken> siguientes_expresionOVacio = Arrays.asList(TipoDeToken.punt_puntoYComa);
+    private final List<TipoDeToken> siguientes_ifFactorizado = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new,
+                                                               TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, 
+                                                               TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq, TipoDeToken.pr_else, TipoDeToken.punt_llaveDer); 
+    private final List<TipoDeToken> siguientes_expresionRecursiva = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_coma,TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_accesoVar_accesoMetodo = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, 
+                                                                        TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, 
+                                                                        TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, 
+                                                                        TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division,TipoDeToken.op_modulo, TipoDeToken.punt_coma, 
+                                                                        TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_listaExpsOVacio = Arrays.asList(TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_listaExpsFactorizada = Arrays.asList(TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_encadenado = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, TipoDeToken.punt_puntoYComa, TipoDeToken.op_or,
+                                                            TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual,
+                                                            TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, 
+                                                            TipoDeToken.op_modulo, TipoDeToken.punt_coma, TipoDeToken.punt_parentDer); 
+    private final List<TipoDeToken> siguientes_varOMetodoEncadenado = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, 
+                                                                      TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, 
+                                                                      TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, 
+                                                                      TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo, TipoDeToken.punt_coma, 
+                                                                      TipoDeToken.punt_parentDer);
 
     public AnalizadorSintactico(AnalizadorLexico analizadorLexico) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         this.analizadorLexico = analizadorLexico;
@@ -70,8 +101,10 @@ public class AnalizadorSintactico {
     private void listaClasesFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_class){
             listaClases();
-        } else{
+        } else if(siguientes_listaClasesFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("class o el fin del archivo", tokenActual);
         }
 
     }
@@ -89,8 +122,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_extends){
             match(TipoDeToken.pr_extends, "extends");
             match(TipoDeToken.id_clase, "identificador de clase");
-        }else{
+        }else if(siguientes_herencia.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("{ o extends", tokenActual);
         }
     }
 
@@ -98,8 +133,10 @@ public class AnalizadorSintactico {
         if(primeros_miembro.contains(tokenActual.getTipoDeToken())){
             miembro();
             listaMiembros();
-        } else{
+        } else if(siguientes_listaMiembros.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("el comienzo de un miembro o }", tokenActual);
         }
     }
 
@@ -179,8 +216,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ";");
             listaDecAtrs();
-        } else{
+        } else if(siguientes_listaDecAtrsFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un ; o ,", tokenActual);
         }
     }
 
@@ -213,8 +252,10 @@ public class AnalizadorSintactico {
     private void listaArgsFormalesOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_listaArgsFormales.contains(tokenActual.getTipoDeToken())){
             listaArgsFormales();
-        } else{
+        } else if(siguientes_listaArgsFormalesOVacio.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un tipo o )", tokenActual);
         }
     }
 
@@ -227,8 +268,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
             listaArgsFormales();
-        } else{
+        } else if(siguientes_listaArgsFormalesFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un ; o )", tokenActual);
         }
     }
 
@@ -247,8 +290,10 @@ public class AnalizadorSintactico {
         if(primeros_sentencia.contains(tokenActual.getTipoDeToken())){
             sentencia();
             listaSentencias();
-        } else{
+        } else if(siguientes_listaSentencias.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("una sentencia o }", tokenActual);
         }
     }
 
@@ -314,8 +359,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_asignacion){
             match(TipoDeToken.op_asignacion, "=");
             expresion();
-        } else{
+        } else if(siguientes_varLocalFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("= o ;", tokenActual);
         }
     }
 
@@ -327,8 +374,10 @@ public class AnalizadorSintactico {
     private void expresionOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_expresion.contains(tokenActual.getTipoDeToken())){
             expresion();
-        } else{
+        } else if(siguientes_expresionOVacio.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("una expresion o un ;", tokenActual);
         }
     }
 
@@ -345,8 +394,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_else){
             match(TipoDeToken.pr_else, "else");
             sentencia();
-        } else{
+        } else if(siguientes_ifFactorizado.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("el comienzo de una sentencia, un else o }", tokenActual);
         }
     }
 
@@ -372,8 +423,10 @@ public class AnalizadorSintactico {
             operadorBinario();
             expresionUnaria();
             expresionRecursiva();
-        } else{
+        } else if (siguientes_expresionRecursiva.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un operador binario, un ;, o un , o un )", tokenActual);
         }
     }
 
@@ -394,10 +447,10 @@ public class AnalizadorSintactico {
             match(TipoDeToken.op_menorOIgual, "<=");
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mayorOIgual){
             match(TipoDeToken.op_mayorOIgual, ">=");
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_suma){
-            match(TipoDeToken.op_suma, "+");
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_resta){
-            match(TipoDeToken.op_resta, "-");
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mas){
+            match(TipoDeToken.op_mas, "+");
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menos){
+            match(TipoDeToken.op_menos, "-");
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_multiplicacion){
             match(TipoDeToken.op_multiplicacion, "*");
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_division){
@@ -422,10 +475,10 @@ public class AnalizadorSintactico {
     }
 
     private void operadorUnario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        if(tokenActual.getTipoDeToken() == TipoDeToken.op_suma){
-            match(TipoDeToken.op_suma, "+");
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_resta){
-            match(TipoDeToken.op_resta, "-");
+        if(tokenActual.getTipoDeToken() == TipoDeToken.op_mas){
+            match(TipoDeToken.op_mas, "+");
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menos){
+            match(TipoDeToken.op_menos, "-");
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_not){
             match(TipoDeToken.op_not, "!");
         } else{
@@ -519,8 +572,10 @@ public class AnalizadorSintactico {
     private void accesoVar_accesoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
             argsActuales();
-        } else{
+        } else if (siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("alguno de los siguientes simbolos: {(, ., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
@@ -539,8 +594,10 @@ public class AnalizadorSintactico {
     private void listaExpsOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_listaExps.contains(tokenActual.getTipoDeToken())){
             listaExps();
-        } else{
+        } else if(siguientes_listaExpsOVacio.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("el comienzo de una expresion o )", tokenActual);
         }
     }
 
@@ -553,8 +610,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
             listaExps();
-        } else{
+        } else if(siguientes_listaExpsFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un , o )", tokenActual);
         }
     }
 
@@ -562,8 +621,10 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_punto){
             varOMetodoEncadenado();
             encadenado();
-        } else{
+        } else if (siguientes_encadenado.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("alguno de estos simbolos: {., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
@@ -576,8 +637,10 @@ public class AnalizadorSintactico {
     private void varOMetodoEncadenadoFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
             argsActuales();
-        } else{
+        } else if (siguientes_varOMetodoEncadenado.contains(tokenActual.getTipoDeToken())){
             //vacio
+        } else{
+            throw new ExcepcionSintactica("un ( o alguno de estos símbolos: {., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
