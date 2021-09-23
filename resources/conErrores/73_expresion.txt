@@ -1,10 +1,10 @@
-///[Error:!|7]
+///[Error:-|7]
 // error en la sentencia, se esperaba ; y se encontro ,
 	
 class Clase{
 	
 	dynamic void met1(){
-		d = 4 - - (- ! 5);
+		d = 4 - - - 5;
 	}
 		
 }

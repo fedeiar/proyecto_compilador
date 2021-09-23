@@ -37,7 +37,8 @@ public enum TipoDeToken{
     punt_puntoYComa,
     punt_coma,
     punt_punto,
-    
+    punt_dosPuntos,
+
     op_mayor,
     op_menor,
     op_not,

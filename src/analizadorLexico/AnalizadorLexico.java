@@ -90,6 +90,10 @@ public class AnalizadorLexico {
             actualizarLexema();
             actualizarCaracterActual();
             return e6_7();
+        } else if(caracterActual == ':'){
+            actualizarLexema();
+            actualizarCaracterActual();
+            return new Token(TipoDeToken.punt_dosPuntos, lexema, gestor.nroLinea());
         } else if(caracterActual == '>'){
             actualizarLexema();
             actualizarCaracterActual();

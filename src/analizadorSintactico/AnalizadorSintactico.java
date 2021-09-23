@@ -10,7 +10,8 @@ public class AnalizadorSintactico {
     private AnalizadorLexico analizadorLexico;
     private Token tokenActual;
 
-    //primeros
+    //Primeros
+
     private final List<TipoDeToken> primeros_miembro = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.id_clase, TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
     private final List<TipoDeToken> primeros_atributo = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
     private final List<TipoDeToken> primeros_metodo = Arrays.asList(TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
@@ -43,7 +44,8 @@ public class AnalizadorSintactico {
                                                          TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
                                                          TipoDeToken.pr_this, TipoDeToken.pr_new);
 
-    //siguientes
+    //Siguientes
+
     private final List<TipoDeToken> siguientes_listaClasesFactorizada = Arrays.asList(TipoDeToken.EOF);
     private final List<TipoDeToken> siguientes_herencia = Arrays.asList(TipoDeToken.punt_llaveIzq);
     private final List<TipoDeToken> siguientes_listaMiembros = Arrays.asList(TipoDeToken.punt_llaveDer);
