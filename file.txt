@@ -4,9 +4,6 @@
 class Prueba1{
 
     dynamic int metodo1() {
-        if(3 + * a.b(){
-	;
-	}
-	
+	a.m1(v1 v2);
     }
 }

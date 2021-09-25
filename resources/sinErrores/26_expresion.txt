@@ -1,4 +1,4 @@
-// prueba miembros intercalados
+// prueba expresiones unarias y binarias
 
 class Prueba extends PruebaPadre{
 
