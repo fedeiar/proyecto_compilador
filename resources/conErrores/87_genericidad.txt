@@ -1,0 +1,14 @@
+///[Error:B|4]
+
+	
+class Clase<A B>{
+	
+
+	
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

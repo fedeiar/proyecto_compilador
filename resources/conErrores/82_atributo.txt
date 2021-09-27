@@ -1,0 +1,13 @@
+///[Error:dynamic|8]
+
+	
+class Clase{
+	
+	int var 
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

@@ -1,0 +1,13 @@
+///[Error:private|6]
+
+	
+class Clase{
+	
+	private private int var;
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

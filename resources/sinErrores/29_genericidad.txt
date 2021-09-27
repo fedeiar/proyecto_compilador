@@ -1,10 +1,10 @@
 // prueba genericidad
-class Prueba<B<A<E,F>,H>, C<C,D>,E,F<G,H>> extends PruebaPadre<B<A<F,G<I,J>,H>,E>, C<D,E>>{
+class Prueba<B<A<E, F>, H>, C<C, D>, E, F<G, H>> extends PruebaPadre<B<A<F,G<I,J>,H>,E>, C<D,E>>{
 	
 	
-	private Class<B<A<E,F>,H>, C<C,D>,E,F<G,H>> var1, var2;
-	public Class<B<A<E,F>,H>, C<C,D>,E,F<G,H>> var;
-	Class<B<A<E,F>,H>, C<C,D>,E,F<G,H>> var1, var2;
+	private Class<A<B<C<D>>>> var1, var2;
+	public Class<A, B, C, D> var;
+	Class<A<B<C<D, D, D>, C, C>, B, B>, A<B<C<D>>>, A<B<C<D, D, D>, C, C>, B, B>> var1, var2;
 	Class<A> var1, var2, var3;
 
 	Prueba(Class<B<A<E,F>,H>, C<C,D>,E,F<G,H>> c1, Class<A<B>, C> c2){
@@ -12,10 +12,10 @@ class Prueba<B<A<E,F>,H>, C<C,D>,E,F<G,H>> extends PruebaPadre<B<A<F,G<I,J>,H>,E
 		Class<A, B> var = new Class<A, B>();
 		Class<A<B,C>, D<E,F>> var = new Class<A<B<F>,E>, C<D>>();
 		Class<A, B> var = new Class<>();
-		(A<A,B>) a = new B<B, C<D, E, G>>(); 
+		(Clase<A<B<C,C>,B<C,C>>, B>) a = new B<B, C<D, E, G>>(); 
 	}
 
-	dynamic Stringg<A<D>,B<E<G>,F>,C> met2(){
+	dynamic Stringg<A<D>,B<E<G>,F>,C> met2(Class<A<B<C>>, A<B,C,D>, A> arg){
 		for(Class<A<B<F>,E>, C<D<I,J>,G,H>> i = new Class<>(); i.num() < var.num; i++){
 			if(c.d() < !7 + 5){
 				for(Class<A<B<F>,E>, C<D<I,J>,G,H>> j : array){
@@ -31,13 +31,6 @@ class Prueba<B<A<E,F>,H>, C<C,D>,E,F<G,H>> extends PruebaPadre<B<A<F,G<I,J>,H>,E
 			}
 		}
 	}
-
-	
-	
-
-	
-
-
 }
 
 

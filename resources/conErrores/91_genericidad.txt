@@ -1,0 +1,14 @@
+///[Error:dynamic|9]
+// debido a que el NT de los tipos parametricos es vaciable, probamos que se detecte un error al no declarar nada después de Clase.
+	
+class Clase<A> extends ClaseB<A<B>, B<A>>{
+	
+
+	Clase
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

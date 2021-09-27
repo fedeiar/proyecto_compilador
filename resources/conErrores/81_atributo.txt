@@ -1,0 +1,13 @@
+///[Error:var|6]
+
+	
+class Clase{
+	
+	int var var;
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

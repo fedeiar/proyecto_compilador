@@ -1,0 +1,14 @@
+///[Error:>|7]
+
+	
+class Clase<A> extends ClaseB<A<B>, B<A>>{
+	
+
+	Clase<> a;
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

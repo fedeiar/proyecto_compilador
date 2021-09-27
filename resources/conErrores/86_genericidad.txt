@@ -1,0 +1,14 @@
+///[Error:>|4]
+
+	
+class Clase<A ,>{
+	
+
+	
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	

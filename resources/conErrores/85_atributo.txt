@@ -1,0 +1,14 @@
+///[Error:{|7]
+
+	
+class Clase{
+	
+
+	Clase a{}
+
+	dynamic void met1(){
+		
+	}
+		
+}
+	
