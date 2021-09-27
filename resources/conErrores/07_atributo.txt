@@ -1,8 +1,8 @@
-///[Error:int|5]
-// atributo mal declarado
+///[Error:}|6]
+// atributo mal declarado, falta ;
 
 class Clase{
-	int a;
+	int a
 }
 
 

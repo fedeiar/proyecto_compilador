@@ -1,5 +1,5 @@
-///[Error:int|6]
-// error en declaración de metodo, falta su formaMetodo.
+///[Error:(|6]
+// error en declaración de metodo, falta su formaMetodo. El caracter en error es ( ya que int met1 puede interpretarse como un intento de atributo con visibilidad implicita
 
 class Clase{
 	
