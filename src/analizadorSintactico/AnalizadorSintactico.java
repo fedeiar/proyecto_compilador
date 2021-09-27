@@ -48,7 +48,8 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_argsFormales = Arrays.asList(TipoDeToken.punt_parentIzq);
     private final List<TipoDeToken> primeros_visibilidad = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
     private final List<TipoDeToken> primeros_listaDecAtrs = Arrays.asList(TipoDeToken.id_metVar);
-    private final List<TipoDeToken> primeros_tiposParametricos = Arrays.asList(TipoDeToken.op_menor);
+    private final List<TipoDeToken> primeros_tipoParametricoOVacio = Arrays.asList(TipoDeToken.op_menor);
+
     //Siguientes
 
     private final List<TipoDeToken> siguientes_listaClasesFactorizada = Arrays.asList(TipoDeToken.EOF);
@@ -119,7 +120,7 @@ public class AnalizadorSintactico {
     private void clase() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.pr_class, "class");
         match(TipoDeToken.id_clase, "identificador de clase");
-        tiposParametricos();
+        tipoParametricoOVacio();
         herencia();
         match(TipoDeToken.punt_llaveIzq, "{");
         listaMiembros();
@@ -130,7 +131,7 @@ public class AnalizadorSintactico {
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_extends){
             match(TipoDeToken.pr_extends, "extends");
             match(TipoDeToken.id_clase, "identificador de clase");
-            tiposParametricos();
+            tipoParametricoOVacio();
         }else if(siguientes_herencia.contains(tokenActual.getTipoDeToken())){
             //vacio
         } else{
@@ -138,23 +139,37 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void tiposParametricos() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        if(tokenActual.getTipoDeToken() == TipoDeToken.op_menor){
+    private void tipoParametricoOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        if(TipoDeToken.op_menor == tokenActual.getTipoDeToken()){
             match(TipoDeToken.op_menor, "<");
             match(TipoDeToken.id_clase, "identificador de clase");
-            listaTiposParametricos();
+            tiposParametricos();
             match(TipoDeToken.op_mayor, ">");
         } else{
             //vacio
         }
     }
 
-    private void listaTiposParametricos() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
+    private void tiposParametricos() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        if(TipoDeToken.punt_coma == tokenActual.getTipoDeToken()){
             match(TipoDeToken.punt_coma, ",");
             match(TipoDeToken.id_clase, "identificador de clase");
-            listaTiposParametricos();
-        } else if(primeros_tiposParametricos.contains(tokenActual.getTipoDeToken())){
+            tiposParametricos();
+        } else if(TipoDeToken.op_menor == tokenActual.getTipoDeToken()){
+            match(TipoDeToken.op_menor, "<");
+            match(TipoDeToken.id_clase, "identificador de clase");
+            tiposParametricos();
+            match(TipoDeToken.op_mayor, ">");
+            tiposParametricosFactorizado();
+        } else{
+            //vacio
+        }
+    }
+
+    private void tiposParametricosFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        if(TipoDeToken.punt_coma == tokenActual.getTipoDeToken()){
+            match(TipoDeToken.punt_coma, ",");
+            match(TipoDeToken.id_clase, "identificador de clase");
             tiposParametricos();
         } else{
             //vacio
@@ -189,8 +204,8 @@ public class AnalizadorSintactico {
         if(primeros_argsFormales.contains(tokenActual.getTipoDeToken())){
             argsFormales();
             bloque();
-        } else if(primeros_tiposParametricos.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
-            tiposParametricos();
+        } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
+            tipoParametricoOVacio();
             listaDecAtrs();
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
@@ -215,7 +230,7 @@ public class AnalizadorSintactico {
 
     private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         formaMetodo();
-        tiposParametricos();
+        tipoParametricoOVacio();
         tipoMetodo();
         match(TipoDeToken.id_metVar, "identificador de variable");
         argsFormales();
@@ -237,7 +252,7 @@ public class AnalizadorSintactico {
             tipoPrimitivo();
         } else if (tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
             match(TipoDeToken.id_clase, "identificador de clase");
-            tiposParametricos();
+            tipoParametricoOVacio();
         } else{
             throw new ExcepcionSintactica("identificador de clase o tipo primitivo", tokenActual);
         }
@@ -648,25 +663,25 @@ public class AnalizadorSintactico {
     private void accesoConstructor() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.pr_new, "new");
         match(TipoDeToken.id_clase, "identificador de clase");
-        tiposParametricosODiamante();
+        tipoParametricoODiamante();
         argsActuales();
     }
 
-    private void tiposParametricosODiamante() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void tipoParametricoODiamante() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(TipoDeToken.op_menor == tokenActual.getTipoDeToken()){
             match(TipoDeToken.op_menor, "<");
-            tiposParametricosFactorizados();
+            tipoParametricoODiamanteFactorizado();
         } else{
             //vacio
         }
     }
 
-    private void tiposParametricosFactorizados() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void tipoParametricoODiamanteFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(TipoDeToken.op_mayor == tokenActual.getTipoDeToken()){
             match(TipoDeToken.op_mayor, ">");
         } else if(TipoDeToken.id_clase == tokenActual.getTipoDeToken()){
             match(TipoDeToken.id_clase, "identificador de clase");
-            listaTiposParametricos();
+            tiposParametricos();
             match(TipoDeToken.op_mayor, ">");
         }
     }

@@ -1,0 +1,31 @@
+// prueba foreach
+class Prueba extends PruebaPadre{
+
+	public int int1;
+	private int int1, int2;
+
+
+	Prueba(int int1, String str1, boolean b1, char c1, Class c1){
+		for(int var : array){
+			print(var);
+			system().out(3 + 4).println(var + "\n");
+		}
+		int num = 0;
+		for(Class var : list){
+			num = num + var.num;
+		}
+	}
+
+	dynamic boolean met2(){
+	
+	}
+
+	
+	
+
+	
+
+
+}
+
+
