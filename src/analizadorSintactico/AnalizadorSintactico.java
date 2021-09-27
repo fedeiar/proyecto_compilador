@@ -230,7 +230,6 @@ public class AnalizadorSintactico {
 
     private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         formaMetodo();
-        tipoParametricoOVacio();
         tipoMetodo();
         match(TipoDeToken.id_metVar, "identificador de variable");
         argsFormales();
@@ -301,7 +300,8 @@ public class AnalizadorSintactico {
     private void tipoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_tipoPrimitivo.contains(tokenActual.getTipoDeToken())){
             tipoPrimitivo();
-        } else if(TipoDeToken.id_clase == tokenActual.getTipoDeToken()){
+        } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || TipoDeToken.id_clase == tokenActual.getTipoDeToken()){
+            tipoParametricoOVacio();
             match(TipoDeToken.id_clase, "identificador de clase");
         } else if(TipoDeToken.pr_void == tokenActual.getTipoDeToken()){
             match(TipoDeToken.pr_void, "void");
