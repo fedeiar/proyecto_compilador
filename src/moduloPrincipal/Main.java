@@ -20,7 +20,7 @@ public class Main {
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");
 
             } catch (FileNotFoundException e){
-                System.out.println("Error: no se encontró el archivo en la ruta especificada");
+                System.out.println("Error: no se encontro el archivo en la ruta especificada");
             } catch (IOException e){
                 e.printStackTrace();
             } catch(ExcepcionLexica e){
