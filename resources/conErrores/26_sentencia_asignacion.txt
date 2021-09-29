@@ -1,9 +1,11 @@
-///[Error:==|7]
+///[Error:==|9]
 // error en la sentencia, asignación mal formada
 
 class Clase{
 	
 	dynamic void met1(){
+		a = 3;
+		A a = new A();
 		this.var == 3;
 	}
 	

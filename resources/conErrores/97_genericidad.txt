@@ -1,16 +1,13 @@
-///[Error:<|12]
+///[Error:,|9]
 
 	
 class Clase<A> extends ClaseB<A<B>, B<A>>{
 	
 
 	
-	dynamic void met1(Class<A> a){
+
+	dynamic void met1(Class<, A> a){
 		
-	}
-
-	static <A> Class met2(){
-
 	}
 		
 }

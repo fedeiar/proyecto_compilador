@@ -1,0 +1,13 @@
+///[Error:)|6]
+// error en los args formales
+
+class Clase{
+	
+	Clase(int a, int b, int){
+
+	}
+}
+
+
+
+

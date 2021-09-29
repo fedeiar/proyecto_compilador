@@ -12,6 +12,7 @@ class Prueba extends PruebaPadre{
 		a(3, 5);
 		a.b(3+2, !'a' - "c");
 		a.b.c((Cast)d.e(3) + true, null);
+		a.a.a().a(b).a(b,c).a(b.b1, c.c1(c2, c2), d.d1(d2, d2(), d2));
 	}
 
 	dynamic int met2(char c1, char c2){

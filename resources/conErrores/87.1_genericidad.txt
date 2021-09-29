@@ -1,7 +1,7 @@
-///[Error:{|4]
+///[Error:D|4]
 
 	
-class Clase<A, B{
+class Clase<A, B, C D>{
 	
 
 	

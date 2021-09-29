@@ -1,7 +1,7 @@
 ///[Error:>|4]
 
 	
-class Clase<A> extends ClaseB<>{
+class Clase<>{
 	
 
 	

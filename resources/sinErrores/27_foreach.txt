@@ -20,6 +20,8 @@ class Prueba extends PruebaPadre{
 		for(ClaseA var : var + 4){
 
 		}
+		for(int a : !(3 + 4) * a.m.m().m(a).m(a.b,c))
+			a = 3;
 	}
 
 	dynamic boolean met2(){

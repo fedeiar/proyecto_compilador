@@ -17,8 +17,11 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_atributo = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, 
                                                         TipoDeToken.pr_String);
     private final List<TipoDeToken> primeros_metodo = Arrays.asList(TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
+    private final List<TipoDeToken> primeros_visibilidad = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
     private final List<TipoDeToken> primeros_tipoPrimitivo = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String);
+    private final List<TipoDeToken> primeros_listaDecAtrs = Arrays.asList(TipoDeToken.id_metVar);
     private final List<TipoDeToken> primeros_tipo = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
+    private final List<TipoDeToken> primeros_argsFormales = Arrays.asList(TipoDeToken.punt_parentIzq);
     private final List<TipoDeToken> primeros_argFormal = primeros_tipo;
     private final List<TipoDeToken> primeros_listaArgsFormales = primeros_argFormal;
     private final List<TipoDeToken> primeros_sentencia = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new,
@@ -26,7 +29,7 @@ public class AnalizadorSintactico {
                                                          TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq);
     private final List<TipoDeToken> primeros_acceso = Arrays.asList(TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_varLocal = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
-    private final List<TipoDeToken> primeros_varLocalFactorizada = Arrays.asList(TipoDeToken.op_asignacion);
+    private final List<TipoDeToken> primeros_varLocalFactorizada = Arrays.asList(TipoDeToken.op_asignacion); // ojo! contiene a vacio
     private final List<TipoDeToken> primeros_tipoDeAsignacion = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento);
     private final List<TipoDeToken> primeros_expresion = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
                                                          TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
@@ -42,13 +45,8 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_expresionParentizada = primeros_expresion;
     private final List<TipoDeToken> primeros_argsActuales = Arrays.asList(TipoDeToken.punt_parentIzq);
-    private final List<TipoDeToken> primeros_listaExps = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
-                                                         TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
-                                                         TipoDeToken.pr_this, TipoDeToken.pr_new);
-    private final List<TipoDeToken> primeros_argsFormales = Arrays.asList(TipoDeToken.punt_parentIzq);
-    private final List<TipoDeToken> primeros_visibilidad = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
-    private final List<TipoDeToken> primeros_listaDecAtrs = Arrays.asList(TipoDeToken.id_metVar);
-    private final List<TipoDeToken> primeros_tipoParametricoOVacio = Arrays.asList(TipoDeToken.op_menor);
+    private final List<TipoDeToken> primeros_listaExps = primeros_expresion;
+    private final List<TipoDeToken> primeros_tipoParametricoOVacio = Arrays.asList(TipoDeToken.op_menor); //ojo! contiene a vacio
     private final List<TipoDeToken> primeros_tipoParametrico = Arrays.asList(TipoDeToken.id_clase);
 
     //Siguientes
@@ -668,6 +666,8 @@ public class AnalizadorSintactico {
             tipoParametrico();
             listaTiposParametricos();
             match(TipoDeToken.op_mayor, ">");
+        } else{
+            throw new ExcepcionSintactica("un > o un identificador de clase", tokenActual);
         }
     }
 

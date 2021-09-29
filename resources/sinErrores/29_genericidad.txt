@@ -12,7 +12,8 @@ class Prueba<B<A<E, F>, H>, C<C, D>, E, F<G, H>> extends PruebaPadre<B<A<F,G<I,J
 		Class<A, B> var = new Class<A, B>();
 		Class<A<B,C>, D<E,F>> var = new Class<A<B<F>,E>, C<D>>();
 		Class<A, B> var = new Class<>();
-		(Clase<A<B<C,C>,B<C,C>>, B>) a = new B<B, C<D, E, G>>(); 
+		(Clase<A<B<C,C>,B<C,C>>, B>) a = new B<B, C<D, E, G>>();
+		a = (Clase< A<B>, A<B<B1<C1>, B2>> >) var.met();  
 	}
 
 	dynamic Stringg<A<D>,B<E<G>,F>,C> met2(Class<A<B<C>>, A<B,C,D>, A> arg){

@@ -1,4 +1,4 @@
-///[Error:<|12]
+///[Error:>|12]
 
 	
 class Clase<A> extends ClaseB<A<B>, B<A>>{
@@ -9,7 +9,7 @@ class Clase<A> extends ClaseB<A<B>, B<A>>{
 		
 	}
 
-	static <A> Class met2(){
+	static Class<> met2(){
 
 	}
 		

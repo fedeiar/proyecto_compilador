@@ -1,0 +1,22 @@
+///[Error:(|14]
+
+
+class Clase{
+	
+	dynamic int met1(int a){
+
+	}
+
+	static int met1(int a){
+
+	}
+
+	int met1(int a){
+
+	}
+
+}
+
+
+
+

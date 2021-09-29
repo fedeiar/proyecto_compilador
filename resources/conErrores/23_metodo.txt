@@ -3,7 +3,7 @@
 
 class Clase{
 	
-	dynamic void met1(claseA var1){
+	dynamic void met1(int var1, ClaseA var2, claseA var3){
 
 	}
 	

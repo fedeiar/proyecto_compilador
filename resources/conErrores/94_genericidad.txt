@@ -1,10 +1,10 @@
-///[Error:dynamic|9]
+///[Error:;|7]
 
 	
 class Clase<A> extends ClaseB<A<B>, B<A>>{
 	
 
-	Clase<A, B> a
+	Clase<A, B> ;
 
 	dynamic void met1(){
 		
