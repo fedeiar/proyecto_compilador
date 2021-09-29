@@ -407,7 +407,7 @@ public class AnalizadorSintactico {
 
     private void varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         tipo();
-        match(TipoDeToken.id_metVar, "identificador de metodo o variable");
+        match(TipoDeToken.id_metVar, "identificador de variable");
         varLocalFactorizada();
     }
 
