@@ -15,7 +15,7 @@ class Prueba<B<A<E,F>,H>, C<C,D>,E,F<G,H>> extends PruebaPadre<B<A<F,G<I,J>,H>,E
 		(A<A,B>) a = new B<B, C<D, E, G>>(); 
 	}
 
-	dynamic <A<D>,B<E<G>,F>,C>Stringg met2(){
+	dynamic Stringg<A<D>,B<E<G>,F>,C> met2(){
 		for(Class<A<B<F>,E>, C<D<I,J>,G,H>> i = new Class<>(); i.num() < var.num; i++){
 			if(c.d() < !7 + 5){
 				for(Class<A<B<F>,E>, C<D<I,J>,G,H>> j : array){
