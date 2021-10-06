@@ -27,16 +27,6 @@ public class Clase {
         this.idClaseAncestro = idClaseAncestro;
     }
 
-    public void establecerConstructor(Constructor constructor) throws ExcepcionSemantica{
-        //TODO: en que momento se verifica si la clase tiene o no constructor para asignarle uno con cuerpo vacio en caso de que no? se hace después del analisis sintactico.
-        if(this.constructor == null){
-            //TODO: para el logro va a haber que modificarlo
-            this.constructor = constructor;
-        } else{
-            throw new ExcepcionSemantica(constructor.getTokenIdClase());
-        }
-    }
-
     public void insertarAtributo(String nombreAtributo, Atributo atributo) throws ExcepcionSemantica{
         //TODO: deberia verificarse aca que no haya un ancesto que tenga un mismo atributo? no, se hace en la consolidacion
         if(atributos.get(nombreAtributo) == null){
@@ -45,6 +35,16 @@ public class Clase {
             throw new ExcepcionSemantica(atributo.getTokenIdVar());
         }
         
+    }
+    
+    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{
+        //TODO: en que momento se verifica si la clase tiene o no constructor para asignarle uno con cuerpo vacio en caso de que no? se hace después del analisis sintactico.
+        if(this.constructor == null){
+            //TODO: para el logro va a haber que modificarlo
+            this.constructor = constructor;
+        } else{
+            throw new ExcepcionSemantica(constructor.getTokenIdClase());
+        }
     }
 
     public void insertarMetodo(String nombreMetodo, Metodo metodo) throws ExcepcionSemantica{
