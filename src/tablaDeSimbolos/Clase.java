@@ -7,24 +7,24 @@ import analizadorLexico.Token;
 public class Clase {
     
 
-    private Token idClase;
-    private Token idClaseAncestro;
+    private Token tokenIdClase;
+    private Token tokenIdClaseAncestro;
     private Constructor constructor;
     private Map<String, Atributo> atributos;
     private Map<String, Metodo> metodos;
     
 
     public Clase(Token idClase){
-        this.idClase = idClase;
+        this.tokenIdClase = idClase;
     }
 
     public Token getTokenIdClase(){
-        return idClase;
+        return tokenIdClase;
     }
 
     public void set_idClaseAncestro(Token idClaseAncestro){
         //debería verificar aca que exista la clase de la que heredo? NO, eso se verifica en el chequeo de declaraciones, junto a si hay herencia circular.
-        this.idClaseAncestro = idClaseAncestro;
+        this.tokenIdClaseAncestro = idClaseAncestro;
     }
 
     public void insertarAtributo(String nombreAtributo, Atributo atributo) throws ExcepcionSemantica{
@@ -58,7 +58,6 @@ public class Clase {
 
     
 
-
     public Metodo existeMetodo(Token tokenIdMet) throws ExcepcionSemantica{
         Metodo metodo = metodos.get(tokenIdMet.getLexema());
         if(metodo != null){
@@ -66,6 +65,18 @@ public class Clase {
         } else{
             throw new ExcepcionSemantica(tokenIdMet);
         }
+    }
+
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        if(!TablaSimbolos.getInstance().existeClase(this.tokenIdClase)){
+            throw new ExcepcionSemantica(this.tokenIdClase);
+        }
+        //TODO: verificar otras cosas como herencia circular, etc.
+
+
+
+        
     }
 
 }

@@ -2,17 +2,17 @@ package tablaDeSimbolos;
 import java.util.HashMap;
 import java.util.Map;
 
+import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
 
-public class Metodo {
+public class Metodo extends Unidad{
     
     private Token tokenIdMet;
-    private String formaMetodo;
+    private TipoDeToken formaMetodo;
     private TipoMetodo tipoMetodo;
-    private Map<String, ParametroFormal> parametros;
+    
 
-
-    public Metodo(Token tokenIdMet, String formaMetodo, TipoMetodo tipoMetodo){
+    public Metodo(Token tokenIdMet, TipoDeToken formaMetodo, TipoMetodo tipoMetodo){
         this.tokenIdMet = tokenIdMet;
         this.formaMetodo = formaMetodo;
         this.tipoMetodo = tipoMetodo;
@@ -22,7 +22,7 @@ public class Metodo {
         return tokenIdMet;
     }
 
-    public String getFormaMetodo(){
+    public TipoDeToken getFormaMetodo(){
         return formaMetodo;
     }
 
@@ -30,11 +30,4 @@ public class Metodo {
         return tipoMetodo;
     }
 
-    public void insertarParametro(String nombreParametro, ParametroFormal parametro) throws ExcepcionSemantica{
-        if(parametros.get(nombreParametro) == null){
-            parametros.put(nombreParametro, parametro);
-        } else{
-            throw new ExcepcionSemantica(parametro.getTokenIdVar());
-        }
-    }
 }

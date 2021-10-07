@@ -4,24 +4,25 @@ import java.util.Map;
 
 import analizadorLexico.Token;
 
-public class Constructor {
+public class Constructor extends Unidad{
     
     private Token tokenIdClase;
-    private Map<String, ParametroFormal> parametros;
 
-    public Constructor(Token tokenIdClase){
+    public Constructor(Token tokenIdClase) throws ExcepcionSemantica{
         this.tokenIdClase = tokenIdClase;
+        
     }
 
     public Token getTokenIdClase(){
         return tokenIdClase;
     }
 
-    public void insertarParametro(String nombreParametro, ParametroFormal parametro) throws ExcepcionSemantica{
-        if(parametros.get(nombreParametro) == null){
-            parametros.put(nombreParametro, parametro);
-        } else{
-            throw new ExcepcionSemantica(parametro.getTokenIdVar());
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        if( !tokenIdClase.getLexema().equals(TablaSimbolos.getInstance().claseActual.getTokenIdClase().getLexema()) ){
+            throw new ExcepcionSemantica(tokenIdClase);
         }
+        //TODO: ver si pueden haber mas controles
     }
+    
 }

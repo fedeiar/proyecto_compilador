@@ -1,6 +1,10 @@
 package analizadorSintactico;
 
 import analizadorLexico.*;
+import tablaDeSimbolos.Clase;
+import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.TablaSimbolos;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +85,7 @@ public class AnalizadorSintactico {
                                                                       TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo, TipoDeToken.punt_coma, 
                                                                       TipoDeToken.punt_parentDer);
 
-    public AnalizadorSintactico(AnalizadorLexico analizadorLexico) throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    public AnalizadorSintactico(AnalizadorLexico analizadorLexico) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         this.analizadorLexico = analizadorLexico;
         tokenActual = analizadorLexico.proximoToken();
         inicial();
@@ -95,17 +99,17 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void inicial() throws IOException, ExcepcionLexica, ExcepcionSintactica {
+    private void inicial() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica {
         listaClases();
         match(TipoDeToken.EOF, "EOF");
     }
 
-    private void listaClases() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaClases() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         clase();
         listaClasesFactorizada();
     }
 
-    private void listaClasesFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaClasesFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_class){
             listaClases();
         } else if(siguientes_listaClasesFactorizada.contains(tokenActual.getTipoDeToken())){
@@ -116,23 +120,35 @@ public class AnalizadorSintactico {
 
     }
 
-    private void clase() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void clase() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         match(TipoDeToken.pr_class, "class");
+        Token tokenIdClase = tokenActual;
         match(TipoDeToken.id_clase, "identificador de clase");
-        tipoParametricoOVacio();
-        herencia();
+        Clase clase = new Clase(tokenIdClase);
+        TablaSimbolos.getInstance().claseActual = clase;
+        TablaSimbolos.getInstance().insertarClase(tokenIdClase.getLexema(), clase);
+
+        tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+
+        Token tokenIdClaseAncestro = herencia();
+        clase.set_idClaseAncestro(tokenIdClaseAncestro);
+
         match(TipoDeToken.punt_llaveIzq, "{");
         listaMiembros();
         match(TipoDeToken.punt_llaveDer, "}");
     }
 
-    private void herencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Token herencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_extends){
             match(TipoDeToken.pr_extends, "extends");
+            Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
-            tipoParametricoOVacio();
+            
+            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+
+            return tokenIdClase;
         }else if(siguientes_herencia.contains(tokenActual.getTipoDeToken())){
-            //vacio
+            return new Token(TipoDeToken.id_clase, "Object", 0);
         } else{
             throw new ExcepcionSintactica("{ o extends", tokenActual);
         }
