@@ -23,21 +23,57 @@ public class TablaSimbolos {
         clases = new HashMap<String, Clase>();
         
         Metodo metodo;
+
+        //Creando Object
         Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
         Clase claseObject = new Clase(tokenObject); 
         claseObject.set_idClaseAncestro(null);//Object va a ser la unica clase que tenga ancestro null.
+
         metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), TipoDeToken.pr_static, new TipoVoid());
         metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
         claseObject.insertarMetodo("debugPrint", metodo); 
 
+        //Creando System
         Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
         claseSystem.set_idClaseAncestro(tokenObject);
+
         metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), TipoDeToken.pr_static, new TipoInt());
         claseSystem.insertarMetodo("read", metodo);
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), TipoDeToken.pr_static, new TipoInt());
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printB", 0), TipoDeToken.pr_static, new TipoVoid());
         metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
-        claseSystem.insertarMetodo("read", metodo);
-        //TODO: terminar de insertar los metodos en System.
+        claseSystem.insertarMetodo("printB", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printC", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
+        claseSystem.insertarMetodo("printC", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printI", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
+        claseSystem.insertarMetodo("printI", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printS", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
+        claseSystem.insertarMetodo("printS", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "println", 0), TipoDeToken.pr_static, new TipoVoid());
+        claseSystem.insertarMetodo("println", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printBln", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
+        claseSystem.insertarMetodo("printBln", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printCln", 0), TipoDeToken.pr_static, new TipoVoid()); 
+        metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
+        claseSystem.insertarMetodo("printCln", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printIln", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
+        claseSystem.insertarMetodo("printIln", metodo);
+
+        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printSln", 0), TipoDeToken.pr_static, new TipoVoid());
+        metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
+        claseSystem.insertarMetodo("printSln", metodo);
 
         insertarClase("Object", claseObject);
         insertarClase("System", claseSystem);
