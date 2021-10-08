@@ -1,9 +1,7 @@
 package analizadorSintactico;
 
 import analizadorLexico.*;
-import tablaDeSimbolos.Clase;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -180,7 +178,7 @@ public class AnalizadorSintactico {
         tipoParametricoOVacio();
     }
 
-    private void listaMiembros() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaMiembros() throws IOException, ExcepcionLexica, ExcepcionSintactica,  ExcepcionSemantica{
         if(primeros_miembro.contains(tokenActual.getTipoDeToken())){
             miembro();
             listaMiembros();
@@ -191,10 +189,11 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void miembro() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void miembro() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(TipoDeToken.id_clase == tokenActual.getTipoDeToken()){
+            Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
-            constructor_atributoImplicito();
+            constructor_atributoImplicito(tokenIdClase);
         } else if(primeros_atributo.contains(tokenActual.getTipoDeToken())){
             atributo();
         }else if(primeros_metodo.contains(tokenActual.getTipoDeToken())){
@@ -204,86 +203,111 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void constructor_atributoImplicito() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void constructor_atributoImplicito(Token tokenIdClase) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_argsFormales.contains(tokenActual.getTipoDeToken())){
+            Constructor constructor = new Constructor(tokenIdClase);
+            TablaSimbolos.getInstance().unidadActual = constructor;
+            TablaSimbolos.getInstance().claseActual.insertarConstructor(constructor);
             argsFormales();
             bloque();
         } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
-            tipoParametricoOVacio();
-            listaDecAtrs();
+            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+            listaDecAtrs(TipoDeToken.pr_public, new TipoClase(tokenIdClase));
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
             throw new ExcepcionSintactica("un (, un < o un identificador de variable", tokenActual);
         }
     }
 
-    private void atributo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void atributo() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_visibilidad.contains(tokenActual.getTipoDeToken())){
-            visibilidad();
-            tipo();
-            listaDecAtrs();
+            TipoDeToken visibilidad = visibilidad();
+            Tipo tipo = tipo();
+            listaDecAtrs(visibilidad, tipo);
             match(TipoDeToken.punt_puntoYComa, ";");
         } else if(primeros_tipoPrimitivo.contains(tokenActual.getTipoDeToken())){
-            tipoPrimitivo();
-            listaDecAtrs();
+            TipoDeToken visibilidad = TipoDeToken.pr_public;
+            Tipo tipo = tipoPrimitivo();
+            listaDecAtrs(visibilidad, tipo);
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
             throw new ExcepcionSintactica("el comienzo de la declaracion un atributo", tokenActual);
         }
     }
 
-    private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        formaMetodo();
-        tipoMetodo();
+    private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        TipoDeToken formaMetodo = formaMetodo();
+        TipoMetodo tipoMetodo = tipoMetodo();
+        Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
+        Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
+        TablaSimbolos.getInstance().unidadActual = metodo;
+        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo);
         argsFormales();
         bloque();
     }
 
-    private void visibilidad() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private TipoDeToken visibilidad() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_public){
+            TipoDeToken visibilidad = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_public, "public");
+            return visibilidad;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_private){
+            TipoDeToken visibilidad = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_private, "private");
+            return visibilidad;
         } else{
             throw new ExcepcionSintactica("public o private", tokenActual);
         }
     }
 
-    private void tipo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Tipo tipo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_tipoPrimitivo.contains(tokenActual.getTipoDeToken())){
-            tipoPrimitivo();
+            Tipo tipo = tipoPrimitivo();
+            return tipo;
         } else if (tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
+            Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
-            tipoParametricoOVacio();
+            Tipo tipo = new TipoClase(tokenIdClase);
+
+            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+
+            return tipo;
         } else{
             throw new ExcepcionSintactica("identificador de clase o tipo primitivo", tokenActual);
         }
     }
 
-    private void tipoPrimitivo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Tipo tipoPrimitivo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_boolean){
             match(TipoDeToken.pr_boolean, "boolean");
+            return new TipoBoolean();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_char){
             match(TipoDeToken.pr_char, "char");
+            return new TipoChar();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_int){
             match(TipoDeToken.pr_int, "int");
+            return new TipoInt();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_String){
             match(TipoDeToken.pr_String, "String");
+            return new TipoString();
         } else{
             throw new ExcepcionSintactica("un tipo primitivo", tokenActual);
         }
     }
 
-    private void listaDecAtrs() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaDecAtrs(TipoDeToken visibilidad, Tipo tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
-        listaDecAtrsFactorizada();
+        Atributo atributo = new Atributo(tokenIdVar, visibilidad, tipoAtributo);
+        TablaSimbolos.getInstance().claseActual.insertarAtributo(tokenIdVar.getLexema(), atributo);
+        listaDecAtrsFactorizada(visibilidad, tipoAtributo);
     }
 
-    private void listaDecAtrsFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaDecAtrsFactorizada(TipoDeToken visibilidad, Tipo tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
-            listaDecAtrs();
+            listaDecAtrs(visibilidad, tipoAtributo);
         } else if(siguientes_listaDecAtrsFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
         } else{
@@ -291,33 +315,39 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void formaMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private TipoDeToken formaMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_static){
+            TipoDeToken formaMetodo = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_static, "static");
+            return formaMetodo;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_dynamic){
+            TipoDeToken formaMetodo = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_dynamic, "dynamic");
+            return formaMetodo;
         } else{
             throw new ExcepcionSintactica("static o dynamic", tokenActual);
         }
     }
 
-    private void tipoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private TipoMetodo tipoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_tipo.contains(tokenActual.getTipoDeToken())){
-            tipo();
+            Tipo tipo = tipo();
+            return tipo;
         } else if(TipoDeToken.pr_void == tokenActual.getTipoDeToken()){
             match(TipoDeToken.pr_void, "void");
+            return new TipoVoid();
         } else{
             throw new ExcepcionSintactica("un tipo o void", tokenActual);
         }
     }
 
-    private void argsFormales() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void argsFormales() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         match(TipoDeToken.punt_parentIzq, "(");
         listaArgsFormalesOVacio();
         match(TipoDeToken.punt_parentDer, ")");
     }
 
-    private void listaArgsFormalesOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaArgsFormalesOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_listaArgsFormales.contains(tokenActual.getTipoDeToken())){
             listaArgsFormales();
         } else if(siguientes_listaArgsFormalesOVacio.contains(tokenActual.getTipoDeToken())){
@@ -327,12 +357,12 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void listaArgsFormales() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaArgsFormales() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         argFormal();
         listaArgsFormalesFactorizada();
     }
 
-    private void listaArgsFormalesFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaArgsFormalesFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
             listaArgsFormales();
@@ -343,9 +373,12 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void argFormal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        tipo();
+    private void argFormal() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        Tipo tipo = tipo();
+        Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
+        ParametroFormal parametro = new ParametroFormal(tokenIdVar, tipo);
+        TablaSimbolos.getInstance().unidadActual.insertarParametro(tokenIdVar.getLexema(), parametro);
     }
 
     private void bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica{   

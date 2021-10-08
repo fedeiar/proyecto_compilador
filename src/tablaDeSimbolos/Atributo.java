@@ -6,10 +6,10 @@ import analizadorLexico.Token;
 public class Atributo {
     
     private Token tokenIdVar;
-    private Tipo tipoAtributo;
     private TipoDeToken visibilidadAtributo;
-
-    public Atributo(Token idVar, Tipo tipoAtributo, TipoDeToken visibilidadAtributo){
+    private Tipo tipoAtributo;
+    
+    public Atributo(Token idVar, TipoDeToken visibilidadAtributo, Tipo tipoAtributo){
         this.tokenIdVar = idVar;
         this.tipoAtributo = tipoAtributo;
         this.visibilidadAtributo = visibilidadAtributo;
