@@ -30,4 +30,19 @@ public class Metodo extends Unidad{
         return tipoMetodo;
     }
 
+    public boolean equalsSignatura(Metodo metodo){ //TODO: preg si está bien
+        boolean mismaFormaMetodo = this.formaMetodo == metodo.getFormaMetodo();
+        boolean mismoTipo = this.tipoMetodo.mismoTipo(metodo.getTipoMetodo());
+        boolean mismoNombre = this.tokenIdMet.getLexema() == metodo.getTokenIdMet().getLexema();
+        boolean mismosParametros = this.mismosParametros(metodo);
+        return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
+    }
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        super.estaBienDeclarado();
+        tipoMetodo.verificarExistenciaTipo();
+    }
+
+    
+
 }

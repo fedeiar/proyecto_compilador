@@ -19,67 +19,71 @@ public class TablaSimbolos {
     public Unidad unidadActual;
     //TODO: no nos interesan mas entidades actuales que estas no?
 
-    private TablaSimbolos() throws ExcepcionSemantica{
+    private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
         
-        Metodo metodo;
+        try{
+            Metodo metodo;
 
-        //Creando Object
-        Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
-        Clase claseObject = new Clase(tokenObject); 
-        claseObject.set_idClaseAncestro(null);//Object va a ser la unica clase que tenga ancestro null.
+            //Creando Object
+            Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
+            Clase claseObject = new Clase(tokenObject); 
+            claseObject.set_idClaseAncestro(null);//Object va a ser la unica clase que tenga ancestro null.
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
-        claseObject.insertarMetodo("debugPrint", metodo); 
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
+            claseObject.insertarMetodo("debugPrint", metodo); 
 
-        //Creando System
-        Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
-        claseSystem.set_idClaseAncestro(tokenObject);
+            //Creando System
+            Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
+            claseSystem.set_idClaseAncestro(tokenObject);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), TipoDeToken.pr_static, new TipoInt());
-        claseSystem.insertarMetodo("read", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), TipoDeToken.pr_static, new TipoInt());
+            claseSystem.insertarMetodo("read", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printB", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
-        claseSystem.insertarMetodo("printB", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printB", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
+            claseSystem.insertarMetodo("printB", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printC", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
-        claseSystem.insertarMetodo("printC", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printC", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
+            claseSystem.insertarMetodo("printC", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printI", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
-        claseSystem.insertarMetodo("printI", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printI", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
+            claseSystem.insertarMetodo("printI", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printS", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
-        claseSystem.insertarMetodo("printS", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printS", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
+            claseSystem.insertarMetodo("printS", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "println", 0), TipoDeToken.pr_static, new TipoVoid());
-        claseSystem.insertarMetodo("println", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "println", 0), TipoDeToken.pr_static, new TipoVoid());
+            claseSystem.insertarMetodo("println", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printBln", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
-        claseSystem.insertarMetodo("printBln", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printBln", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("b", new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
+            claseSystem.insertarMetodo("printBln", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printCln", 0), TipoDeToken.pr_static, new TipoVoid()); 
-        metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
-        claseSystem.insertarMetodo("printCln", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printCln", 0), TipoDeToken.pr_static, new TipoVoid()); 
+            metodo.insertarParametro("c", new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
+            claseSystem.insertarMetodo("printCln", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printIln", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
-        claseSystem.insertarMetodo("printIln", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printIln", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("i", new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
+            claseSystem.insertarMetodo("printIln", metodo);
 
-        metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printSln", 0), TipoDeToken.pr_static, new TipoVoid());
-        metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
-        claseSystem.insertarMetodo("printSln", metodo);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printSln", 0), TipoDeToken.pr_static, new TipoVoid());
+            metodo.insertarParametro("s", new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
+            claseSystem.insertarMetodo("printSln", metodo);
 
-        insertarClase("Object", claseObject);
-        insertarClase("System", claseSystem);
+            insertarClase("Object", claseObject);
+            insertarClase("System", claseSystem);
+        } catch(ExcepcionSemantica e){
+            //NUNCA DEBERÍA SUCEDER ESTE ERROR.
+        }
     }
 
-    public static TablaSimbolos getInstance() throws ExcepcionSemantica{
+    public static TablaSimbolos getInstance(){ //TODO:
         if(instance == null){
             instance = new TablaSimbolos();
         }
@@ -91,13 +95,17 @@ public class TablaSimbolos {
         if(clases.get(nombreClase) == null){
             clases.put(nombreClase, clase);
         } else{
-            throw new ExcepcionSemantica(clase.getTokenIdClase()); //el token actual lo saco de la variable clase
+            throw new ExcepcionSemantica(clase.getTokenIdClase(), "la clase "+clase.getTokenIdClase().getLexema()+" ya esta declarada"); 
         }
     }
 
+    public Clase getClase(String nombreClase){
+        return clases.get(nombreClase);
+    }
 
-    public boolean existeClase(Token tokenIdClase){
-        Clase clase = clases.get(tokenIdClase.getLexema());
+
+    public boolean existeClase(String nombreClase){
+        Clase clase = clases.get(nombreClase);
         if(clase != null){
             return true;
         } else{
@@ -111,9 +119,26 @@ public class TablaSimbolos {
         for(Clase clase : clases.values()){
             clase.estaBienDeclarado();
         }
+
+        existeMain();
+    }
+
+    private void existeMain() throws ExcepcionSemantica{
+        Metodo metodoMain = new Metodo(new Token(TipoDeToken.id_metVar, "main", 0), TipoDeToken.pr_static, new TipoVoid());
+        boolean estaMain = false; 
+        for(Clase clase : clases.values()){
+            if(estaMain && clase.existeMetodo(metodoMain)){
+                throw new ExcepcionSemantica(clase.getMetodo("main").getTokenIdMet(), "se encontro mas de una declaracion del metodo main");
+            }
+            if(clase.existeMetodo(metodoMain)){
+                estaMain = true;
+            }
+        }
     }
 
     public void consolidar() throws ExcepcionSemantica{
-        //TODO
+        for(Clase clase : clases.values()){
+            clase.consolidar();
+        }
     }
 }

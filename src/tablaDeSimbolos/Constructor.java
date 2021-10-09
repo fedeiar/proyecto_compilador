@@ -10,7 +10,6 @@ public class Constructor extends Unidad{
 
     public Constructor(Token tokenIdClase) throws ExcepcionSemantica{
         this.tokenIdClase = tokenIdClase;
-        
     }
 
     public Token getTokenIdClase(){
@@ -19,6 +18,7 @@ public class Constructor extends Unidad{
 
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
+        super.estaBienDeclarado();
         if( !tokenIdClase.getLexema().equals(TablaSimbolos.getInstance().claseActual.getTokenIdClase().getLexema()) ){
             throw new ExcepcionSemantica(tokenIdClase);
         }

@@ -10,6 +10,7 @@ import manejadorDeArchivo.*;
 public class Main {
     public static void main(String[] args){
         
+        
         try{
             String filename = args[0];
 
@@ -33,5 +34,7 @@ public class Main {
         } catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Error: falta el argumento con la ruta del archivo");
         }
+
+        //TODO: HAY QUE LIMPIAR LA TABLA DE SIMBOLOS AL FINAL DEL MAIN! ya que es un singleton.
     }
 }

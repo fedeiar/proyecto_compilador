@@ -3,9 +3,17 @@ package tablaDeSimbolos;
 public abstract class TipoMetodo {
 
 
-    //Todos estos metodos seran redefinidos a conveniencia (devolver true)
 
-    //TODO: es posible tener estos metodos en Tipo en lugar de TipoMetodo, y que solamente tengamos en TipoMetodo para ver si es void o ei es un Tipo?
+    public void verificarExistenciaTipo() throws ExcepcionSemantica{ //TODO: preg si está bien
+        
+    }
+
+    public boolean mismoTipo(TipoMetodo tipoMetodo){
+        return this.getClass() == tipoMetodo.getClass(); //TODO: esta muy mal? ya que es para saber si son exactamente del mismo tipo.
+    }
+
+
+    //Todos estos metodos seran redefinidos a conveniencia (devolver true)
 
     public boolean verCompatibilidad(TipoClase tipo){
         return false;
@@ -16,6 +24,10 @@ public abstract class TipoMetodo {
     }
 
     public boolean verCompatibilidad(TipoInt tipo){
+        return false;
+    }
+
+    public boolean verCompatibilidad(TipoString tipo){
         return false;
     }
 

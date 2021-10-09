@@ -18,4 +18,17 @@ public class Atributo {
     public Token getTokenIdVar(){
         return tokenIdVar;
     }
+
+    public TipoDeToken getVisibilidadAtributo(){
+        return visibilidadAtributo;
+    }
+
+    public Tipo getTipoAtributo(){
+        return tipoAtributo;
+    }
+
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        tipoAtributo.verificarExistenciaTipo();
+    }
 }

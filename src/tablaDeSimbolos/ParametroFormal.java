@@ -15,4 +15,16 @@ public class ParametroFormal {
     public Token getTokenIdVar(){
         return tokenIdVar;
     }
+
+    public Tipo getTipo(){
+        return tipoParametro;
+    }
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        tipoParametro.verificarExistenciaTipo();
+    }
+
+    public boolean mismoTipo(ParametroFormal parametroFormal){
+        return tipoParametro.mismoTipo(parametroFormal.getTipo());
+    }
 }

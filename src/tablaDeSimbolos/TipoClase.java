@@ -15,6 +15,12 @@ public class TipoClase extends Tipo{
         return tokenIdClase;
     }
 
+    public void verificarExistenciaTipo() throws ExcepcionSemantica{ //TODO: preg si está bien
+        if(!TablaSimbolos.getInstance().existeClase(tokenIdClase.getLexema())){
+            throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada");
+        }
+    }
+
     public boolean verCompatibilidad(TipoClase tipo){
         //TODO
     }
