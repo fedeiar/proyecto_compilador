@@ -1,11 +1,15 @@
 package moduloPrincipal;
 import java.io.*;
 
+import javax.swing.plaf.basic.BasicTabbedPaneUI.TabbedPaneLayout;
+
 import analizadorLexico.AnalizadorLexico;
 import analizadorLexico.ExcepcionLexica;
 import analizadorSintactico.AnalizadorSintactico;
 import analizadorSintactico.ExcepcionSintactica;
 import manejadorDeArchivo.*;
+import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.TablaSimbolos;
 
 public class Main {
     public static void main(String[] args){
@@ -16,7 +20,16 @@ public class Main {
 
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
-                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico(analizadorLexico);
+
+                //creacion de la tabla de simbolos
+                TablaSimbolos.getInstance();
+
+                //Cuando se crea el Sintactico, se hace la primer pasada
+                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico(analizadorLexico); 
+
+                //Segunda pasada
+                TablaSimbolos.getInstance().estaBienDeclarado();
+                TablaSimbolos.getInstance().consolidar();
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");
 
@@ -28,6 +41,8 @@ public class Main {
                 System.out.println(e.getMessage());
             } catch(ExcepcionSintactica e){
                 System.out.println(e.getMessage());
+            } catch(ExcepcionSemantica e){
+                System.out.println(e.getMessage());
             }
 
 
@@ -35,6 +50,6 @@ public class Main {
             System.out.println("Error: falta el argumento con la ruta del archivo");
         }
 
-        //TODO: HAY QUE LIMPIAR LA TABLA DE SIMBOLOS AL FINAL DEL MAIN! ya que es un singleton.
+        TablaSimbolos.reiniciar(); //TODO: preg si está bien como se reinicia y si es aca.
     }
 }

@@ -1,0 +1,20 @@
+///[Error:v2|6]
+// parametro repetido
+class A{
+	
+	static B m1(int v1, B v2, char v3, 
+		    boolean v2){
+
+	
+}
+
+
+class B{
+
+}
+
+
+class Init{
+    static void main()
+    { }
+}

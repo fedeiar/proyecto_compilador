@@ -1,0 +1,11 @@
+///[Error:main|0]
+// falta main().
+class A{
+
+}
+
+
+
+class Init{
+    
+}

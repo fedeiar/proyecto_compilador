@@ -6,7 +6,7 @@ class A{
 
 	}
 
-	dynamic A m2(int v1){
+	static int m2(int v1){
 
 	}
 }
@@ -14,7 +14,7 @@ class A{
 
 class B extends A{
 
-	dynamic B m2(int v1){
+	static void m2(int v1){
 	
 	}
 }

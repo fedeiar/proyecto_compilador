@@ -1,4 +1,5 @@
 package tablaDeSimbolos;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ public class Metodo extends Unidad{
     
 
     public Metodo(Token tokenIdMet, TipoDeToken formaMetodo, TipoMetodo tipoMetodo){
+        super();
         this.tokenIdMet = tokenIdMet;
         this.formaMetodo = formaMetodo;
         this.tipoMetodo = tipoMetodo;
@@ -33,7 +35,7 @@ public class Metodo extends Unidad{
     public boolean equalsSignatura(Metodo metodo){ //TODO: preg si está bien
         boolean mismaFormaMetodo = this.formaMetodo == metodo.getFormaMetodo();
         boolean mismoTipo = this.tipoMetodo.mismoTipo(metodo.getTipoMetodo());
-        boolean mismoNombre = this.tokenIdMet.getLexema() == metodo.getTokenIdMet().getLexema();
+        boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodo.getTokenIdMet().getLexema());
         boolean mismosParametros = this.mismosParametros(metodo);
         return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
     }

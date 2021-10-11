@@ -8,7 +8,7 @@ public class TipoClase extends Tipo{
     private Token tokenIdClase;
 
     public TipoClase(Token tokenIdClase){
-        //TODO: aca debería verificarse que exista la clase asociada? no, ese tipo de chequeos se realiza después del analisis sintactico.
+        this.tokenIdClase = tokenIdClase;
     }
 
     public Token getTokenIdClase(){
@@ -21,8 +21,18 @@ public class TipoClase extends Tipo{
         }
     }
 
+    public boolean mismoTipo(TipoMetodo tipo){ //TODO: como puedo hacer mejor esto, sin usar instanceof
+        if(tipo instanceof TipoClase){
+            TipoClase tipo_param = (TipoClase) tipo;
+            return this.tokenIdClase.getLexema().equals(tipo_param.getTokenIdClase().getLexema());
+        } else{
+            return false;
+        }
+    }
+
     public boolean verCompatibilidad(TipoClase tipo){
-        //TODO
+        //TODO: implementar
+        return true;
     }
     
 }

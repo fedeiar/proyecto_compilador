@@ -6,7 +6,6 @@ public class TipoChar extends TipoPrimitivo{
 
     }
 
-
     public boolean verCompatibilidad(TipoChar tipo){
         return true;
     }

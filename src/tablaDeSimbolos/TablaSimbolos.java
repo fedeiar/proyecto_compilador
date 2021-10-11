@@ -13,10 +13,10 @@ public class TablaSimbolos {
 
     private static TablaSimbolos instance;
 
-    private Map<String, Clase> clases;
+    private static Map<String, Clase> clases;
 
-    public Clase claseActual;
-    public Unidad unidadActual;
+    public static Clase claseActual;
+    public static Unidad unidadActual;
     //TODO: no nos interesan mas entidades actuales que estas no?
 
     private TablaSimbolos(){
@@ -90,6 +90,13 @@ public class TablaSimbolos {
         return instance;
     }
 
+    public static void reiniciar(){ //TODO: esta bien?
+        instance = null;
+        clases = null;
+        claseActual = null;
+        unidadActual = null;
+    }
+
 
     public void insertarClase(String nombreClase, Clase clase) throws ExcepcionSemantica{
         if(clases.get(nombreClase) == null){
@@ -103,7 +110,6 @@ public class TablaSimbolos {
         return clases.get(nombreClase);
     }
 
-
     public boolean existeClase(String nombreClase){
         Clase clase = clases.get(nombreClase);
         if(clase != null){
@@ -114,6 +120,8 @@ public class TablaSimbolos {
     }
 
     
+    //chequeo de declaraciones
+
     public void estaBienDeclarado() throws ExcepcionSemantica{
         //TODO
         for(Clase clase : clases.values()){
@@ -133,6 +141,10 @@ public class TablaSimbolos {
             if(clase.existeMetodo(metodoMain)){
                 estaMain = true;
             }
+        }
+
+        if(!estaMain){
+            throw new ExcepcionSemantica(metodoMain.getTokenIdMet(), "debe declararse el metodo main() en alguna clase");
         }
     }
 

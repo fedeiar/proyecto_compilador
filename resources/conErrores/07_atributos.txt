@@ -1,0 +1,19 @@
+///[Error:v3|13]
+// atributos repetidos en ancestro
+class A{
+	
+	private int v1, v2;
+	private String v3;
+	public boolean v4;
+	char v5;
+}
+
+class B extends A{
+
+	public boolean v3;
+}
+
+class Init{
+    static void main()
+    { }
+}

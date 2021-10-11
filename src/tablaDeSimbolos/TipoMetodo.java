@@ -8,14 +8,20 @@ public abstract class TipoMetodo {
         
     }
 
-    public boolean mismoTipo(TipoMetodo tipoMetodo){
-        return this.getClass() == tipoMetodo.getClass(); //TODO: esta muy mal? ya que es para saber si son exactamente del mismo tipo.
+    public boolean mismoTipo(TipoMetodo tipo){
+        return this.getClass() == tipo.getClass(); //TODO: esta muy mal? ya que es para saber si son exactamente del mismo tipo.
     }
+
+    
 
 
     //Todos estos metodos seran redefinidos a conveniencia (devolver true)
 
     public boolean verCompatibilidad(TipoClase tipo){
+        return false;
+    }
+    
+    public boolean verCompatibilidad(TipoBoolean tipo){
         return false;
     }
 
@@ -31,6 +37,8 @@ public abstract class TipoMetodo {
         return false;
     }
 
-    //TODO: agregar el resto de los tipos.
+    public boolean verCompatibilidad(TipoVoid tipo){
+        return false;
+    }
 
 }

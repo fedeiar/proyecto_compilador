@@ -3,11 +3,5 @@ package tablaDeSimbolos;
 public abstract class TipoPrimitivo extends Tipo{
     
 
-
-    public TipoPrimitivo(){
-        
-    }
-
-
-
+    //TODO: esta bien que no tenga nada?
 }
