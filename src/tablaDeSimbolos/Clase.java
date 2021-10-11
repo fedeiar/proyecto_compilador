@@ -127,7 +127,7 @@ public class Clase {
 
     public void verificarHerenciaCircular(Map<String, Clase> clases_ancestro) throws ExcepcionSemantica{
         if(!estaVerificadoHerenciaCircular){ //TODO: está bien cambiada la condición (this.tokenIdClaseAncestro != null) por la actual? sigue siendo correcto?
-            if(clases_ancestro.get(this.tokenIdClase.getLexema()) != null){
+            if(clases_ancestro.get(this.tokenIdClaseAncestro.getLexema()) != null){
                 throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClase.getLexema()+" hereda circularmente de "+ this.tokenIdClaseAncestro.getLexema());
             } else{
                 clases_ancestro.put(this.tokenIdClase.getLexema(), this);

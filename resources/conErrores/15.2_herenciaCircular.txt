@@ -1,4 +1,4 @@
-///[Error:?|?]
+///[Error:A|8]
 // herencia circular
 class A extends C{
 	

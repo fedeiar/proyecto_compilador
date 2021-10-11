@@ -30,9 +30,15 @@ public class TipoClase extends Tipo{
         }
     }
 
-    public boolean verCompatibilidad(TipoClase tipo){
+    public boolean verificarCompatibilidad(TipoMetodo tipo){
+        return tipo.VisitarVerCompatibilidad(this);
+    }
+
+    public boolean VisitarVerCompatibilidad(TipoClase tipo){
         //TODO: implementar
         return true;
     }
+
+    
     
 }

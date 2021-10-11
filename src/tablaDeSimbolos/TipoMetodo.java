@@ -16,28 +16,33 @@ public abstract class TipoMetodo {
 
 
     //Todos estos metodos seran redefinidos a conveniencia (devolver true)
+    //TODO: preg si está bien esta forma de ver la compatibilidad.
 
-    public boolean verCompatibilidad(TipoClase tipo){
+    public abstract boolean verificarCompatibilidad(TipoMetodo tipo);
+
+
+    //TODO: pero si tengo que comparar 2 Tipo, no voy a poder usar ninguno de estos metodos, ya que a ninguno de ellos puedo pasarle una variable de tipo Tipo por parametro..
+    public boolean VisitarVerCompatibilidad(TipoClase tipo){
         return false;
     }
     
-    public boolean verCompatibilidad(TipoBoolean tipo){
+    public boolean VisitarVerCompatibilidad(TipoBoolean tipo){
         return false;
     }
 
-    public boolean verCompatibilidad(TipoChar tipo){
+    public boolean VisitarVerCompatibilidad(TipoChar tipo){
         return false;
     }
 
-    public boolean verCompatibilidad(TipoInt tipo){
+    public boolean VisitarVerCompatibilidad(TipoInt tipo){
         return false;
     }
 
-    public boolean verCompatibilidad(TipoString tipo){
+    public boolean VisitarVerCompatibilidad(TipoString tipo){
         return false;
     }
 
-    public boolean verCompatibilidad(TipoVoid tipo){
+    public boolean VisitarVerCompatibilidad(TipoVoid tipo){
         return false;
     }
 

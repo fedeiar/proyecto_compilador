@@ -6,7 +6,11 @@ public class TipoChar extends TipoPrimitivo{
 
     }
 
-    public boolean verCompatibilidad(TipoChar tipo){
+    public boolean verificarCompatibilidad(TipoMetodo tipo){
+        return tipo.VisitarVerCompatibilidad(this);
+    }
+
+    public boolean VisitarVerCompatibilidad(TipoChar tipo){
         return true;
     }
 }

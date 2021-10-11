@@ -6,7 +6,11 @@ public class TipoInt extends TipoPrimitivo{
 
     }
 
-    public boolean verCompatibilidad(TipoInt tipo){
+    public boolean verificarCompatibilidad(TipoMetodo tipo){
+        return tipo.VisitarVerCompatibilidad(this);
+    }
+
+    public boolean VisitarVerCompatibilidad(TipoInt tipo){
         return true;
     }
 }

@@ -1,22 +1,16 @@
-///[Error:m2|17]
-// metodo mal redefinido
-class A{
+///[Error:A|8]
+// herencia circular
+class A extends C{
 	
-	static B m1(int v1, B v2){
-
-	}
-
-	dynamic A m2(int v1){
-
-	}
+	
 }
-
 
 class B extends A{
 
-	dynamic B m2(int v1){
-	
-	}
+}
+
+class C extends B{
+
 }
 
 
