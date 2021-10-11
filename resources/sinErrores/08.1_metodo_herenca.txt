@@ -10,27 +10,37 @@ class A{
 	static A idmetvar1(B var){}
 
 	dynamic C1 met2(B p1){}
+
+	static Object met4(C p1){}
 }
 
-class B{}
+class B extends A{
 
-class C extends A{
+	dynamic System met5(Object p1){}
+
+}
+
+class C extends B{
 
 	public char idmetvar1, idmetvar2;
 
 	static void metEnB(){}
 
-	dynamic int idmetvar2(int a, C1 c1, B b, C c, int idmetvar2){}
+	dynamic int idmetvar2(int a, C1 c1, B b, C c, int idmetvar2){} //redefine
 
-	dynamic C metodoQueDevuelveAlgoC(int idmetvar1, char idmetvar2){}
+	dynamic C metodoQueDevuelveAlgoC(int idmetvar1, char idmetvar2){} //redefine
 
-	static A idmetvar1(B var){}
+	static B idmetvar1(B var){} //redefine
 
 }
 
 class C1 extends C{
 
+	dynamic C1 metodoQueDevuelveAlgoC(int idmetvar1, char idmetvar2){} //redefine
+
 	static void met1(){}
+
+	static A met4(C p1){}
 }
 
 class C2 extends C1{
@@ -40,6 +50,10 @@ class C2 extends C1{
 	dynamic int idmetvar2(int p1, C1 p2, B p3, C p4, int p5){}
 
 	dynamic C1 met2(B p1){}
+
+	static C1 idmetvar1(B p1){}  //redefine
+
+	dynamic System met5(Object o){}
 
 }
 

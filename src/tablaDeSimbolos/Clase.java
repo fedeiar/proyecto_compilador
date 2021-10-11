@@ -18,6 +18,7 @@ public class Clase {
     private List<Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, List<Metodo>> metodos;
+    private List<Metodo> lista_metodos; //NO importa el orden de los elementos de esta lista.
     
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
@@ -27,6 +28,7 @@ public class Clase {
         constructores = new ArrayList<>();
         atributos = new HashMap<>();
         metodos = new HashMap<>();
+        lista_metodos = new ArrayList<>();
 
         estaConsolidado = false;
         estaVerificadoHerenciaCircular = false;
@@ -98,21 +100,16 @@ public class Clase {
             }
             lista_metodosMismoNombre.add(metodo_a_insertar);
         }
+        lista_metodos.add(metodo_a_insertar);
     }
 
     public Metodo getMetodoMismaSignatura(Metodo metodo2){ //TODO: preg si esta bien.
-        Metodo metodo_retorno = null;
-        List<Metodo> lista_metodoEnClase = metodos.get(metodo2.getTokenIdMet().getLexema());
-        if(lista_metodoEnClase != null){
-            for(Metodo metodo : lista_metodoEnClase){
-                if(metodo.equalsSignatura(metodo2)){
-                    metodo_retorno = metodo;
-                    break;
-                }
+        for(Metodo metodo : lista_metodos){
+            if(metodo.equalsSignatura(metodo2)){
+                return metodo;
             }
         }
-
-        return metodo_retorno;
+        return null;
     }
 
 

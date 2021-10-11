@@ -7,15 +7,18 @@ class A{
 
 	dynamic C1 met2(B p1){}
 
-	static A idmetvar1(B var){}
+	static Object idmetvar1(B var){}
 
 	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
 
 }
 
-class B{}
+class B extends A{
 
-class C extends A{
+	dynamic Object met3(System p1){}
+}
+
+class C extends B{
 
 	dynamic void met1(int p1){} //sobrecarga
 
@@ -35,7 +38,24 @@ class C1 extends C{
 
 	static A idmetvar1(A var){} //sobrecarga al de A y de B
 
-	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5, char var6){} //sobrecarga el de A y B
+	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5, char var6){} //sobrecarga el de A y C
+
+	dynamic System met3(System p1){} //redefine al de B
+}
+
+class D extends System{
+
+	static System met1(){}
+}
+
+class D1 extends D{
+
+	static D met1(){} //redefine a met1() de D.
+	
+	static void printS(String p1){} //redefine a printS() de System.
+
+	static int println(int p1){} //sobrecarga a println() de System.
+
 }
 
 

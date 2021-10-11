@@ -1,0 +1,23 @@
+///[Error:printS|13]
+// metodo en la clase ancestro mal redefinido: tipos incompatibles.
+
+class A extends System{
+
+	static void printSln(String p1){} //redefine
+
+	static void printIln(){} //sobrecarga
+}
+
+class B extends A{
+
+	static int printS(String p1){} //error: redefine mal.
+}
+	
+
+
+
+
+class Init{
+    static void main()
+    { }
+}

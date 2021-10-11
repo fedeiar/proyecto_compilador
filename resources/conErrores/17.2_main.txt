@@ -1,11 +1,25 @@
-///[Error:main|10]
+///[Error:main|23]
 // main declarado 2 veces.
 class A{
-	static void main(){}
+
+	static int main(){}
+
 }
 
+class B{
+	
+	static void main(){}
 
+}
+
+class C{
+
+	static void main(int p1){}
+
+}
 
 class Init{
- 	static void main(){}  
+
+ 	static void main(){}
+
 }
