@@ -208,7 +208,7 @@ public class AnalizadorSintactico {
             Constructor constructor = new Constructor(tokenIdClase);
             TablaSimbolos.unidadActual = constructor;
             argsFormales();
-            TablaSimbolos.claseActual.insertarConstructor(tokenIdClase.getLexema(), constructor); //TODO: esta bien que haga falta hacerlo despues de argsFormales()?
+            TablaSimbolos.claseActual.insertarConstructor(tokenIdClase.getLexema(), constructor); 
             bloque();
         } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
             tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
@@ -243,7 +243,7 @@ public class AnalizadorSintactico {
         Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
         TablaSimbolos.getInstance().unidadActual = metodo;
         argsFormales();
-        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo); //TODO: puede ser que haga falta hacer esto desp. de argsFormales()?
+        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo);
         bloque();
     }
 

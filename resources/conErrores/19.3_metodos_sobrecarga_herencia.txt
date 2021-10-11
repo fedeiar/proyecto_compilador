@@ -28,7 +28,7 @@ class C extends A{
 
 class C1 extends C{
 
-	static B met1(int p1, char p2){} //error: redefine mal de A
+	static B met1(int p1, char p2){} //error: redefine mal de A porque B no hereda de A
 
 	dynamic void met1(int p1){} //redefine el de B
 

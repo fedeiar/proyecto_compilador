@@ -33,9 +33,18 @@ public class TipoClase extends Tipo{
         return tipo.VisitarVerCompatibilidad(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoClase tipo){
-        //TODO: implementar
-        return true;
+    public boolean VisitarVerCompatibilidad(TipoClase subtipo){ //TODO: preguntar si esta bien.
+        if(this.tokenIdClase.getLexema().equals(subtipo.getTokenIdClase().getLexema())){
+            return true;
+        } else {
+            Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
+            Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
+            if(tokenClasePadreDelSubtipo != null){
+                return VisitarVerCompatibilidad(new TipoClase(tokenClasePadreDelSubtipo)); //TODO: esta mal esto?
+            }else{
+                return false;
+            }
+        }
     }
 
     

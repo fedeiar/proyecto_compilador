@@ -24,7 +24,6 @@ public class Constructor extends Unidad{
         if( !tokenIdClase.getLexema().equals(TablaSimbolos.claseActual.getTokenIdClase().getLexema()) ){ //TODO: esta bien este chequeo?
             throw new ExcepcionSemantica(tokenIdClase, "el constructor que se intenta crear no tiene el mismo nombre que la clase");
         }
-        //TODO: ver si pueden haber mas controles
     }
     
 }

@@ -14,10 +14,12 @@ class A{
 
 class B extends A{
 
-	dynamic B m2(int v1){
+	dynamic C m2(int v1){
 	
 	}
 }
+
+class C{}
 
 
 class Init{

@@ -40,6 +40,14 @@ public class Metodo extends Unidad{
         return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
     }
 
+    public boolean redefineCorrectamente(Metodo metodoAncestro){
+        boolean mismaFormaMetodo = this.formaMetodo == metodoAncestro.getFormaMetodo();
+        boolean mismoTipo = this.tipoMetodo.verificarCompatibilidad(metodoAncestro.getTipoMetodo()); //USAR ESTO EN EL ORDEN ADECUADO!
+        boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodoAncestro.getTokenIdMet().getLexema());
+        boolean mismosParametros = this.mismosParametros(metodoAncestro);
+        return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
+    }
+
     public void estaBienDeclarado() throws ExcepcionSemantica{
         super.estaBienDeclarado();
         tipoMetodo.verificarExistenciaTipo();

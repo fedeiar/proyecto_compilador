@@ -11,7 +11,7 @@ public abstract class TipoMetodo {
     public abstract boolean mismoTipo(TipoMetodo tipo);
 
     public boolean visitarMismoTipo(TipoMetodo tipo){
-        return this.getClass() == tipo.getClass(); //TODO: esta muy mal? ya que es para saber si son exactamente del mismo tipo.
+        return this.getClass() == tipo.getClass();
     }
 
     public boolean visitarMismoTipo(TipoClase tipo){ //redefinido solamente en TipoClase

@@ -1,0 +1,32 @@
+///[Error:A|23]
+// Error: se quiere utilizar un constructor con un idClase diferente al de la clase contenida.
+
+
+class A{
+
+	A(){}
+
+	A(int p1){}
+
+	A(int p1, int p2, int p3){}
+
+	A(int p1, int p2, char p3){}
+
+}
+
+class B extends A{
+
+	B(){}
+
+	B(int p1){}
+
+	A(int p1, int p2, int p3){}  //error
+
+	B(int param1, int param2, int param3, int p4){}
+}
+
+
+class Init{
+    static void main()
+    { }
+}

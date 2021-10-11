@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
@@ -14,16 +15,16 @@ public class Clase {
 
     private Token tokenIdClase;
     private Token tokenIdClaseAncestro;
-    private Map<String, Constructor> constructores;
+    private List<Constructor> constructores;
     private Map<String, Atributo> atributos;
-    private Map<String, Metodo> metodos;
+    private Map<String, List<Metodo>> metodos;
     
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
 
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
-        constructores = new HashMap<>();
+        constructores = new ArrayList<>();
         atributos = new HashMap<>();
         metodos = new HashMap<>();
 
@@ -39,15 +40,19 @@ public class Clase {
         return tokenIdClase;
     }
 
+    public Token getTokenIdClaseAncestro(){
+        return tokenIdClaseAncestro;
+    }
+
     public Collection<Atributo> getAtributos(){
         return atributos.values();
     }
 
-    public Metodo getMetodo(String nombreMetodo){
+    public List<Metodo> getMetodosMismoNombre(String nombreMetodo){
         return metodos.get(nombreMetodo);
     }
 
-    public Collection<Metodo> getMetodos(){
+    public Collection<List<Metodo>> getMetodos(){
         return metodos.values();
     }
 
@@ -68,34 +73,47 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(String nombreConstructor, Constructor constructor) throws ExcepcionSemantica{
-        Constructor constructor_en_clase = constructores.get(nombreConstructor);
-        if(constructor_en_clase == null || !constructor_en_clase.mismosParametros(constructor)){ //TODO: preg si asi esta bien.
-            constructores.put(nombreConstructor, constructor);
+    public void insertarConstructor(String nombreConstructor, Constructor constructor) throws ExcepcionSemantica{ //TODO: preg si esta bien.
+        for(Constructor constructor_en_clase : constructores){
+            if(constructor_en_clase.mismosParametros(constructor)){
+                throw new ExcepcionSemantica(constructor.getTokenIdClase(), "existe otro constructor con el mismo nombre y parametros en esta clase"); 
+            }
+        }
+        //si no hubo error, insertamos.
+        constructores.add(constructor);
+    }
+
+    public void insertarMetodo(String nombreMetodo, Metodo metodo_a_insertar) throws ExcepcionSemantica{ //TODO: tener una lista que tenga todos los metodos al mismo nivel
+        List<Metodo> lista_metodosMismoNombre = metodos.get(nombreMetodo);
+        if(lista_metodosMismoNombre == null){      
+            List<Metodo> nuevaLista_metodosMismoNombre = new ArrayList<>();
+            nuevaLista_metodosMismoNombre.add(metodo_a_insertar);                                      
+            metodos.put(nombreMetodo, nuevaLista_metodosMismoNombre);                                      
         } else{
-            throw new ExcepcionSemantica(constructor.getTokenIdClase(), "existe otro constructor con el mismo nombre y parametros en esta clase"); 
+            //Lo sobrecarga
+            for(Metodo m : lista_metodosMismoNombre){
+                if(m.mismosParametros(metodo_a_insertar)){
+                    throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
+                }
+            }
+            lista_metodosMismoNombre.add(metodo_a_insertar);
         }
     }
 
-    public void insertarMetodo(String nombreMetodo, Metodo metodo) throws ExcepcionSemantica{
-        Metodo metodo_en_clase = metodos.get(nombreMetodo);
-        if(metodo_en_clase == null || !metodo_en_clase.mismosParametros(metodo)){ //TODO: preg si con este chequeo alcanza.
-            metodos.put(nombreMetodo, metodo);                                      //TODO: como hacer para que no colisionen 2 metodos con el mismo nombre en el hash?
-        } else{
-            throw new ExcepcionSemantica(metodo.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
+    public Metodo getMetodoMismaSignatura(Metodo metodo2){ //TODO: preg si esta bien.
+        Metodo metodo_retorno = null;
+        List<Metodo> lista_metodoEnClase = metodos.get(metodo2.getTokenIdMet().getLexema());
+        if(lista_metodoEnClase != null){
+            for(Metodo metodo : lista_metodoEnClase){
+                if(metodo.equalsSignatura(metodo2)){
+                    metodo_retorno = metodo;
+                    break;
+                }
+            }
         }
+
+        return metodo_retorno;
     }
-
-    public boolean existeMetodo(Metodo metodo2){
-        Metodo metodoEnClase = metodos.get(metodo2.getTokenIdMet().getLexema());
-        if(metodoEnClase != null && metodoEnClase.equalsSignatura(metodo2)){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-
 
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
@@ -112,17 +130,20 @@ public class Clase {
                 a.estaBienDeclarado();
             }
 
-            for(Metodo m : metodos.values()){
-                m.estaBienDeclarado();
+            for(List<Metodo> lista_metodosMismoNombre : metodos.values()){ 
+                for(Metodo metodo : lista_metodosMismoNombre){
+                    //TODO: tener un metodo que devuelva lista con TODOS los metodos al mismo nivel.
+                    metodo.estaBienDeclarado();
+                }
+            }
+
+            for(Constructor c : constructores){
+                c.estaBienDeclarado();
             }
 
             if(constructores.size() == 0){
-               insertarConstructor(this.tokenIdClase.getLexema(), new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
-            }
-
-            for(Constructor c : constructores.values()){
-                c.estaBienDeclarado();
-            }
+                insertarConstructor(this.tokenIdClase.getLexema(), new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
+            } 
 
             //TODO: verificar otras cosas
         }
@@ -138,7 +159,7 @@ public class Clase {
                 Clase clase_ancestra = TablaSimbolos.getInstance().getClase(tokenIdClaseAncestro.getLexema());
                 clase_ancestra.verificarHerenciaCircular(clases_ancestro);
             }
-            estaVerificadoHerenciaCircular = true; //TODO: preg si esta bien setearlo en true aca
+            estaVerificadoHerenciaCircular = true;
         }
     }
 
@@ -167,33 +188,36 @@ public class Clase {
         }
     }
 
-    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preg si está bien hecho, cual de las dos versiones es mejor?
-        //TODO: habria que controlar que no heredemos el metodo main si es q esta en un ancestro?
+    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: tener una lista que tenga todos los metodos al mismo nivel
 
-        /*
-        for(Metodo metodo : claseAncestro.getMetodos()){
-            if(this.existeMetodo(metodo)){
-                //no hacer nada, lo redefinio
-            } else{
-                this.insertarMetodo(metodo.getTokenIdMet().getLexema(), metodo);
-            }
-        }
-        */
-        System.out.println("------------------------ le toca a: "+this.tokenIdClase.getLexema());
-        for(Metodo metodo : claseAncestro.getMetodos()){
-            System.out.println("el padre tiene el metodo: "+metodo.getTokenIdMet().getLexema());
-            Metodo metodo_en_clase = metodos.get(metodo.getTokenIdMet().getLexema());
-            if(metodo_en_clase == null || !metodo_en_clase.mismosParametros(metodo)){ //TODO: esta bien este chequeo para insertar los sobrecargados?
-                this.insertarMetodo(metodo.getTokenIdMet().getLexema(), metodo); 
-            } else{
-                if(this.existeMetodo(metodo)){
-                    //no hacer nada, lo esta redefiniendo
+        for(List<Metodo> listaAncestro_metodosMismoNombre : claseAncestro.getMetodos()){
+            for(Metodo metodoAncestro : listaAncestro_metodosMismoNombre){
+                List<Metodo> lista_metodosMismoNombre = this.getMetodosMismoNombre(metodoAncestro.getTokenIdMet().getLexema());
+                if(lista_metodosMismoNombre == null){
+                    metodos.put(metodoAncestro.getTokenIdMet().getLexema(), listaAncestro_metodosMismoNombre);
                 } else{
-                    throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
+                    boolean loSobrecarga = true;
+                    for(Metodo metodo_en_clase : lista_metodosMismoNombre){
+                        if(metodo_en_clase.mismosParametros(metodoAncestro)){
+                            if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
+                                //no hacer nada, lo redefine
+                                loSobrecarga = false;
+                                break;
+                            } else{
+                                throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
+                            }
+                        }
+                    }
+                    if(loSobrecarga){
+                        this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
+                       
+                    }
+
                 }
             }
         }
         
     }
+
 
 }

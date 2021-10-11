@@ -83,7 +83,7 @@ public class TablaSimbolos {
         }
     }
 
-    public static TablaSimbolos getInstance(){ //TODO:
+    public static TablaSimbolos getInstance(){
         if(instance == null){
             instance = new TablaSimbolos();
         }
@@ -106,7 +106,7 @@ public class TablaSimbolos {
         }
     }
 
-    public Clase getClase(String nombreClase){
+    public static Clase getClase(String nombreClase){
         return clases.get(nombreClase);
     }
 
@@ -123,7 +123,6 @@ public class TablaSimbolos {
     //chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
-        //TODO
         for(Clase clase : clases.values()){
             clase.estaBienDeclarado();
         }
@@ -131,20 +130,22 @@ public class TablaSimbolos {
         existeMain();
     }
 
-    private void existeMain() throws ExcepcionSemantica{
+    private void existeMain() throws ExcepcionSemantica{ 
         Metodo metodoMain = new Metodo(new Token(TipoDeToken.id_metVar, "main", 0), TipoDeToken.pr_static, new TipoVoid());
         boolean estaMain = false; 
+        Metodo metodoMainOriginal;
         for(Clase clase : clases.values()){
-            if(estaMain && clase.existeMetodo(metodoMain)){
-                throw new ExcepcionSemantica(clase.getMetodo("main").getTokenIdMet(), "se encontro mas de una declaracion del metodo main");
+            metodoMainOriginal = clase.getMetodoMismaSignatura(metodoMain);
+            if(estaMain && metodoMainOriginal != null){
+                throw new ExcepcionSemantica(metodoMainOriginal.getTokenIdMet(), "se encontro mas de una declaracion del metodo main");
             }
-            if(clase.existeMetodo(metodoMain)){
+            if(metodoMainOriginal != null){
                 estaMain = true;
             }
         }
 
         if(!estaMain){
-            throw new ExcepcionSemantica(metodoMain.getTokenIdMet(), "debe declararse el metodo main() en alguna clase");
+            throw new ExcepcionSemantica(metodoMain.getTokenIdMet(), "debe declararse el metodo main() en alguna clase"); //TODO: aclarar en el informe que se señala el error en la linea 0
         }
     }
 

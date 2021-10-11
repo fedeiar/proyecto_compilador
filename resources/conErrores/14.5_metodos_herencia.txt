@@ -1,8 +1,8 @@
-///[Error:met1|32]
-// metodo mal redefinido en ancestro profundo.
+///[Error:met5|38]
+// metodo mal redefinido en ancestro profundo: incompatibles.
 
 class A{
-	
+
 	static void met1(){}
 
 	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
@@ -11,13 +11,13 @@ class A{
 
 	static A idmetvar1(B var){}
 
+	dynamic B met5(){}
+
 }
 
-class B{}
+class B extends A{}
 
-class C extends A{
-
-	public char idmetvar1, idmetvar2;
+class C extends B{
 
 	dynamic int idmetvar2(int a, C1 c1, B b, C c, int idmetvar2){}
 
@@ -25,11 +25,17 @@ class C extends A{
 
 	static A idmetvar1(B var){}
 
+	dynamic C met5(){} //redefine bien (es compatible)
+
 }
 
-class C1 extends C{
+class C1 extends C{}
 
-	static A met1(){}
+class C2 extends C1{
+
+	static void met1(){}
+
+	dynamic A met5(){}
 }
 
 

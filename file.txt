@@ -1,42 +1,25 @@
-///[Error:met1|31]
-// metodo en la clase ancestro mal redefinido: no coincide el tipo.
+///[Error:m2|17]
+// metodo mal redefinido en el ancestro inmediato
 class A{
 	
-	public A idmetvar1;
+	static B m1(int v1, B v2){
 
-	static A met1(){}
+	}
 
-	dynamic C1 met2(B p1){}
+	dynamic A m2(int v1){
 
-	static A idmetvar1(B var){}
-
-	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
-
+	}
 }
 
-class B{}
 
-class C extends A{
+class B extends A{
 
-	dynamic void met1(int p1){} //sobrecarga
-
-	dynamic B met2(){}  //sobrecarga
-
-	static A idmetvar1(B p1){}  //redefine
-
-}
-
-class C1 extends C{
-
-	static char met1(){} //error: redefine mal de A.
-
-	dynamic void met1(int p1){} //redefine el de B
-
-	static A idmetvar1(A var){} //sobrecarga al de A y de B
-
+	dynamic C m2(int v1){
 	
+	}
 }
 
+class C{}
 
 
 class Init{
