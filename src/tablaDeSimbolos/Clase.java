@@ -103,7 +103,7 @@ public class Clase {
         lista_metodos.add(metodo_a_insertar);
     }
 
-    public Metodo getMetodoMismaSignatura(Metodo metodo2){ //TODO: preg si esta bien.
+    public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
         for(Metodo metodo : lista_metodos){
             if(metodo.equalsSignatura(metodo2)){
                 return metodo;
@@ -127,11 +127,8 @@ public class Clase {
                 a.estaBienDeclarado();
             }
 
-            for(List<Metodo> lista_metodosMismoNombre : metodos.values()){ 
-                for(Metodo metodo : lista_metodosMismoNombre){
-                    //TODO: tener un metodo que devuelva lista con TODOS los metodos al mismo nivel.
-                    metodo.estaBienDeclarado();
-                }
+            for(Metodo metodo : lista_metodos){
+                metodo.estaBienDeclarado();
             }
 
             for(Constructor c : constructores){
@@ -142,18 +139,17 @@ public class Clase {
                 insertarConstructor(this.tokenIdClase.getLexema(), new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
             } 
 
-            //TODO: verificar otras cosas
         }
 
     }
 
     public void verificarHerenciaCircular(Map<String, Clase> clases_ancestro) throws ExcepcionSemantica{
-        if(!estaVerificadoHerenciaCircular){ //TODO: está bien cambiada la condición (this.tokenIdClaseAncestro != null) por la actual? sigue siendo correcto?
+        if(!estaVerificadoHerenciaCircular){ 
             if(clases_ancestro.get(this.tokenIdClaseAncestro.getLexema()) != null){
                 throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClase.getLexema()+" hereda circularmente de "+ this.tokenIdClaseAncestro.getLexema());
             } else{
                 clases_ancestro.put(this.tokenIdClase.getLexema(), this);
-                Clase clase_ancestra = TablaSimbolos.getInstance().getClase(tokenIdClaseAncestro.getLexema());
+                Clase clase_ancestra = TablaSimbolos.getClase(tokenIdClaseAncestro.getLexema());
                 clase_ancestra.verificarHerenciaCircular(clases_ancestro);
             }
             estaVerificadoHerenciaCircular = true;
@@ -163,7 +159,7 @@ public class Clase {
 
     public void consolidar() throws ExcepcionSemantica{
         if(!estaConsolidado){
-            Clase claseAncestro = TablaSimbolos.getInstance().getClase(tokenIdClaseAncestro.getLexema());
+            Clase claseAncestro = TablaSimbolos.getClase(tokenIdClaseAncestro.getLexema());
             if(!claseAncestro.estaConsolidado()){
                 claseAncestro.consolidar();
             }
