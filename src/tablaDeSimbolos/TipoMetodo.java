@@ -8,11 +8,15 @@ public abstract class TipoMetodo {
         
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){
+    public abstract boolean mismoTipo(TipoMetodo tipo);
+
+    public boolean visitarMismoTipo(TipoMetodo tipo){
         return this.getClass() == tipo.getClass(); //TODO: esta muy mal? ya que es para saber si son exactamente del mismo tipo.
     }
 
-    
+    public boolean visitarMismoTipo(TipoClase tipo){ //redefinido solamente en TipoClase
+        return false;                           //TODO: esta bien hecho asi?
+    }
 
 
     //Todos estos metodos seran redefinidos a conveniencia (devolver true)

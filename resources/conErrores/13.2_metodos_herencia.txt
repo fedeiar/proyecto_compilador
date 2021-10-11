@@ -1,12 +1,12 @@
 ///[Error:m2|17]
-// metodo mal redefinido
+// metodo mal redefinido en el ancestro inmediato
 class A{
 	
 	static B m1(int v1, B v2){
 
 	}
 
-	dynamic A m2(int v1){
+	dynamic B m2(int v1){
 
 	}
 }
@@ -14,7 +14,7 @@ class A{
 
 class B extends A{
 
-	dynamic B m2(int v1){
+	dynamic boolean m2(int v1){
 	
 	}
 }

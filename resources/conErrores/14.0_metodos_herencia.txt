@@ -1,0 +1,44 @@
+///[Error:met1|32]
+// metodo mal redefinido en ancestro profundo.
+
+class A{
+	
+	static void met1(){}
+
+	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
+
+	dynamic C metodoQueDevuelveAlgoC(int idmetvar1, char idmetvar2){}
+
+	static A idmetvar1(B var){}
+
+}
+
+class B{}
+
+class C extends A{
+
+	public char idmetvar1, idmetvar2;
+
+	dynamic int idmetvar2(int a, C1 c1, B b, C c, int idmetvar2){}
+
+	dynamic C metodoQueDevuelveAlgoC(int idmetvar1, char idmetvar2){}
+
+	static A idmetvar1(B var){}
+
+}
+
+class C1 extends C{
+
+	static A met1(){}
+}
+
+class C2 extends C1{
+
+	public String v5;
+}
+
+
+class Init{
+    static void main()
+    { }
+}

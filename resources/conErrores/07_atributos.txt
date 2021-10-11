@@ -1,5 +1,5 @@
 ///[Error:v3|13]
-// atributos repetidos en ancestro
+// atributos repetidos en ancestro inmediato
 class A{
 	
 	private int v1, v2;

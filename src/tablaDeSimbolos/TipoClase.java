@@ -21,13 +21,12 @@ public class TipoClase extends Tipo{
         }
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){ //TODO: como puedo hacer mejor esto, sin usar instanceof
-        if(tipo instanceof TipoClase){
-            TipoClase tipo_param = (TipoClase) tipo;
-            return this.tokenIdClase.getLexema().equals(tipo_param.getTokenIdClase().getLexema());
-        } else{
-            return false;
-        }
+    public boolean mismoTipo(TipoMetodo tipo){ //TODO: esta bien hecho asi?
+        return tipo.visitarMismoTipo(this);
+    }
+
+    public boolean visitarMismoTipo(TipoClase tipo){ //TODO: esta bien hecho asi?
+        return this.tokenIdClase.getLexema().equals(tipo.getTokenIdClase().getLexema());
     }
 
     public boolean verificarCompatibilidad(TipoMetodo tipo){

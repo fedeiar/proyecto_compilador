@@ -7,6 +7,10 @@ public class TipoString extends TipoPrimitivo{
         
     }
 
+    public boolean mismoTipo(TipoMetodo tipo){
+        return tipo.visitarMismoTipo(this);
+    }
+
     public boolean verificarCompatibilidad(TipoMetodo tipo){
         return tipo.VisitarVerCompatibilidad(this);
     }
