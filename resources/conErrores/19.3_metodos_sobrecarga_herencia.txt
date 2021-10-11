@@ -4,7 +4,7 @@ class A{
 	
 	public A idmetvar1;
 
-	static A met1(){}
+	static A met1(int p1, char p2){}
 
 	dynamic C1 met2(B p1){}
 
@@ -28,7 +28,7 @@ class C extends A{
 
 class C1 extends C{
 
-	static char met1(){} //error: redefine mal de A.
+	static B met1(int p1, char p2){} //error: redefine mal de A
 
 	dynamic void met1(int p1){} //redefine el de B
 

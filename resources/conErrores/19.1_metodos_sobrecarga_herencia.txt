@@ -1,10 +1,10 @@
-///[Error:met1|31]
-// metodo en la clase ancestro mal redefinido: no coincide el tipo.
+///[Error:idmetvar2|27]
+// metodo en la clase ancestro mal redefinido: no coincide el formaMetodo.
 class A{
 	
 	public A idmetvar1;
 
-	static A met1(){}
+	static void met1(){}
 
 	dynamic C1 met2(B p1){}
 
@@ -24,20 +24,11 @@ class C extends A{
 
 	static A idmetvar1(B p1){}  //redefine
 
+	static int idmetvar2(int p1, C1 p2, B p3, C var4, int p5){} //error: redefine mal
+
 }
 
-class C1 extends C{
-
-	static char met1(){} //error: redefine mal de A.
-
-	dynamic void met1(int p1){} //redefine el de B
-
-	static A idmetvar1(A var){} //sobrecarga al de A y de B
-
-	
-}
-
-
+class C1{}
 
 class Init{
     static void main()

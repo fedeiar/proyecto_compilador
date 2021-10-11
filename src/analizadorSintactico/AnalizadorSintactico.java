@@ -206,9 +206,9 @@ public class AnalizadorSintactico {
     private void constructor_atributoImplicito(Token tokenIdClase) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_argsFormales.contains(tokenActual.getTipoDeToken())){
             Constructor constructor = new Constructor(tokenIdClase);
-            TablaSimbolos.getInstance().unidadActual = constructor;
-            TablaSimbolos.getInstance().claseActual.insertarConstructor(constructor);
+            TablaSimbolos.unidadActual = constructor;
             argsFormales();
+            TablaSimbolos.claseActual.insertarConstructor(tokenIdClase.getLexema(), constructor); //TODO: esta bien que haga falta hacerlo despues de argsFormales()?
             bloque();
         } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
             tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
@@ -242,8 +242,8 @@ public class AnalizadorSintactico {
         match(TipoDeToken.id_metVar, "identificador de metodo");
         Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
         TablaSimbolos.getInstance().unidadActual = metodo;
-        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo);
         argsFormales();
+        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo); //TODO: puede ser que haga falta hacer esto desp. de argsFormales()?
         bloque();
     }
 

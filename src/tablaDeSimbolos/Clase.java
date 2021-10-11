@@ -14,15 +14,16 @@ public class Clase {
 
     private Token tokenIdClase;
     private Token tokenIdClaseAncestro;
-    private Constructor constructor;
+    private Map<String, Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, Metodo> metodos;
     
     private boolean estaConsolidado;
-    private boolean estaVerificadoHerenciaCircular; //TODO: usarlo para verificarHerenciaCircular
+    private boolean estaVerificadoHerenciaCircular;
 
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
+        constructores = new HashMap<>();
         atributos = new HashMap<>();
         metodos = new HashMap<>();
 
@@ -67,20 +68,21 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{
-        if(this.constructor == null){
-            //TODO: para el logro va a haber que modificarlo y usar un hashMap como con metodos y atributos.
-            this.constructor = constructor;
+    public void insertarConstructor(String nombreConstructor, Constructor constructor) throws ExcepcionSemantica{
+        Constructor constructor_en_clase = constructores.get(nombreConstructor);
+        if(constructor_en_clase == null || !constructor_en_clase.mismosParametros(constructor)){ //TODO: preg si asi esta bien.
+            constructores.put(nombreConstructor, constructor);
         } else{
-            throw new ExcepcionSemantica(constructor.getTokenIdClase(), ""); //TODO: modificar para sobrecarga.
+            throw new ExcepcionSemantica(constructor.getTokenIdClase(), "existe otro constructor con el mismo nombre y parametros en esta clase"); 
         }
     }
 
     public void insertarMetodo(String nombreMetodo, Metodo metodo) throws ExcepcionSemantica{
-        if(metodos.get(nombreMetodo) == null){
-            metodos.put(nombreMetodo, metodo);
+        Metodo metodo_en_clase = metodos.get(nombreMetodo);
+        if(metodo_en_clase == null || !metodo_en_clase.mismosParametros(metodo)){ //TODO: preg si con este chequeo alcanza.
+            metodos.put(nombreMetodo, metodo);                                      //TODO: como hacer para que no colisionen 2 metodos con el mismo nombre en el hash?
         } else{
-            throw new ExcepcionSemantica(metodo.getTokenIdMet(), "existe otro metodo con el mismo nombre en esta clase");
+            throw new ExcepcionSemantica(metodo.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
         }
     }
 
@@ -114,11 +116,13 @@ public class Clase {
                 m.estaBienDeclarado();
             }
 
-            if(this.constructor == null){
-                constructor = new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0)); //TODO: está bien creado el constructor por default?
+            if(constructores.size() == 0){
+               insertarConstructor(this.tokenIdClase.getLexema(), new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
             }
 
-            constructor.estaBienDeclarado();
+            for(Constructor c : constructores.values()){
+                c.estaBienDeclarado();
+            }
 
             //TODO: verificar otras cosas
         }
@@ -175,17 +179,18 @@ public class Clase {
             }
         }
         */
-        
+        System.out.println("------------------------ le toca a: "+this.tokenIdClase.getLexema());
         for(Metodo metodo : claseAncestro.getMetodos()){
+            System.out.println("el padre tiene el metodo: "+metodo.getTokenIdMet().getLexema());
             Metodo metodo_en_clase = metodos.get(metodo.getTokenIdMet().getLexema());
-            if(metodo_en_clase != null){
+            if(metodo_en_clase == null || !metodo_en_clase.mismosParametros(metodo)){ //TODO: esta bien este chequeo para insertar los sobrecargados?
+                this.insertarMetodo(metodo.getTokenIdMet().getLexema(), metodo); 
+            } else{
                 if(this.existeMetodo(metodo)){
                     //no hacer nada, lo esta redefiniendo
                 } else{
                     throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
                 }
-            } else{
-                this.insertarMetodo(metodo.getTokenIdMet().getLexema(), metodo);
             }
         }
         

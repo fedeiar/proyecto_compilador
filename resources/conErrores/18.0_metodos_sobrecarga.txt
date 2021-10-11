@@ -1,0 +1,27 @@
+///[Error:idmetvar1|15]
+// metodo en la misma clase mal sobrecargado: mismos parametros.
+
+
+class A{
+
+	public char idmetvar1, idmetvar2;
+
+	static void idmetvar1(){}
+
+	static void idmetvar1(int p1){}
+
+	static void idmetvar1(char p1, int p2){}
+
+	static void idmetvar1(char p1, int p2){}
+
+	static int idmetvar1(B p1, char p2, A p3, int p4){}
+
+}
+
+class B{}
+
+
+class Init{
+    static void main()
+    { }
+}

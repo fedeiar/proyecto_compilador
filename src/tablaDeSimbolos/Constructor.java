@@ -11,9 +11,6 @@ public class Constructor extends Unidad{
     public Constructor(Token tokenIdClase) throws ExcepcionSemantica{
         super();
         this.tokenIdClase = tokenIdClase;
-
-        
-        
     }
 
     public Token getTokenIdClase(){

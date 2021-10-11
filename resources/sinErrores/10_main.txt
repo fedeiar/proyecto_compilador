@@ -2,32 +2,22 @@
 
 class A{
 	
-	dynamic void main(){
-
-	}
+	dynamic void main(){}
 
 }
 
 class C extends A{
-
-	
-	
-
 }
 
 class E{
 
-	static void main(int var){
+	static void main(int var){}
 
-	}
-	
 }
 
 class J{
 
-	static int main(){
-
-	}
+	static int main(){}
 	
 }
 

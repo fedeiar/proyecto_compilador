@@ -28,13 +28,13 @@ public abstract class Unidad {
         return lista_parametros;
     }
 
-    protected boolean mismosParametros(Metodo metodo2){
-        List<ParametroFormal> lista_parametros_metodo2 = metodo2.getListaParametros();
+    public boolean mismosParametros(Unidad unidad2){
+        List<ParametroFormal> lista_parametros_unidad2 = unidad2.getListaParametros();
         int i = 0;
         boolean mismosParametros = true;
-        if(lista_parametros.size() == lista_parametros_metodo2.size()){
+        if(lista_parametros.size() == lista_parametros_unidad2.size()){
             for(ParametroFormal p1 : lista_parametros){
-                ParametroFormal p2 = lista_parametros_metodo2.get(i);
+                ParametroFormal p2 = lista_parametros_unidad2.get(i);
                 i++;
                 if(!p1.mismoTipo(p2)){
                     mismosParametros = false;
