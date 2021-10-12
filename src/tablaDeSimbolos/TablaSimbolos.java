@@ -1,9 +1,9 @@
 package tablaDeSimbolos;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+
 
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;

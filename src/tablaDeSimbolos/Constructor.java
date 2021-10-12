@@ -1,7 +1,5 @@
 package tablaDeSimbolos;
 
-import java.util.Map;
-
 import analizadorLexico.Token;
 
 public class Constructor extends Unidad{

@@ -2,10 +2,8 @@ package tablaDeSimbolos;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
@@ -54,8 +52,8 @@ public class Clase {
         return metodos.get(nombreMetodo);
     }
 
-    public Collection<List<Metodo>> getMetodos(){
-        return metodos.values();
+    public List<Metodo> getMetodos(){
+        return lista_metodos;
     }
 
     public boolean estaConsolidado(){
@@ -181,32 +179,28 @@ public class Clase {
         }
     }
 
-    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: tener una lista que tenga todos los metodos al mismo nivel
-
-        for(List<Metodo> listaAncestro_metodosMismoNombre : claseAncestro.getMetodos()){
-            for(Metodo metodoAncestro : listaAncestro_metodosMismoNombre){
-                List<Metodo> lista_metodosMismoNombre = this.getMetodosMismoNombre(metodoAncestro.getTokenIdMet().getLexema());
-                if(lista_metodosMismoNombre == null){
-                    metodos.put(metodoAncestro.getTokenIdMet().getLexema(), listaAncestro_metodosMismoNombre);
-                } else{
-                    boolean loSobrecarga = true;
-                    for(Metodo metodo_en_clase : lista_metodosMismoNombre){
-                        if(metodo_en_clase.mismosParametros(metodoAncestro)){
-                            if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
-                                //no hacer nada, lo redefine
-                                loSobrecarga = false;
-                                break;
-                            } else{
-                                throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
-                            }
+    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preguntar si asi esta bien.
+        for(Metodo metodoAncestro : claseAncestro.getMetodos()){
+            List<Metodo> lista_metodosMismoNombre = this.getMetodosMismoNombre(metodoAncestro.getTokenIdMet().getLexema());
+            if(lista_metodosMismoNombre == null){
+                this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
+            } else{
+                boolean loSobrecarga = true;
+                for(Metodo metodo_en_clase : lista_metodosMismoNombre){
+                    if(metodo_en_clase.mismosParametros(metodoAncestro)){
+                        if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
+                            //no hacer nada, ya que lo redefine
+                            loSobrecarga = false;
+                            break;
+                        } else{
+                            throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
                         }
                     }
-                    if(loSobrecarga){
-                        this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
-                       
-                    }
-
                 }
+                if(loSobrecarga){
+                    this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
+                }
+                
             }
         }
         
