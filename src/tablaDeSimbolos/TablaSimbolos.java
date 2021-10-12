@@ -153,5 +153,6 @@ public class TablaSimbolos {
         for(Clase clase : clases.values()){
             clase.consolidar();
         }
+
     }
 }

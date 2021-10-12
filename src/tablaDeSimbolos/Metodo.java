@@ -1,5 +1,7 @@
 package tablaDeSimbolos;
 
+import javax.swing.SingleSelectionModel;
+
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
 
@@ -50,6 +52,13 @@ public class Metodo extends Unidad{
         tipoMetodo.verificarExistenciaTipo();
     }
 
-    
+    public String toString(){
+        String signaturaMetodo = tokenIdMet.getLexema() + "(";
+        for(ParametroFormal p : lista_parametros){
+            signaturaMetodo += p.getTipo().getNombreTipo() + ",";
+        }
+        signaturaMetodo += ")";
+        return signaturaMetodo;
+    }
 
 }

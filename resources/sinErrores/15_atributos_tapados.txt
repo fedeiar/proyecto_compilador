@@ -1,5 +1,4 @@
-///[Error:v3|13]
-// atributos repetidos en ancestro inmediato
+
 class A{
 	
 	private int v1, v2;
@@ -11,6 +10,15 @@ class A{
 class B extends A{
 
 	public boolean v3;
+	public A v4;
+}
+
+
+class C extends B{
+	
+	public char v1, v2;
+	public B v4;
+
 }
 
 class Init{

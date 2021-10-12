@@ -15,6 +15,7 @@ public class Clase {
     private Token tokenIdClaseAncestro;
     private List<Constructor> constructores;
     private Map<String, Atributo> atributos;
+    private Map<String, Atributo> atributos_tapados;
     private Map<String, List<Metodo>> metodos;
     private List<Metodo> lista_metodos; //NO importa el orden de los elementos de esta lista.
     
@@ -25,6 +26,7 @@ public class Clase {
         this.tokenIdClase = idClase;
         constructores = new ArrayList<>();
         atributos = new HashMap<>();
+        atributos_tapados = new HashMap<>();
         metodos = new HashMap<>();
         lista_metodos = new ArrayList<>();
 
@@ -46,6 +48,10 @@ public class Clase {
 
     public Collection<Atributo> getAtributos(){
         return atributos.values();
+    }
+
+    public Collection<Atributo> getAtributosTapados(){
+        return atributos_tapados.values();
     }
 
     public List<Metodo> getMetodosMismoNombre(String nombreMetodo){
@@ -174,7 +180,8 @@ public class Clase {
                 this.insertarAtributo(atributo.getTokenIdVar().getLexema(), atributo);
             }
             else{
-                throw new ExcepcionSemantica(atributo_en_clase.getTokenIdVar(), "ya existe un atributo con el mismo nombre que "+atributo_en_clase.getTokenIdVar().getLexema()+" en algun ancestro");
+                atributos_tapados.put(atributo.getTokenIdVar().getLexema(), atributo); //TODO: preg si está bien. está bien no hacer controles? ya que no irán a parar repetidos aca.
+                //throw new ExcepcionSemantica(atributo_en_clase.getTokenIdVar(), "ya existe un atributo con el mismo nombre que "+atributo_en_clase.getTokenIdVar().getLexema()+" en algun ancestro");
             }
         }
     }

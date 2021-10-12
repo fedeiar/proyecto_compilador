@@ -6,6 +6,10 @@ public class TipoVoid extends TipoMetodo{
         
     }
 
+    public String getNombreTipo(){
+        return "void";
+    }
+
     public boolean mismoTipo(TipoMetodo tipo){
         return tipo.visitarMismoTipo(this);
     }

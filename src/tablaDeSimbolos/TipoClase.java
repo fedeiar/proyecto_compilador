@@ -11,6 +11,10 @@ public class TipoClase extends Tipo{
         this.tokenIdClase = tokenIdClase;
     }
 
+    public String getNombreTipo(){
+        return tokenIdClase.getLexema();
+    }
+
     public Token getTokenIdClase(){
         return tokenIdClase;
     }

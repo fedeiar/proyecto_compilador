@@ -3,6 +3,7 @@ package tablaDeSimbolos;
 public abstract class TipoMetodo {
 
 
+    public abstract String getNombreTipo();
 
     public void verificarExistenciaTipo() throws ExcepcionSemantica{ //TODO: preg si está bien
         

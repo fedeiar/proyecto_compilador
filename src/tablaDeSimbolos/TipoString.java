@@ -7,6 +7,10 @@ public class TipoString extends TipoPrimitivo{
         
     }
 
+    public String getNombreTipo(){
+        return "String";
+    }
+
     public boolean mismoTipo(TipoMetodo tipo){
         return tipo.visitarMismoTipo(this);
     }
