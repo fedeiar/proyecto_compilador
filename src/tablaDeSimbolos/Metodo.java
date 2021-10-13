@@ -57,6 +57,9 @@ public class Metodo extends Unidad{
         for(ParametroFormal p : lista_parametros){
             signaturaMetodo += p.getTipo().getNombreTipo() + ",";
         }
+        if(signaturaMetodo.charAt(signaturaMetodo.length() - 1) == ','){
+            signaturaMetodo = signaturaMetodo.substring(0, signaturaMetodo.length() - 1);
+        }
         signaturaMetodo += ")";
         return signaturaMetodo;
     }
