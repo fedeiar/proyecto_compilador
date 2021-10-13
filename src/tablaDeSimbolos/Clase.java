@@ -16,6 +16,7 @@ public class Clase {
     private List<Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, Atributo> atributos_tapados;
+    //borrar lo de abajo y usar un solo hash con el toString() de metodo.
     private Map<String, List<Metodo>> metodos;
     private List<Metodo> lista_metodos; //NO importa el orden de los elementos de esta lista.
     
@@ -54,11 +55,12 @@ public class Clase {
         return atributos_tapados.values();
     }
 
-    public List<Metodo> getMetodosMismoNombre(String nombreMetodo){
+    //TODO: sacando la lista de metodos estos 2 ni harían falta
+    private List<Metodo> getMetodosMismoNombre(String nombreMetodo){
         return metodos.get(nombreMetodo);
     }
 
-    public List<Metodo> getMetodos(){
+    private List<Metodo> getMetodos(){
         return lista_metodos;
     }
 
@@ -89,7 +91,7 @@ public class Clase {
         constructores.add(constructor);
     }
 
-    public void insertarMetodo(String nombreMetodo, Metodo metodo_a_insertar) throws ExcepcionSemantica{ //TODO: tener una lista que tenga todos los metodos al mismo nivel
+    public void insertarMetodo(String nombreMetodo, Metodo metodo_a_insertar) throws ExcepcionSemantica{ //TODO: si usamos el hash lo tenemos simple como antes?
         List<Metodo> lista_metodosMismoNombre = metodos.get(nombreMetodo);
         if(lista_metodosMismoNombre == null){      
             List<Metodo> nuevaLista_metodosMismoNombre = new ArrayList<>();
@@ -106,15 +108,26 @@ public class Clase {
         }
         lista_metodos.add(metodo_a_insertar);
         System.out.println(metodo_a_insertar.toString());
+
+        //de esta forma ni haria falta el parametro nombreMetodo
+        /*
+        if(metodos.get(metodo_a_insertar.toString()) == null){
+            metodos.put(metodo_a_insertar.toString(), metodo_a_insertar)
+        } else{
+            throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
+        }
+        */
     }
 
-    public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
+    public Metodo getMetodoMismaSignatura(Metodo metodo2){ //TODO: con el hash estaría bien simplemente hacer eso?
         for(Metodo metodo : lista_metodos){
             if(metodo.equalsSignatura(metodo2)){
                 return metodo;
             }
         }
         return null;
+
+        // return metodos.get(metodo2.toString());
     }
 
 
@@ -188,6 +201,7 @@ public class Clase {
     }
 
     private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preguntar si asi esta bien.
+        //TODO: si usaramos un hash lo tenemos simple como antes o hay que considerar algo adicional?
         for(Metodo metodoAncestro : claseAncestro.getMetodos()){
             List<Metodo> lista_metodosMismoNombre = this.getMetodosMismoNombre(metodoAncestro.getTokenIdMet().getLexema());
             if(lista_metodosMismoNombre == null){
@@ -211,6 +225,22 @@ public class Clase {
                 
             }
         }
+
+
+        /*
+        for(Metodo metodoAncestro : claseAncestro.getMetodos()){
+            Metodo metodo_en_clase = metodos.get(metodoAncestro.toString());
+            if(metodo_en_clase == null){
+                this.insertarMetodo(metodoAncestro);
+            } else{
+                if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
+                    //no hacer nada, ya que lo redefine
+                } else{
+                    throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
+                }
+            }
+        }
+        */
         
     }
 
