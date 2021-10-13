@@ -1,5 +1,5 @@
 ///[Error:debugPrint|17]
-// metodo en la clase ancestro mal redefinido: tipos incompatibles.
+// metodo en la clase ancestro mal redefinido: no coincide el tipo.
 
 class A extends System{
 

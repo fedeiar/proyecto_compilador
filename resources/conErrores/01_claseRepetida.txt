@@ -1,5 +1,17 @@
-///[Error:A|7]
+///[Error:A|15]
 // 
+class A{
+
+}
+
+class B extends A{
+
+}
+
+class C{
+
+}
+
 class A{
 
 }

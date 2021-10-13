@@ -5,17 +5,24 @@ class A{
 
 	static void met1(){}
 
-	dynamic C1 met2(B p1){}
+	dynamic D met2(B p1){}
 
 	static Object idmetvar1(B var){}
 
-	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
+	dynamic int idmetvar2(int var1, D var2, B var3, C var4, int var5){}
+
+	dynamic B metE1(E p1, D p2){}
 
 }
 
 class B extends A{
 
 	dynamic Object met3(System p1){}
+
+	dynamic Object metE2(A p1){}
+
+	static void metB4(int p1, char p2){}
+
 }
 
 class C extends B{
@@ -26,31 +33,53 @@ class C extends B{
 
 	static A idmetvar1(B p1){}  //redefine
 
-	dynamic int idmetvar2(int p1, C1 p2, B p3, int var4, C p5){} //sobrecarga
+	dynamic int idmetvar2(int p1, D p2, B p3, int var4, C p5){} //sobrecarga
+
+	static void metB4(int p1, char p2, char p3){} //sobrecarga el de B
 
 }
 
-class C1 extends C{
+class D extends C{
 
 	static void met1(){} //redefine el de A
 
 	dynamic void met1(int p1){} //redefine el de B
 
+	dynamic System met3(System p1){} //redefine al de B
+
 	static A idmetvar1(A var){} //sobrecarga al de A y de B
 
-	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5, char var6){} //sobrecarga el de A y C
+	dynamic int idmetvar2(int var1, D var2, B var3, C var4, int var5, char var6){} //sobrecarga el de A y C
 
-	dynamic System met3(System p1){} //redefine al de B
+	static void metB4(int p1){} //Sobrecarga el de B y C
+	
 }
 
-class D extends System{
+
+class E extends D{
+
+	dynamic E metE1(E p1, D p2){} //redefine al de A
+
+	dynamic System metE2(B p1){} //sobrecarga al de B
+
+	dynamic System metE2(A p1){} //redefine al de B
+
+	static void metB4(int p1, char p2){} //redefine el de B
+
+}
+
+class A1 extends System{
 
 	static System met1(){}
+
+	dynamic A1 met2(){}
 }
 
-class D1 extends D{
+class B1 extends A1{
 
-	static D met1(){} //redefine a met1() de D.
+	static A1 met1(){} //redefine a met1() de A1.
+
+	dynamic B1 met2(){} //redefine a met2() de A1
 	
 	static void printS(String p1){} //redefine a printS() de System.
 
