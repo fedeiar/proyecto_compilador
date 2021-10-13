@@ -74,7 +74,7 @@ public class Clase {
         if(atributos.get(nombreAtributo) == null){
             atributos.put(nombreAtributo, atributo);
         } else{
-            throw new ExcepcionSemantica(atributo.getTokenIdVar(), "ya existe un atributo con el mismo nombre dentro de esta clase");
+            throw new ExcepcionSemantica(atributo.getTokenIdVar(), "el atributo "+ nombreAtributo +" ya esta declarado dentro de la clase "+tokenIdClase.getLexema());
         }
         
     }
@@ -82,7 +82,7 @@ public class Clase {
     public void insertarConstructor(String nombreConstructor, Constructor constructor) throws ExcepcionSemantica{ //TODO: preg si esta bien.
         for(Constructor constructor_en_clase : constructores){
             if(constructor_en_clase.mismosParametros(constructor)){
-                throw new ExcepcionSemantica(constructor.getTokenIdClase(), "existe otro constructor con el mismo nombre y parametros en esta clase"); 
+                throw new ExcepcionSemantica(constructor.getTokenIdClase(), "ya existe otro constructor "+ constructor.getTokenIdClase().getLexema() +" con el mismo nombre y parametros dentro la clase "+tokenIdClase.getLexema()); 
             }
         }
         //si no hubo error, insertamos.

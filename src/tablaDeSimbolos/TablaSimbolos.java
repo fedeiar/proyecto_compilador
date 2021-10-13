@@ -145,7 +145,7 @@ public class TablaSimbolos {
         }
 
         if(!estaMain){
-            throw new ExcepcionSemantica(metodoMain.getTokenIdMet(), "debe declararse el metodo main() en alguna clase"); //TODO: aclarar en el informe que se señala el error en la linea 0
+            throw new ExcepcionSemantica(metodoMain.getTokenIdMet(), "debe declararse el metodo main() en alguna clase");
         }
     }
 

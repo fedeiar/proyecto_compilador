@@ -20,7 +20,7 @@ public abstract class Unidad {
             parametros.put(nombreParametro, parametro);
             lista_parametros.add(parametro);
         } else{
-            throw new ExcepcionSemantica(parametro.getTokenIdVar(), "ya existe otro parametro con el mismo nombre");
+            throw new ExcepcionSemantica(parametro.getTokenIdVar(), "ya existe otro parametro con el mismo nombre en la unidad");
         }
     }
 
