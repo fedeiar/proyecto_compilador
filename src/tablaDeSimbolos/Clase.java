@@ -79,7 +79,7 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(String nombreConstructor, Constructor constructor) throws ExcepcionSemantica{ //TODO: preg si esta bien.
+    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{ //TODO: preg si esta bien.
         for(Constructor constructor_en_clase : constructores){
             if(constructor_en_clase.mismosParametros(constructor)){
                 throw new ExcepcionSemantica(constructor.getTokenIdClase(), "ya existe otro constructor "+ constructor.getTokenIdClase().getLexema() +" con el mismo nombre y parametros dentro la clase "+tokenIdClase.getLexema()); 
@@ -105,6 +105,7 @@ public class Clase {
             lista_metodosMismoNombre.add(metodo_a_insertar);
         }
         lista_metodos.add(metodo_a_insertar);
+        System.out.println(metodo_a_insertar.toString());
     }
 
     public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
@@ -140,7 +141,7 @@ public class Clase {
             }
 
             if(constructores.size() == 0){
-                insertarConstructor(this.tokenIdClase.getLexema(), new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
+                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
             } 
 
         }
