@@ -37,14 +37,14 @@ public class TipoClase extends Tipo{
         return tipo.VisitarVerCompatibilidad(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoClase subtipo){ //TODO: preguntar si esta bien.
+    public boolean VisitarVerCompatibilidad(TipoClase subtipo){ 
         if(this.tokenIdClase.getLexema().equals(subtipo.getTokenIdClase().getLexema())){
             return true;
         } else {
             Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
             Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
             if(tokenClasePadreDelSubtipo != null){
-                return VisitarVerCompatibilidad(new TipoClase(tokenClasePadreDelSubtipo)); //TODO: esta mal esto?
+                return VisitarVerCompatibilidad(new TipoClase(tokenClasePadreDelSubtipo));
             }else{
                 return false;
             }

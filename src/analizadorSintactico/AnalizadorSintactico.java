@@ -243,7 +243,7 @@ public class AnalizadorSintactico {
         Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
         TablaSimbolos.getInstance().unidadActual = metodo;
         argsFormales();
-        TablaSimbolos.getInstance().claseActual.insertarMetodo(tokenIdMet.getLexema(), metodo);
+        TablaSimbolos.getInstance().claseActual.insertarMetodo(metodo);
         bloque();
     }
 

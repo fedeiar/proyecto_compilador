@@ -15,10 +15,8 @@ public class Clase {
     private Token tokenIdClaseAncestro;
     private List<Constructor> constructores;
     private Map<String, Atributo> atributos;
-    private Map<String, Atributo> atributos_tapados;
-    //borrar lo de abajo y usar un solo hash con el toString() de metodo.
-    private Map<String, List<Metodo>> metodos;
-    private List<Metodo> lista_metodos; //NO importa el orden de los elementos de esta lista.
+    private Map<String, Atributo> atributos_tapados; //NO usar esto. Anteponer un # a cada tapado.
+    private Map<String, Metodo> metodos;
     
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
@@ -29,7 +27,6 @@ public class Clase {
         atributos = new HashMap<>();
         atributos_tapados = new HashMap<>();
         metodos = new HashMap<>();
-        lista_metodos = new ArrayList<>();
 
         estaConsolidado = false;
         estaVerificadoHerenciaCircular = false;
@@ -55,13 +52,8 @@ public class Clase {
         return atributos_tapados.values();
     }
 
-    //TODO: sacando la lista de metodos estos 2 ni harían falta
-    private List<Metodo> getMetodosMismoNombre(String nombreMetodo){
-        return metodos.get(nombreMetodo);
-    }
-
-    private List<Metodo> getMetodos(){
-        return lista_metodos;
+    public Collection<Metodo> getMetodos(){
+        return metodos.values();
     }
 
     public boolean estaConsolidado(){
@@ -81,53 +73,31 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{ //TODO: preg si esta bien.
+    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{ //TODO: usar el mismo toString() que usamos en metodo.
         for(Constructor constructor_en_clase : constructores){
             if(constructor_en_clase.mismosParametros(constructor)){
                 throw new ExcepcionSemantica(constructor.getTokenIdClase(), "ya existe otro constructor "+ constructor.getTokenIdClase().getLexema() +" con el mismo nombre y parametros dentro la clase "+tokenIdClase.getLexema()); 
             }
         }
-        //si no hubo error, insertamos.
         constructores.add(constructor);
     }
 
-    public void insertarMetodo(String nombreMetodo, Metodo metodo_a_insertar) throws ExcepcionSemantica{ //TODO: si usamos el hash lo tenemos simple como antes?
-        List<Metodo> lista_metodosMismoNombre = metodos.get(nombreMetodo);
-        if(lista_metodosMismoNombre == null){      
-            List<Metodo> nuevaLista_metodosMismoNombre = new ArrayList<>();
-            nuevaLista_metodosMismoNombre.add(metodo_a_insertar);                                      
-            metodos.put(nombreMetodo, nuevaLista_metodosMismoNombre);                                      
-        } else{
-            //Lo sobrecarga
-            for(Metodo m : lista_metodosMismoNombre){
-                if(m.mismosParametros(metodo_a_insertar)){
-                    throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
-                }
-            }
-            lista_metodosMismoNombre.add(metodo_a_insertar);
-        }
-        lista_metodos.add(metodo_a_insertar);
-        System.out.println(metodo_a_insertar.toString());
-
-        //de esta forma ni haria falta el parametro nombreMetodo
-        /*
+    public void insertarMetodo(Metodo metodo_a_insertar) throws ExcepcionSemantica{  
         if(metodos.get(metodo_a_insertar.toString()) == null){
-            metodos.put(metodo_a_insertar.toString(), metodo_a_insertar)
+            metodos.put(metodo_a_insertar.toString(), metodo_a_insertar);
         } else{
             throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
         }
-        */
+        
     }
 
-    public Metodo getMetodoMismaSignatura(Metodo metodo2){ //TODO: con el hash estaría bien simplemente hacer eso?
-        for(Metodo metodo : lista_metodos){
-            if(metodo.equalsSignatura(metodo2)){
-                return metodo;
-            }
+    public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
+        Metodo metodo_en_clase = metodos.get(metodo2.toString());
+        if(metodo_en_clase != null && metodo_en_clase.equalsSignatura(metodo2)){
+            return metodo_en_clase;
+        } else{
+            return null;
         }
-        return null;
-
-        // return metodos.get(metodo2.toString());
     }
 
 
@@ -145,7 +115,7 @@ public class Clase {
                 a.estaBienDeclarado();
             }
 
-            for(Metodo metodo : lista_metodos){
+            for(Metodo metodo : metodos.values()){
                 metodo.estaBienDeclarado();
             }
 
@@ -195,39 +165,13 @@ public class Clase {
             }
             else{
                 atributos_tapados.put(atributo.getTokenIdVar().getLexema(), atributo); //TODO: preg si está bien. está bien no hacer controles? ya que no irán a parar repetidos aca.
+                //TODO: necesitamos a los atributos abuelos. Anteponer un # si esta tapado. De esa manera no perdemos nada.
                 //throw new ExcepcionSemantica(atributo_en_clase.getTokenIdVar(), "ya existe un atributo con el mismo nombre que "+atributo_en_clase.getTokenIdVar().getLexema()+" en algun ancestro");
             }
         }
     }
 
-    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preguntar si asi esta bien.
-        //TODO: si usaramos un hash lo tenemos simple como antes o hay que considerar algo adicional?
-        for(Metodo metodoAncestro : claseAncestro.getMetodos()){
-            List<Metodo> lista_metodosMismoNombre = this.getMetodosMismoNombre(metodoAncestro.getTokenIdMet().getLexema());
-            if(lista_metodosMismoNombre == null){
-                this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
-            } else{
-                boolean loSobrecarga = true;
-                for(Metodo metodo_en_clase : lista_metodosMismoNombre){
-                    if(metodo_en_clase.mismosParametros(metodoAncestro)){
-                        if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
-                            //no hacer nada, ya que lo redefine
-                            loSobrecarga = false;
-                            break;
-                        } else{
-                            throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
-                        }
-                    }
-                }
-                if(loSobrecarga){
-                    this.insertarMetodo(metodoAncestro.getTokenIdMet().getLexema(), metodoAncestro);
-                }
-                
-            }
-        }
-
-
-        /*
+    private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{
         for(Metodo metodoAncestro : claseAncestro.getMetodos()){
             Metodo metodo_en_clase = metodos.get(metodoAncestro.toString());
             if(metodo_en_clase == null){
@@ -240,7 +184,6 @@ public class Clase {
                 }
             }
         }
-        */
         
     }
 
