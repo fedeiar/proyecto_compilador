@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
@@ -15,7 +16,6 @@ public class Clase {
     private Token tokenIdClaseAncestro;
     private Map<String, Constructor> constructores;
     private Map<String, Atributo> atributos;
-    private Map<String, Atributo> atributos_tapados; //NO usar esto. Anteponer un # a cada tapado.
     private Map<String, Metodo> metodos;
     
     private boolean estaConsolidado;
@@ -25,7 +25,6 @@ public class Clase {
         this.tokenIdClase = idClase;
         constructores = new HashMap<>();
         atributos = new HashMap<>();
-        atributos_tapados = new HashMap<>();
         metodos = new HashMap<>();
 
         estaConsolidado = false;
@@ -48,8 +47,8 @@ public class Clase {
         return atributos.values();
     }
 
-    public Collection<Atributo> getAtributosTapados(){
-        return atributos_tapados.values();
+    public Map<String,Atributo> getHashAtributos(){
+        return atributos;
     }
 
     public Collection<Metodo> getMetodos(){
@@ -157,16 +156,14 @@ public class Clase {
         }
     }
 
-    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{ 
-        for(Atributo atributo : claseAncestro.getAtributos()){
-            Atributo atributo_en_clase = atributos.get(atributo.getTokenIdVar().getLexema());
-            if(atributo_en_clase == null){
-                this.insertarAtributo(atributo.getTokenIdVar().getLexema(), atributo);
-            }
-            else{
-                atributos_tapados.put(atributo.getTokenIdVar().getLexema(), atributo); //TODO: preg si está bien. está bien no hacer controles? ya que no irán a parar repetidos aca.
-                //TODO: necesitamos a los atributos abuelos. Anteponer un # si esta tapado. De esa manera no perdemos nada.
-                //throw new ExcepcionSemantica(atributo_en_clase.getTokenIdVar(), "ya existe un atributo con el mismo nombre que "+atributo_en_clase.getTokenIdVar().getLexema()+" en algun ancestro");
+    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preg. si esta bien
+        for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
+            String nombreAtributoAncestro = atributoAncestro.getKey();
+            Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);
+            if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){
+                this.insertarAtributo(atributoAncestro.getKey(), atributoAncestro.getValue());
+            } else{
+                this.insertarAtributo("#"+atributoAncestro.getKey(), atributoAncestro.getValue());
             }
         }
     }

@@ -300,7 +300,7 @@ public class AnalizadorSintactico {
         Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
         Atributo atributo = new Atributo(tokenIdVar, visibilidad, tipoAtributo);
-        TablaSimbolos.getInstance().claseActual.insertarAtributo(tokenIdVar.getLexema(), atributo);
+        TablaSimbolos.claseActual.insertarAtributo(tokenIdVar.getLexema(), atributo);
         listaDecAtrsFactorizada(visibilidad, tipoAtributo);
     }
 

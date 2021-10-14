@@ -151,8 +151,16 @@ public class TablaSimbolos {
 
     public void consolidar() throws ExcepcionSemantica{
         for(Clase clase : clases.values()){
+            System.out.println(clase.getTokenIdClase().getLexema()); //TODO: borrar despues de preg
             clase.consolidar();
+
+            
+            for(Map.Entry<String,Atributo> a : clase.getHashAtributos().entrySet()){//TODO: borrar despues de preg
+                System.out.println(a.getKey());
+            }
         }
+
+        
 
     }
 }
