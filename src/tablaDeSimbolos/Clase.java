@@ -17,6 +17,9 @@ public class Clase {
     private Map<String, Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, Metodo> metodos;
+
+    private List<Token> listaTiposParametricos;
+    private Map<String, Token> tiposParametricos;
     
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
@@ -26,6 +29,9 @@ public class Clase {
         constructores = new HashMap<>();
         atributos = new HashMap<>();
         metodos = new HashMap<>();
+
+        tiposParametricos = new HashMap<>();
+        listaTiposParametricos = new ArrayList<>();
 
         estaConsolidado = false;
         estaVerificadoHerenciaCircular = false;
@@ -61,6 +67,15 @@ public class Clase {
 
     public void set_idClaseAncestro(Token idClaseAncestro){
         this.tokenIdClaseAncestro = idClaseAncestro;
+    }
+
+    public void insertarTipoParametrico(String nombreTipoParametrico, Token tipoParametrico) throws ExcepcionSemantica{ //TODO: esta bien?
+        if(tiposParametricos.get(nombreTipoParametrico) == null){
+            tiposParametricos.put(nombreTipoParametrico, tipoParametrico);
+            listaTiposParametricos.add(tipoParametrico);
+        } else{
+            throw new ExcepcionSemantica(tipoParametrico, "ya existe un tipo parametrico con el mismo nombre que "+tipoParametrico.getLexema());
+        }
     }
 
     public void insertarAtributo(String nombreAtributo, Atributo atributo) throws ExcepcionSemantica{

@@ -118,6 +118,28 @@ public class AnalizadorSintactico {
 
     }
 
+    private void TipoParametricoOVacioNoAnidado() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        if(TipoDeToken.op_menor == tokenActual.getTipoDeToken()){
+            match(TipoDeToken.op_menor, "<");
+            match(TipoDeToken.id_clase, "identificador de clase");
+            listaTiposParametricosNoAnidados();
+            match(TipoDeToken.op_mayor, ">");
+        } else{
+            //vacio
+        }
+    }
+
+    private void listaTiposParametricosNoAnidados() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        if(TipoDeToken.punt_coma == tokenActual.getTipoDeToken()){
+            match(TipoDeToken.punt_coma, ",");
+            match(TipoDeToken.id_clase, "identificador de clase");
+            listaTiposParametricosNoAnidados();
+        } else{
+            //vacio
+        }
+
+    }
+
     private void clase() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         match(TipoDeToken.pr_class, "class");
         Token tokenIdClase = tokenActual;
@@ -126,7 +148,7 @@ public class AnalizadorSintactico {
         TablaSimbolos.getInstance().claseActual = clase;
         TablaSimbolos.getInstance().insertarClase(tokenIdClase.getLexema(), clase);
 
-        tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+        TipoParametricoOVacioNoAnidado(); //TODO: HACER ALGO CON ESTO
 
         Token tokenIdClaseAncestro = herencia();
         clase.set_idClaseAncestro(tokenIdClaseAncestro);
@@ -136,13 +158,13 @@ public class AnalizadorSintactico {
         match(TipoDeToken.punt_llaveDer, "}");
     }
 
-    private Token herencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Token herencia() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_extends){
             match(TipoDeToken.pr_extends, "extends");
             Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
             
-            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+            TipoParametricoOVacioNoAnidado(); //TODO: HACER ALGO CON ESTO
 
             return tokenIdClase;
         }else if(siguientes_herencia.contains(tokenActual.getTipoDeToken())){

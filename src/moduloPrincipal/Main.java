@@ -1,7 +1,6 @@
 package moduloPrincipal;
 import java.io.*;
 
-import javax.swing.plaf.basic.BasicTabbedPaneUI.TabbedPaneLayout;
 
 import analizadorLexico.AnalizadorLexico;
 import analizadorLexico.ExcepcionLexica;
@@ -13,7 +12,6 @@ import tablaDeSimbolos.TablaSimbolos;
 
 public class Main {
     public static void main(String[] args){
-        
         
         try{
             String filename = args[0];
@@ -50,6 +48,6 @@ public class Main {
             System.out.println("Error: falta el argumento con la ruta del archivo");
         }
 
-        TablaSimbolos.reiniciar(); //TODO: preg si está bien como se reinicia y si es aca.
+        TablaSimbolos.reiniciar();
     }
 }
