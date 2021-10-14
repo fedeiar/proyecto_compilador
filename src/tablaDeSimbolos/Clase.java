@@ -13,7 +13,7 @@ public class Clase {
 
     private Token tokenIdClase;
     private Token tokenIdClaseAncestro;
-    private List<Constructor> constructores;
+    private Map<String, Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, Atributo> atributos_tapados; //NO usar esto. Anteponer un # a cada tapado.
     private Map<String, Metodo> metodos;
@@ -23,7 +23,7 @@ public class Clase {
 
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
-        constructores = new ArrayList<>();
+        constructores = new HashMap<>();
         atributos = new HashMap<>();
         atributos_tapados = new HashMap<>();
         metodos = new HashMap<>();
@@ -73,20 +73,20 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(Constructor constructor) throws ExcepcionSemantica{ //TODO: usar el mismo toString() que usamos en metodo.
-        for(Constructor constructor_en_clase : constructores){
-            if(constructor_en_clase.mismosParametros(constructor)){
-                throw new ExcepcionSemantica(constructor.getTokenIdClase(), "ya existe otro constructor "+ constructor.getTokenIdClase().getLexema() +" con el mismo nombre y parametros dentro la clase "+tokenIdClase.getLexema()); 
-            }
+    public void insertarConstructor(Constructor constructor_a_insertar) throws ExcepcionSemantica{ //TODO: usar el mismo toString() que usamos en metodo.
+        Constructor constructor_en_clase = constructores.get(constructor_a_insertar.toString());
+        if(constructor_en_clase == null){
+            constructores.put(constructor_a_insertar.toString(), constructor_a_insertar);
+        } else{
+            throw new ExcepcionSemantica(constructor_a_insertar.getTokenIdClase(), "ya existe otro constructor con los mismos parametros dentro la clase "+tokenIdClase.getLexema()); 
         }
-        constructores.add(constructor);
     }
 
     public void insertarMetodo(Metodo metodo_a_insertar) throws ExcepcionSemantica{  
         if(metodos.get(metodo_a_insertar.toString()) == null){
             metodos.put(metodo_a_insertar.toString(), metodo_a_insertar);
         } else{
-            throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros en esta clase");
+            throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros dentro de la clase "+tokenIdClase.getLexema());
         }
         
     }
@@ -119,7 +119,7 @@ public class Clase {
                 metodo.estaBienDeclarado();
             }
 
-            for(Constructor c : constructores){
+            for(Constructor c : constructores.values()){
                 c.estaBienDeclarado();
             }
 
