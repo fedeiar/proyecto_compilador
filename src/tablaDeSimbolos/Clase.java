@@ -69,7 +69,7 @@ public class Clase {
         this.tokenIdClaseAncestro = idClaseAncestro;
     }
 
-    public void insertarTipoParametrico(String nombreTipoParametrico, TipoClase tipoParametrico) throws ExcepcionSemantica{ //TODO: esta bien?
+    public void insertarTipoParametrico(String nombreTipoParametrico, TipoClase tipoParametrico) throws ExcepcionSemantica{ //TODO: usar para logro genericidad.
         if(tiposParametricos.get(nombreTipoParametrico) == null){
             tiposParametricos.put(nombreTipoParametrico, tipoParametrico);
             listaTiposParametricos.add(tipoParametrico);
@@ -87,7 +87,7 @@ public class Clase {
         
     }
     
-    public void insertarConstructor(Constructor constructor_a_insertar) throws ExcepcionSemantica{ //TODO: usar el mismo toString() que usamos en metodo.
+    public void insertarConstructor(Constructor constructor_a_insertar) throws ExcepcionSemantica{
         Constructor constructor_en_clase = constructores.get(constructor_a_insertar.toString());
         if(constructor_en_clase == null){
             constructores.put(constructor_a_insertar.toString(), constructor_a_insertar);
@@ -124,7 +124,7 @@ public class Clase {
 
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
-        if(!this.tokenIdClase.getLexema().equals("Object")){ //TODO: hay una forma mejor que hacer esto?
+        if(!this.tokenIdClase.getLexema().equals("Object")){
 
             TablaSimbolos.claseActual = this; //ya que para algunos chequeos (como el constructor de Constructor) necesitamos saber la clase actual que estamos chequeando.
             if(!TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){
@@ -146,7 +146,7 @@ public class Clase {
             }
 
             if(constructores.size() == 0){
-                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: esta bien creado el constructor por default?
+                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0)));
             } 
 
         }

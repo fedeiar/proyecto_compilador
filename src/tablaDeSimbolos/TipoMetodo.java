@@ -5,7 +5,7 @@ public abstract class TipoMetodo {
 
     public abstract String getNombreTipo();
 
-    public void verificarExistenciaTipo() throws ExcepcionSemantica{ //TODO: preg si está bien
+    public void verificarExistenciaTipo() throws ExcepcionSemantica{ 
         
     }
 
@@ -16,17 +16,15 @@ public abstract class TipoMetodo {
     }
 
     public boolean visitarMismoTipo(TipoClase tipo){ //redefinido solamente en TipoClase
-        return false;                           //TODO: esta bien hecho asi?
+        return false;                          
     }
 
 
     //Todos estos metodos seran redefinidos a conveniencia (devolver true)
-    //TODO: preg si está bien esta forma de ver la compatibilidad.
 
     public abstract boolean verificarCompatibilidad(TipoMetodo tipo);
 
 
-    //TODO: pero si tengo que comparar 2 Tipo, no voy a poder usar ninguno de estos metodos, ya que a ninguno de ellos puedo pasarle una variable de tipo Tipo por parametro..
     public boolean VisitarVerCompatibilidad(TipoClase tipo){
         return false;
     }

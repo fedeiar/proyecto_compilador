@@ -17,7 +17,6 @@ public class TablaSimbolos {
 
     public static Clase claseActual;
     public static Unidad unidadActual;
-    //TODO: no nos interesan mas entidades actuales que estas no?
 
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
@@ -90,7 +89,7 @@ public class TablaSimbolos {
         return instance;
     }
 
-    public static void reiniciar(){ //TODO: esta bien?
+    public static void reiniciar(){
         instance = null;
         clases = null;
         claseActual = null;

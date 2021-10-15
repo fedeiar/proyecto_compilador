@@ -4,7 +4,7 @@ import analizadorLexico.Token;
 
 public class ExcepcionSemantica extends Exception{
 
-    public ExcepcionSemantica(Token tokenActual, String mensaje){ //TODO: fijarse bien los parametros, que se necesita
+    public ExcepcionSemantica(Token tokenActual, String mensaje){
         super(armarMensaje(tokenActual, mensaje)); 
     }
 

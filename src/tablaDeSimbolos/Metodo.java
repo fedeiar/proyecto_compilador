@@ -29,7 +29,7 @@ public class Metodo extends Unidad{
         return tipoMetodo;
     }
 
-    public boolean equalsSignatura(Metodo metodo){ //TODO: preg si está bien
+    public boolean equalsSignatura(Metodo metodo){
         boolean mismaFormaMetodo = this.formaMetodo == metodo.getFormaMetodo();
         boolean mismoTipo = this.tipoMetodo.mismoTipo(metodo.getTipoMetodo());
         boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodo.getTokenIdMet().getLexema());
