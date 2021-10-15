@@ -18,8 +18,8 @@ public class Clase {
     private Map<String, Atributo> atributos;
     private Map<String, Metodo> metodos;
 
-    private List<Token> listaTiposParametricos;
-    private Map<String, Token> tiposParametricos;
+    private List<TipoClase> listaTiposParametricos;
+    private Map<String, TipoClase> tiposParametricos;
     
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
@@ -69,12 +69,12 @@ public class Clase {
         this.tokenIdClaseAncestro = idClaseAncestro;
     }
 
-    public void insertarTipoParametrico(String nombreTipoParametrico, Token tipoParametrico) throws ExcepcionSemantica{ //TODO: esta bien?
+    public void insertarTipoParametrico(String nombreTipoParametrico, TipoClase tipoParametrico) throws ExcepcionSemantica{ //TODO: esta bien?
         if(tiposParametricos.get(nombreTipoParametrico) == null){
             tiposParametricos.put(nombreTipoParametrico, tipoParametrico);
             listaTiposParametricos.add(tipoParametrico);
         } else{
-            throw new ExcepcionSemantica(tipoParametrico, "ya existe un tipo parametrico con el mismo nombre que "+tipoParametrico.getLexema());
+            throw new ExcepcionSemantica(tipoParametrico.getTokenIdClase(), "ya existe un tipo parametrico con el mismo nombre que "+tipoParametrico.getTokenIdClase().getLexema());
         }
     }
 
@@ -103,6 +103,14 @@ public class Clase {
             throw new ExcepcionSemantica(metodo_a_insertar.getTokenIdMet(), "existe otro metodo con el mismo nombre y parametros dentro de la clase "+tokenIdClase.getLexema());
         }
         
+    }
+
+    public boolean existeTipoParametrico(Token tokenIdClase){
+        if(tiposParametricos.get(tokenIdClase.getLexema()) != null){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
@@ -171,7 +179,8 @@ public class Clase {
         }
     }
 
-    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preg. si esta bien
+    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{
+        //en esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
         for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = atributoAncestro.getKey();
             Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);

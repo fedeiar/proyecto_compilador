@@ -145,10 +145,10 @@ public class AnalizadorSintactico {
         Token tokenIdClase = tokenActual;
         match(TipoDeToken.id_clase, "identificador de clase");
         Clase clase = new Clase(tokenIdClase);
-        TablaSimbolos.getInstance().claseActual = clase;
+        TablaSimbolos.claseActual = clase;
         TablaSimbolos.getInstance().insertarClase(tokenIdClase.getLexema(), clase);
 
-        TipoParametricoOVacioNoAnidado(); //TODO: HACER ALGO CON ESTO
+        TipoParametricoOVacioNoAnidado(); //TODO: completar para logro genericidad
 
         Token tokenIdClaseAncestro = herencia();
         clase.set_idClaseAncestro(tokenIdClaseAncestro);
@@ -164,7 +164,7 @@ public class AnalizadorSintactico {
             Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
             
-            TipoParametricoOVacioNoAnidado(); //TODO: HACER ALGO CON ESTO
+            TipoParametricoOVacioNoAnidado(); //TODO: completar para logro genericidad
 
             return tokenIdClase;
         }else if(siguientes_herencia.contains(tokenActual.getTipoDeToken())){
@@ -233,7 +233,7 @@ public class AnalizadorSintactico {
             TablaSimbolos.claseActual.insertarConstructor(constructor); 
             bloque();
         } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
-            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+            tipoParametricoOVacio(); //TODO: completar para logro genericidad
             listaDecAtrs(TipoDeToken.pr_public, new TipoClase(tokenIdClase));
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
@@ -263,9 +263,9 @@ public class AnalizadorSintactico {
         Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
         Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
-        TablaSimbolos.getInstance().unidadActual = metodo;
+        TablaSimbolos.unidadActual = metodo;
         argsFormales();
-        TablaSimbolos.getInstance().claseActual.insertarMetodo(metodo);
+        TablaSimbolos.claseActual.insertarMetodo(metodo);
         bloque();
     }
 
@@ -292,7 +292,7 @@ public class AnalizadorSintactico {
             match(TipoDeToken.id_clase, "identificador de clase");
             Tipo tipo = new TipoClase(tokenIdClase);
 
-            tipoParametricoOVacio(); //TODO: HACER ALGO CON ESTO
+            tipoParametricoOVacio(); //TODO: completar para logro genericidad
 
             return tipo;
         } else{
@@ -400,7 +400,7 @@ public class AnalizadorSintactico {
         Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
         ParametroFormal parametro = new ParametroFormal(tokenIdVar, tipo);
-        TablaSimbolos.getInstance().unidadActual.insertarParametro(tokenIdVar.getLexema(), parametro);
+        TablaSimbolos.unidadActual.insertarParametro(tokenIdVar.getLexema(), parametro);
     }
 
     private void bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica{   
