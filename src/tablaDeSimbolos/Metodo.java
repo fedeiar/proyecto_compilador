@@ -1,7 +1,5 @@
 package tablaDeSimbolos;
 
-import javax.swing.SingleSelectionModel;
-
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
 
