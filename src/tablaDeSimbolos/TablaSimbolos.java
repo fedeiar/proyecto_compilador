@@ -79,7 +79,7 @@ public class TablaSimbolos {
             insertarClase("Object", claseObject);
             insertarClase("System", claseSystem);
         } catch(ExcepcionSemantica e){
-            //NUNCA DEBERÍA SUCEDER ESTE ERROR.
+            //NUNCA DEBERIA SUCEDER ESTE ERROR.
         }
     }
 

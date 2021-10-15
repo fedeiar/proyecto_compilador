@@ -138,7 +138,7 @@ public class Clase {
             }
 
             if(constructores.size() == 0){
-                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: está bien creado el constructor por default?
+                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0))); //TODO: esta bien creado el constructor por default?
             } 
 
         }
