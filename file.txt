@@ -5,7 +5,7 @@ class A{
 	private String v3;
 	public boolean v4;
 	char v5, v6;
-	
+	B v9;
 }
 
 class B extends A{
@@ -28,6 +28,7 @@ class D extends C{
 	public A v4;
 	public A v6;
 	public int v7;
+	private B v8,v9;
 }
 
 class Init{

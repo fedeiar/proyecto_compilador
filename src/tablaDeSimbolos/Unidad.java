@@ -8,6 +8,8 @@ public abstract class Unidad {
     
     protected Map<String, ParametroFormal> parametros;
     protected List<ParametroFormal> lista_parametros; //la lista es porque necesitamos el orden de los parametros
+    //TODO: insertar la tabla para almacenar los parámetros y variables locales del método.
+
 
     public Unidad(){
         parametros = new HashMap<>();
