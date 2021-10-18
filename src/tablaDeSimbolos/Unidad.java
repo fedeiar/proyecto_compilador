@@ -8,7 +8,7 @@ public abstract class Unidad {
     
     protected Map<String, ParametroFormal> parametros;
     protected List<ParametroFormal> lista_parametros; //la lista es porque necesitamos el orden de los parametros
-    //TODO: insertar la tabla para almacenar los parámetros y variables locales del método.
+    //TODO: insertar un atributo NODO que sea de tipo bloque, que es la raíz del AST de la unidad en cuestión.
 
 
     public Unidad(){
