@@ -1,14 +1,13 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.tipos;
 
-public class TipoString extends TipoPrimitivo{
+public class TipoBoolean extends TipoPrimitivo{
     
+    public TipoBoolean(){
 
-    public TipoString(){
-        
     }
 
     public String getNombreTipo(){
-        return "String";
+        return "boolean";
     }
 
     public boolean mismoTipo(TipoMetodo tipo){
@@ -19,7 +18,7 @@ public class TipoString extends TipoPrimitivo{
         return tipo.VisitarVerCompatibilidad(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoString tipo){
+    public boolean VisitarVerCompatibilidad(TipoBoolean tipo){
         return true;
     }
 }

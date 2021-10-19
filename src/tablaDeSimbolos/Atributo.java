@@ -1,9 +1,9 @@
 package tablaDeSimbolos;
-
+import tablaDeSimbolos.tipos.*;
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
 
-public class Atributo {
+public class Atributo{
     
     private Token tokenIdVar;
     private TipoDeToken visibilidadAtributo;

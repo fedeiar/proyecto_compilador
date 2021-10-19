@@ -1,6 +1,6 @@
 package tablaDeSimbolos;
 
-
+import tablaDeSimbolos.tipos.*;
 import java.util.HashMap;
 import java.util.Map;
 

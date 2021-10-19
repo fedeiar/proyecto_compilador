@@ -1,5 +1,6 @@
 package tablaDeSimbolos;
 
+import tablaDeSimbolos.tipos.*;
 import analizadorLexico.Token;
 
 public class ParametroFormal {

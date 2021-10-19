@@ -1,13 +1,13 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.tipos;
 
-public class TipoChar extends TipoPrimitivo{
-    
-    public TipoChar(){
+public class TipoInt extends TipoPrimitivo{
+
+    public TipoInt(){
 
     }
 
     public String getNombreTipo(){
-        return "char";
+        return "int";
     }
 
     public boolean mismoTipo(TipoMetodo tipo){
@@ -18,7 +18,7 @@ public class TipoChar extends TipoPrimitivo{
         return tipo.VisitarVerCompatibilidad(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoChar tipo){
+    public boolean VisitarVerCompatibilidad(TipoInt tipo){
         return true;
     }
 }

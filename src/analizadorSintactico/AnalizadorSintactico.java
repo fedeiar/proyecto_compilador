@@ -2,7 +2,7 @@ package analizadorSintactico;
 
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
-
+import tablaDeSimbolos.tipos.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,11 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.tipos;
+import tablaDeSimbolos.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import analizadorLexico.Token;
+
 
 public class TipoClase extends Tipo{
     

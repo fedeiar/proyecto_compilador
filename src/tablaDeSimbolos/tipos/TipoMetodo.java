@@ -1,4 +1,5 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.tipos;
+import tablaDeSimbolos.*;
 
 public abstract class TipoMetodo {
 
