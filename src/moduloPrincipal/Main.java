@@ -1,12 +1,11 @@
 package moduloPrincipal;
 import java.io.*;
 
-
+import manejadorDeArchivo.*;
 import analizadorLexico.AnalizadorLexico;
 import analizadorLexico.ExcepcionLexica;
 import analizadorSintactico.AnalizadorSintactico;
 import analizadorSintactico.ExcepcionSintactica;
-import manejadorDeArchivo.*;
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.TablaSimbolos;
 

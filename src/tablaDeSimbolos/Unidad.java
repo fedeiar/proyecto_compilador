@@ -1,4 +1,6 @@
 package tablaDeSimbolos;
+
+import tablaDeSimbolos.nodosAST.*;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -8,8 +10,9 @@ public abstract class Unidad {
     
     protected Map<String, ParametroFormal> parametros;
     protected List<ParametroFormal> lista_parametros; //la lista es porque necesitamos el orden de los parametros
-    //TODO: insertar un atributo NODO que sea de tipo bloque, que es la raíz del AST de la unidad en cuestión.
 
+    //TODO: insertar un atributo NODO que sea de tipo bloque, que es la raíz del AST de la unidad en cuestión.
+    protected NodoBloque bloque;
 
     public Unidad(){
         parametros = new HashMap<>();
