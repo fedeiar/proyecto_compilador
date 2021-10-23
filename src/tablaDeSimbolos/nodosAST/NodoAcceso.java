@@ -1,5 +1,7 @@
 package tablaDeSimbolos.nodosAST;
 
-public class NodoAcceso extends NodoOperando{
+import analizadorLexico.Token;
+
+public abstract class NodoAcceso extends NodoOperando{
     
 }

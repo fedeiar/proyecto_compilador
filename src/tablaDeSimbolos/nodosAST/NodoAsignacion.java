@@ -2,12 +2,12 @@ package tablaDeSimbolos.nodosAST;
 
 public abstract class NodoAsignacion extends NodoSentencia{
     
-    private NodoAcceso ladoIzq;
+    protected NodoAcceso nodoAccesoLadoIzq;
     
 
 
-    public NodoAsignacion(NodoAcceso ladoIzq){
-        this.ladoIzq = ladoIzq;
+    public NodoAsignacion(NodoAcceso nodoAccesoLadoIzq){
+        this.nodoAccesoLadoIzq = nodoAccesoLadoIzq;
     }
 
 

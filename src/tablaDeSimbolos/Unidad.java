@@ -57,4 +57,9 @@ public abstract class Unidad {
             p.estaBienDeclarado();
         }
     }
+
+
+    public void setBloque(NodoBloque bloque){ //TODO: preg si está bien asi.
+        this.bloque = bloque;
+    }
 }

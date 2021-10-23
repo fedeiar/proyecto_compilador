@@ -1,5 +1,13 @@
 package tablaDeSimbolos.nodosAST;
 
+import analizadorLexico.Token;
+
 public class NodoAsignacionDecremento extends NodoAsignacion{
     
+    private Token tokenDecremento;
+
+    public NodoAsignacionDecremento(NodoAcceso nodoAccesoLadoIzq, Token tokenDecremento){
+        super(nodoAccesoLadoIzq);
+        this.tokenDecremento = tokenDecremento;
+    }
 }
