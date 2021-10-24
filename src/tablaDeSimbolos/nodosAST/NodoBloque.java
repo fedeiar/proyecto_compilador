@@ -13,6 +13,8 @@ public class NodoBloque extends NodoSentencia{
 
 
     public void insertarSentencia(NodoSentencia sentencia){
-        sentencias.add(sentencia);
+        if(sentencia != null){ //TODO: está bien controlarlo aca cuando es <Sentencia>::= ;?
+            sentencias.add(sentencia);
+        }
     }
 }

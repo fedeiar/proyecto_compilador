@@ -2,7 +2,13 @@ package tablaDeSimbolos.nodosAST;
 
 public class NodoReturn extends NodoSentencia{
     
-    NodoExpresion retorno;
+    private NodoExpresion nodoExpresionRetorno;
 
-    
+    public NodoReturn(){
+
+    }
+
+    public void insertarExpresion(NodoExpresion nodoExpresionRetorno){
+        this.nodoExpresionRetorno = nodoExpresionRetorno;
+    }
 }

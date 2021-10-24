@@ -1,7 +1,18 @@
 package tablaDeSimbolos.nodosAST;
 
-public class NodoIf {
+public class NodoIf extends NodoSentencia{
     
-    private NodoExpresion condicion;
-    private NodoSentencia sentencia;
+    private NodoExpresion NodoExpresionCondicion;
+    private NodoSentencia nodoSentenciaIf;
+    private NodoSentencia nodoSentenciaElse;
+
+    public NodoIf(NodoExpresion condicion, NodoSentencia sentenciaIf){
+        this.NodoExpresionCondicion = condicion;
+        this.nodoSentenciaIf = sentenciaIf;
+    }
+
+
+    public void insertarSentenciaElse(NodoSentencia nodoSentenciaElse){
+        nodoSentenciaElse = this.nodoSentenciaElse;
+    }
 }

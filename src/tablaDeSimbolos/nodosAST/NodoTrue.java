@@ -2,7 +2,7 @@ package tablaDeSimbolos.nodosAST;
 
 import analizadorLexico.Token;
 
-public class NodoTrue {
+public class NodoTrue extends NodoBoolean{
     
     private Token tokenTrue;
 

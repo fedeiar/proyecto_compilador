@@ -2,8 +2,10 @@ package analizadorSintactico;
 
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
+import tablaDeSimbolos.nodosAST.*;
 import tablaDeSimbolos.tipos.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -231,7 +233,9 @@ public class AnalizadorSintactico {
             TablaSimbolos.unidadActual = constructor;
             argsFormales();
             TablaSimbolos.claseActual.insertarConstructor(constructor); 
-            bloque();
+
+            NodoBloque nodoBloque = bloque(); 
+            constructor.insertarBloque(nodoBloque);
         } else if(primeros_tipoParametricoOVacio.contains(tokenActual.getTipoDeToken()) || primeros_listaDecAtrs.contains(tokenActual.getTipoDeToken())){
             tipoParametricoOVacio(); //TODO: completar para logro genericidad
             listaDecAtrs(TipoDeToken.pr_public, new TipoClase(tokenIdClase));
@@ -266,7 +270,9 @@ public class AnalizadorSintactico {
         TablaSimbolos.unidadActual = metodo;
         argsFormales();
         TablaSimbolos.claseActual.insertarMetodo(metodo);
-        bloque();
+
+        NodoBloque nodoBloque = bloque();
+        metodo.insertarBloque(nodoBloque);
     }
 
     private TipoDeToken visibilidad() throws IOException, ExcepcionLexica, ExcepcionSintactica{
@@ -403,16 +409,21 @@ public class AnalizadorSintactico {
         TablaSimbolos.unidadActual.insertarParametro(tokenIdVar.getLexema(), parametro);
     }
 
-    private void bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica{   
+    //aca comienzan las sentencias
+
+    private NodoBloque bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica{   
         match(TipoDeToken.punt_llaveIzq, "{");
-        listaSentencias();
+        NodoBloque nodoBloque = new NodoBloque();
+        listaSentencias(nodoBloque);
         match(TipoDeToken.punt_llaveDer, "}");
+        return nodoBloque;
     }
 
-    private void listaSentencias() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void listaSentencias(NodoBloque nodoBloque) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_sentencia.contains(tokenActual.getTipoDeToken())){
-            sentencia();
-            listaSentencias();
+            NodoSentencia nodoSentencia = sentencia();
+            nodoBloque.insertarSentencia(nodoSentencia);
+            listaSentencias(nodoBloque);
         } else if(siguientes_listaSentencias.contains(tokenActual.getTipoDeToken())){
             //vacio
         } else{
@@ -420,308 +431,404 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoSentencia sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
+            return null; //TODO: está bien devovler nulo y controlarlo en insertarSentencia?
         } else if(primeros_acceso.contains(tokenActual.getTipoDeToken())){
-            acceso();
-            asignacion_llamada();
+            NodoAcceso nodoAcceso = acceso();
+            return asignacion_llamada(nodoAcceso);
         } else if(primeros_varLocal.contains(tokenActual.getTipoDeToken())){
-            varLocal();
+            NodoSentencia nodoSentencia = varLocal();
             match(TipoDeToken.punt_puntoYComa, ";");
+            return nodoSentencia;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_return){
-            return_();
+            NodoSentencia nodoSentencia = return_();
             match(TipoDeToken.punt_puntoYComa, ";");
+            return nodoSentencia;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_if){
-            if_();
+            return if_();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_for){
             match(TipoDeToken.pr_for, "for");
             match(TipoDeToken.punt_parentIzq, "(");
-            tipo();
+            Tipo tipo = tipo();
+            Token tokenIdVar = tokenActual;
             match(TipoDeToken.id_metVar, "identificador de variable");
-            for_forEach();
+            NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
+            return for_forEach(nodoVarLocal);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_llaveIzq){
-            bloque();
+            return bloque();
         } else{
             throw new ExcepcionSintactica("un ; o el comienzo de una sentencia", tokenActual);
         }
     }
 
-    private void asignacion_llamada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoSentencia asignacion_llamada(NodoAcceso nodoAcceso) throws IOException, ExcepcionLexica, ExcepcionSintactica{ //TODO: SEGUIR DESDE ACA
         if(primeros_tipoDeAsignacion.contains(tokenActual.getTipoDeToken())){
-            tipoDeAsignacion();
+            NodoAsignacion nodoAsignacion = tipoDeAsignacion(nodoAcceso);
             match(TipoDeToken.punt_puntoYComa, ";");
+            return nodoAsignacion;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
+            return new NodoLlamada(nodoAcceso);
         } else{
             throw new ExcepcionSintactica("tipo de asignación o ;", tokenActual);
         }
     }
 
-    private void asignacion() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        acceso();
-        tipoDeAsignacion();
+    private NodoAsignacion asignacion() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        NodoAcceso nodoAcceso = acceso();
+        return tipoDeAsignacion(nodoAcceso);
     }
 
-    private void tipoDeAsignacion() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoAsignacion tipoDeAsignacion(NodoAcceso nodoAcceso) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_asignacion){
             match(TipoDeToken.op_asignacion, "=");
-            expresion();
+            NodoExpresion nodoExpresion = expresion();
+            return new NodoAsignacionExpresion(nodoAcceso, nodoExpresion);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_incremento){
+            Token tokenIncremento = tokenActual;
             match(TipoDeToken.op_incremento, "++");
+            return new NodoAsignacionIncremento(nodoAcceso, tokenIncremento);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_decremento){
+            Token tokenDecremento = tokenActual;
             match(TipoDeToken.op_decremento, "--");
+            return new NodoAsignacionDecremento(nodoAcceso, tokenDecremento);
         } else{
             throw new ExcepcionSintactica("=, ++ o --", tokenActual);
         }
     }
 
-    private void varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        tipo();
+    private NodoVarLocal varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        Tipo tipo = tipo();
+        Token tokenIdVar = tokenActual;
+        NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
         match(TipoDeToken.id_metVar, "identificador de variable");
-        varLocalFactorizada();
+        NodoExpresion nodoExpresion = varLocalFactorizada();
+        nodoVarLocal.insertarExpresion(nodoExpresion);
+        return nodoVarLocal;
     }
 
-    private void varLocalFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoExpresion varLocalFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_asignacion){
             match(TipoDeToken.op_asignacion, "=");
-            expresion();
+            return expresion();
         } else if(siguientes_varLocalFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return null;
         } else{
             throw new ExcepcionSintactica("= o ;", tokenActual);
         }
     }
 
-    private void return_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoReturn return_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.pr_return, "return");
-        expresionOVacio();
+        NodoReturn NodoReturn = new NodoReturn();
+        NodoExpresion nodoExpresion = expresionOVacio();
+        NodoReturn.insertarExpresion(nodoExpresion);
+        return NodoReturn;
     }
 
-    private void expresionOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoExpresion expresionOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_expresion.contains(tokenActual.getTipoDeToken())){
-            expresion();
+            return expresion();
         } else if(siguientes_expresionOVacio.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return null;
         } else{
             throw new ExcepcionSintactica("una expresion o un ;", tokenActual);
         }
     }
 
-    private void if_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoIf if_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.pr_if, "if");
         match(TipoDeToken.punt_parentIzq, "(");
-        expresion();
+        NodoExpresion nodoExpresion = expresion();
         match(TipoDeToken.punt_parentDer, ")");
-        sentencia();
-        ifFactorizado();
+        NodoSentencia nodoSentenciaIf = sentencia();
+        NodoIf nodoIf = new NodoIf(nodoExpresion, nodoSentenciaIf);
+        NodoSentencia nodoSentenciaElse = ifFactorizado();
+        nodoIf.insertarSentenciaElse(nodoSentenciaElse);
+        return nodoIf;
     }
 
-    private void ifFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoSentencia ifFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_else){
             match(TipoDeToken.pr_else, "else");
-            sentencia();
+            return sentencia();
         } else if(siguientes_ifFactorizado.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return null;
         } else{
             throw new ExcepcionSintactica("el comienzo de una sentencia, un else o }", tokenActual);
         }
     }
 
-    private void for_forEach() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoFor for_forEach(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_varLocalFactorizada.contains(tokenActual.getTipoDeToken()) || TipoDeToken.punt_puntoYComa == tokenActual.getTipoDeToken()){
-            varLocalFactorizada();
+            NodoExpresion nodoExpresionVarLocal = varLocalFactorizada();
+            nodoVarLocal.insertarExpresion(nodoExpresionVarLocal);
             match(TipoDeToken.punt_puntoYComa, ";");
-            expresion();
+            NodoExpresion nodoExpresionFor = expresion();
             match(TipoDeToken.punt_puntoYComa, ";");
-            asignacion();
+            NodoAsignacion nodoAsignacion = asignacion();
             match(TipoDeToken.punt_parentDer, ")");
-            sentencia();
-        } else if(TipoDeToken.punt_dosPuntos == tokenActual.getTipoDeToken()){
+            NodoSentencia nodoSentencia = sentencia();
+            return new NodoFor(nodoVarLocal, nodoExpresionFor, nodoAsignacion, nodoSentencia);
+        } else if(TipoDeToken.punt_dosPuntos == tokenActual.getTipoDeToken()){ //TODO: el else es para el forEach. Completar Genericidad primero si se quiere este logro en la etapa 4.
             match(TipoDeToken.punt_dosPuntos, ":");
             expresion();
             match(TipoDeToken.punt_parentDer, ")");
             sentencia();
+            return null; //TODO: en realidad devuelve el nodoForEach, pero necesitamos genericidad.
         } else {
             throw new ExcepcionSintactica("un = un ; o un :", tokenActual);
         }
     }
 
-    private void expresion() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        expresionUnaria();
-        expresionRecursiva();
+    private NodoExpresion expresion() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        NodoExpresion nodoExpresionLadoIzq = expresionUnaria();
+        return expresionRecursiva(nodoExpresionLadoIzq);
     }
 
-    private void expresionRecursiva() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoExpresion expresionRecursiva(NodoExpresion nodoExpresionLadoIzq) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_operadorBinario.contains(tokenActual.getTipoDeToken())){
-            operadorBinario();
-            expresionUnaria();
-            expresionRecursiva();
+            Token tokenOperadorBinario = operadorBinario();
+            NodoExpresion nodoExpresionLadoDer = expresionUnaria();
+            NodoExpresionBinaria nodoExpresionBinaria = new NodoExpresionBinaria(tokenOperadorBinario, nodoExpresionLadoIzq, nodoExpresionLadoDer);
+            NodoExpresion nodoExpresion = expresionRecursiva(nodoExpresionBinaria);
+            return nodoExpresion;
         } else if (siguientes_expresionRecursiva.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return nodoExpresionLadoIzq;
         } else{
             throw new ExcepcionSintactica("un operador binario, un ;, o un , o un )", tokenActual);
         }
     }
 
-    private void operadorBinario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Token operadorBinario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_or){
+            Token tokenOr = tokenActual;
             match(TipoDeToken.op_or, "||");
+            return tokenOr;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_and){
+            Token tokenAnd = tokenActual;
             match(TipoDeToken.op_and, "&&");
+            return tokenAnd;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_igualdad){
+            Token tokenIgualdad = tokenActual;
             match(TipoDeToken.op_igualdad, "==");
+            return tokenIgualdad;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_notIgual){
+            Token tokenNotIgual = tokenActual;
             match(TipoDeToken.op_notIgual, "!=");
+            return tokenNotIgual;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menor){
+            Token tokenMenor = tokenActual;
             match(TipoDeToken.op_menor, "<");
+            return tokenMenor;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mayor){
+            Token tokenMayor = tokenActual;
             match(TipoDeToken.op_mayor, ">");
+            return tokenMayor;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menorOIgual){
+            Token tokenMenorOIgual = tokenActual;
             match(TipoDeToken.op_menorOIgual, "<=");
+            return tokenMenorOIgual;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mayorOIgual){
+            Token tokenMayorOIgual = tokenActual;
             match(TipoDeToken.op_mayorOIgual, ">=");
+            return tokenMayorOIgual;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mas){
+            Token tokenMas = tokenActual;
             match(TipoDeToken.op_mas, "+");
+            return tokenMas;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menos){
+            Token tokenMenos = tokenActual;
             match(TipoDeToken.op_menos, "-");
+            return tokenMenos;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_multiplicacion){
+            Token tokenMultiplicacion = tokenActual;
             match(TipoDeToken.op_multiplicacion, "*");
+            return tokenMultiplicacion;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_division){
+            Token tokenDivision = tokenActual;
             match(TipoDeToken.op_division, "/");
+            return tokenDivision;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_modulo){
+            Token tokenModulo = tokenActual;
             match(TipoDeToken.op_modulo, "%");
-        } else {
+            return tokenModulo;
+        } else{
             throw new ExcepcionSintactica("un operador binario", tokenActual);
         }
         
     }
 
-    private void expresionUnaria() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoExpresion expresionUnaria() throws IOException, ExcepcionLexica, ExcepcionSintactica{ 
         if(primeros_operadorUnario.contains(tokenActual.getTipoDeToken())){
-            operadorUnario();
-            operando();
+            Token tokenOperador = operadorUnario();
+            NodoOperando nodoOperando = operando();
+            return new NodoExpresionUnaria(tokenOperador, nodoOperando);
         } else if(primeros_operando.contains(tokenActual.getTipoDeToken())){
-            operando();
+            return operando();
         } else{
             throw new ExcepcionSintactica("operador unario u operando", tokenActual);
         }
     }
 
-    private void operadorUnario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Token operadorUnario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_mas){
+            Token tokenMas = tokenActual;
             match(TipoDeToken.op_mas, "+");
+            return tokenMas;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menos){
+            Token tokenMenos = tokenActual;
             match(TipoDeToken.op_menos, "-");
+            return tokenMenos;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_not){
+            Token tokenNot = tokenActual;
             match(TipoDeToken.op_not, "!");
+            return tokenNot;
         } else{
             throw new ExcepcionSintactica("operador unario", tokenActual);
         }
     }
 
-    private void operando() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoOperando operando() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_literal.contains(tokenActual.getTipoDeToken())){
-            literal();
+            return literal();
         } else if(primeros_acceso.contains(tokenActual.getTipoDeToken())){
-            acceso();
+            return acceso();
         } else{
             throw new ExcepcionSintactica("un literal o el comienzo de un acceso", tokenActual);
         }
     }
 
-    private void literal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoOperando literal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_null){
+            Token tokenNull = tokenActual;
             match(TipoDeToken.pr_null, "null");
+            return new NodoNull(tokenNull);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_true){
+            Token tokenTrue = tokenActual;
             match(TipoDeToken.pr_true, "true");
+            return new NodoTrue(tokenTrue);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_false){
+            Token tokenFalse = tokenActual;
             match(TipoDeToken.pr_false, "false");
+            return new NodoFalse(tokenFalse);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.lit_entero){
+            Token tokenLitEntero = tokenActual;
             match(TipoDeToken.lit_entero, "literal entero");
+            return new NodoEntero(tokenLitEntero);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.lit_caracter){
+            Token tokenLitCaracter = tokenActual;
             match(TipoDeToken.lit_caracter, "literal caracter");
+            return new NodoCaracter(tokenLitCaracter);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.lit_string){
+            Token tokenLitString = tokenActual;
             match(TipoDeToken.lit_string, "literal String");
+            return new NodoString(tokenLitString);
         } else{
             throw new ExcepcionSintactica("un literal", tokenActual);
         }
     }
 
-    private void acceso() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoAcceso acceso() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_parentIzq){
             match(TipoDeToken.punt_parentIzq, "(");
-            casting_expresionParentizada();
+            return casting_expresionParentizada();
         } else if(primeros_primario.contains(tokenActual.getTipoDeToken())){
-            primario();
-            encadenado();
+            NodoPrimario nodoPrimario = primario();
+            NodoEncadenado nodoEncadenado = encadenado();
+            nodoPrimario.insertarNodoEncadenado(nodoEncadenado);
+            return nodoPrimario;
         } else{
             throw new ExcepcionSintactica("el comienzo de un primario o casting", tokenActual);
         }
     }
 
-    private void casting_expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoAcceso casting_expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
+            Token tokenIdClaseCasting = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
-            tipoParametricoOVacio();
+            
+            tipoParametricoOVacio(); //TODO: para hacer algo con esto, necesitamos genericidad de etapa 3.
+
             match(TipoDeToken.punt_parentDer, ")");
-            primario_expresionParentizada();
-            encadenado();
+            NodoPrimario nodoPrimario = primario_expresionParentizada();
+            NodoEncadenado nodoEncadenado = encadenado();
+            nodoPrimario.insertarNodoEncadenado(nodoEncadenado);
+            NodoPrimarioCasting nodoPrimarioCasting = new NodoPrimarioCasting(tokenIdClaseCasting, nodoPrimario);
+            return nodoPrimarioCasting;
         } else if(primeros_expresionParentizada.contains(tokenActual.getTipoDeToken())){
-            expresionParentizada();
-            encadenado();
+            NodoExpresionParentizada nodoExpresionParentizada = expresionParentizada();
+            NodoEncadenado nodoEncadenado = encadenado();
+            nodoExpresionParentizada.insertarNodoEncadenado(nodoEncadenado);
+            return nodoExpresionParentizada;
         } else{
             throw new ExcepcionSintactica("un identificador de clase o una expresion", tokenActual);
         }
     }
 
-    private void primario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoPrimario primario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.id_metVar){
+            Token tokenIdMetVar = tokenActual;
             match(TipoDeToken.id_metVar, "identificador de metodo o variable");
-            accesoVar_accesoMetodo();
+            return accesoVar_accesoMetodo(tokenIdMetVar);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_this){
+            Token tokenThis = tokenActual;
             match(TipoDeToken.pr_this, "this");
+            return new NodoThis(tokenThis);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_new){
-            accesoConstructor();
+            return accesoConstructor();
         } else{
             throw new ExcepcionSintactica("un identificador de metodo o variable, this, o new", tokenActual);
         }
     }
 
-    private void primario_expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoPrimario primario_expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_primario.contains(tokenActual.getTipoDeToken())){
-            primario();
+            return primario();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_parentIzq){
             match(TipoDeToken.punt_parentIzq, "(");
-            expresionParentizada();
+            return expresionParentizada();
         } else{
             throw new ExcepcionSintactica("el comienzo de un primario", tokenActual);
         }
     }
 
-    private void expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        expresion();
+    private NodoExpresionParentizada expresionParentizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        NodoExpresion nodoExpresion = expresion();
         match(TipoDeToken.punt_parentDer, ")");
+        return new NodoExpresionParentizada(nodoExpresion);
     }
 
-    private void accesoVar_accesoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoPrimario accesoVar_accesoMetodo(Token tokenIdMetVar) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
-            argsActuales();
+            List<NodoExpresion> listaParametrosActuales = argsActuales();
+            return new NodoAccesoMetodo(tokenIdMetVar, listaParametrosActuales);
         } else if (siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return new NodoAccesoVar(tokenIdMetVar);
         } else{
             throw new ExcepcionSintactica("alguno de los siguientes simbolos: {(, ., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
-    private void accesoConstructor() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoAccesoConstructor accesoConstructor() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.pr_new, "new");
+        Token tokenIdClase = tokenActual;
         match(TipoDeToken.id_clase, "identificador de clase");
-        tipoParametricoODiamante();
-        argsActuales();
+
+        tipoParametricoODiamante(); //TODO: se necesita genericidad etapa 3 para hacer algo con esto
+
+        List<NodoExpresion> listaParametrosActuales = argsActuales();
+        return new NodoAccesoConstructor(tokenIdClase, listaParametrosActuales);
     }
 
-    private void tipoParametricoODiamante() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void tipoParametricoODiamante() throws IOException, ExcepcionLexica, ExcepcionSintactica{ //TODO: se necesita genericidad etapa 3 para hacer algo con esto
         if(TipoDeToken.op_menor == tokenActual.getTipoDeToken()){
             match(TipoDeToken.op_menor, "<");
             tipoParametricoODiamanteFactorizado();
@@ -730,7 +837,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void tipoParametricoODiamanteFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void tipoParametricoODiamanteFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{ //TODO: se necesita genericidad etapa 3 para hacer algo con esto
         if(TipoDeToken.op_mayor == tokenActual.getTipoDeToken()){
             match(TipoDeToken.op_mayor, ">");
         } else if(primeros_tipoParametrico.contains(tokenActual.getTipoDeToken())){
@@ -742,60 +849,72 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void argsActuales() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private List<NodoExpresion> argsActuales() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.punt_parentIzq, "(");
-        listaExpsOVacio();
+        List<NodoExpresion> listaParametrosActuales = listaExpsOVacio();
         match(TipoDeToken.punt_parentDer, ")");
+        return listaParametrosActuales;
     }
 
-    private void listaExpsOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private List<NodoExpresion> listaExpsOVacio() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_listaExps.contains(tokenActual.getTipoDeToken())){
-            listaExps();
+            return listaExps();
         } else if(siguientes_listaExpsOVacio.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return new ArrayList<NodoExpresion>();
         } else{
             throw new ExcepcionSintactica("el comienzo de una expresion o )", tokenActual);
         }
     }
 
-    private void listaExps() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        expresion();
-        listaExpsFactorizada();
+    private List<NodoExpresion> listaExps() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        NodoExpresion nodoExpresion = expresion();
+        List<NodoExpresion> listaParametrosActuales = listaExpsFactorizada();
+        listaParametrosActuales.add(0, nodoExpresion); //TODO: preguntar si está bien hacer el addFirst de esta manera.
+        return listaParametrosActuales;
     }
 
-    private void listaExpsFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private List<NodoExpresion> listaExpsFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
-            listaExps();
+            return listaExps();
         } else if(siguientes_listaExpsFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return new ArrayList<NodoExpresion>();
         } else{
             throw new ExcepcionSintactica("un , o )", tokenActual);
         }
     }
 
-    private void encadenado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoEncadenado encadenado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_punto){
-            varOMetodoEncadenado();
-            encadenado();
+            NodoEncadenado nodoEncadenado = varOMetodoEncadenado();
+            NodoEncadenado nodoEncadenadoSiguiente = encadenado();
+            nodoEncadenado.insertarNodoEncadenado(nodoEncadenadoSiguiente);
+            return nodoEncadenado;
         } else if (siguientes_encadenado.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return null;
         } else{
             throw new ExcepcionSintactica("alguno de estos simbolos: {., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
-    private void varOMetodoEncadenado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoEncadenado varOMetodoEncadenado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         match(TipoDeToken.punt_punto, ".");
+        Token tokenIdMetVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
-        varOMetodoEncadenadoFactorizado();
+        return varOMetodoEncadenadoFactorizado(tokenIdMetVar);
     }
 
-    private void varOMetodoEncadenadoFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoEncadenado varOMetodoEncadenadoFactorizado(Token tokenIdMetVar) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
-            argsActuales();
+            List<NodoExpresion> listaParametrosActuales = argsActuales();
+            NodoAccesoMetodoEncadenado nodoAccesoMetodoEncadenado = new NodoAccesoMetodoEncadenado(tokenIdMetVar, listaParametrosActuales);
+            return nodoAccesoMetodoEncadenado;
         } else if (siguientes_varOMetodoEncadenado.contains(tokenActual.getTipoDeToken())){
             //vacio
+            return new NodoAccesoVarEncadenada(tokenIdMetVar);
         } else{
             throw new ExcepcionSintactica("un ( o alguno de estos símbolos: {., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }

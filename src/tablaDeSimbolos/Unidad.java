@@ -59,7 +59,7 @@ public abstract class Unidad {
     }
 
 
-    public void setBloque(NodoBloque bloque){ //TODO: preg si está bien asi.
+    public void insertarBloque(NodoBloque bloque){ //TODO: preg si está bien asi.
         this.bloque = bloque;
     }
 }
