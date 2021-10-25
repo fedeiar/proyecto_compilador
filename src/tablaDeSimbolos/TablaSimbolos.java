@@ -1,7 +1,11 @@
 package tablaDeSimbolos;
 
+import tablaDeSimbolos.nodosAST.NodoBloque;
 import tablaDeSimbolos.tipos.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -17,10 +21,13 @@ public class TablaSimbolos {
 
     public static Clase claseActual;
     public static Unidad unidadActual;
+    private static List<NodoBloque> stackBloqueActual; //TODO: aca está bien la pila de bloques?
 
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
-        
+        stackBloqueActual = new ArrayList<NodoBloque>();
+
+
         try{
             Metodo metodo;
 
@@ -152,8 +159,21 @@ public class TablaSimbolos {
         for(Clase clase : clases.values()){
             clase.consolidar();
         }
+    }
 
-        
+    public void chequeoSentencias() throws ExcepcionSemantica{ 
+        for(Clase clase : clases.values()){
+            for(Constructor constructor : clase.getConstructores()){
+                constructor.chequearSentencias();
+            }
 
+            for(Metodo metodo: clase.getMetodos()){
+                metodo.chequearSentencias();
+            }
+        }
+    }
+
+    public static void apilarBloqueActual(NodoBloque bloque){ //TODO: esta bien?
+        stackBloqueActual.add(0, bloque);
     }
 }

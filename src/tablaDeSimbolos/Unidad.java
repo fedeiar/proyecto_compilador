@@ -11,8 +11,8 @@ public abstract class Unidad {
     protected Map<String, ParametroFormal> parametros;
     protected List<ParametroFormal> lista_parametros; //la lista es porque necesitamos el orden de los parametros
 
-    //TODO: insertar un atributo NODO que sea de tipo bloque, que es la raíz del AST de la unidad en cuestión.
     protected NodoBloque bloque;
+
 
     public Unidad(){
         parametros = new HashMap<>();
@@ -58,8 +58,12 @@ public abstract class Unidad {
         }
     }
 
-
-    public void insertarBloque(NodoBloque bloque){ //TODO: preg si está bien asi.
+    public void insertarBloque(NodoBloque bloque){ 
         this.bloque = bloque;
     }
+
+    public void chequearSentencias() throws ExcepcionSemantica{ //TODO: recordar que para los metodos deben chequearse solamente una vez en el lugar donde estan declarados y en ningun otro lugar. Hacerlo
+        bloque.chequear();
+    }
+    
 }

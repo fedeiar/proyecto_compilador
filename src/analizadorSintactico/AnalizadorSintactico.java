@@ -434,7 +434,7 @@ public class AnalizadorSintactico {
     private NodoSentencia sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
-            return null; //TODO: está bien devovler nulo y controlarlo en insertarSentencia?
+            return null; 
         } else if(primeros_acceso.contains(tokenActual.getTipoDeToken())){
             NodoAcceso nodoAcceso = acceso();
             return asignacion_llamada(nodoAcceso);
@@ -463,7 +463,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoSentencia asignacion_llamada(NodoAcceso nodoAcceso) throws IOException, ExcepcionLexica, ExcepcionSintactica{ //TODO: SEGUIR DESDE ACA
+    private NodoSentencia asignacion_llamada(NodoAcceso nodoAcceso) throws IOException, ExcepcionLexica, ExcepcionSintactica{ 
         if(primeros_tipoDeAsignacion.contains(tokenActual.getTipoDeToken())){
             NodoAsignacion nodoAsignacion = tipoDeAsignacion(nodoAcceso);
             match(TipoDeToken.punt_puntoYComa, ";");
@@ -522,8 +522,9 @@ public class AnalizadorSintactico {
     }
 
     private NodoReturn return_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+        Token tokenReturn = tokenActual;
         match(TipoDeToken.pr_return, "return");
-        NodoReturn NodoReturn = new NodoReturn();
+        NodoReturn NodoReturn = new NodoReturn(tokenReturn);
         NodoExpresion nodoExpresion = expresionOVacio();
         NodoReturn.insertarExpresion(nodoExpresion);
         return NodoReturn;

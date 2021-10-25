@@ -1,6 +1,7 @@
 package tablaDeSimbolos;
 
 import tablaDeSimbolos.tipos.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -57,6 +58,10 @@ public class Clase {
 
     public Map<String,Atributo> getHashAtributos(){
         return atributos;
+    }
+
+    public Collection<Constructor> getConstructores(){
+        return constructores.values();
     }
 
     public Collection<Metodo> getMetodos(){

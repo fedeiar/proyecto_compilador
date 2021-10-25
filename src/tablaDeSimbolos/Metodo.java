@@ -10,7 +10,6 @@ public class Metodo extends Unidad{
     private TipoDeToken formaMetodo;
     private TipoMetodo tipoMetodo;
     
-
     public Metodo(Token tokenIdMet, TipoDeToken formaMetodo, TipoMetodo tipoMetodo){
         super();
         this.tokenIdMet = tokenIdMet;

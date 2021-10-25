@@ -18,15 +18,19 @@ public class Main {
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
 
-                //creacion de la tabla de simbolos
+                // Creacion de la tabla de simbolos
                 TablaSimbolos.getInstance();
 
-                //Cuando se crea el Sintactico, se hace la primer pasada
-                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico(analizadorLexico); 
+                // Primer pasada: creación del sintáctico
+                new AnalizadorSintactico(analizadorLexico); 
 
-                //Segunda pasada
+                // Segunda pasada (tiene dos partes)
+
+                // Chequeo de declaraciones
                 TablaSimbolos.getInstance().estaBienDeclarado();
                 TablaSimbolos.getInstance().consolidar();
+
+                //TODO: aca debería ir el chequeo de sentencias, justo después del chequeo de declaraciones.
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");
 

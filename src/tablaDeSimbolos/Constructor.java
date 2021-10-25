@@ -35,5 +35,5 @@ public class Constructor extends Unidad{
         signaturaMetodo += ")";
         return signaturaMetodo;
     }
-    
+
 }
