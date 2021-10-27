@@ -19,18 +19,21 @@ public abstract class Unidad {
         lista_parametros = new ArrayList<>();
     }
 
+    public List<ParametroFormal> getListaParametros(){
+        return lista_parametros;
+    }
 
-    public void insertarParametro(String nombreParametro, ParametroFormal parametro) throws ExcepcionSemantica{
-        if(parametros.get(nombreParametro) == null){
-            parametros.put(nombreParametro, parametro);
+    public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{ //TODO: cambiar por un toString y eliminar el parametro nombreParametro
+        if(parametros.get(parametro.toString()) == null){
+            parametros.put(parametro.toString(), parametro);
             lista_parametros.add(parametro);
         } else{
             throw new ExcepcionSemantica(parametro.getTokenIdVar(), "ya existe otro parametro con el mismo nombre en la unidad");
         }
     }
 
-    public List<ParametroFormal> getListaParametros(){
-        return lista_parametros;
+    public ParametroFormal getParametroFormal(String nombreParametroFormal){
+        return parametros.get(nombreParametroFormal);
     }
 
     public boolean mismosParametros(Unidad unidad2){

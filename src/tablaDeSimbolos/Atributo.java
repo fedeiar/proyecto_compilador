@@ -23,7 +23,7 @@ public class Atributo{
         return visibilidadAtributo;
     }
 
-    public Tipo getTipoAtributo(){
+    public Tipo getTipo(){
         return tipoAtributo;
     }
 

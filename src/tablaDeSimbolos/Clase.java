@@ -52,8 +52,8 @@ public class Clase {
         return tokenIdClaseAncestro;
     }
 
-    public Collection<Atributo> getAtributos(){
-        return atributos.values();
+    public Atributo getAtributo(String nombreAtributo){
+        return atributos.get(nombreAtributo);
     }
 
     public Map<String,Atributo> getHashAtributos(){
@@ -203,7 +203,7 @@ public class Clase {
         for(Metodo metodoAncestro : claseAncestro.getMetodos()){
             Metodo metodo_en_clase = metodos.get(metodoAncestro.toString());
             if(metodo_en_clase == null){
-                this.insertarMetodo(metodoAncestro);
+                this.insertarMetodo(metodoAncestro); //TODO: tal vez haya que hacer un metodo insertarMetodoHeredado() y tener 2 estructuras, preguntar.
             } else{
                 if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
                     //no hacer nada, ya que lo redefine
@@ -211,6 +211,17 @@ public class Clase {
                     throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
                 }
             }
+        }
+    }
+
+
+    public void chequearSentencias() throws ExcepcionSemantica{
+        
+        for(Constructor constructor : constructores.values()){
+            constructor.chequearSentencias();
+        }
+        for(Metodo metodo: metodos.values()){
+            metodo.chequearSentencias();
         }
         
     }

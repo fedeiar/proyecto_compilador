@@ -28,4 +28,8 @@ public class ParametroFormal {
     public boolean mismoTipo(ParametroFormal parametroFormal){
         return tipoParametro.mismoTipo(parametroFormal.getTipo());
     }
+
+    public String toString(){
+        return tokenIdVar.getLexema();
+    }
 }
