@@ -1,6 +1,7 @@
 package tablaDeSimbolos.nodosAST;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
 
 public class NodoAsignacionDecremento extends NodoAsignacion{
     

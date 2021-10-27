@@ -9,7 +9,7 @@ public class Constructor extends Unidad{
     public Constructor(Token tokenIdClase) throws ExcepcionSemantica{
         super();
         this.tokenIdClase = tokenIdClase;
-        esDinamico = true; //TODO: esta bien?
+        esDinamico = true;
     }
 
     public Token getTokenIdClase(){

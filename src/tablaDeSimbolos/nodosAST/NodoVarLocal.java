@@ -3,18 +3,19 @@ package tablaDeSimbolos.nodosAST;
 import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.Tipo;
 
 public class NodoVarLocal extends NodoSentencia{
     
     private Token tokenIdVar;
     private Tipo tipo;
+    private Token tokenIgual;
     private NodoExpresion nodoExpresion;
 
-    public NodoVarLocal(Token tokenIdVar, Tipo tipo) throws ExcepcionSemantica{
+    public NodoVarLocal(Token tokenIdVar, Tipo tipo){
         this.tokenIdVar = tokenIdVar;
         this.tipo = tipo;
-        TablaSimbolos.getBloqueActual().insertarVarLocal(this); //TODO: esta bien?
     }
 
     public Token getToken(){
@@ -25,14 +26,18 @@ public class NodoVarLocal extends NodoSentencia{
         return tipo;
     }
 
-    public void insertarExpresion(NodoExpresion nodoExpresion){
+    public void insertarExpresion(Token tokenIgual, NodoExpresion nodoExpresion){
+        this.tokenIgual = tokenIgual;
         this.nodoExpresion = nodoExpresion;
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: seria solo eso lo que hay que chequear?
+    public void chequear() throws ExcepcionSemantica{ 
+        TablaSimbolos.getBloqueActual().insertarVarLocal(this); 
+        tipo.verificarExistenciaTipo();
+        
         if(nodoExpresion != null){
             if(!nodoExpresion.chequear().esSubtipo(tipo)){
-                throw new ExcepcionSemantica(nodoExpresion.getToken(), "el tipo de la expresion no es compatible con el tipo de la declaracion de la variable local");
+                throw new ExcepcionSemantica(tokenIgual, "el tipo de la expresion no es compatible con el tipo de la declaracion de la variable local");
             }
         }
     }

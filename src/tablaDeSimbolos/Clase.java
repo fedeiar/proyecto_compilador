@@ -220,6 +220,7 @@ public class Clase {
             constructor.chequearSentencias();
         }
         for(Metodo metodo: metodos.values()){
+            //TODO: si el atributo del metodo que indica su clase actual es igual a esta clase, chequear, sino no.
             metodo.chequearSentencias();
         }
         

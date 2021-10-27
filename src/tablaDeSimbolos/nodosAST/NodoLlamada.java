@@ -1,5 +1,7 @@
 package tablaDeSimbolos.nodosAST;
 
+import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
+
 public class NodoLlamada extends NodoSentencia{
     
 

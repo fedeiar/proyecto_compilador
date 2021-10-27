@@ -1,6 +1,7 @@
 package tablaDeSimbolos.nodosAST;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 
 public class NodoReturn extends NodoSentencia{
     

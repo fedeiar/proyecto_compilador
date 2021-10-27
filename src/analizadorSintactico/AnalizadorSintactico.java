@@ -3,6 +3,10 @@ package analizadorSintactico;
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
 import tablaDeSimbolos.nodosAST.*;
+import tablaDeSimbolos.nodosAST.NodoAsignacionExpresion;
+import tablaDeSimbolos.nodosAST.literales.*;
+import tablaDeSimbolos.nodosAST.nodosAcceso.*;
+import tablaDeSimbolos.nodosAST.nodosExpresion.*;
 import tablaDeSimbolos.tipos.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -503,18 +507,18 @@ public class AnalizadorSintactico {
         Token tokenIdVar = tokenActual;
         NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
         match(TipoDeToken.id_metVar, "identificador de variable");
-        NodoExpresion nodoExpresion = varLocalFactorizada();
-        nodoVarLocal.insertarExpresion(nodoExpresion);
+        varLocalFactorizada(nodoVarLocal);
         return nodoVarLocal;
     }
 
-    private NodoExpresion varLocalFactorizada() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private void varLocalFactorizada(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_asignacion){
+            Token tokenIgual = tokenActual;
             match(TipoDeToken.op_asignacion, "=");
-            return expresion();
+            NodoExpresion nodoExpresion = expresion();
+            nodoVarLocal.insertarExpresion(tokenIgual, nodoExpresion);
         } else if(siguientes_varLocalFactorizada.contains(tokenActual.getTipoDeToken())){
             //vacio
-            return null;
         } else{
             throw new ExcepcionSintactica("= o ;", tokenActual);
         }
@@ -541,12 +545,13 @@ public class AnalizadorSintactico {
     }
 
     private NodoIf if_() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+        Token tokenIf = tokenActual;
         match(TipoDeToken.pr_if, "if");
         match(TipoDeToken.punt_parentIzq, "(");
         NodoExpresion nodoExpresion = expresion();
         match(TipoDeToken.punt_parentDer, ")");
         NodoSentencia nodoSentenciaIf = sentencia();
-        NodoIf nodoIf = new NodoIf(nodoExpresion, nodoSentenciaIf);
+        NodoIf nodoIf = new NodoIf(tokenIf, nodoExpresion, nodoSentenciaIf);
         NodoSentencia nodoSentenciaElse = ifFactorizado();
         nodoIf.insertarSentenciaElse(nodoSentenciaElse);
         return nodoIf;
@@ -566,8 +571,7 @@ public class AnalizadorSintactico {
 
     private NodoFor for_forEach(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_varLocalFactorizada.contains(tokenActual.getTipoDeToken()) || TipoDeToken.punt_puntoYComa == tokenActual.getTipoDeToken()){
-            NodoExpresion nodoExpresionVarLocal = varLocalFactorizada();
-            nodoVarLocal.insertarExpresion(nodoExpresionVarLocal);
+            varLocalFactorizada(nodoVarLocal);
             match(TipoDeToken.punt_puntoYComa, ";");
             NodoExpresion nodoExpresionFor = expresion();
             match(TipoDeToken.punt_puntoYComa, ";");

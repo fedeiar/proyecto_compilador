@@ -1,15 +1,19 @@
 package tablaDeSimbolos.nodosAST;
 
+import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.TipoBoolean;
 
 public class NodoIf extends NodoSentencia{
     
+    private Token tokenIf;
     private NodoExpresion NodoExpresionCondicion;
     private NodoSentencia nodoSentenciaIf;
     private NodoSentencia nodoSentenciaElse;
 
-    public NodoIf(NodoExpresion condicion, NodoSentencia sentenciaIf){
+    public NodoIf(Token tokenIf, NodoExpresion condicion, NodoSentencia sentenciaIf){
+        this.tokenIf = tokenIf;
         this.NodoExpresionCondicion = condicion;
         this.nodoSentenciaIf = sentenciaIf;
     }
@@ -20,13 +24,13 @@ public class NodoIf extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{
-        if(NodoExpresionCondicion.chequear().visitarMismoTipo(new TipoBoolean())){ //TODO: esta bien asi el chequeo?
+        if(NodoExpresionCondicion.chequear().visitarMismoTipo(new TipoBoolean())){ 
             nodoSentenciaIf.chequear();
             if(nodoSentenciaElse != null){
                 nodoSentenciaElse.chequear();
             }
         } else{
-            throw new ExcepcionSemantica(NodoExpresionCondicion.getToken(), "se esperaba una expresion de tipo boolean");
+            throw new ExcepcionSemantica(tokenIf, "se esperaba una expresion de tipo boolean");
         }
     }
 }

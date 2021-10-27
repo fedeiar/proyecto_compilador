@@ -29,7 +29,7 @@ public class NodoBloque extends NodoSentencia{
         return varLocales.get(nombreVarLocal);
     }
 
-    public NodoVarLocal getVarLocalMetodo(String nombreVarLocal){ //TODO: esta bien?
+    public NodoVarLocal getVarLocalMetodo(String nombreVarLocal){ //TODO: tal vez moverlo a TablaSimbolos.
         for(NodoBloque bloque : TablaSimbolos.stackBloqueActual){
             NodoVarLocal varLocal = bloque.getVarLocalBloque(nombreVarLocal);
             if(varLocal != null){
@@ -39,19 +39,20 @@ public class NodoBloque extends NodoSentencia{
         return null;
     }
 
-    public boolean existeVarLocalEnMetodo(String nombreVarLocal){ //TODO: esta bien?
+    public boolean existeVarLocalEnMetodo(String nombreVarLocal){ //TODO: tal vez moverlo a Metodo.
         return this.getVarLocalMetodo(nombreVarLocal) != null;
     }
 
     public void insertarVarLocal(NodoVarLocal varLocal) throws ExcepcionSemantica{ //TODO: esta bien este metodo insertarVarLocales? 
+        
         if(this.existeVarLocalEnMetodo(varLocal.toString())){
-              throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
+            throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
         }
         
         if(TablaSimbolos.unidadActual.getParametroFormal(varLocal.toString()) != null){
             throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
         }
-
+        
         varLocales.put(varLocal.toString(), varLocal);
     }
 
@@ -60,6 +61,7 @@ public class NodoBloque extends NodoSentencia{
         for(NodoSentencia sentencia : sentencias){
             sentencia.chequear();
         }
+
         TablaSimbolos.desapilarBloqueActual(); //TODO: esta bien desapilarlo aca despues de chequearse?
         //TODO
     }

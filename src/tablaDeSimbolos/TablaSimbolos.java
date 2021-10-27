@@ -21,7 +21,7 @@ public class TablaSimbolos {
 
     public static Clase claseActual;
     public static Unidad unidadActual;
-    public static List<NodoBloque> stackBloqueActual; //TODO: aca está bien la pila de bloques?
+    public static List<NodoBloque> stackBloqueActual;
 
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();

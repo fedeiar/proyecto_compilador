@@ -1,7 +1,8 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.*;
+import tablaDeSimbolos.nodosAST.NodoVarLocal;
 import tablaDeSimbolos.tipos.Tipo;
 
 public class NodoAccesoVar extends NodoPrimario{
@@ -16,7 +17,7 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{  //TODO esta bien todos los chequeos? falta lo de public o private de los atributos?
+    public Tipo chequear() throws ExcepcionSemantica{  //TODO: hacer lo de public o private.
         Tipo tipoVariable;
         NodoVarLocal nodoVarLocal = TablaSimbolos.getBloqueActual().getVarLocalBloque(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
@@ -26,9 +27,15 @@ public class NodoAccesoVar extends NodoPrimario{
             if(parametroFormal != null){
                 tipoVariable = parametroFormal.getTipo();
             } else{
+                //TODO: controlar tambien lo de public o private.
                 Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
-                if(atributo != null && TablaSimbolos.unidadActual.esDinamico()){
-                    tipoVariable = atributo.getTipo();
+                if(atributo != null){
+                    if(TablaSimbolos.unidadActual.esDinamico()){
+                        tipoVariable = atributo.getTipo();
+                    }
+                    else{
+                        throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica");
+                    }
                 } else{
                     throw new ExcepcionSemantica(tokenIdVar, "la variable "+tokenIdVar.getLexema()+" no fue declarada");
                 }

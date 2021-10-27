@@ -1,6 +1,7 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 
 public class NodoExpresionParentizada extends NodoPrimario{
 
@@ -10,7 +11,4 @@ public class NodoExpresionParentizada extends NodoPrimario{
         this.nodoExpresion = nodoExpresion;
     }
 
-    public Token getToken(){ //TODO: esta bien asi?
-        return nodoExpresion.getToken();
-    }
 }

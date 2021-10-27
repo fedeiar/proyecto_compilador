@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 public abstract class NodoPrimario extends NodoAcceso{
     

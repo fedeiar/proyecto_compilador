@@ -1,8 +1,9 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import java.util.List;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 
 public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
     

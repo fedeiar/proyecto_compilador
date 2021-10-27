@@ -7,7 +7,9 @@ public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private TipoMetodo tipoMetodo;
-    
+    //TODO: un atributo que indique a la clase a la cual pertenece
+
+
     public Metodo(Token tokenIdMet, boolean esDinamico, TipoMetodo tipoMetodo){
         super();
         this.tokenIdMet = tokenIdMet;

@@ -1,6 +1,7 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.literales;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoOperando;
 
 public class NodoCaracter extends NodoOperando{
     

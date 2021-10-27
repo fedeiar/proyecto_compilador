@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosExpresion;
 import analizadorLexico.Token;
 
 public class NodoExpresionBinaria extends NodoExpresion{
