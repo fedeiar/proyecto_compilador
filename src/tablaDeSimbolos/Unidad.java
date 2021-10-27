@@ -11,6 +11,7 @@ public abstract class Unidad {
     protected Map<String, ParametroFormal> parametros;
     protected List<ParametroFormal> lista_parametros; //la lista es porque necesitamos el orden de los parametros
 
+    protected boolean esDinamico; //TODO: esta bien?
     protected NodoBloque bloque;
 
 
@@ -53,6 +54,10 @@ public abstract class Unidad {
             mismosParametros = false;
         }
         return mismosParametros;
+    }
+
+    public boolean esDinamico(){
+        return esDinamico;
     }
 
     public void estaBienDeclarado() throws ExcepcionSemantica{

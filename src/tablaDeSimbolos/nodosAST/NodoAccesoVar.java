@@ -16,7 +16,7 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ 
+    public Tipo chequear() throws ExcepcionSemantica{  //TODO esta bien todos los chequeos? falta lo de public o private de los atributos?
         Tipo tipoVariable;
         NodoVarLocal nodoVarLocal = TablaSimbolos.getBloqueActual().getVarLocalBloque(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
@@ -27,7 +27,7 @@ public class NodoAccesoVar extends NodoPrimario{
                 tipoVariable = parametroFormal.getTipo();
             } else{
                 Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
-                if(atributo != null){
+                if(atributo != null && TablaSimbolos.unidadActual.esDinamico()){
                     tipoVariable = atributo.getTipo();
                 } else{
                     throw new ExcepcionSemantica(tokenIdVar, "la variable "+tokenIdVar.getLexema()+" no fue declarada");

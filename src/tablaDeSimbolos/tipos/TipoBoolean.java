@@ -14,8 +14,8 @@ public class TipoBoolean extends TipoPrimitivo{
         return tipo.visitarMismoTipo(this);
     }
 
-    public boolean verificarCompatibilidad(TipoMetodo tipo){
-        return tipo.VisitarVerCompatibilidad(this);
+    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
+        return tipoDelAncestro.VisitarVerCompatibilidad(this);
     }
 
     public boolean VisitarVerCompatibilidad(TipoBoolean tipo){

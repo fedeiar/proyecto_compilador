@@ -52,7 +52,7 @@ public class TipoClase extends Tipo{
         return this.tokenIdClase.getLexema().equals(tipo.getTokenIdClase().getLexema());
     }
 
-    public boolean verificarCompatibilidad(TipoMetodo tipoDelAncestro){
+    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
         return tipoDelAncestro.VisitarVerCompatibilidad(this);
     }
 

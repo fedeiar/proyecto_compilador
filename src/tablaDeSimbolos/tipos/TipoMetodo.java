@@ -23,7 +23,7 @@ public abstract class TipoMetodo {
 
     //Todos estos metodos seran redefinidos a conveniencia (devolver true)
 
-    public abstract boolean verificarCompatibilidad(TipoMetodo tipo);
+    public abstract boolean esSubtipo(TipoMetodo tipoDelAncestro);
 
 
     public boolean VisitarVerCompatibilidad(TipoClase tipo){

@@ -14,7 +14,6 @@ import analizadorLexico.Token;
 
 public class Clase {
     
-
     private Token tokenIdClase;
     private Token tokenIdClaseAncestro;
     private Map<String, Constructor> constructores;

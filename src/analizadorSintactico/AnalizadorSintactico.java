@@ -262,7 +262,7 @@ public class AnalizadorSintactico {
     }
 
     private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
-        TipoDeToken formaMetodo = formaMetodo();
+        boolean formaMetodo = formaMetodo();
         TipoMetodo tipoMetodo = tipoMetodo();
         Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
@@ -343,15 +343,14 @@ public class AnalizadorSintactico {
         }
     }
 
-    private TipoDeToken formaMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    // Si es estatico es falso, si es dinamico es verdadero.
+    private boolean formaMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_static){
-            TipoDeToken formaMetodo = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_static, "static");
-            return formaMetodo;
+            return false;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_dynamic){
-            TipoDeToken formaMetodo = tokenActual.getTipoDeToken();
             match(TipoDeToken.pr_dynamic, "dynamic");
-            return formaMetodo;
+            return true;
         } else{
             throw new ExcepcionSintactica("static o dynamic", tokenActual);
         }
