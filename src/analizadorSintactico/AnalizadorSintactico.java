@@ -270,7 +270,7 @@ public class AnalizadorSintactico {
         TipoMetodo tipoMetodo = tipoMetodo();
         Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
-        Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo);
+        Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo, TablaSimbolos.claseActual.getTokenIdClase()); //TODO: esta bien obtener el tokenIdClase asi?
         TablaSimbolos.unidadActual = metodo;
         argsFormales();
         TablaSimbolos.claseActual.insertarMetodo(metodo);
@@ -414,7 +414,7 @@ public class AnalizadorSintactico {
 
     //aca comienzan las sentencias
 
-    private NodoBloque bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{   
+    private NodoBloque bloque() throws IOException, ExcepcionLexica, ExcepcionSintactica{   
         match(TipoDeToken.punt_llaveIzq, "{");
         NodoBloque nodoBloque = new NodoBloque();
         listaSentencias(nodoBloque);
@@ -422,7 +422,7 @@ public class AnalizadorSintactico {
         return nodoBloque;
     }
 
-    private void listaSentencias(NodoBloque nodoBloque) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private void listaSentencias(NodoBloque nodoBloque) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_sentencia.contains(tokenActual.getTipoDeToken())){
             NodoSentencia nodoSentencia = sentencia();
             nodoBloque.insertarSentencia(nodoSentencia);
@@ -434,7 +434,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoSentencia sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private NodoSentencia sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
             return null; 
@@ -502,7 +502,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoVarLocal varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private NodoVarLocal varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         Tipo tipo = tipo();
         Token tokenIdVar = tokenActual;
         NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
@@ -544,7 +544,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoIf if_() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private NodoIf if_() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         Token tokenIf = tokenActual;
         match(TipoDeToken.pr_if, "if");
         match(TipoDeToken.punt_parentIzq, "(");
@@ -557,7 +557,7 @@ public class AnalizadorSintactico {
         return nodoIf;
     }
 
-    private NodoSentencia ifFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private NodoSentencia ifFactorizado() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_else){
             match(TipoDeToken.pr_else, "else");
             return sentencia();
@@ -569,7 +569,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoFor for_forEach(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private NodoFor for_forEach(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_varLocalFactorizada.contains(tokenActual.getTipoDeToken()) || TipoDeToken.punt_puntoYComa == tokenActual.getTipoDeToken()){
             varLocalFactorizada(nodoVarLocal);
             match(TipoDeToken.punt_puntoYComa, ";");

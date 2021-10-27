@@ -190,8 +190,11 @@ public class Clase {
         for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = atributoAncestro.getKey();
             Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);
-            if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){
-                this.insertarAtributo(atributoAncestro.getKey(), atributoAncestro.getValue());
+            if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){ //TODO: asi esta bien?
+                if(atributoAncestro.getValue().esPublic())
+                    this.insertarAtributo(atributoAncestro.getKey(), atributoAncestro.getValue());
+                else
+                    this.insertarAtributo("$"+atributoAncestro.getKey(), atributoAncestro.getValue()); //el $ quiere decir que no podemos usarlo ya que es privado
             } else{
                 this.insertarAtributo("#"+atributoAncestro.getKey(), atributoAncestro.getValue());
             }
@@ -215,15 +218,13 @@ public class Clase {
 
 
     public void chequearSentencias() throws ExcepcionSemantica{
-        
         for(Constructor constructor : constructores.values()){
             constructor.chequearSentencias();
         }
         for(Metodo metodo: metodos.values()){
-            //TODO: si el atributo del metodo que indica su clase actual es igual a esta clase, chequear, sino no.
-            metodo.chequearSentencias();
+            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())) //TODO: esta bien la comparacion?
+                metodo.chequearSentencias();
         }
-        
     }
 
 

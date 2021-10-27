@@ -8,13 +8,15 @@ public class Metodo extends Unidad{
     private Token tokenIdMet;
     private TipoMetodo tipoMetodo;
     //TODO: un atributo que indique a la clase a la cual pertenece
+    private Token tokenClaseContenedora;
 
 
-    public Metodo(Token tokenIdMet, boolean esDinamico, TipoMetodo tipoMetodo){
+    public Metodo(Token tokenIdMet, boolean esDinamico, TipoMetodo tipoMetodo, Token claseContenedora){
         super();
         this.tokenIdMet = tokenIdMet;
         this.esDinamico = esDinamico;
         this.tipoMetodo = tipoMetodo;
+        this.tokenClaseContenedora = claseContenedora;
     }
 
     public Token getTokenIdMet(){
@@ -25,7 +27,9 @@ public class Metodo extends Unidad{
         return tipoMetodo;
     }
 
-    
+    public Token getTokenClaseContenedora(){
+        return tokenClaseContenedora;
+    }
 
     public boolean equalsSignatura(Metodo metodo){
         boolean mismaFormaMetodo = this.esDinamico == metodo.esDinamico();

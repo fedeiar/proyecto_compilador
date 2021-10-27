@@ -23,6 +23,10 @@ public class Atributo{
         return visibilidadAtributo;
     }
 
+    public boolean esPublic(){ //TODO: asi estaria bien para saber si es public o private?
+        return visibilidadAtributo.toString().equals("pr_public");
+    }
+
     public Tipo getTipo(){
         return tipoAtributo;
     }

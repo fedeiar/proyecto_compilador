@@ -17,7 +17,7 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{  //TODO: hacer lo de public o private.
+    public Tipo chequear() throws ExcepcionSemantica{  
         Tipo tipoVariable;
         NodoVarLocal nodoVarLocal = TablaSimbolos.getBloqueActual().getVarLocalBloque(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
@@ -27,7 +27,7 @@ public class NodoAccesoVar extends NodoPrimario{
             if(parametroFormal != null){
                 tipoVariable = parametroFormal.getTipo();
             } else{
-                //TODO: controlar tambien lo de public o private.
+                //TODO: con la modificacion que se hizo en consolidarAtributos() entonces ya alcanzaria?
                 Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
                 if(atributo != null){
                     if(TablaSimbolos.unidadActual.esDinamico()){

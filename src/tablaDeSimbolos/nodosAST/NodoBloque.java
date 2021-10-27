@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class NodoBloque extends NodoSentencia{
     
     private List<NodoSentencia> sentencias;
-    private Map<String, NodoVarLocal> varLocales; //TODO: esta bien esto? luego insertamos las var locales al crearse?
+    private Map<String, NodoVarLocal> varLocales;
 
     public NodoBloque(){
         sentencias = new ArrayList<>();
@@ -25,7 +25,7 @@ public class NodoBloque extends NodoSentencia{
         }
     }
 
-    public NodoVarLocal getVarLocalBloque(String nombreVarLocal){ //TODO: esta bien?
+    public NodoVarLocal getVarLocalBloque(String nombreVarLocal){
         return varLocales.get(nombreVarLocal);
     }
 
@@ -43,7 +43,7 @@ public class NodoBloque extends NodoSentencia{
         return this.getVarLocalMetodo(nombreVarLocal) != null;
     }
 
-    public void insertarVarLocal(NodoVarLocal varLocal) throws ExcepcionSemantica{ //TODO: esta bien este metodo insertarVarLocales? 
+    public void insertarVarLocal(NodoVarLocal varLocal) throws ExcepcionSemantica{
         
         if(this.existeVarLocalEnMetodo(varLocal.toString())){
             throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
@@ -57,12 +57,12 @@ public class NodoBloque extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{
-        TablaSimbolos.apilarBloqueActual(this); //TODO esta bien? entonces de esta manera tenemos siempre al tope el bloque más anidado.
+        TablaSimbolos.apilarBloqueActual(this); 
         for(NodoSentencia sentencia : sentencias){
             sentencia.chequear();
         }
 
-        TablaSimbolos.desapilarBloqueActual(); //TODO: esta bien desapilarlo aca despues de chequearse?
+        TablaSimbolos.desapilarBloqueActual(); 
         //TODO
     }
 
