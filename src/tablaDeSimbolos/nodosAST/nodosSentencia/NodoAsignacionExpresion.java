@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;

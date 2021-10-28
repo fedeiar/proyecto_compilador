@@ -3,10 +3,21 @@ package analizadorSintactico;
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
 import tablaDeSimbolos.nodosAST.*;
-import tablaDeSimbolos.nodosAST.NodoAsignacionExpresion;
 import tablaDeSimbolos.nodosAST.literales.*;
 import tablaDeSimbolos.nodosAST.nodosAcceso.*;
 import tablaDeSimbolos.nodosAST.nodosExpresion.*;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoAsignacion;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoAsignacionDecremento;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoAsignacionExpresion;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoAsignacionIncremento;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoFor;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoIf;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoLlamada;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoPrimarioCasting;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoReturn;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoSentencia;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -597,9 +608,9 @@ public class AnalizadorSintactico {
 
     private NodoExpresion expresionRecursiva(NodoExpresion nodoExpresionLadoIzq) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_operadorBinario.contains(tokenActual.getTipoDeToken())){
-            Token tokenOperadorBinario = operadorBinario();
+            NodoExpresionBinaria nodoExpresionBinaria = operadorBinario();
             NodoExpresion nodoExpresionLadoDer = expresionUnaria();
-            NodoExpresionBinaria nodoExpresionBinaria = new NodoExpresionBinaria(tokenOperadorBinario, nodoExpresionLadoIzq, nodoExpresionLadoDer);
+            nodoExpresionBinaria.setExpresiones(nodoExpresionLadoIzq, nodoExpresionLadoDer);
             NodoExpresion nodoExpresion = expresionRecursiva(nodoExpresionBinaria);
             return nodoExpresion;
         } else if (siguientes_expresionRecursiva.contains(tokenActual.getTipoDeToken())){
@@ -610,59 +621,59 @@ public class AnalizadorSintactico {
         }
     }
 
-    private Token operadorBinario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoExpresionBinaria operadorBinario() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_or){
             Token tokenOr = tokenActual;
             match(TipoDeToken.op_or, "||");
-            return tokenOr;
+            return new NodoExpresionBinariaOr(tokenOr);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_and){
             Token tokenAnd = tokenActual;
             match(TipoDeToken.op_and, "&&");
-            return tokenAnd;
+            return new NodoExpresionBinariaAnd(tokenAnd);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_igualdad){
             Token tokenIgualdad = tokenActual;
             match(TipoDeToken.op_igualdad, "==");
-            return tokenIgualdad;
+            return new NodoExpresionBinariaIgual(tokenIgualdad);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_notIgual){
             Token tokenNotIgual = tokenActual;
             match(TipoDeToken.op_notIgual, "!=");
-            return tokenNotIgual;
+            return new NodoExpresionBinariaNotIgual(tokenNotIgual);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menor){
             Token tokenMenor = tokenActual;
             match(TipoDeToken.op_menor, "<");
-            return tokenMenor;
+            return new NodoExpresionBinariaMenor(tokenMenor);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mayor){
             Token tokenMayor = tokenActual;
             match(TipoDeToken.op_mayor, ">");
-            return tokenMayor;
+            return new NodoExpresionBinariaMayor(tokenMayor);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menorOIgual){
             Token tokenMenorOIgual = tokenActual;
             match(TipoDeToken.op_menorOIgual, "<=");
-            return tokenMenorOIgual;
+            return new NodoExpresionBinariaMenorOIgual(tokenMenorOIgual);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mayorOIgual){
             Token tokenMayorOIgual = tokenActual;
             match(TipoDeToken.op_mayorOIgual, ">=");
-            return tokenMayorOIgual;
+            return new NodoExpresionBinariaMayorOIgual(tokenMayorOIgual);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_mas){
             Token tokenMas = tokenActual;
             match(TipoDeToken.op_mas, "+");
-            return tokenMas;
+            return new NodoExpresionBinariaSuma(tokenMas);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_menos){
             Token tokenMenos = tokenActual;
             match(TipoDeToken.op_menos, "-");
-            return tokenMenos;
+            return new NodoExpresionBinariaResta(tokenMenos);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_multiplicacion){
             Token tokenMultiplicacion = tokenActual;
             match(TipoDeToken.op_multiplicacion, "*");
-            return tokenMultiplicacion;
+            return new NodoExpresionBinariaMultiplicacion(tokenMultiplicacion);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_division){
             Token tokenDivision = tokenActual;
             match(TipoDeToken.op_division, "/");
-            return tokenDivision;
+            return new NodoExpresionBinariaDivision(tokenDivision);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_modulo){
             Token tokenModulo = tokenActual;
             match(TipoDeToken.op_modulo, "%");
-            return tokenModulo;
+            return new NodoExpresionBinariaModulo(tokenModulo);
         } else{
             throw new ExcepcionSintactica("un operador binario", tokenActual);
         }

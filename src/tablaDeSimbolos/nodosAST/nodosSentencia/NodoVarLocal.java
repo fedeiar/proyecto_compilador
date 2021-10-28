@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
@@ -31,7 +31,7 @@ public class NodoVarLocal extends NodoSentencia{
         this.nodoExpresion = nodoExpresion;
     }
 
-    public void chequear() throws ExcepcionSemantica{ 
+    public void chequear() throws ExcepcionSemantica{ //TODO: ademas de el control de subtipo, habría que controlar que si el tipo de la varLocal es de tipo clase, la expresion puede ser null?
         TablaSimbolos.getBloqueActual().insertarVarLocal(this); 
         tipo.verificarExistenciaTipo();
         

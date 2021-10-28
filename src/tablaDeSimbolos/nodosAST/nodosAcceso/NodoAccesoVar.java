@@ -2,7 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.*;
-import tablaDeSimbolos.nodosAST.NodoVarLocal;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.Tipo;
 
 public class NodoAccesoVar extends NodoPrimario{
@@ -19,10 +19,10 @@ public class NodoAccesoVar extends NodoPrimario{
 
     public Tipo chequear() throws ExcepcionSemantica{  
         Tipo tipoVariable;
-        NodoVarLocal nodoVarLocal = TablaSimbolos.getBloqueActual().getVarLocalBloque(tokenIdVar.getLexema());
+        NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
             tipoVariable = nodoVarLocal.getTipo();
-        } else {
+        } else{
             ParametroFormal parametroFormal = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
             if(parametroFormal != null){
                 tipoVariable = parametroFormal.getTipo();

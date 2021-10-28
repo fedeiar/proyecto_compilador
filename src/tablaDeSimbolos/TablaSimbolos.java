@@ -1,6 +1,7 @@
 package tablaDeSimbolos;
 
-import tablaDeSimbolos.nodosAST.NodoBloque;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
 
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ public class TablaSimbolos {
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
         stackBloqueActual = new ArrayList<NodoBloque>();
-
 
         try{
             Metodo metodo;
@@ -126,7 +126,7 @@ public class TablaSimbolos {
     }
 
     
-    //chequeo de declaraciones
+    // Chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         for(Clase clase : clases.values()){
@@ -161,11 +161,15 @@ public class TablaSimbolos {
         }
     }
 
+    // Chequeo de sentencias
+
     public void chequeoSentencias() throws ExcepcionSemantica{ 
         for(Clase clase : clases.values()){
             clase.chequearSentencias();
         }
     }
+
+    // Operaciones sobre el bloque actual
 
     public static void apilarBloqueActual(NodoBloque bloque){ 
         stackBloqueActual.add(0, bloque);
@@ -177,5 +181,15 @@ public class TablaSimbolos {
 
     public static NodoBloque getBloqueActual(){ 
         return stackBloqueActual.get(0);
+    }
+
+    public static NodoVarLocal getVarLocalUnidadActual(String nombreVarLocal){ //TODO: aca esta bien?
+        for(NodoBloque bloque : stackBloqueActual){
+            NodoVarLocal varLocal = bloque.getVarLocalBloque(nombreVarLocal);
+            if(varLocal != null){
+                return varLocal;
+            }
+        }
+        return null;
     }
 }

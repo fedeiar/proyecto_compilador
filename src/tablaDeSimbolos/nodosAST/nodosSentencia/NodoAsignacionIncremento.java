@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;

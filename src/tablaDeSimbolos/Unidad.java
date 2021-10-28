@@ -1,6 +1,8 @@
 package tablaDeSimbolos;
 
 import tablaDeSimbolos.nodosAST.*;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -70,7 +72,8 @@ public abstract class Unidad {
         this.bloque = bloque;
     }
 
-    public void chequearSentencias() throws ExcepcionSemantica{ //TODO: recordar que para los metodos deben chequearse solamente una vez en el lugar donde estan declarados y en ningun otro lugar. Hacerlo
+    public void chequearSentencias() throws ExcepcionSemantica{
+        TablaSimbolos.unidadActual = this;
         bloque.chequear();
     }
     

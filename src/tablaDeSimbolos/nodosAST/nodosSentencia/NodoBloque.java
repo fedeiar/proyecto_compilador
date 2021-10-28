@@ -1,4 +1,4 @@
-package tablaDeSimbolos.nodosAST;
+package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import java.util.List;
 import java.util.Map;
@@ -29,23 +29,8 @@ public class NodoBloque extends NodoSentencia{
         return varLocales.get(nombreVarLocal);
     }
 
-    public NodoVarLocal getVarLocalMetodo(String nombreVarLocal){ //TODO: tal vez moverlo a TablaSimbolos.
-        for(NodoBloque bloque : TablaSimbolos.stackBloqueActual){
-            NodoVarLocal varLocal = bloque.getVarLocalBloque(nombreVarLocal);
-            if(varLocal != null){
-                return varLocal;
-            }
-        }
-        return null;
-    }
-
-    public boolean existeVarLocalEnMetodo(String nombreVarLocal){ //TODO: tal vez moverlo a Metodo.
-        return this.getVarLocalMetodo(nombreVarLocal) != null;
-    }
-
     public void insertarVarLocal(NodoVarLocal varLocal) throws ExcepcionSemantica{
-        
-        if(this.existeVarLocalEnMetodo(varLocal.toString())){
+        if(TablaSimbolos.getVarLocalUnidadActual(varLocal.toString()) != null){
             throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
         }
         

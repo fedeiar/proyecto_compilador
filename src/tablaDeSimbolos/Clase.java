@@ -218,12 +218,14 @@ public class Clase {
 
 
     public void chequearSentencias() throws ExcepcionSemantica{
+        TablaSimbolos.claseActual = this;
         for(Constructor constructor : constructores.values()){
             constructor.chequearSentencias();
         }
         for(Metodo metodo: metodos.values()){
-            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())) //TODO: esta bien la comparacion?
+            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){ //TODO: esta bien la comparacion?
                 metodo.chequearSentencias();
+            }
         }
     }
 
