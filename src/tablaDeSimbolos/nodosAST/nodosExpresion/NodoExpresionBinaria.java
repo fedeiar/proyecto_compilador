@@ -3,9 +3,9 @@ import analizadorLexico.Token;
 
 public abstract class NodoExpresionBinaria extends NodoExpresion{
     
-    private Token tokenOperadorBinario;
-    private NodoExpresion nodoExpresionLadoIzq;
-    private NodoExpresion nodoExpresionLadoDer;
+    protected Token tokenOperadorBinario;
+    protected NodoExpresion nodoExpresionLadoIzq;
+    protected NodoExpresion nodoExpresionLadoDer;
     
     public NodoExpresionBinaria(Token tokenOperadorBinario){
         this.tokenOperadorBinario = tokenOperadorBinario;

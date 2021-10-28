@@ -53,17 +53,17 @@ public class TipoClase extends Tipo{
     }
 
     public boolean esSubtipo(TipoMetodo tipoDelAncestro){
-        return tipoDelAncestro.VisitarVerCompatibilidad(this);
+        return tipoDelAncestro.visitarEsSubtipo(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoClase subtipo){ 
+    public boolean visitarEsSubtipo(TipoClase subtipo){ 
         if(this.tokenIdClase.getLexema().equals(subtipo.getTokenIdClase().getLexema())){
             return true;
         } else {
             Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
             Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
             if(tokenClasePadreDelSubtipo != null){
-                return VisitarVerCompatibilidad(new TipoClase(tokenClasePadreDelSubtipo));
+                return visitarEsSubtipo(new TipoClase(tokenClasePadreDelSubtipo));
             }else{
                 return false;
             }

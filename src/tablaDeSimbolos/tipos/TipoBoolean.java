@@ -15,10 +15,10 @@ public class TipoBoolean extends TipoPrimitivo{
     }
 
     public boolean esSubtipo(TipoMetodo tipoDelAncestro){
-        return tipoDelAncestro.VisitarVerCompatibilidad(this);
+        return tipoDelAncestro.visitarEsSubtipo(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoBoolean tipo){
+    public boolean visitarEsSubtipo(TipoBoolean tipo){
         return true;
     }
 }

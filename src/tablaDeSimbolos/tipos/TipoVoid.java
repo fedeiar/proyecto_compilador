@@ -15,10 +15,10 @@ public class TipoVoid extends TipoMetodo{
     }
 
     public boolean esSubtipo(TipoMetodo tipoDelAncestro){
-        return tipoDelAncestro.VisitarVerCompatibilidad(this);
+        return tipoDelAncestro.visitarEsSubtipo(this);
     }
 
-    public boolean VisitarVerCompatibilidad(TipoVoid tipo){
+    public boolean visitarEsSubtipo(TipoVoid tipo){
         return true;
     }
 }

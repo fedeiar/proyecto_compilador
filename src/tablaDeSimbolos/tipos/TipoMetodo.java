@@ -26,27 +26,27 @@ public abstract class TipoMetodo {
     public abstract boolean esSubtipo(TipoMetodo tipoDelAncestro);
 
 
-    public boolean VisitarVerCompatibilidad(TipoClase tipo){
+    public boolean visitarEsSubtipo(TipoClase tipo){
         return false;
     }
     
-    public boolean VisitarVerCompatibilidad(TipoBoolean tipo){
+    public boolean visitarEsSubtipo(TipoBoolean tipo){
         return false;
     }
 
-    public boolean VisitarVerCompatibilidad(TipoChar tipo){
+    public boolean visitarEsSubtipo(TipoChar tipo){
         return false;
     }
 
-    public boolean VisitarVerCompatibilidad(TipoInt tipo){
+    public boolean visitarEsSubtipo(TipoInt tipo){
         return false;
     }
 
-    public boolean VisitarVerCompatibilidad(TipoString tipo){
+    public boolean visitarEsSubtipo(TipoString tipo){
         return false;
     }
 
-    public boolean VisitarVerCompatibilidad(TipoVoid tipo){
+    public boolean visitarEsSubtipo(TipoVoid tipo){
         return false;
     }
 
