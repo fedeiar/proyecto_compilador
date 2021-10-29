@@ -9,4 +9,6 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
     public NodoAccesoVarEncadenada(Token tokenIdVar){
         this.tokenIdVar = tokenIdVar;
     }
+
+    
 }

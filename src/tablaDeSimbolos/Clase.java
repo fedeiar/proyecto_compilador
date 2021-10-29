@@ -63,8 +63,16 @@ public class Clase {
         return constructores.values();
     }
 
+    public Constructor getConstructor(String nombreConstructorYParams){ //TODO: esta bien asi de simple?
+        return constructores.get(nombreConstructorYParams);
+    }
+
     public Collection<Metodo> getMetodos(){
         return metodos.values();
+    }
+
+    public Metodo getMetodo(String nombreMetodoYparams){ //TODO: esta bien asi de simple? teniendo en cuenta q le paso algo tipo m1(int,char)
+        return metodos.get(nombreMetodoYparams);
     }
 
     public boolean estaConsolidado(){
@@ -205,7 +213,7 @@ public class Clase {
         for(Metodo metodoAncestro : claseAncestro.getMetodos()){
             Metodo metodo_en_clase = metodos.get(metodoAncestro.toString());
             if(metodo_en_clase == null){
-                this.insertarMetodo(metodoAncestro); //TODO: tal vez haya que hacer un metodo insertarMetodoHeredado() y tener 2 estructuras, preguntar.
+                this.insertarMetodo(metodoAncestro);
             } else{
                 if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
                     //no hacer nada, ya que lo redefine

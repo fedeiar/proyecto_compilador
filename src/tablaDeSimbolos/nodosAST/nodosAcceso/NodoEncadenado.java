@@ -2,6 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoMetodo;
 
 public abstract class NodoEncadenado {
     
@@ -11,5 +12,5 @@ public abstract class NodoEncadenado {
         this.nodoEncadenado = nodoEncadenado;
     }
 
-    public abstract Tipo chequear(Tipo tipo) throws ExcepcionSemantica;
+    public abstract Tipo chequear(TipoMetodo tipo) throws ExcepcionSemantica;
 }

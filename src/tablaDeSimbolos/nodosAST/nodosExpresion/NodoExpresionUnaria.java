@@ -14,7 +14,7 @@ public class NodoExpresionUnaria extends NodoExpresion{
         this.nodoOperando = nodoOperando;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien hecho?
+    public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien hecho?
         if(tokenOperador != null){
             if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
                 if(nodoOperando.chequear().mismoTipo(new TipoInt())){

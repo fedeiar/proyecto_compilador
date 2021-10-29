@@ -16,7 +16,7 @@ public class NodoPrimarioCasting extends NodoAcceso{
     public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         TipoClase tipoCasting = new TipoClase(tokenIdClaseCasting);
         tipoCasting.verificarExistenciaTipo();
-        Tipo tipoNodoPrimario = nodoPrimario.chequear();
+        TipoMetodo tipoNodoPrimario = nodoPrimario.chequear();
         if(! tipoCasting.esSubtipo(tipoNodoPrimario)){
             throw new ExcepcionSemantica(tokenIdClaseCasting, "casting invalido: la clase "+tokenIdClaseCasting.getLexema()+" debe ser un subtipo del acceso");
         }

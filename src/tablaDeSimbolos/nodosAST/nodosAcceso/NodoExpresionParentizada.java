@@ -13,7 +13,7 @@ public class NodoExpresionParentizada extends NodoPrimario{
         this.nodoExpresion = nodoExpresion;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien?
+    public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         return nodoExpresion.chequear();
     }
 
