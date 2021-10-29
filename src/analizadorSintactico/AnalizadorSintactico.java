@@ -452,13 +452,14 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_if){
             return if_();
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_for){
+            Token tokenFor = tokenActual;
             match(TipoDeToken.pr_for, "for");
             match(TipoDeToken.punt_parentIzq, "(");
             Tipo tipo = tipo();
             Token tokenIdVar = tokenActual;
             match(TipoDeToken.id_metVar, "identificador de variable");
             NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
-            return for_forEach(nodoVarLocal);
+            return for_forEach(tokenFor, nodoVarLocal);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_llaveIzq){
             return bloque();
         } else{
@@ -569,7 +570,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoFor for_forEach(NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoFor for_forEach(Token tokenFor, NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_varLocalFactorizada.contains(tokenActual.getTipoDeToken()) || TipoDeToken.punt_puntoYComa == tokenActual.getTipoDeToken()){
             varLocalFactorizada(nodoVarLocal);
             match(TipoDeToken.punt_puntoYComa, ";");
@@ -578,7 +579,7 @@ public class AnalizadorSintactico {
             NodoAsignacion nodoAsignacion = asignacion();
             match(TipoDeToken.punt_parentDer, ")");
             NodoSentencia nodoSentencia = sentencia();
-            return new NodoFor(nodoVarLocal, nodoExpresionFor, nodoAsignacion, nodoSentencia);
+            return new NodoFor(tokenFor, nodoVarLocal, nodoExpresionFor, nodoAsignacion, nodoSentencia);
         } else if(TipoDeToken.punt_dosPuntos == tokenActual.getTipoDeToken()){ //TODO: el else es para el forEach. Completar Genericidad primero si se quiere este logro en la etapa 4.
             match(TipoDeToken.punt_dosPuntos, ":");
             expresion();

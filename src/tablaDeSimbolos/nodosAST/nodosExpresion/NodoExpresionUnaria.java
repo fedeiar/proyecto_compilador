@@ -1,7 +1,5 @@
 package tablaDeSimbolos.nodosAST.nodosExpresion;
 
-import javax.sound.midi.MidiChannel;
-
 import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.tipos.*;

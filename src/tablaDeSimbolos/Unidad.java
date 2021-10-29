@@ -2,6 +2,8 @@ package tablaDeSimbolos;
 
 import tablaDeSimbolos.nodosAST.*;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
+import tablaDeSimbolos.tipos.TipoMetodo;
+import tablaDeSimbolos.tipos.TipoVoid;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,10 @@ public abstract class Unidad {
 
     public List<ParametroFormal> getListaParametros(){
         return lista_parametros;
+    }
+
+    public TipoMetodo getTipoMetodo(){ //TODO: esto está bien? los constructores tienen return void?
+        return new TipoVoid();
     }
 
     public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{ //TODO: cambiar por un toString y eliminar el parametro nombreParametro

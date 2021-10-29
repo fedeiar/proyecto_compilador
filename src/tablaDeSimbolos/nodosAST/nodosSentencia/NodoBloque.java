@@ -41,14 +41,12 @@ public class NodoBloque extends NodoSentencia{
         varLocales.put(varLocal.toString(), varLocal);
     }
 
-    public void chequear() throws ExcepcionSemantica{
+    public void chequear() throws ExcepcionSemantica{ //TODO: asi esta bien no hay nada mas que chequear aca?
         TablaSimbolos.apilarBloqueActual(this); 
         for(NodoSentencia sentencia : sentencias){
             sentencia.chequear();
         }
-
-        TablaSimbolos.desapilarBloqueActual(); 
-        //TODO
+        TablaSimbolos.desapilarBloqueActual();
     }
 
     

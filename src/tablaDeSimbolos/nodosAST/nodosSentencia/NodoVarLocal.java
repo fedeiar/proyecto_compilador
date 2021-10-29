@@ -9,13 +9,13 @@ import tablaDeSimbolos.tipos.Tipo;
 public class NodoVarLocal extends NodoSentencia{
     
     private Token tokenIdVar;
-    private Tipo tipo;
+    private Tipo tipoVarLocal;
     private Token tokenIgual;
     private NodoExpresion nodoExpresion;
 
     public NodoVarLocal(Token tokenIdVar, Tipo tipo){
         this.tokenIdVar = tokenIdVar;
-        this.tipo = tipo;
+        this.tipoVarLocal = tipo;
     }
 
     public Token getToken(){
@@ -23,7 +23,7 @@ public class NodoVarLocal extends NodoSentencia{
     }
 
     public Tipo getTipo(){
-        return tipo;
+        return tipoVarLocal;
     }
 
     public void insertarExpresion(Token tokenIgual, NodoExpresion nodoExpresion){
@@ -32,11 +32,12 @@ public class NodoVarLocal extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{ //TODO: ademas de el control de subtipo, habría que controlar que si el tipo de la varLocal es de tipo clase, la expresion puede ser null?
+        tipoVarLocal.verificarExistenciaTipo();
+
         TablaSimbolos.getBloqueActual().insertarVarLocal(this); 
-        tipo.verificarExistenciaTipo();
         
         if(nodoExpresion != null){
-            if(!nodoExpresion.chequear().esSubtipo(tipo)){
+            if(!nodoExpresion.chequear().esSubtipo(tipoVarLocal)){
                 throw new ExcepcionSemantica(tokenIgual, "el tipo de la expresion no es compatible con el tipo de la declaracion de la variable local");
             }
         }
