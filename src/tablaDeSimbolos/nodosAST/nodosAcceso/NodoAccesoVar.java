@@ -4,6 +4,7 @@ import analizadorLexico.Token;
 import tablaDeSimbolos.*;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoMetodo;
 
 public class NodoAccesoVar extends NodoPrimario{
     
@@ -17,7 +18,7 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{  
+    public TipoMetodo chequear() throws ExcepcionSemantica{  
         Tipo tipoVariable;
         NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
@@ -43,7 +44,7 @@ public class NodoAccesoVar extends NodoPrimario{
         }
 
         if(nodoEncadenado != null){
-            return nodoEncadenado.chequear(tipoVariable);
+            return nodoEncadenado.chequear(tipoVariable); //TODO: puede ser que tambien haya que pasar el token por si hay error?
         }
         return tipoVariable;
     }

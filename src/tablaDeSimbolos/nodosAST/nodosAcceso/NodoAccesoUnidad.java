@@ -15,7 +15,7 @@ public abstract class NodoAccesoUnidad extends NodoPrimario{
         this.listaParametrosActuales = listaParametrosActuales;
     }
 
-    protected String toStringLlamada(Token tokenId) throws ExcepcionSemantica{ //TODO: habria que chequear en algun momento aca que exista el Tipo del parametro actual? o eso ya se hace en pActual.chequear()?
+    public static String toStringNombreUnidad(Token tokenId, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{ //TODO: habria que chequear en algun momento aca que exista el Tipo del parametro actual? o eso ya se hace en pActual.chequear()?
         String signaturaUnidad = tokenId.getLexema() + "(";
         for(NodoExpresion parametroActual : listaParametrosActuales){
             TipoMetodo tipoParametroActual = parametroActual.chequear();

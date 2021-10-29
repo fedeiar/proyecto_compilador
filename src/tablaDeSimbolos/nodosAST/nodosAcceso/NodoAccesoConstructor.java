@@ -19,7 +19,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     }
 
     public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        String nombreConstructor = super.toStringLlamada(tokenIdClase);
+        String nombreConstructor = NodoAccesoUnidad.toStringNombreUnidad(tokenIdClase, listaParametrosActuales);
         Constructor constructor = TablaSimbolos.claseActual.getConstructor(nombreConstructor); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(constructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado");

@@ -2,7 +2,6 @@ package analizadorSintactico;
 
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
-import tablaDeSimbolos.nodosAST.*;
 import tablaDeSimbolos.nodosAST.literales.*;
 import tablaDeSimbolos.nodosAST.nodosAcceso.*;
 import tablaDeSimbolos.nodosAST.nodosExpresion.*;

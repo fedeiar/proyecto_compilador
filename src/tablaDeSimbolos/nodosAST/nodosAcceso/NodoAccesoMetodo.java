@@ -18,7 +18,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
     }
 
     public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        String nombreMetodo = super.toStringLlamada(tokenIdMet);
+        String nombreMetodo = NodoAccesoUnidad.toStringNombreUnidad(tokenIdMet, listaParametrosActuales);
         Metodo metodo = TablaSimbolos.claseActual.getMetodo(nombreMetodo); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodo == null){
             throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado");

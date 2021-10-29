@@ -12,5 +12,5 @@ public abstract class NodoEncadenado {
         this.nodoEncadenado = nodoEncadenado;
     }
 
-    public abstract Tipo chequear(TipoMetodo tipo) throws ExcepcionSemantica;
+    public abstract TipoMetodo chequear(TipoMetodo tipo) throws ExcepcionSemantica;
 }

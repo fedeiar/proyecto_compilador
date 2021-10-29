@@ -193,7 +193,7 @@ public class Clase {
         }
     }
 
-    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{
+    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preg si esta bien como se actua con los atributos heredados privados.
         //en esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
         for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = atributoAncestro.getKey();
