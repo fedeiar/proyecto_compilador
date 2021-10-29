@@ -24,7 +24,7 @@ public class NodoIf extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{
-        if(NodoExpresionCondicion.chequear().visitarMismoTipo(new TipoBoolean())){ 
+        if(NodoExpresionCondicion.chequear().mismoTipo(new TipoBoolean())){ 
             nodoSentenciaIf.chequear();
             if(nodoSentenciaElse != null){
                 nodoSentenciaElse.chequear();

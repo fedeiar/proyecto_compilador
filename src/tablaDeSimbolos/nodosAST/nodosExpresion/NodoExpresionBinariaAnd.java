@@ -12,7 +12,7 @@ public class NodoExpresionBinariaAnd extends NodoExpresionBinaria{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        if(nodoExpresionLadoIzq.chequear().visitarMismoTipo(new TipoBoolean()) && nodoExpresionLadoDer.chequear().visitarMismoTipo(new TipoBoolean())){
+        if(nodoExpresionLadoIzq.chequear().mismoTipo(new TipoBoolean()) && nodoExpresionLadoDer.chequear().mismoTipo(new TipoBoolean())){
             return new TipoBoolean();
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador"+ tokenOperadorBinario.getLexema()+" solo funciona con tipos booleanos");

@@ -1,7 +1,9 @@
 package tablaDeSimbolos.nodosAST.literales;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoOperando;
+import tablaDeSimbolos.tipos.*;
 
 public class NodoNull extends NodoOperando{
 
@@ -9,5 +11,9 @@ public class NodoNull extends NodoOperando{
 
     public NodoNull(Token tokenNull){
         this.tokenNull = tokenNull;
+    }
+
+    public Tipo chequear() throws ExcepcionSemantica{
+        return new TipoNull(); 
     }
 }

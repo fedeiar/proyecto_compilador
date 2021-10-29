@@ -13,7 +13,7 @@ public class NodoExpresionBinariaSuma extends NodoExpresionBinaria{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        if(nodoExpresionLadoIzq.chequear().visitarMismoTipo(new TipoInt()) && nodoExpresionLadoDer.chequear().visitarMismoTipo(new TipoInt())){
+        if(nodoExpresionLadoIzq.chequear().mismoTipo(new TipoInt()) && nodoExpresionLadoDer.chequear().mismoTipo(new TipoInt())){
             return new TipoInt();
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador"+ tokenOperadorBinario.getLexema()+" solo funciona con tipos enteros");

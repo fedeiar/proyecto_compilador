@@ -6,22 +6,22 @@ public abstract class TipoMetodo {
 
     public abstract String getNombreTipo();
 
-    public void verificarExistenciaTipo() throws ExcepcionSemantica{ 
+    public void verificarExistenciaTipo() throws ExcepcionSemantica{ // Redefinido solamente en TipoClase
         
     }
 
-    public abstract boolean mismoTipo(TipoMetodo tipo);
+    public abstract boolean mismoTipo(TipoMetodo tipo); //TODO: considerar tener 1 solo  metodo mismoTipo, sin el visitar.
 
     public boolean visitarMismoTipo(TipoMetodo tipo){
         return this.getClass() == tipo.getClass();
     }
 
-    public boolean visitarMismoTipo(TipoClase tipo){ //redefinido solamente en TipoClase
+    public boolean visitarMismoTipo(TipoClase tipo){ // Redefinido solamente en TipoClase
         return false;                          
     }
 
 
-    //Todos estos metodos seran redefinidos a conveniencia (devolver true)
+    // Todos estos metodos seran redefinidos en cada Tipo concreto.
 
     public abstract boolean esSubtipo(TipoMetodo tipoDelAncestro);
 
