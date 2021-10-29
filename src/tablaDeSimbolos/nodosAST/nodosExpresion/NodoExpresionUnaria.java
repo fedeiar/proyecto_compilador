@@ -14,7 +14,7 @@ public class NodoExpresionUnaria extends NodoExpresion{
         this.nodoOperando = nodoOperando;
     }
 
-    public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien hecho?
+    public Tipo chequear() throws ExcepcionSemantica{
         if(tokenOperador != null){
             if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
                 if(nodoOperando.chequear().mismoTipo(new TipoInt())){
@@ -22,15 +22,12 @@ public class NodoExpresionUnaria extends NodoExpresion{
                 }else{
                     throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo int");
                 }
-            } else if (tokenOperador.getLexema().equals("!")){
+            } else{ // Sino el lexema es un !
                 if(nodoOperando.chequear().mismoTipo(new TipoBoolean())){
                     return new TipoBoolean();
                 } else{
                     throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo boolean");
                 }
-            } else{
-                //TODO: que mensaje de error iria? puede ser que nunca suceda un tipo de error asi?
-                throw new ExcepcionSemantica(tokenOperador, "el operador unario "+tokenOperador.getLexema()+" no es un operador unario valido");
             }
         } else{
             return nodoOperando.chequear();

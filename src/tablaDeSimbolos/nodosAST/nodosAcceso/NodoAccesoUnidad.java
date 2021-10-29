@@ -4,7 +4,7 @@ import java.util.List;
 
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.tipos.TipoMetodo;
+import tablaDeSimbolos.tipos.Tipo;
 import analizadorLexico.Token;
 
 public abstract class NodoAccesoUnidad extends NodoPrimario{
@@ -18,7 +18,7 @@ public abstract class NodoAccesoUnidad extends NodoPrimario{
     public static String toStringNombreUnidad(Token tokenId, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{ //TODO: habria que chequear en algun momento aca que exista el Tipo del parametro actual? o eso ya se hace en pActual.chequear()?
         String signaturaUnidad = tokenId.getLexema() + "(";
         for(NodoExpresion parametroActual : listaParametrosActuales){
-            TipoMetodo tipoParametroActual = parametroActual.chequear();
+            Tipo tipoParametroActual = parametroActual.chequear();
             signaturaUnidad += tipoParametroActual.getNombreTipo() + ",";
         }
         if(signaturaUnidad.charAt(signaturaUnidad.length() - 1) == ','){

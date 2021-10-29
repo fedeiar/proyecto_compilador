@@ -3,8 +3,8 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 import analizadorLexico.Token;
 import tablaDeSimbolos.*;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
+import tablaDeSimbolos.tipos.TipoConcreto;
 import tablaDeSimbolos.tipos.Tipo;
-import tablaDeSimbolos.tipos.TipoMetodo;
 
 public class NodoAccesoVar extends NodoPrimario{
     
@@ -18,8 +18,8 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public TipoMetodo chequear() throws ExcepcionSemantica{  
-        Tipo tipoVariable;
+    public Tipo chequear() throws ExcepcionSemantica{  
+        TipoConcreto tipoVariable;
         NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
         if(nodoVarLocal != null){
             tipoVariable = nodoVarLocal.getTipo();

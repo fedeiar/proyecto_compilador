@@ -14,10 +14,10 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
     }
 
     public void chequear() throws ExcepcionSemantica{ //TODO: preguntar como resolver lo del acceso y los encadendados.
-        TipoMetodo tipoAcceso = nodoAccesoLadoIzq.chequear();
+        Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
         //TODO: preguntar hacer todo eso del encadenado
 
-        TipoMetodo tipoExpresion = nodoExpresionLadoDer.chequear();
+        Tipo tipoExpresion = nodoExpresionLadoDer.chequear();
         
     }
     

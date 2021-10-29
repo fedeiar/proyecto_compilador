@@ -13,7 +13,7 @@ public class NodoNull extends NodoOperando{
         this.tokenNull = tokenNull;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoNull(); 
     }
 }

@@ -6,9 +6,9 @@ import analizadorLexico.Token;
 public class ParametroFormal {
     
     private Token tokenIdVar;
-    private Tipo tipoParametro;
+    private TipoConcreto tipoParametro;
 
-    public ParametroFormal(Token tokenIdVar, Tipo tipoParametro){
+    public ParametroFormal(Token tokenIdVar, TipoConcreto tipoParametro){
         this.tokenIdVar = tokenIdVar;
         this.tipoParametro = tipoParametro;
     }
@@ -17,7 +17,7 @@ public class ParametroFormal {
         return tokenIdVar;
     }
 
-    public Tipo getTipo(){
+    public TipoConcreto getTipo(){
         return tipoParametro;
     }
 

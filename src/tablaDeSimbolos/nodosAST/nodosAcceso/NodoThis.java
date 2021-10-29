@@ -12,7 +12,7 @@ public class NodoThis extends NodoPrimario{
         this.tokenThis = tokenThis;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien?
+    public TipoConcreto chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         if( ! TablaSimbolos.unidadActual.esDinamico()){
             throw new ExcepcionSemantica(tokenThis, "no se puede hacer referencia a this en un metodo estatico");
         }

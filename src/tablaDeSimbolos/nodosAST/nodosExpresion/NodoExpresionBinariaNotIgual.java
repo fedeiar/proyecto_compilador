@@ -11,8 +11,10 @@ public class NodoExpresionBinariaNotIgual extends NodoExpresionBinaria{
         super(tokenOperadorBinario);
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
-        if(nodoExpresionLadoIzq.chequear().esSubtipo(nodoExpresionLadoDer.chequear()) || nodoExpresionLadoDer.chequear().esSubtipo(nodoExpresionLadoIzq.chequear())){
+    public TipoConcreto chequear() throws ExcepcionSemantica{
+        Tipo tipoExpresionLadoIzq = nodoExpresionLadoIzq.chequear();
+        Tipo tipoExpresionLadoDer = nodoExpresionLadoDer.chequear();
+        if(tipoExpresionLadoIzq.esSubtipo(tipoExpresionLadoDer) || tipoExpresionLadoDer.esSubtipo(tipoExpresionLadoIzq)){
             return new TipoBoolean();
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador"+ tokenOperadorBinario.getLexema()+" solo funciona con tipos conformantes");

@@ -7,7 +7,7 @@ import java.util.Map;
 import analizadorLexico.Token;
 
 
-public class TipoClase extends Tipo{
+public class TipoClase extends TipoConcreto{
     
 
     private Token tokenIdClase;
@@ -44,15 +44,11 @@ public class TipoClase extends Tipo{
         }
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){
-        return tipo.visitarMismoTipo(this);
-    }
-
-    public boolean visitarMismoTipo(TipoClase tipo){
+    public boolean mismoTipo(TipoClase tipo){
         return this.tokenIdClase.getLexema().equals(tipo.getTokenIdClase().getLexema());
     }
 
-    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
+    public boolean esSubtipo(Tipo tipoDelAncestro){
         return tipoDelAncestro.visitarEsSubtipo(this);
     }
 

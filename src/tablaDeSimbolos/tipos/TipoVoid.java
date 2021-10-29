@@ -1,6 +1,6 @@
 package tablaDeSimbolos.tipos;
 
-public class TipoVoid extends TipoMetodo{
+public class TipoVoid extends Tipo{
     
     public TipoVoid(){
         
@@ -10,11 +10,7 @@ public class TipoVoid extends TipoMetodo{
         return "void";
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){
-        return tipo.visitarMismoTipo(this);
-    }
-
-    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
+    public boolean esSubtipo(Tipo tipoDelAncestro){
         return tipoDelAncestro.visitarEsSubtipo(this);
     }
 

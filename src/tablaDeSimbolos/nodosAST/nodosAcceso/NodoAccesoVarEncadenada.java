@@ -14,8 +14,8 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         this.tokenIdVar = tokenIdVar;
     }
 
-    public TipoMetodo chequear(TipoMetodo tipoIzquierda) throws ExcepcionSemantica{ //TODO: asi esta bien?
-        Tipo tipoAtributo;
+    public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: asi esta bien?
+        TipoConcreto tipoAtributo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){
             Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); //TODO: al manejar los prviados con un $ entonces asi ya alcanza?

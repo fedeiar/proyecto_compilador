@@ -2,7 +2,7 @@ package tablaDeSimbolos;
 
 import tablaDeSimbolos.nodosAST.*;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
-import tablaDeSimbolos.tipos.TipoMetodo;
+import tablaDeSimbolos.tipos.Tipo;
 import tablaDeSimbolos.tipos.TipoVoid;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public abstract class Unidad {
         return lista_parametros;
     }
 
-    public TipoMetodo getTipoMetodo(){ //TODO: esto está bien? los constructores tienen return void?
+    public Tipo getTipoUnidad(){ //TODO: esto está bien? los constructores tienen return void?
         return new TipoVoid();
     }
 

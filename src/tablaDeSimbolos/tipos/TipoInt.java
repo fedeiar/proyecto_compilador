@@ -10,11 +10,7 @@ public class TipoInt extends TipoPrimitivo{
         return "int";
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){
-        return tipo.visitarMismoTipo(this);
-    }
-
-    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
+    public boolean esSubtipo(Tipo tipoDelAncestro){
         return tipoDelAncestro.visitarEsSubtipo(this);
     }
 

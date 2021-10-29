@@ -7,9 +7,9 @@ public class Atributo{
     
     private Token tokenIdVar;
     private TipoDeToken visibilidadAtributo;
-    private Tipo tipoAtributo;
+    private TipoConcreto tipoAtributo;
     
-    public Atributo(Token idVar, TipoDeToken visibilidadAtributo, Tipo tipoAtributo){
+    public Atributo(Token idVar, TipoDeToken visibilidadAtributo, TipoConcreto tipoAtributo){
         this.tokenIdVar = idVar;
         this.tipoAtributo = tipoAtributo;
         this.visibilidadAtributo = visibilidadAtributo;
@@ -27,7 +27,7 @@ public class Atributo{
         return visibilidadAtributo.toString().equals("pr_public");
     }
 
-    public Tipo getTipo(){
+    public TipoConcreto getTipo(){
         return tipoAtributo;
     }
 

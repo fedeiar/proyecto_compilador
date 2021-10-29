@@ -2,7 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosExpresion;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoConcreto;
 import tablaDeSimbolos.tipos.TipoInt;
 
 public class NodoExpresionBinariaSuma extends NodoExpresionBinaria{
@@ -12,7 +12,7 @@ public class NodoExpresionBinariaSuma extends NodoExpresionBinaria{
         super(tokenOperadorBinario);
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         if(nodoExpresionLadoIzq.chequear().mismoTipo(new TipoInt()) && nodoExpresionLadoDer.chequear().mismoTipo(new TipoInt())){
             return new TipoInt();
         } else{

@@ -12,7 +12,7 @@ public class NodoTrue extends NodoBoolean{
         this.tokenTrue = tokenTrue;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoBoolean();
     }
 }

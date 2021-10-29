@@ -11,7 +11,7 @@ public class NodoExpresionBinariaMenorOIgual extends NodoExpresionBinaria{
         super(tokenOperadorBinario);
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         if(nodoExpresionLadoIzq.chequear().mismoTipo(new TipoInt()) && nodoExpresionLadoDer.chequear().mismoTipo(new TipoInt())){
             return new TipoBoolean();
         } else{

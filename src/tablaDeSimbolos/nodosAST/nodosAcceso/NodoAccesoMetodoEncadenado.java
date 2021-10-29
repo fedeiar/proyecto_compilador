@@ -20,8 +20,8 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         this.listaParametrosActuales = listaParametrosActuales;
     }
 
-    public TipoMetodo chequear(TipoMetodo tipoIzquierda) throws ExcepcionSemantica{ //TODO: esta bien?
-        TipoMetodo tipoMetodo;
+    public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: esta bien?
+        Tipo tipoMetodo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){
             Metodo metodo = clase.getMetodo(NodoAccesoUnidad.toStringNombreUnidad(tokenIdMet, listaParametrosActuales));
@@ -29,7 +29,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
                 if( !TablaSimbolos.unidadActual.esDinamico() && metodo.esDinamico()){
                     throw new ExcepcionSemantica(tokenIdMet, "no se puede hacer referencia al metodo dinamico "+tokenIdMet.getLexema() +" desde un metodo estatico");
                 }else{
-                    tipoMetodo = metodo.getTipoMetodo();
+                    tipoMetodo = metodo.getTipoUnidad();
                 }
             }else{
                 throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema());

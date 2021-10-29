@@ -4,16 +4,16 @@ import analizadorLexico.Token;
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
-import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoConcreto;
 
 public class NodoVarLocal extends NodoSentencia{
     
     private Token tokenIdVar;
-    private Tipo tipoVarLocal;
+    private TipoConcreto tipoVarLocal;
     private Token tokenIgual;
     private NodoExpresion nodoExpresion;
 
-    public NodoVarLocal(Token tokenIdVar, Tipo tipo){
+    public NodoVarLocal(Token tokenIdVar, TipoConcreto tipo){
         this.tokenIdVar = tokenIdVar;
         this.tipoVarLocal = tipo;
     }
@@ -22,7 +22,7 @@ public class NodoVarLocal extends NodoSentencia{
         return tokenIdVar;
     }
 
-    public Tipo getTipo(){
+    public TipoConcreto getTipo(){
         return tipoVarLocal;
     }
 

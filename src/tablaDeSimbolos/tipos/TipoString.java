@@ -11,11 +11,7 @@ public class TipoString extends TipoPrimitivo{
         return "String";
     }
 
-    public boolean mismoTipo(TipoMetodo tipo){
-        return tipo.visitarMismoTipo(this);
-    }
-
-    public boolean esSubtipo(TipoMetodo tipoDelAncestro){
+    public boolean esSubtipo(Tipo tipoDelAncestro){
         return tipoDelAncestro.visitarEsSubtipo(this);
     }
 

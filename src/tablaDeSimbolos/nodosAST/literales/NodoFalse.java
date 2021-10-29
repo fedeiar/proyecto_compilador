@@ -3,7 +3,7 @@ package tablaDeSimbolos.nodosAST.literales;
 import analizadorLexico.Token;
 import tablaDeSimbolos.tipos.TipoBoolean;
 import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoConcreto;
 
 public class NodoFalse extends NodoBoolean{
     
@@ -13,7 +13,7 @@ public class NodoFalse extends NodoBoolean{
         this.tokenFalse = tokenFalse;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoBoolean();
     }
 }

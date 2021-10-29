@@ -12,7 +12,7 @@ public class NodoEntero extends NodoOperando{
         this.tokenLitEntero = tokenLitEntero;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoInt();
     }
 }

@@ -17,7 +17,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         this.tokenIdMet = tokenIdMet;
     }
 
-    public TipoMetodo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
+    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
         String nombreMetodo = NodoAccesoUnidad.toStringNombreUnidad(tokenIdMet, listaParametrosActuales);
         Metodo metodo = TablaSimbolos.claseActual.getMetodo(nombreMetodo); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodo == null){
@@ -27,7 +27,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             throw new ExcepcionSemantica(tokenIdMet, "no se puede hacer referencia al metodo dinamico "+tokenIdMet.getLexema() +" desde un metodo estatico");
         }
 
-        TipoMetodo tipoMetodo = metodo.getTipoMetodo();
+        Tipo tipoMetodo = metodo.getTipoUnidad();
         if(nodoEncadenado == null){
             return tipoMetodo;
         } else{

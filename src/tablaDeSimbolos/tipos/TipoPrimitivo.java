@@ -1,6 +1,6 @@
 package tablaDeSimbolos.tipos;
 
-public abstract class TipoPrimitivo extends Tipo{
+public abstract class TipoPrimitivo extends TipoConcreto{
     
 
 }

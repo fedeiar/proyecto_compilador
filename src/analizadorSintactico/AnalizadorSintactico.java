@@ -251,12 +251,12 @@ public class AnalizadorSintactico {
     private void atributo() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(primeros_visibilidad.contains(tokenActual.getTipoDeToken())){
             TipoDeToken visibilidad = visibilidad();
-            Tipo tipo = tipo();
+            TipoConcreto tipo = tipo();
             listaDecAtrs(visibilidad, tipo);
             match(TipoDeToken.punt_puntoYComa, ";");
         } else if(primeros_tipoPrimitivo.contains(tokenActual.getTipoDeToken())){
             TipoDeToken visibilidad = TipoDeToken.pr_public;
-            Tipo tipo = tipoPrimitivo();
+            TipoConcreto tipo = tipoPrimitivo();
             listaDecAtrs(visibilidad, tipo);
             match(TipoDeToken.punt_puntoYComa, ";");
         } else{
@@ -266,7 +266,7 @@ public class AnalizadorSintactico {
 
     private void metodo() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         boolean formaMetodo = formaMetodo();
-        TipoMetodo tipoMetodo = tipoMetodo();
+        Tipo tipoMetodo = tipoMetodo();
         Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
         Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo, TablaSimbolos.claseActual.getTokenIdClase()); //TODO: esta bien obtener el tokenIdClase asi?
@@ -292,14 +292,14 @@ public class AnalizadorSintactico {
         }
     }
 
-    private Tipo tipo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private TipoConcreto tipo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_tipoPrimitivo.contains(tokenActual.getTipoDeToken())){
-            Tipo tipo = tipoPrimitivo();
+            TipoConcreto tipo = tipoPrimitivo();
             return tipo;
         } else if (tokenActual.getTipoDeToken() == TipoDeToken.id_clase){
             Token tokenIdClase = tokenActual;
             match(TipoDeToken.id_clase, "identificador de clase");
-            Tipo tipo = new TipoClase(tokenIdClase);
+            TipoConcreto tipo = new TipoClase(tokenIdClase);
 
             tipoParametricoOVacio(); //TODO: completar para logro genericidad
 
@@ -309,7 +309,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private Tipo tipoPrimitivo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private TipoConcreto tipoPrimitivo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.pr_boolean){
             match(TipoDeToken.pr_boolean, "boolean");
             return new TipoBoolean();
@@ -327,7 +327,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private void listaDecAtrs(TipoDeToken visibilidad, Tipo tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private void listaDecAtrs(TipoDeToken visibilidad, TipoConcreto tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
         Atributo atributo = new Atributo(tokenIdVar, visibilidad, tipoAtributo);
@@ -335,7 +335,7 @@ public class AnalizadorSintactico {
         listaDecAtrsFactorizada(visibilidad, tipoAtributo);
     }
 
-    private void listaDecAtrsFactorizada(TipoDeToken visibilidad, Tipo tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
+    private void listaDecAtrsFactorizada(TipoDeToken visibilidad, TipoConcreto tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_coma){
             match(TipoDeToken.punt_coma, ",");
             listaDecAtrs(visibilidad, tipoAtributo);
@@ -359,9 +359,9 @@ public class AnalizadorSintactico {
         }
     }
 
-    private TipoMetodo tipoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private Tipo tipoMetodo() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_tipo.contains(tokenActual.getTipoDeToken())){
-            Tipo tipo = tipo();
+            TipoConcreto tipo = tipo();
             return tipo;
         } else if(TipoDeToken.pr_void == tokenActual.getTipoDeToken()){
             match(TipoDeToken.pr_void, "void");
@@ -404,7 +404,7 @@ public class AnalizadorSintactico {
     }
 
     private void argFormal() throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
-        Tipo tipo = tipo();
+        TipoConcreto tipo = tipo();
         Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
         ParametroFormal parametro = new ParametroFormal(tokenIdVar, tipo);
@@ -454,7 +454,7 @@ public class AnalizadorSintactico {
             Token tokenFor = tokenActual;
             match(TipoDeToken.pr_for, "for");
             match(TipoDeToken.punt_parentIzq, "(");
-            Tipo tipo = tipo();
+            TipoConcreto tipo = tipo();
             Token tokenIdVar = tokenActual;
             match(TipoDeToken.id_metVar, "identificador de variable");
             NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
@@ -503,7 +503,7 @@ public class AnalizadorSintactico {
     }
 
     private NodoVarLocal varLocal() throws IOException, ExcepcionLexica, ExcepcionSintactica{
-        Tipo tipo = tipo();
+        TipoConcreto tipo = tipo();
         Token tokenIdVar = tokenActual;
         NodoVarLocal nodoVarLocal = new NodoVarLocal(tokenIdVar, tipo);
         match(TipoDeToken.id_metVar, "identificador de variable");

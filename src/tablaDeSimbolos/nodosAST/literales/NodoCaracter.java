@@ -12,7 +12,7 @@ public class NodoCaracter extends NodoOperando{
         this.tokenLitCaracter = tokenLitCaracter;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoChar();
     }
 }
