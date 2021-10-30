@@ -23,10 +23,13 @@ public class NodoReturn extends NodoSentencia{
     public void chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         Tipo tipoMetodo = TablaSimbolos.unidadActual.getTipoUnidad();
         if(nodoExpresionRetorno == null){
+            if( !(tipoMetodo.mismoTipo(new TipoVoid())) ){
+                throw new ExcepcionSemantica(tokenReturn, "debe retornarse algo de tipo "+tipoMetodo.getNombreTipo());
+            }
+        } else{
             if(tipoMetodo.mismoTipo(new TipoVoid())){
                 throw new ExcepcionSemantica(tokenReturn, "las unidades con tipo void no pueden retornar valores");
             }
-        } else{
             Tipo tipoExpresion = nodoExpresionRetorno.chequear();
             tipoExpresion.esSubtipo(tipoMetodo);
         }

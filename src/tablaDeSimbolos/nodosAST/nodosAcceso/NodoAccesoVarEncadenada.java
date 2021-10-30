@@ -29,7 +29,7 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
                 throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema()+" o bien no es visible");
             }
         } else{
-            throw new ExcepcionSemantica(tokenIdVar, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada");
+            throw new ExcepcionSemantica(tokenIdVar, "el tipo del acceso a izquierda de " +tokenIdVar.getLexema() +" no es una clase valida o no esta declarada");
         }
 
         if(nodoEncadenado != null){

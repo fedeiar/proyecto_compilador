@@ -32,7 +32,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
                 throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema());
             }
         }else{
-            throw new ExcepcionSemantica(tokenIdMet, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada"); //que token uso?
+            throw new ExcepcionSemantica(tokenIdMet, "el tipo del acceso a izquierda de " +tokenIdMet.getLexema() +" no es una clase valida o no esta declarada"); //que token uso?
         }
 
         if(nodoEncadenado != null){

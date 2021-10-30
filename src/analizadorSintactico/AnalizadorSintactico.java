@@ -478,8 +478,9 @@ public class AnalizadorSintactico {
             match(TipoDeToken.punt_puntoYComa, ";");
             return nodoAsignacion;
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
+            Token tokenPuntoYComa = tokenActual;
             match(TipoDeToken.punt_puntoYComa, ";");
-            return new NodoLlamada(nodoAcceso);
+            return new NodoLlamada(tokenPuntoYComa, nodoAcceso);
         } else{
             throw new ExcepcionSintactica("tipo de asignación o ;", tokenActual);
         }
