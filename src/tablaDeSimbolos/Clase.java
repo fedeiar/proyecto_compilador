@@ -114,8 +114,7 @@ public class Clase {
 
     //TODO: AYUDA
     
-    public Metodo getMetodoQueMasConformaParametros(String nombreMetodo, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{ //TODO: asi esta bien?
-
+    public Metodo getMetodoQueMasConformaParametros(Token tokenIdMet, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{ //TODO: asi esta bien?
         List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
         for(NodoExpresion parametroActual : listaParametrosActuales){
             listaTiposParametrosActuales.add(parametroActual.chequear());
@@ -128,30 +127,47 @@ public class Clase {
             }
         }
 
-        // Como tenemos solo metodos conformantes, entonces conformidad nunca sera -1.
-        int posicionParametro = 0;
-        int masConforme = Integer.MAX_VALUE;
-        Metodo metodoMasConformeParaPosParametro = listaMetodosConformantes.get(0);
-        Metodo metodoMasConforme;
-        boolean empatados = false;
-        while(posicionParametro < listaParametrosActuales.size()){
-            for(Metodo metodo : listaMetodosConformantes){
-                Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
-                Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
-                int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
-                if(conformidad == masConforme){
-                    empatados = true;
+        if(listaMetodosConformantes.size() == 0){
+            return null;
+        } else if(listaMetodosConformantes.size() == 1){
+            return listaMetodosConformantes.get(0);
+        } else{ // Hay que decidir quien sera el mas conformante (como minimo tienen todos 1 parametro si o si)
+            // Como tenemos solo metodos conformantes, entonces conformidad nunca sera -1.
+            int posicionParametro = 0;
+            int masConforme = Integer.MAX_VALUE;
+            Metodo metodoMasConformeParaPosParametro = null;
+            Metodo metodoMasConforme = null;
+            boolean empatados = false;
+            // Este recorrido es equivalente a recorrer una matriz por columnas.
+            while(posicionParametro < listaParametrosActuales.size()){
+                for(Metodo metodo : listaMetodosConformantes){
+                    Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
+                    Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
+                    int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
+                    if(conformidad == masConforme){
+                        empatados = true;
+                        metodoMasConformeParaPosParametro = null; // Si empatan, entonces aun no podemos decidir el posible metodo mas conforme.
+                    }else if(conformidad < masConforme){
+                        empatados = false;
+                        masConforme = conformidad;
+                        metodoMasConformeParaPosParametro = metodo;
+                    }
                 }
-                if(conformidad < masConforme){
-                    masConforme = conformidad;
-                    metodoMasConformeParaPosParametro = metodo;
+                if(metodoMasConforme == null){ // Si estamos revisando la primer columna
+                    metodoMasConforme = metodoMasConformeParaPosParametro;
+                } else if(metodoMasConformeParaPosParametro != metodoMasConforme){ // Hay una ambiguedad: un metodo gana en un parametro, pero otro metodo gana en otro parametro
+                    throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
                 }
+                posicionParametro++;
+                masConforme = Integer.MAX_VALUE;
             }
 
-            if(metodoMasConformeParaPosParametro != null && )
-        }
+            if(metodoMasConforme == null){ // quiere decir que los mejores empataron en todos sus parametros.
+                throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
+            }
 
-        return metodoMasConforme;
+            return metodoMasConforme;
+        }
     }
     
 
