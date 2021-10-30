@@ -22,6 +22,7 @@ public abstract class Unidad {
     public Unidad(){
         parametros = new HashMap<>();
         lista_parametrosFormales = new ArrayList<>();
+        bloque = new NodoBloque(); //TODO: esta bien esto? es para el caso de los constructores por defecto.
     }
 
     public List<ParametroFormal> getListaParametros(){
