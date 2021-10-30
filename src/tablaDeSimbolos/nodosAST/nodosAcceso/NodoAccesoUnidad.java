@@ -1,6 +1,5 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;

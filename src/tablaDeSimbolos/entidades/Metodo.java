@@ -2,7 +2,6 @@ package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.tipos.*;
 
-import java.util.List;
 
 import analizadorLexico.Token;
 

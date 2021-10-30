@@ -1,6 +1,5 @@
 package tablaDeSimbolos.entidades;
 
-import tablaDeSimbolos.nodosAST.*;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.tipos.Tipo;
 import tablaDeSimbolos.tipos.TipoVoid;

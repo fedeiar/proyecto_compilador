@@ -1,7 +1,6 @@
 package analizadorSintactico;
 
 import analizadorLexico.*;
-import tablaDeSimbolos.*;
 import tablaDeSimbolos.entidades.Atributo;
 import tablaDeSimbolos.entidades.Clase;
 import tablaDeSimbolos.entidades.Constructor;

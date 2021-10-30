@@ -1,5 +1,4 @@
 package tablaDeSimbolos.tipos;
-import tablaDeSimbolos.*;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 
 public abstract class Tipo {

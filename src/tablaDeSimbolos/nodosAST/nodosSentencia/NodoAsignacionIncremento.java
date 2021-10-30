@@ -17,7 +17,11 @@ public class NodoAsignacionIncremento extends NodoAsignacion{
     public void chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
 
-        nodoAccesoLadoIzq.esVariable();
+        try{
+            nodoAccesoLadoIzq.esVariable();
+        } catch(ExcepcionSemantica e){
+            throw new ExcepcionSemantica(tokenIncremento, "el lado izquierdo de un incremento debe ser una variable");
+        }
            
         if(!tipoAcceso.mismoTipo(new TipoInt())){
             throw new ExcepcionSemantica(tokenIncremento, "el tipo de la variable debe ser entero");

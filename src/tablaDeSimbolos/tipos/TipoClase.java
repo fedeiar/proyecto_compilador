@@ -1,5 +1,4 @@
 package tablaDeSimbolos.tipos;
-import tablaDeSimbolos.*;
 import tablaDeSimbolos.entidades.Clase;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.entidades.TablaSimbolos;

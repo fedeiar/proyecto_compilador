@@ -7,7 +7,7 @@ public abstract class NodoExpresion {
  
     public abstract Tipo chequear() throws ExcepcionSemantica;
 
-    public abstract void esVariable() throws ExcepcionSemantica; //TODO: esta bien declarado aca?
+    public abstract void esVariable() throws ExcepcionSemantica; //TODO: esta bien declarado aca? tendría que ser void o boolean?
 
     public abstract void esLlamada() throws ExcepcionSemantica; //TODO: esta bien declarado aca?
 }
