@@ -1,7 +1,5 @@
 package tablaDeSimbolos.tipos;
 
-import analizadorLexico.Token;
-
 public class TipoNull extends TipoConcreto{ //TODO: esta bien esta clase? con esto alcanza para siempre que asignemos null?
     
 

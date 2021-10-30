@@ -28,7 +28,6 @@ public class NodoAccesoVar extends NodoPrimario{
             if(parametroFormal != null){
                 tipoVariable = parametroFormal.getTipo();
             } else{
-                //TODO: con la modificacion que se hizo en consolidarAtributos() entonces ya alcanzaria?
                 Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
                 if(atributo != null){
                     if(TablaSimbolos.unidadActual.esDinamico()){
@@ -44,8 +43,51 @@ public class NodoAccesoVar extends NodoPrimario{
         }
 
         if(nodoEncadenado != null){
-            return nodoEncadenado.chequear(tipoVariable); //TODO: puede ser que tambien haya que pasar el token por si hay error?
+            return nodoEncadenado.chequear(tipoVariable); 
         }
         return tipoVariable;
+    }
+
+    /*
+    public boolean esVariable(){ //TODO: preg si está bien
+        // hace falta chequear todo lo que esta comentado aca abajo?
+        
+        NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
+        if(nodoVarLocal == null){
+            ParametroFormal parametroFormal = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
+            if(parametroFormal == null){
+                Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
+                if(atributo == null){
+                    throw new ExcepcionSemantica(tokenIdVar, "la variable "+tokenIdVar.getLexema()+" no fue declarada");
+                }else{
+                    if(!TablaSimbolos.unidadActual.esDinamico()){
+                        throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica");
+                    }
+                }
+            }
+        }
+        //hasta aca
+
+        if(nodoEncadenado != null){
+            return nodoEncadenado.esVariable(); 
+        }
+        return true;
+    }
+*/
+
+    public void esVariable() throws ExcepcionSemantica{
+        if(nodoEncadenado != null){
+            nodoEncadenado.esVariable();
+        } else{
+            // No hacer nada, es correcto.
+        }
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+        if(nodoEncadenado != null){
+            nodoEncadenado.esLlamada();
+        } else{
+            throw new ExcepcionSemantica(tokenIdVar, "se esperaba una llamada a un metodo o constructor");
+        }
     }
 }

@@ -2,6 +2,8 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import tablaDeSimbolos.Clase;
 import tablaDeSimbolos.Constructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import analizadorLexico.Token;
@@ -20,20 +22,37 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        String nombreConstructor = NodoAccesoUnidad.toStringNombreUnidad(tokenIdClase, listaParametrosActuales);
         Clase claseDelConstructor = TablaSimbolos.getClase(tokenIdClase.getLexema());
-        Constructor constructor = claseDelConstructor.getConstructor(nombreConstructor); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
+        //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
+        Constructor constructor = claseDelConstructor.getConstructorQueConformaParametros(listaParametrosActuales); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(constructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado");
         }
         
         Tipo tipoConstructor = constructor.getTipoUnidad();
+        
         if(nodoEncadenado == null){ //TODO: esta bien controlar esto de los encadenados también aca?
             return tipoConstructor;
         } else{
             return nodoEncadenado.chequear(tipoConstructor);
         }
 
+    }
+
+    public void esVariable() throws ExcepcionSemantica{
+        if(nodoEncadenado != null){
+            nodoEncadenado.esVariable();
+        } else{
+            throw new ExcepcionSemantica(tokenIdClase, "el lado izquierdo de una asignacion debe ser una variable");
+        }
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+        if(nodoEncadenado != null){
+            nodoEncadenado.esLlamada();
+        } else{
+            // No hacer nada, es correcto
+        }
     }
 
 

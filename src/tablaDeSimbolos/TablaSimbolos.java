@@ -137,7 +137,7 @@ public class TablaSimbolos {
     }
 
     private void existeMain() throws ExcepcionSemantica{ 
-        Metodo metodoMain = new Metodo(new Token(TipoDeToken.id_metVar, "main", 0), false, new TipoVoid(), null); //TODO: esta muy mal poner null? ya que aca no lo necesitamos.
+        Metodo metodoMain = new Metodo(new Token(TipoDeToken.id_metVar, "main", 0), false, new TipoVoid(), null);
         boolean estaMain = false; 
         Metodo metodoMainOriginal;
         for(Clase clase : clases.values()){

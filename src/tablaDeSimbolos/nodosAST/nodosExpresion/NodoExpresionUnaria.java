@@ -22,7 +22,7 @@ public class NodoExpresionUnaria extends NodoExpresion{
                 }else{
                     throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo int");
                 }
-            } else{ // Sino el lexema es un !
+            } else{ // Si no el operador es un !
                 if(nodoOperando.chequear().mismoTipo(new TipoBoolean())){
                     return new TipoBoolean();
                 } else{
@@ -32,6 +32,14 @@ public class NodoExpresionUnaria extends NodoExpresion{
         } else{
             return nodoOperando.chequear();
         }
+    }
+
+    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
+        throw new ExcepcionSemantica(tokenOperador, "una expresion unaria no es una variable");
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{
+        throw new ExcepcionSemantica(tokenOperador, "una expresion unaria no es una llamada");
     }
 
 }

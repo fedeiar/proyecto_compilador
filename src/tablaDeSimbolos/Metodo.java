@@ -1,13 +1,15 @@
 package tablaDeSimbolos;
 
 import tablaDeSimbolos.tipos.*;
+
+import java.util.List;
+
 import analizadorLexico.Token;
 
 public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Tipo tipoMetodo;
-    //TODO: un atributo que indique a la clase a la cual pertenece
     private Token tokenClaseContenedora;
 
 
@@ -54,7 +56,7 @@ public class Metodo extends Unidad{
 
     public String toString(){
         String signaturaMetodo = tokenIdMet.getLexema() + "(";
-        for(ParametroFormal p : lista_parametros){
+        for(ParametroFormal p : lista_parametrosFormales){
             signaturaMetodo += p.getTipo().getNombreTipo() + ",";
         }
         if(signaturaMetodo.charAt(signaturaMetodo.length() - 1) == ','){

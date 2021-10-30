@@ -1,8 +1,10 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.Clase;
 import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
@@ -18,8 +20,8 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        String nombreMetodo = NodoAccesoUnidad.toStringNombreUnidad(tokenIdMet, listaParametrosActuales);
-        Metodo metodo = TablaSimbolos.claseActual.getMetodo(nombreMetodo); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
+        //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
+        Metodo metodo = TablaSimbolos.claseActual.getMetodoQueConformaParametros(tokenIdMet.getLexema(), listaParametrosActuales); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodo == null){
             throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado");
         }
@@ -34,6 +36,22 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             return nodoEncadenado.chequear(tipoMetodo);
         }
 
+    }
+
+    public void esVariable() throws ExcepcionSemantica{
+        if(nodoEncadenado != null){
+            nodoEncadenado.esVariable();
+        } else{
+            throw new ExcepcionSemantica(tokenIdMet, "el lado izquierdo de una asignacion debe ser una variable");
+        }
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+        if(nodoEncadenado != null){
+            nodoEncadenado.esLlamada();
+        } else{
+            // No hacer nada, es correcto
+        }
     }
 
 }

@@ -16,4 +16,12 @@ public class NodoNull extends NodoOperando{
     public TipoConcreto chequear() throws ExcepcionSemantica{
         return new TipoNull(); 
     }
+
+    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
+        throw new ExcepcionSemantica(tokenNull, "una literal no es una variable");
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{
+        throw new ExcepcionSemantica(tokenNull, "una literal no es una llamada");
+    }
 }

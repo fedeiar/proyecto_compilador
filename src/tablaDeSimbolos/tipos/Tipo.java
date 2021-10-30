@@ -22,28 +22,44 @@ public abstract class Tipo {
     public abstract boolean esSubtipo(Tipo tipoDelAncestro);
 
 
-    public boolean visitarEsSubtipo(TipoClase tipo){
+    public boolean visitarEsSubtipo(TipoClase subtipo){
         return false;
     }
     
-    public boolean visitarEsSubtipo(TipoBoolean tipo){
+    public boolean visitarEsSubtipo(TipoBoolean subtipo){
         return false;
     }
 
-    public boolean visitarEsSubtipo(TipoChar tipo){
+    public boolean visitarEsSubtipo(TipoChar subtipo){
         return false;
     }
 
-    public boolean visitarEsSubtipo(TipoInt tipo){
+    public boolean visitarEsSubtipo(TipoInt subtipo){
         return false;
     }
 
-    public boolean visitarEsSubtipo(TipoString tipo){
+    public boolean visitarEsSubtipo(TipoString subtipo){
         return false;
     }
 
-    public boolean visitarEsSubtipo(TipoVoid tipo){
+    public boolean visitarEsSubtipo(TipoVoid subtipo){
         return false;
+    }
+
+
+    // Este metodo es para calcular la conformidad de la lista de parametros
+
+    /* Devuelve -1 si no estan relacionados, 0 si son el mismo tipo, y n donde n es la cantidad de niveles (cantidad de arcos) de herencia que separan al ancestro del hijo*/ 
+    public int profundidadDelHijo(Tipo subtipo){ //TODO: preg si esta bien.
+        if(this.getClass() == subtipo.getClass()){
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+    //TODO: preg si esta bien.
+    public int profundidadDelHijo(TipoClase subtipo){ // Redefinido solamente TipoClase
+        return -1;
     }
 
 }

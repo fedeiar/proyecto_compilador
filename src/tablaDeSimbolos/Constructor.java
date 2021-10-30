@@ -27,7 +27,7 @@ public class Constructor extends Unidad{
 
     public String toString(){
         String signaturaMetodo = tokenIdClase.getLexema() + "(";
-        for(ParametroFormal p : lista_parametros){
+        for(ParametroFormal p : lista_parametrosFormales){
             signaturaMetodo += p.getTipo().getNombreTipo() + ",";
         }
         if(signaturaMetodo.charAt(signaturaMetodo.length() - 1) == ','){

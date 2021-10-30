@@ -18,14 +18,18 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         TipoConcreto tipoAtributo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){
-            Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); //TODO: al manejar los prviados con un $ entonces asi ya alcanza?
+            Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); 
             if(atributo != null){
-                tipoAtributo = atributo.getTipo();
+                if(atributo.esPublic()){
+                    tipoAtributo = atributo.getTipo();
+                } else{
+                    throw new ExcepcionSemantica(tokenIdVar, "HACER"); //TODO: mensaje
+                }
             }else{
                 throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema()+" o bien no es visible");
             }
         } else{
-            //throw new ExcepcionSemantica(, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada"); //que token uso?
+            throw new ExcepcionSemantica(tokenIdVar, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada"); //que token uso?
         }
 
         if(nodoEncadenado != null){
@@ -34,5 +38,21 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
             return tipoAtributo;
         }
         
+    }
+
+    public void esVariable() throws ExcepcionSemantica{
+        if(nodoEncadenado != null){
+            nodoEncadenado.esVariable();
+        } else{
+            // No hacer nada, es correcto
+        }
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+        if(nodoEncadenado != null){
+            nodoEncadenado.esLlamada();
+        } else{
+            throw new ExcepcionSemantica(tokenIdVar, "se esperaba una llamada a un metodo o constructor");
+        }
     }
 }

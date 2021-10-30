@@ -14,6 +14,6 @@ public class NodoLlamada extends NodoSentencia{
 
     public void chequear() throws ExcepcionSemantica{
         nodoAcceso.chequear();
-        //TODO: como hago lo de los encadenados?
+        nodoAcceso.esLlamada();  
     }
 }

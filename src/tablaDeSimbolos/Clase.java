@@ -1,7 +1,9 @@
 package tablaDeSimbolos;
 
+import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
 
+import java.rmi.MarshalledObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,16 +65,99 @@ public class Clase {
         return constructores.values();
     }
 
-    public Constructor getConstructor(String nombreConstructorYParams){ //TODO: esta bien asi de simple?
-        return constructores.get(nombreConstructorYParams);
+    public Constructor getConstructorQueConformaParametros(List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{
+        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
+        for(NodoExpresion parametroActual : listaParametrosActuales){
+            listaTiposParametrosActuales.add(parametroActual.chequear());
+        }
+
+        for(Constructor constructor : constructores.values()){
+            if(constructor.conformanParametros(listaTiposParametrosActuales)){
+                return constructor;
+            }
+        }
+
+        return null;
     }
+
+    //TODO: AYUDA
+    /*
+    public Constructor getConstructorQueMasConformaParametros(String nombreConstructor, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{ //TODO: asi esta bien?
+        List<Tipo> listaTiposDeLosParametros = new ArrayList<>();
+        for(NodoExpresion parametroActual : listaParametrosActuales){
+            listaTiposDeLosParametros.add(parametroActual.chequear());
+        }
+
+
+
+    }
+    */
 
     public Collection<Metodo> getMetodos(){
         return metodos.values();
     }
 
-    public Metodo getMetodo(String nombreMetodoYparams){ //TODO: esta bien asi de simple? teniendo en cuenta q le paso algo tipo m1(int,char)
-        return metodos.get(nombreMetodoYparams);
+    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{
+        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
+        for(NodoExpresion parametroActual : listaParametrosActuales){
+            listaTiposParametrosActuales.add(parametroActual.chequear());
+        }
+
+        for(Metodo metodo : metodos.values()){
+            if(metodo.getTokenIdMet().getLexema().equals(nombreMetodo) && metodo.conformanParametros(listaTiposParametrosActuales)){
+                return metodo;
+            }
+        }
+
+        return null;
+    }
+
+    //TODO: AYUDA
+    /*
+    public Metodo getMetodoQueMasConformaParametros(String nombreMetodo, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{ //TODO: asi esta bien?
+
+        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
+        for(NodoExpresion parametroActual : listaParametrosActuales){
+            listaTiposParametrosActuales.add(parametroActual.chequear());
+        }
+
+        List<Metodo> listaMetodosConformantes = new ArrayList<>();
+        for(Metodo metodo : metodos.values()){
+            if(metodo.conformanParametros(listaTiposParametrosActuales)){
+                listaMetodosConformantes.add(metodo);
+            }
+        }
+
+        // Como tenemos solo metodos conformantes, entonces conformidad nunca sera -1.
+        int posicionParametro = 0;
+        int masConforme = Integer.MAX_VALUE;
+        Metodo metodoMasConformeParaPosParametro = listaMetodosConformantes.get(0);
+        Metodo metodoMasConforme;
+        while(posicionParametro < listaParametrosActuales.size()){
+            for(Metodo metodo : listaMetodosConformantes){
+                Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
+                Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
+                int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
+                if(conformidad < masConforme){
+                    masConforme = conformidad;
+                    metodoMasConformeParaPosParametro = metodo;
+                }
+            }
+
+            if(metodoMasConformeParaPosParametro != null && )
+        }
+
+        return metodoMasConforme;
+    }
+    */
+
+    public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
+        Metodo metodo_en_clase = metodos.get(metodo2.toString());
+        if(metodo_en_clase != null && metodo_en_clase.equalsSignatura(metodo2)){
+            return metodo_en_clase;
+        } else{
+            return null;
+        }
     }
 
     public boolean estaConsolidado(){
@@ -127,15 +212,8 @@ public class Clase {
         }
     }
 
-    public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
-        Metodo metodo_en_clase = metodos.get(metodo2.toString());
-        if(metodo_en_clase != null && metodo_en_clase.equalsSignatura(metodo2)){
-            return metodo_en_clase;
-        } else{
-            return null;
-        }
-    }
-
+    
+    // Chequeos semanticos
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         if(!this.tokenIdClase.getLexema().equals("Object")){
@@ -193,16 +271,16 @@ public class Clase {
         }
     }
 
-    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{ //TODO: preg si esta bien como se actua con los atributos heredados privados.
-        //en esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
+    private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{
+        // En esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
         for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = atributoAncestro.getKey();
             Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);
-            if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){ //TODO: asi esta bien?
+            if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){
                 if(atributoAncestro.getValue().esPublic())
                     this.insertarAtributo(atributoAncestro.getKey(), atributoAncestro.getValue());
                 else
-                    this.insertarAtributo("$"+atributoAncestro.getKey(), atributoAncestro.getValue()); //el $ quiere decir que no podemos usarlo ya que es privado
+                    this.insertarAtributo("$"+atributoAncestro.getKey(), atributoAncestro.getValue()); // El $ quiere decir que no podemos usarlo ya que es privado
             } else{
                 this.insertarAtributo("#"+atributoAncestro.getKey(), atributoAncestro.getValue());
             }
@@ -231,7 +309,7 @@ public class Clase {
             constructor.chequearSentencias();
         }
         for(Metodo metodo: metodos.values()){
-            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){ //TODO: esta bien la comparacion?
+            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){
                 metodo.chequearSentencias();
             }
         }

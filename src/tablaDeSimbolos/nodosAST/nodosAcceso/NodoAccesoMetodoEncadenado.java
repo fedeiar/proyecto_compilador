@@ -22,20 +22,17 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
 
     public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: esta bien?
         Tipo tipoMetodo;
-        Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
+        Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida
         if(clase != null){
-            Metodo metodo = clase.getMetodo(NodoAccesoUnidad.toStringNombreUnidad(tokenIdMet, listaParametrosActuales));
+            //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
+            Metodo metodo = clase.getMetodoQueConformaParametros(tokenIdMet.getLexema(), listaParametrosActuales);
             if(metodo != null){
-                if( !TablaSimbolos.unidadActual.esDinamico() && metodo.esDinamico()){
-                    throw new ExcepcionSemantica(tokenIdMet, "no se puede hacer referencia al metodo dinamico "+tokenIdMet.getLexema() +" desde un metodo estatico");
-                }else{
-                    tipoMetodo = metodo.getTipoUnidad();
-                }
-            }else{
+                tipoMetodo = metodo.getTipoUnidad();
+            }else {
                 throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema());
             }
         }else{
-            //throw new ExcepcionSemantica(, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada"); //que token uso?
+            throw new ExcepcionSemantica(tokenIdMet, tipoIzquierda.getNombreTipo()+" no es una clase valida o no esta declarada"); //que token uso?
         }
 
         if(nodoEncadenado != null){
@@ -43,7 +40,22 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         } else{
             return tipoMetodo;
         }
+    }
 
+    public void esVariable() throws ExcepcionSemantica{
+        if(nodoEncadenado != null){
+            nodoEncadenado.esVariable();
+        } else{
+            throw new ExcepcionSemantica(tokenIdMet, "el lado izquierdo de una asignacion debe ser una variable");
+        }
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+        if(nodoEncadenado != null){
+            nodoEncadenado.esLlamada();
+        } else{
+            // No hacer nada, es correcto
+        }
     }
 
 }

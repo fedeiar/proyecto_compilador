@@ -269,7 +269,7 @@ public class AnalizadorSintactico {
         Tipo tipoMetodo = tipoMetodo();
         Token tokenIdMet = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo");
-        Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo, TablaSimbolos.claseActual.getTokenIdClase()); //TODO: esta bien obtener el tokenIdClase asi?
+        Metodo metodo = new Metodo(tokenIdMet, formaMetodo, tipoMetodo, TablaSimbolos.claseActual.getTokenIdClase());
         TablaSimbolos.unidadActual = metodo;
         argsFormales();
         TablaSimbolos.claseActual.insertarMetodo(metodo);
@@ -486,9 +486,10 @@ public class AnalizadorSintactico {
 
     private NodoAsignacion tipoDeAsignacion(NodoAcceso nodoAcceso) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.op_asignacion){
+            Token tokenAsignacion = tokenActual;
             match(TipoDeToken.op_asignacion, "=");
             NodoExpresion nodoExpresion = expresion();
-            return new NodoAsignacionExpresion(nodoAcceso, nodoExpresion);
+            return new NodoAsignacionExpresion(tokenAsignacion, nodoAcceso, nodoExpresion);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.op_incremento){
             Token tokenIncremento = tokenActual;
             match(TipoDeToken.op_incremento, "++");
@@ -874,7 +875,7 @@ public class AnalizadorSintactico {
     private List<NodoExpresion> listaExps() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         NodoExpresion nodoExpresion = expresion();
         List<NodoExpresion> listaParametrosActuales = listaExpsFactorizada();
-        listaParametrosActuales.add(0, nodoExpresion); //TODO: preguntar si está bien hacer el addFirst de esta manera.
+        listaParametrosActuales.add(0, nodoExpresion);
         return listaParametrosActuales;
     }
 

@@ -8,4 +8,7 @@ public abstract class NodoPrimario extends NodoAcceso{
     public void insertarNodoEncadenado(NodoEncadenado nodoEncadenado){
         this.nodoEncadenado = nodoEncadenado;
     }
+
+
+    
 }

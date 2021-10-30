@@ -13,7 +13,7 @@ public class NodoPrimarioCasting extends NodoAcceso{
         this.nodoPrimario = nodoPrimario;
     }
 
-    public TipoConcreto chequear() throws ExcepcionSemantica{ //TODO: esta bien?
+    public TipoConcreto chequear() throws ExcepcionSemantica{
         TipoClase tipoCasting = new TipoClase(tokenIdClaseCasting);
         tipoCasting.verificarExistenciaTipo();
         Tipo tipoNodoPrimario = nodoPrimario.chequear();
@@ -22,5 +22,13 @@ public class NodoPrimarioCasting extends NodoAcceso{
         }
 
         return tipoCasting;
+    }
+
+    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien asi?
+        nodoPrimario.esVariable();
+    }
+
+    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien asi?
+        nodoPrimario.esLlamada();
     }
 }
