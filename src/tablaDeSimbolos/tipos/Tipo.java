@@ -58,7 +58,7 @@ public abstract class Tipo {
         }
     }
     //TODO: preg si esta bien.
-    public int profundidadDelHijo(TipoClase subtipo){ // Redefinido solamente TipoClase
+    public int profundidadDelHijo(TipoClase subtipo){ // Redefinido solamente TipoClase y TipoNull
         return -1;
     }
 

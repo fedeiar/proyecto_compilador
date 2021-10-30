@@ -24,7 +24,7 @@ public class Atributo{
     }
 
     public boolean esPublic(){ //TODO: asi estaria bien para saber si es public o private?
-        return visibilidadAtributo.toString().equals("pr_public");
+        return visibilidadAtributo == TipoDeToken.pr_public;
     }
 
     public TipoConcreto getTipo(){

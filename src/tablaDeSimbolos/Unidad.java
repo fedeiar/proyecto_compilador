@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public abstract class Unidad {
     
     protected Map<String, ParametroFormal> parametros;
-    protected List<ParametroFormal> lista_parametrosFormales; //la lista es porque necesitamos el orden de los parametros
+    protected List<ParametroFormal> lista_parametrosFormales; // La lista es porque necesitamos el orden de los parametros
 
-    protected boolean esDinamico; //TODO: esta bien?
+    protected boolean esDinamico;
     protected NodoBloque bloque;
 
 
@@ -32,7 +32,7 @@ public abstract class Unidad {
         return new TipoVoid();
     }
 
-    public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{ //TODO: cambiar por un toString y eliminar el parametro nombreParametro
+    public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{
         if(parametros.get(parametro.toString()) == null){
             parametros.put(parametro.toString(), parametro);
             lista_parametrosFormales.add(parametro);

@@ -30,7 +30,8 @@ public class Main {
                 TablaSimbolos.getInstance().estaBienDeclarado();
                 TablaSimbolos.getInstance().consolidar();
 
-                //TODO: aca debería ir el chequeo de sentencias, justo después del chequeo de declaraciones.
+                // Chequeo de sentencias
+                TablaSimbolos.getInstance().chequeoSentencias(); //TODO: con esto ya alcanza?
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");
 

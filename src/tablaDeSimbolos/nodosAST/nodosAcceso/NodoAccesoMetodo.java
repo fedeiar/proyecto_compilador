@@ -23,7 +23,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
         Metodo metodo = TablaSimbolos.claseActual.getMetodoQueConformaParametros(tokenIdMet.getLexema(), listaParametrosActuales); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodo == null){
-            throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado");
+            throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado o los parametros no conforman");
         }
         if(!TablaSimbolos.unidadActual.esDinamico() && metodo.esDinamico()){
             throw new ExcepcionSemantica(tokenIdMet, "no se puede hacer referencia al metodo dinamico "+tokenIdMet.getLexema() +" desde un metodo estatico");

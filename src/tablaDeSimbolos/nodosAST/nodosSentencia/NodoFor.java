@@ -7,7 +7,7 @@ import tablaDeSimbolos.tipos.TipoBoolean;
 
 public class NodoFor extends NodoSentencia{
     
-    private Token tokenFor; //TODO: ponerla en la EDT.
+    private Token tokenFor;
     private NodoVarLocal nodoVarLocal;
     private NodoExpresion nodoExpresionBooleana;
     private NodoAsignacion nodoAsignacion;

@@ -113,7 +113,7 @@ public class Clase {
     }
 
     //TODO: AYUDA
-    /*
+    
     public Metodo getMetodoQueMasConformaParametros(String nombreMetodo, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{ //TODO: asi esta bien?
 
         List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
@@ -133,11 +133,15 @@ public class Clase {
         int masConforme = Integer.MAX_VALUE;
         Metodo metodoMasConformeParaPosParametro = listaMetodosConformantes.get(0);
         Metodo metodoMasConforme;
+        boolean empatados = false;
         while(posicionParametro < listaParametrosActuales.size()){
             for(Metodo metodo : listaMetodosConformantes){
                 Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
                 Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
                 int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
+                if(conformidad == masConforme){
+                    empatados = true;
+                }
                 if(conformidad < masConforme){
                     masConforme = conformidad;
                     metodoMasConformeParaPosParametro = metodo;
@@ -149,7 +153,7 @@ public class Clase {
 
         return metodoMasConforme;
     }
-    */
+    
 
     public Metodo getMetodoMismaSignatura(Metodo metodo2){ 
         Metodo metodo_en_clase = metodos.get(metodo2.toString());

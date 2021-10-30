@@ -32,7 +32,7 @@ public class TipoClase extends TipoConcreto{
         
         tiposParametricos.put(nombreTipoParametrico, tipoParametrico);
         listaTiposParametricos.add(tipoParametrico);
-        //TODO: faltan hacer los controles, recordar que como aca se instancian SI pueden haber nombres repetidos (ver test2.java), asi que no se filtran los nombres repetidos
+        //TODO: faltan hacer los controles para logro, recordar que como aca se instancian SI pueden haber nombres repetidos (ver test2.java), asi que no se filtran los nombres repetidos
     }
 
     public void verificarExistenciaTipo() throws ExcepcionSemantica{  //TODO: esta bien el control de tipos parametricos pero hay que hacer mas controles, capaz cambia el codigo

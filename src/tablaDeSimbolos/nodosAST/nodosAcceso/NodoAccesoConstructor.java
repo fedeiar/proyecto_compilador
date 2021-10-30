@@ -26,12 +26,12 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
         Constructor constructor = claseDelConstructor.getConstructorQueConformaParametros(listaParametrosActuales); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(constructor == null){
-            throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado");
+            throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado o los parametros no conforman");
         }
         
         Tipo tipoConstructor = constructor.getTipoUnidad();
         
-        if(nodoEncadenado == null){ //TODO: esta bien controlar esto de los encadenados también aca?
+        if(nodoEncadenado == null){
             return tipoConstructor;
         } else{
             return nodoEncadenado.chequear(tipoConstructor);
