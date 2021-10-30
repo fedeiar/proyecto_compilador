@@ -2,6 +2,13 @@ package analizadorSintactico;
 
 import analizadorLexico.*;
 import tablaDeSimbolos.*;
+import tablaDeSimbolos.entidades.Atributo;
+import tablaDeSimbolos.entidades.Clase;
+import tablaDeSimbolos.entidades.Constructor;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.Metodo;
+import tablaDeSimbolos.entidades.ParametroFormal;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.literales.*;
 import tablaDeSimbolos.nodosAST.nodosAcceso.*;
 import tablaDeSimbolos.nodosAST.nodosExpresion.*;

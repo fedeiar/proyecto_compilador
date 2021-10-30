@@ -1,7 +1,7 @@
 package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;

@@ -2,6 +2,10 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.*;
+import tablaDeSimbolos.entidades.Atributo;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ParametroFormal;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.TipoConcreto;
 import tablaDeSimbolos.tipos.Tipo;

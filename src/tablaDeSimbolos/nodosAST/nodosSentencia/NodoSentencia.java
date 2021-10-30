@@ -1,6 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosSentencia;
 
-import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 
 public abstract class NodoSentencia {
     

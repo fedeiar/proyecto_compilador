@@ -1,11 +1,11 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.Clase;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.Atributo;
+import tablaDeSimbolos.entidades.Clase;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.tipos.*;
-import tablaDeSimbolos.Atributo;
 public class NodoAccesoVarEncadenada extends NodoEncadenado{
     
     protected Token tokenIdVar;

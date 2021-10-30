@@ -6,8 +6,8 @@ import analizadorLexico.AnalizadorLexico;
 import analizadorLexico.ExcepcionLexica;
 import analizadorSintactico.AnalizadorSintactico;
 import analizadorSintactico.ExcepcionSintactica;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 
 public class Main {
     public static void main(String[] args){

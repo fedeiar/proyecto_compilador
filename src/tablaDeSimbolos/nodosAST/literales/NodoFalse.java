@@ -1,8 +1,8 @@
 package tablaDeSimbolos.nodosAST.literales;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.tipos.TipoBoolean;
-import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.tipos.TipoConcreto;
 
 public class NodoFalse extends NodoBoolean{

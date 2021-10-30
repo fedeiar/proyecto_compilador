@@ -1,8 +1,8 @@
 package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
-import tablaDeSimbolos.ExcepcionSemantica;
 import tablaDeSimbolos.tipos.*;
 
 public class NodoAsignacionIncremento extends NodoAsignacion{

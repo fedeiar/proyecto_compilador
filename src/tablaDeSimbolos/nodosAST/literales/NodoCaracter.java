@@ -1,7 +1,7 @@
 package tablaDeSimbolos.nodosAST.literales;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoOperando;
 import tablaDeSimbolos.tipos.*;
 public class NodoCaracter extends NodoOperando{

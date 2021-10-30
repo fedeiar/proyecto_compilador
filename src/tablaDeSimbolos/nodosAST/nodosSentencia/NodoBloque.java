@@ -3,8 +3,8 @@ package tablaDeSimbolos.nodosAST.nodosSentencia;
 import java.util.List;
 import java.util.Map;
 
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 
 import java.util.ArrayList;
 import java.util.HashMap;

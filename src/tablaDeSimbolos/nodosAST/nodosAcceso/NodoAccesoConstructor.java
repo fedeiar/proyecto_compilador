@@ -1,14 +1,13 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
-import tablaDeSimbolos.Clase;
-import tablaDeSimbolos.Constructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.Clase;
+import tablaDeSimbolos.entidades.Constructor;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.Tipo;
 

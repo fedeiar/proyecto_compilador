@@ -1,6 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosExpresion;
 import analizadorLexico.Token;
-import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 
 public abstract class NodoExpresionBinaria extends NodoExpresion{
     

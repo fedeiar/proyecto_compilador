@@ -3,12 +3,12 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 import java.util.List;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.Metodo;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
-import tablaDeSimbolos.Clase;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.Clase;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.Metodo;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 
 public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
     

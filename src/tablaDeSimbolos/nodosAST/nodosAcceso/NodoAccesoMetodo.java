@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.Clase;
-import tablaDeSimbolos.ExcepcionSemantica;
-import tablaDeSimbolos.TablaSimbolos;
+import tablaDeSimbolos.entidades.Clase;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.Metodo;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
-import tablaDeSimbolos.Metodo;
 public class NodoAccesoMetodo extends NodoAccesoUnidad{
     
     protected Token tokenIdMet;

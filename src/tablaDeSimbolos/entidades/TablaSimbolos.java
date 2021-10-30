@@ -1,4 +1,4 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;

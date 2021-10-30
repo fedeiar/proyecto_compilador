@@ -1,9 +1,8 @@
-package tablaDeSimbolos;
+package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
 
-import java.rmi.MarshalledObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,16 +52,16 @@ public class Clase {
         return tokenIdClaseAncestro;
     }
 
+    public void set_idClaseAncestro(Token idClaseAncestro){
+        this.tokenIdClaseAncestro = idClaseAncestro;
+    }
+
     public Atributo getAtributo(String nombreAtributo){
         return atributos.get(nombreAtributo);
     }
 
     public Map<String,Atributo> getHashAtributos(){
         return atributos;
-    }
-
-    public Collection<Constructor> getConstructores(){
-        return constructores.values();
     }
 
     public Constructor getConstructorQueConformaParametros(List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{
@@ -137,7 +136,6 @@ public class Clase {
             int masConforme = Integer.MAX_VALUE;
             Metodo metodoMasConformeParaPosParametro = null;
             Metodo metodoMasConforme = null;
-            boolean empatados = false;
             // Este recorrido es equivalente a recorrer una matriz por columnas.
             while(posicionParametro < listaParametrosActuales.size()){
                 for(Metodo metodo : listaMetodosConformantes){
@@ -145,10 +143,8 @@ public class Clase {
                     Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
                     int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
                     if(conformidad == masConforme){
-                        empatados = true;
                         metodoMasConformeParaPosParametro = null; // Si empatan, entonces aun no podemos decidir el posible metodo mas conforme.
                     }else if(conformidad < masConforme){
-                        empatados = false;
                         masConforme = conformidad;
                         metodoMasConformeParaPosParametro = metodo;
                     }
@@ -162,7 +158,7 @@ public class Clase {
                 masConforme = Integer.MAX_VALUE;
             }
 
-            if(metodoMasConforme == null){ // quiere decir que los mejores empataron en todos sus parametros.
+            if(metodoMasConforme == null){ // Quiere decir que los mejores empataron en todos sus parametros.
                 throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
             }
 
@@ -178,14 +174,6 @@ public class Clase {
         } else{
             return null;
         }
-    }
-
-    public boolean estaConsolidado(){
-        return estaConsolidado;
-    }
-
-    public void set_idClaseAncestro(Token idClaseAncestro){
-        this.tokenIdClaseAncestro = idClaseAncestro;
     }
 
     public void insertarTipoParametrico(String nombreTipoParametrico, TipoClase tipoParametrico) throws ExcepcionSemantica{ //TODO: usar para logro genericidad.
@@ -233,7 +221,9 @@ public class Clase {
     }
 
     
-    // Chequeos semanticos
+    // -----Chequeos semanticos-----
+
+    // Chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         if(!this.tokenIdClase.getLexema().equals("Object")){
@@ -278,6 +268,9 @@ public class Clase {
         }
     }
 
+    public boolean estaConsolidado(){
+        return estaConsolidado;
+    }
 
     public void consolidar() throws ExcepcionSemantica{
         if(!estaConsolidado){
@@ -322,6 +315,7 @@ public class Clase {
         }
     }
 
+    // Chequeo de sentencias
 
     public void chequearSentencias() throws ExcepcionSemantica{
         TablaSimbolos.claseActual = this;

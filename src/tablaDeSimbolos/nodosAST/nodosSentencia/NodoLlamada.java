@@ -1,6 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosSentencia;
 
-import tablaDeSimbolos.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
 
 public class NodoLlamada extends NodoSentencia{
