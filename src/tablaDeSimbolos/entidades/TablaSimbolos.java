@@ -34,7 +34,7 @@ public class TablaSimbolos {
             //Creando Object
             Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
             Clase claseObject = new Clase(tokenObject); 
-            claseObject.set_idClaseAncestro(null);//Object va a ser la unica clase que tenga ancestro null.
+            claseObject.set_idClaseAncestro(null); // Object va a ser la unica clase que tenga ancestro null.
 
             metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), false, new TipoVoid(), tokenObject);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));

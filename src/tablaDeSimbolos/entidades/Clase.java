@@ -38,7 +38,8 @@ public class Clase {
 
         estaConsolidado = false;
         estaVerificadoHerenciaCircular = false;
-        if(tokenIdClase.getLexema() == "Object"){
+
+        if(tokenIdClase.getLexema().equals("Object")){
             estaConsolidado = true; 
             estaVerificadoHerenciaCircular = true;
         }
@@ -69,8 +70,9 @@ public class Clase {
         for(NodoExpresion parametroActual : listaParametrosActuales){
             listaTiposParametrosActuales.add(parametroActual.chequear());
         }
-
+        
         for(Constructor constructor : constructores.values()){
+            
             if(constructor.conformanParametros(listaTiposParametrosActuales)){
                 return constructor;
             }
@@ -226,32 +228,30 @@ public class Clase {
     // Chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
-        if(!this.tokenIdClase.getLexema().equals("Object")){
+      
+        TablaSimbolos.claseActual = this; // Ya que para algunos chequeos (como el constructor de Constructor) necesitamos saber la clase actual que estamos chequeando.
 
-            TablaSimbolos.claseActual = this; //ya que para algunos chequeos (como el constructor de Constructor) necesitamos saber la clase actual que estamos chequeando.
-            if(!TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){
-                throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClaseAncestro.getLexema()+" de la cual se intenta heredar no esta declarada");
-            }
-
-            verificarHerenciaCircular(new HashMap<String, Clase>());
-
-            for(Atributo a : atributos.values()){
-                a.estaBienDeclarado();
-            }
-
-            for(Metodo metodo : metodos.values()){
-                metodo.estaBienDeclarado();
-            }
-
-            for(Constructor c : constructores.values()){
-                c.estaBienDeclarado();
-            }
-
-            if(constructores.size() == 0){
-                insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0)));
-            } 
-
+        if(!this.tokenIdClase.getLexema().equals("Object") && !TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){
+            throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClaseAncestro.getLexema()+" de la cual se intenta heredar no esta declarada");
         }
+
+        verificarHerenciaCircular(new HashMap<String, Clase>());
+
+        for(Atributo a : atributos.values()){
+            a.estaBienDeclarado();
+        }
+
+        for(Metodo metodo : metodos.values()){
+            metodo.estaBienDeclarado();
+        }
+
+        for(Constructor c : constructores.values()){
+            c.estaBienDeclarado();
+        }
+
+        if(constructores.size() == 0){
+            insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0)));
+        } 
 
     }
 

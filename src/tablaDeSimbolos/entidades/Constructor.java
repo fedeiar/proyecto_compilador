@@ -1,21 +1,24 @@
 package tablaDeSimbolos.entidades;
 
 import analizadorLexico.Token;
+import tablaDeSimbolos.tipos.Tipo;
+import tablaDeSimbolos.tipos.TipoVoid;
 
 public class Constructor extends Unidad{
     
     private Token tokenIdClase;
+    
 
     public Constructor(Token tokenIdClase) throws ExcepcionSemantica{
         super();
         this.tokenIdClase = tokenIdClase;
         esDinamico = true;
+        tipoUnidad = new TipoVoid(); //TODO: esto está bien? los constructores tienen return void?
     }
 
     public Token getTokenIdClase(){
         return tokenIdClase;
     }
-
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         super.estaBienDeclarado();

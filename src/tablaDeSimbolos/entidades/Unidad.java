@@ -16,6 +16,7 @@ public abstract class Unidad {
 
     protected boolean esDinamico;
     protected NodoBloque bloque;
+    protected Tipo tipoUnidad;
 
 
     public Unidad(){
@@ -28,8 +29,8 @@ public abstract class Unidad {
         return lista_parametrosFormales;
     }
 
-    public Tipo getTipoUnidad(){ //TODO: esto está bien? los constructores tienen return void?
-        return new TipoVoid();
+    public Tipo getTipoUnidad(){ 
+        return tipoUnidad;
     }
 
     public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{

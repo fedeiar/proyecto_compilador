@@ -38,7 +38,7 @@ public class NodoVarLocal extends NodoSentencia{
         
         if(nodoExpresion != null){
             if(!nodoExpresion.chequear().esSubtipo(tipoVarLocal)){
-                throw new ExcepcionSemantica(tokenIgual, "el tipo de la expresion no es compatible con el tipo de la declaracion de la variable local");
+                throw new ExcepcionSemantica(tokenIgual, "el tipo de la expresion no conforma con el tipo de la declaracion de la variable local");
             }
         }
     }

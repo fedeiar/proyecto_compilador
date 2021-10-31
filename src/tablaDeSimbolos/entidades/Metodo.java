@@ -8,7 +8,6 @@ import analizadorLexico.Token;
 public class Metodo extends Unidad{
     
     private Token tokenIdMet;
-    private Tipo tipoMetodo;
     private Token tokenClaseContenedora;
 
 
@@ -16,16 +15,12 @@ public class Metodo extends Unidad{
         super();
         this.tokenIdMet = tokenIdMet;
         this.esDinamico = esDinamico;
-        this.tipoMetodo = tipoMetodo;
+        this.tipoUnidad = tipoMetodo;
         this.tokenClaseContenedora = claseContenedora;
     }
 
     public Token getTokenIdMet(){
         return tokenIdMet;
-    }
-
-    public Tipo getTipoUnidad(){
-        return tipoMetodo;
     }
 
     public Token getTokenClaseContenedora(){
@@ -34,7 +29,7 @@ public class Metodo extends Unidad{
 
     public boolean equalsSignatura(Metodo metodo){
         boolean mismaFormaMetodo = this.esDinamico == metodo.esDinamico();
-        boolean mismoTipo = this.tipoMetodo.mismoTipo(metodo.getTipoUnidad());
+        boolean mismoTipo = this.tipoUnidad.mismoTipo(metodo.getTipoUnidad());
         boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodo.getTokenIdMet().getLexema());
         boolean mismosParametros = this.mismosParametros(metodo);
         return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
@@ -42,7 +37,7 @@ public class Metodo extends Unidad{
 
     public boolean redefineCorrectamente(Metodo metodoAncestro){
         boolean mismaFormaMetodo = this.esDinamico == metodoAncestro.esDinamico();
-        boolean mismoTipo = this.tipoMetodo.esSubtipo(metodoAncestro.getTipoUnidad());
+        boolean mismoTipo = this.tipoUnidad.esSubtipo(metodoAncestro.getTipoUnidad());
         boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodoAncestro.getTokenIdMet().getLexema());
         boolean mismosParametros = this.mismosParametros(metodoAncestro);
         return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;
@@ -50,7 +45,7 @@ public class Metodo extends Unidad{
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         super.estaBienDeclarado();
-        tipoMetodo.verificarExistenciaTipo();
+        tipoUnidad.verificarExistenciaTipo();
     }
 
     public String toString(){
