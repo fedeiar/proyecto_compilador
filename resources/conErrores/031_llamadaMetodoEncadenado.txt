@@ -1,0 +1,53 @@
+///[Error:m0C|25]
+class A {
+	static A m0A(){} // no es redef.
+
+	dynamic B m1A(int a1){} // es redef. en B
+
+	dynamic C m2A(){}
+
+	dynamic String m3A(){}
+
+	static A s_m1A(){} // no es redef.
+
+	static C s_m2A(){} // no es redef.
+
+	static A s_m3A(int p1, A p2){} // es redef. en B
+
+	static int s_m4A(A p1, B p2){} // es redef. en B
+} 
+
+class B extends A{
+	public int a;
+	dynamic B m0B(){}
+
+	dynamic C m1A(int p1){ // redefine
+		m1A(3).m0B().m0C();
+    	}
+
+	dynamic void m3B(int a, int b){}
+	dynamic void m4B(A p1, B p2, C p3, D p4){}
+	static void s_m5B(){}
+
+    	static int s_m2A(A p1, B p2){} // redefine
+
+	static B s_m3A(int p1, A p2){} // redefine
+
+}
+
+class C extends B{
+
+	dynamic C m0C(){}
+
+	dynamic void m1C(){}
+
+}
+
+class D extends C{}
+
+class Init{
+    static void main()
+    { }
+}
+
+

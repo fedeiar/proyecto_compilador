@@ -1,0 +1,50 @@
+///[Error:m1|39]
+class A {
+	static A m0(){} // no es redef.
+
+	dynamic B m1(int a1){} // es redef. en B
+
+	static int s_m2(A p1, B p2){} // es redef. en B
+
+	static A s_m1A(){} // no es redef.
+
+	static C s_m2A(){} // no es redef.
+
+	static A s_m3A(int p1, A p2){} // es redef. en B
+} 
+
+class B extends A{
+
+	dynamic C m1(int p1){} // redefine
+    
+	dynamic void m3(int a, int b){}
+	dynamic void m4(A p1, B p2, C p3, D p4){}
+	static void s_m5(){}
+
+    	static int s_m2(A p1, B p2){} // redefine
+
+	static B s_m3A(int p1, A p2){} // redefine
+
+}
+
+class C extends B{
+
+	dynamic void m1C(){}
+
+}
+
+class D extends C{
+
+	dynamic void m1D(){
+		m1('a'); // error: no conforman
+	}
+
+
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

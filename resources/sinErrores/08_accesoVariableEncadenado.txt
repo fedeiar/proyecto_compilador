@@ -1,4 +1,4 @@
-///
+// testeamos llamadas a metodoo simple. También testesamos que conformen los parametros.
 class A {
 	private int a1A; // tapado en B
 	public char a2A; // tapado en B
@@ -23,11 +23,20 @@ class B extends A{
 	public int a4B;
 
 	dynamic C m4B(int p1, char p2, A p3, B p4){ // redefine
-		
+		D vl0;
+		int vl1 = a1A.a1C;
+		A vl2 = a1A.a2C.a9A;
+		B vl3 = a6A.a6A.a6A.a6A;
+		A vl4 = p3.a6A.a1B;
+		C vl5 = vl0.a1D.a6A.a4C.a4C;
     	}
 
 	static D s_m4B(int p1, char p2, A p3, B p4, C p5, D p6){
-		a8A.a10A;
+		D vl0;
+		int vl1;
+		A vl2 = p3.a9A.a10A;
+		B vl3 = p6.a1B.a6A;
+		D vl4 = vl3.a1B.a9A.a10A;
 	}
 
 

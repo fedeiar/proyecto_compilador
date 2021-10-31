@@ -1,0 +1,66 @@
+
+class A {
+	static A m0(){} // no es redef.
+
+	dynamic B m1(int a1){} // es redef. en B
+
+	static int s_m2(A p1, B p2){} // es redef. en B
+
+	static A s_m1A(){} // no es redef.
+
+	static C s_m2A(){} // no es redef.
+
+	static A s_m3A(int p1, A p2){} // es redef. en B
+} 
+
+class B extends A{
+
+	dynamic C m1(int p1){ // redefine
+		A vl1 = m0();
+		A vl2 = m1(3);
+		B vl3 = m1(3);
+		C vl4 = m1(3); // ya que redefine (llamada recursiva)
+        	m3(3, 5);
+		s_m1A();
+		s_m2(m0(), m1(3));
+		m4(new A(), new B(), new C(), new D());
+		m4(new D(), new D(), new D(), new D());
+		m4(new C(), new C(), null, null);
+    	}
+
+	dynamic void m3(int a, int b){}
+	dynamic void m4(A p1, B p2, C p3, D p4){}
+	static void s_m5(){}
+
+    	static int s_m2(A p1, B p2){ // redefine
+		Object vl1 = s_m1A();
+		Object vl2 = s_m2A();
+		A vl3 = s_m2A();
+		B vl4 = s_m3A(3, new A());
+		B vl5 = s_m3A(-9, new D());
+		s_m1A();
+	}
+
+	static B s_m3A(int p1, A p2){} // redefine
+
+}
+
+class C extends B{
+
+	dynamic void m1C(){
+		A a = m0();
+		s_m1A();
+		m1(5);
+		m3(-90, +44);
+	}
+
+}
+
+class D extends C{}
+
+class Init{
+    static void main()
+    { }
+}
+
+

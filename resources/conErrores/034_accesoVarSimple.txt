@@ -1,4 +1,4 @@
-///
+///[Error:a5A|31]
 class A {
 	private int a1A; // tapado en B
 	public char a2A; // tapado en B
@@ -8,8 +8,6 @@ class A {
 	public C a6A;
 	public String a7A;
 	public char a8A;
-	public A a9A;
-	public D a10A;
 } 
 
 class B extends A{
@@ -22,31 +20,29 @@ class B extends A{
 	private Object a3B;
 	public int a4B;
 
-	dynamic C m4B(int p1, char p2, A p3, B p4){ // redefine
-		
-    	}
+	dynamic void m1B(A p1, B p2, C p3){}
+	dynamic void m2B(int p1, char p2, String p3){}
+	dynamic void m3B(Object p1){}
 
-	static D s_m4B(int p1, char p2, A p3, B p4, C p5, D p6){
-		a8A.a10A;
-	}
+	dynamic C m1A(int p1, char p2, A p3, B p4){ // redefine
+		A vl1;
+		B vl2;
+		C vl3;
+		m1B(a5A, vl3, vl3);
+    	}
 
 
 }
 
 class C extends B{
 
-	public int a1C;
-	public A a2C;
-	public B a3C;
-	public C a4C;
-	public D a5C;
+	dynamic C m0C(){
+	}
+
 
 }
 
-class D extends C{
-
-	public A a1D;
-}
+class D extends C{}
 
 class Init{
     static void main()

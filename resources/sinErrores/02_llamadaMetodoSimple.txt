@@ -1,0 +1,41 @@
+// testeamos llamadas a metodoo simple, sin herencia y sin sobrecarga.
+
+
+class A{
+
+	dynamic Object m1(int p){}
+
+	dynamic A m2 (int p1, char p2, A p3){}
+
+	dynamic void m3(int a, int b){}
+
+	static void s_m5(){}
+    
+	dynamic Object m4(int p1){
+		Object vl1 = m1(3);
+		A vl2 = m2(3, 'a', s_m3(3, new A()));
+        	m3(3, 5);
+		m4(-90);
+		Object vl3 = s_m1();
+		System vl4 = s_m1();
+		s_m2(m1(3), new A(), m2(3, 'T', new A()));
+    	}
+
+	static System s_m1(){}
+
+    	static System s_m2(Object p1, Object p2, A p3){
+		Object vl1 = s_m1();
+		Object vl2 = s_m2(new System(), new Object(), new A());
+		A vl4 = s_m3(3, new A());
+	}
+
+	static A s_m3(int p1, A p2){}
+
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

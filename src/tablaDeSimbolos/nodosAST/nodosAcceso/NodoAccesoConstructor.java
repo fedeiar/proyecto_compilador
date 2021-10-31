@@ -23,7 +23,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
         Clase claseDelConstructor = TablaSimbolos.getClase(tokenIdClase.getLexema());
         if(claseDelConstructor == null){
-            throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada");
+            throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada para su instanciacion");
         }
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
         Constructor constructor = claseDelConstructor.getConstructorQueConformaParametros(listaParametrosActuales); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.

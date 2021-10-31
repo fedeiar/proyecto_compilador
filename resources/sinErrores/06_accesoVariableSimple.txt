@@ -1,0 +1,78 @@
+
+class A {
+	private int a1A; // tapado en B
+	public char a2A; // tapado en B
+	private A a3A;   
+	public A a4A;    // tapado en B
+	private B a5A;
+	public C a6A;
+	public String a7A;
+	public char a8A;
+} 
+
+class B extends A{
+
+	public C a1A; // tapa al de A
+	public String a2A; // tapa al de A
+	private B a4A;  // tapa al de A
+	public A a1B;
+	private D a2B;
+	private Object a3B;
+	public int a4B;
+
+	dynamic void m1B(A p1, B p2, C p3){}
+	dynamic void m2B(int p1, char p2, String p3){}
+	dynamic void m3B(Object p1){}
+
+	dynamic C m4B(int p1, char p2, A p3, B p4){ // redefine
+		D vl0;
+		int vl1;
+		A vl2 = a1A;
+		B vl3 = a6A;
+		A vl4 = p3;
+		C vl5 = vl0;
+		A vl6 = a4A;
+		m1B(a1B, a1A, a6A);
+		m1B(vl5, p4, a2B);  
+		m1B(a4A, vl3, vl5);
+		m2B(p1, a8A, a2A);
+		m3B(a3B);
+    	}
+
+	static void s_m1B(A p1, B p2, C p3){}
+	static void s_m2B(int p1, char p2, String p3){}
+	static B s_m3B(Object p1){}
+
+	static D s_m4B(int p1, char p2, A p3, B p4, C p5, D p6){
+		D vl0;
+		int vl1;
+		A vl2 = p3;
+		B vl3 = p4;
+		A vl4 = p4;
+		C vl5 = p6;
+		A vl6 = p6;
+		s_m1B(p3, vl3, p6);
+		s_m3B(s_m3B(p5));
+	}
+
+
+}
+
+class C extends B{
+
+	dynamic C m0C(){
+		m1B(a1B, a1A, a1A);
+		m2B(a4B, a8A, a7A);
+	}
+
+
+}
+
+class D extends C{}
+
+class Init{
+    static void main()
+    { }
+}
+
+

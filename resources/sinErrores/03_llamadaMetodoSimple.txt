@@ -1,0 +1,57 @@
+
+class A {
+	static A m0(){}
+
+	dynamic B m1(int a1){}
+
+	static int s_m2(A p1, B p2){}
+
+	static A s_m1A(){}
+
+	static C s_m2A(){}
+
+	static A s_m3A(int p1, A p2){}
+} 
+
+class B extends A{
+
+	dynamic C m1(int p1){
+		A vl1 = m0();
+		A vl2 = m1(3);
+		B vl3 = m1(3);
+		C vl4 = m1(3); // ya que redefine
+        	m3(3, 5);
+		s_m1A();
+		s_m2(m0(), m1(3));
+		m4(new A(), new B(), new C(), new D());
+		m4(new D(), new D(), new D(), new D());
+		m4(new C(), new C(), null, null);
+    	}
+
+	dynamic void m3(int a, int b){}
+	dynamic void m4(A p1, B p2, C p3, D p4){}
+	static void s_m5(){}
+
+    	static int s_m2(A p1, B p2){
+		Object vl1 = s_m1A();
+		Object vl2 = s_m2A();
+		A vl3 = s_m2A();
+		B vl4 = s_m3A(3, new A());
+		B vl5 = s_m3A(-9, new D());
+		s_m1A();
+	}
+
+	static B s_m3A(int p1, A p2){}
+
+}
+
+class C extends B{}
+
+class D extends C{}
+
+class Init{
+    static void main()
+    { }
+}
+
+
