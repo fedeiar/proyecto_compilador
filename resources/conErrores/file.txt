@@ -1,0 +1,38 @@
+///[Error:D|16]
+
+
+class A {
+
+	dynamic void m0(){}
+
+	dynamic void m1(int a1){}
+
+	static void m1A(){}
+	
+} 
+
+class B extends A{
+    	public A a3;
+    
+	dynamic void m1(int a1){
+        	m3(3, 5);
+		m1A();
+		m2();
+    	}
+
+    	static int m2(){
+
+	}
+
+	dynamic void m3(int a, int b){}
+}
+
+class C extends B{}
+
+
+class Init{
+    static void main()
+    { }
+}
+
+

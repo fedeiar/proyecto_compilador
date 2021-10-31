@@ -1,3 +1,4 @@
+///[Error:a4|20]
 
 
 class A {
@@ -14,23 +15,22 @@ class B extends A{
 	{
 		B a2;
 		{	
-			String a3 = "asd";
+			String a5 = "asd";
 			{
-				System a7;
-				System a5 = null;
+				System a4;
 			}
 			int a7;
-			int a5 = 434;
+			int a8 = 434;
 			char a6 = 'b';
 		}
 		int a7 = -12;
 		char a3;
-		B a6 = new B();
+		B a4 = new B();
 	}
 	int a7 = +34;
         boolean a2;
 	{
-		A a6 = new B();
+		A a1 = new B();
 		Object a5 = new A();
 		boolean a3 = true;
 		Object a8 = new System();
@@ -38,7 +38,6 @@ class B extends A{
 	C a8 = null;
 	boolean a3 = false;
 	A a5 = new C();
-	Object a6 = null;
     }
 }
 

@@ -1,3 +1,4 @@
+///[Error:a4|16]
 
 
 class A {
@@ -12,12 +13,11 @@ class B extends A{
     dynamic void m1(int a1){
         A a4 = new A();
 	{
-		B a2;
+		B a4;
 		{	
 			String a3 = "asd";
 			{
 				System a7;
-				System a5 = null;
 			}
 			int a7;
 			int a5 = 434;
@@ -38,7 +38,6 @@ class B extends A{
 	C a8 = null;
 	boolean a3 = false;
 	A a5 = new C();
-	Object a6 = null;
     }
 }
 

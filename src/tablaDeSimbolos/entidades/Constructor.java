@@ -1,7 +1,6 @@
 package tablaDeSimbolos.entidades;
 
 import analizadorLexico.Token;
-import tablaDeSimbolos.tipos.Tipo;
 import tablaDeSimbolos.tipos.TipoVoid;
 
 public class Constructor extends Unidad{

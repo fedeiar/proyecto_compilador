@@ -1,4 +1,4 @@
-///[Error:Object|14]
+///[Error:a4|27]
 
 
 class A {
@@ -11,21 +11,21 @@ class B extends A{
     public A a3;
     
     dynamic void m1(int a1){
-        Object a4 = new Object();
+        A a4 = new A();
 	{
 		B a2;
 		{	
-			String a3 = "asd";
+			String a5 = "asd";
 			{
-				System a7;
+				System a10;
 			}
 			int a7;
-			int a5 = 434;
+			int a8 = 434;
 			char a6 = 'b';
 		}
 		int a7 = -12;
-		char a3;
-		B a6 = new B();
+		char a1;
+		B a4 = new B();
 	}
 	int a7 = +34;
         boolean a2;

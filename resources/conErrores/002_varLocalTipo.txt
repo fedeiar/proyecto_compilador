@@ -1,0 +1,26 @@
+///[Error:=|14]
+
+
+class A {
+    public B a1;
+    public int a2;
+    private int a3;
+} 
+
+class B extends A{
+    public A a3;
+    
+    dynamic void m1(int a1){
+        A a4 = new Object();
+    }
+}
+
+class C extends B{}
+
+
+class Init{
+    static void main()
+    { }
+}
+
+

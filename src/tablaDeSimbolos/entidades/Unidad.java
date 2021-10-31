@@ -2,7 +2,6 @@ package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.tipos.Tipo;
-import tablaDeSimbolos.tipos.TipoVoid;
 
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,7 @@ public abstract class Unidad {
     public boolean conformanParametros(List<Tipo> listaTiposParametrosActuales){
         List<Tipo> listaTiposParametrosFormales = new ArrayList<>();
         for(ParametroFormal parametroFormal : lista_parametrosFormales){
-            listaTiposParametrosActuales.add(parametroFormal.getTipo());
+            listaTiposParametrosFormales.add(parametroFormal.getTipo());
         }
 
         int i = 0;
@@ -82,6 +81,7 @@ public abstract class Unidad {
                 Tipo tipoActual = listaTiposParametrosActuales.get(i);
                 i++;
                 if(!tipoActual.esSubtipo(tipoFormal)){
+                    
                     parametrosConformantes = false;
                     break;
                 }
@@ -89,6 +89,7 @@ public abstract class Unidad {
         } else{
             parametrosConformantes = false;
         }
+        
         return parametrosConformantes;
     }
 

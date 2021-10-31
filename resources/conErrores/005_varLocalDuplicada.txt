@@ -1,3 +1,4 @@
+///[Error:a1|18]
 
 
 class A {
@@ -14,10 +15,9 @@ class B extends A{
 	{
 		B a2;
 		{	
-			String a3 = "asd";
+			String a1 = "asd";
 			{
 				System a7;
-				System a5 = null;
 			}
 			int a7;
 			int a5 = 434;
@@ -38,7 +38,6 @@ class B extends A{
 	C a8 = null;
 	boolean a3 = false;
 	A a5 = new C();
-	Object a6 = null;
     }
 }
 
