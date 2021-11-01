@@ -26,7 +26,7 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
                     throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder al atributo "+tokenIdVar.getLexema()+" ya que esta declarado privado");
                 }
             }else{
-                throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema()+" o bien no es accesible");
+                throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado o no es accesible en la clase "+clase.getTokenIdClase().getLexema());
             }
         } else{
             throw new ExcepcionSemantica(tokenIdVar, "el tipo del acceso a izquierda de " +tokenIdVar.getLexema() +" no es una clase valida o no esta declarada");

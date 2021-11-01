@@ -18,7 +18,7 @@ class B extends A{
 	public boolean a2B;
 
 	B(C p1){
-		new A(new D(), new D(), new B(a1B), new D()); // error: no conforma en el tercer parametro.
+		new A(new D(), new D(), new D());
 	}
 
 	dynamic B m2B(){}

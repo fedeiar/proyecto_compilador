@@ -1,0 +1,56 @@
+///[Error:a5A|26]
+class A {
+	private int a1A; // tapado en B
+	public char a2A; // tapado en B
+	private A a3A;   
+	public A a4A;    // tapado en B
+	private B a5A;
+	public C a6A;
+	public String a7A;
+	public char a8A;
+	public A a9A;
+	public D a10A;
+} 
+
+class B extends A{
+
+	public C a1A; // tapa al de A
+	public String a2A; // tapa al de A
+	private B a4A;  // tapa al de A
+	public A a1B;
+	private D a2B;
+	private Object a3B;
+	public int a4B;
+
+	dynamic C m4B(int p1, char p2, A p3, B p4){ // redefine
+		Object vl1 = a4A.a5A;
+    	}
+
+	static D s_m4B(int p1, char p2, A p3, B p4, C p5, D p6){
+		
+	}
+
+
+}
+
+class C extends B{
+
+	public int a1C;
+	public A a2C;
+	public B a3C;
+	public C a4C;
+	public D a5C;
+
+}
+
+class D extends C{
+
+	public A a1D;
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

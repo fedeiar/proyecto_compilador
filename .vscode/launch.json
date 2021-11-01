@@ -9,7 +9,7 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "resources/ConErrores/file.txt"
+            "args": "resources/SinErrores/file.txt"
         },
         {
             "type": "java",

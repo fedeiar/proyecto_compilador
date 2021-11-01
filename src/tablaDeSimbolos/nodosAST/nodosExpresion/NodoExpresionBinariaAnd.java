@@ -15,7 +15,7 @@ public class NodoExpresionBinariaAnd extends NodoExpresionBinaria{
         if(nodoExpresionLadoIzq.chequear().mismoTipo(new TipoBoolean()) && nodoExpresionLadoDer.chequear().mismoTipo(new TipoBoolean())){
             return new TipoBoolean();
         } else{
-            throw new ExcepcionSemantica(tokenOperadorBinario, "el operador"+ tokenOperadorBinario.getLexema()+" solo funciona con tipos booleanos");
+            throw new ExcepcionSemantica(tokenOperadorBinario, "el operador binario "+ tokenOperadorBinario.getLexema()+" solo funciona con tipos booleanos");
         }
     }
 }

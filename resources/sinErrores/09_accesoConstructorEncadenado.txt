@@ -1,0 +1,52 @@
+// testeamos llamadas a metodoo simple. También testesamos que conformen los parametros.
+class A {
+
+	private int a1A;
+	public char a2A;
+	public C a3A;
+	
+	A(int p1, boolean p2){
+		int a1A = p1;
+		char vl1 = a2A;
+		D vl2 = new D();
+	}
+
+	dynamic A m1A(){}
+
+	static void s_m1A(){}
+} 
+
+class B extends A{
+
+	private D a1B;
+	public boolean a2B;
+
+	B(C p1){
+		A v1 = new A(3, false);
+		B v2 = new C(v1, a3A, a1B);
+		A v3 = new D();
+		A v4 = new A(-3, !true).m1A();
+		new A(78, !a2B);
+		new C(v2, p1, a1B).m2B().m1A();
+		new C(null, a1B, a1B);
+	}
+
+	dynamic B m2B(){}
+}
+
+class C extends B{
+
+	C(A p1, C p2, D p3){}
+}
+
+class D extends C{
+
+	public A a1D;
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

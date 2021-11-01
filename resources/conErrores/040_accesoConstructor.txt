@@ -1,11 +1,11 @@
-///[Error:A|21]
+///[Error:E|21]
 class A {
 
 	private int a1A;
 	public char a2A;
 	public C a3A;
 	
-	A(A p1, B p2, C p3, D p4){}
+	A(int p1, boolean p2){}
 
 	dynamic A m1A(){}
 
@@ -18,7 +18,7 @@ class B extends A{
 	public boolean a2B;
 
 	B(C p1){
-		new A(new D(), new D(), new B(a1B), new D()); // error: no conforma en el tercer parametro.
+		new E();
 	}
 
 	dynamic B m2B(){}
