@@ -1,4 +1,4 @@
-///[Error:;|23]
+///[Error:=|23]
 class A {
 
 	public A a0A;
@@ -20,7 +20,7 @@ class B extends A{
 	public int a5B;
 
 	dynamic B m2B(){
-		(new A().m1A());
+		(a5B) = 4;
 	}
 
 	static C s_m3B(){
