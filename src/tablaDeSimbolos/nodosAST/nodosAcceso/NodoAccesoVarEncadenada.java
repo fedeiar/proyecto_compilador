@@ -40,6 +40,27 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         
     }
 
+    public Tipo chequearThis(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: esta bien?
+        TipoConcreto tipoAtributo;
+        Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
+        if(clase != null){
+            Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); 
+            if(atributo != null){ // Como vengo de this, entonces no controlo si es publico o privado ya que debo poder accederlo igual.
+                tipoAtributo = atributo.getTipo(); 
+            }else{
+                throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado o no es accesible en la clase "+clase.getTokenIdClase().getLexema());
+            }
+        } else{
+            throw new ExcepcionSemantica(tokenIdVar, "el tipo del acceso a izquierda de " +tokenIdVar.getLexema() +" no es una clase valida o no esta declarada");
+        }
+
+        if(nodoEncadenado != null){
+            return nodoEncadenado.chequear(tipoAtributo);
+        } else{
+            return tipoAtributo;
+        }
+    }
+
     public void esVariable() throws ExcepcionSemantica{
         if(nodoEncadenado != null){
             nodoEncadenado.esVariable();

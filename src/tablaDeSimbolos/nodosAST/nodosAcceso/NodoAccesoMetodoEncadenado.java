@@ -42,6 +42,10 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         }
     }
 
+    public Tipo chequearThis(Tipo tipoIzquierda) throws ExcepcionSemantica{
+        return chequear(tipoIzquierda);
+    }
+
     public void esVariable() throws ExcepcionSemantica{
         if(nodoEncadenado != null){
             nodoEncadenado.esVariable();

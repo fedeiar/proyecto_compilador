@@ -1,4 +1,4 @@
-// testeamos llamadas a metodoo simple. También testesamos que conformen los parametros.
+
 class A {
 	private int a1A; // tapado en B
 	public char a2A; // tapado en B

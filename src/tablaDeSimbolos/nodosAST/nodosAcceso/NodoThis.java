@@ -19,7 +19,7 @@ public class NodoThis extends NodoPrimario{
         Tipo tipoClaseActual = new TipoClase(TablaSimbolos.claseActual.getTokenIdClase()); // Esto me asegura que ya existe la clase
 
         if(nodoEncadenado != null){
-            return nodoEncadenado.chequear(tipoClaseActual);
+            return nodoEncadenado.chequearThis(tipoClaseActual); //TODO: esta bien llamar a este en lugar de al chequear() convencional?
         }
         return tipoClaseActual;
     }

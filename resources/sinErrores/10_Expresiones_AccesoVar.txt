@@ -1,4 +1,4 @@
-// testeamos llamadas a metodoo simple. También testesamos que conformen los parametros.
+
 class A {
 
 	public A a0A;
@@ -20,7 +20,7 @@ class B extends A{
 
 	dynamic B m2B(){
 		int vl0 = vl0;
-		int vl1 = -(a3B.a1A + 3 - 8) + (-3) * 4;
+		int vl1 = -(a3B.a1A + 3 - 8) + ((-3) * 4 - s_m3B().m1C());
 		int vl2 = (vl1 % 7) / +3;
 		boolean vl3 = vl1 < vl2;
 		boolean vl4 = !((-(vl1)) <= (vl2 + 9 * 3)) && (true || !(vl3 && false));
@@ -30,11 +30,13 @@ class B extends A{
 		boolean vl8 = (new A().a0A != new D()) && (new D() == new A()) || (new B() != new C());
 		
 	}
+
+	static C s_m3B(){}
 }
 
 class C extends B{
 
-
+	dynamic int m1C(){}
 }
 
 class D extends C{

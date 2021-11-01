@@ -1,4 +1,4 @@
-
+///[Error:==|22]
 class A {
 
 	public A a0A;
@@ -19,7 +19,8 @@ class B extends A{
 	public C a4B;
 
 	dynamic B m2B(){
-		A vl1 = this.a1B;
+		boolean vl0 = new A() == new E();
+		
 	}
 
 	static C s_m3B(){}
@@ -33,9 +34,9 @@ class C extends B{
 class D extends C{
 
 	public A a1D;
-
-	static B a2D(){}
 }
+
+class E {}
 
 class Init{
     static void main()

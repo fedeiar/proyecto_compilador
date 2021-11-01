@@ -13,6 +13,8 @@ public abstract class NodoEncadenado {
 
     public abstract Tipo chequear(Tipo tipo) throws ExcepcionSemantica;
 
+    public abstract Tipo chequearThis(Tipo tipo) throws ExcepcionSemantica; //TODO: esta bien?
+
     public abstract void esVariable() throws ExcepcionSemantica;
 
     public abstract void esLlamada() throws ExcepcionSemantica;
