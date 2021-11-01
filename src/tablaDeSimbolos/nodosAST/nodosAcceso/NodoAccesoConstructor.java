@@ -20,7 +20,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
         this.tokenIdClase = tokenIdClase;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
+    public Tipo chequear() throws ExcepcionSemantica{
         Clase claseDelConstructor = TablaSimbolos.getClase(tokenIdClase.getLexema());
         if(claseDelConstructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada para su instanciacion");
@@ -32,7 +32,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
         }
         
         //Tipo tipoConstructor = constructor.getTipoUnidad();
-        Tipo tipoConstructor = new TipoClase(tokenIdClase); //TODO: esta bien hacerlo asi? ya que segun java los constructores tienen tipo void.
+        Tipo tipoConstructor = new TipoClase(tokenIdClase);
 
         if(nodoEncadenado == null){
             return tipoConstructor;
@@ -42,19 +42,19 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
 
     }
 
-    public void esVariable() throws ExcepcionSemantica{
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         } else{
-            throw new ExcepcionSemantica(tokenIdClase, "el lado izquierdo de una asignacion debe ser una variable");
+            return false;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){ 
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            // No hacer nada, es correcto
+            return true;
         }
     }
 

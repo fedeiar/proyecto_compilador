@@ -12,7 +12,7 @@ public class Constructor extends Unidad{
         super();
         this.tokenIdClase = tokenIdClase;
         esDinamico = true;
-        tipoUnidad = new TipoVoid(); //TODO: esto está bien? los constructores tienen return void?
+        tipoUnidad = new TipoVoid();
     }
 
     public Token getTokenIdClase(){

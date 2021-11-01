@@ -16,9 +16,8 @@ public class NodoLlamada extends NodoSentencia{
 
     public void chequear() throws ExcepcionSemantica{
         nodoAcceso.chequear();
-        try{
-            nodoAcceso.esLlamada();  
-        } catch(ExcepcionSemantica e){
+
+        if( !nodoAcceso.esLlamable()){
             throw new ExcepcionSemantica(tokenPuntoYComa, "se esperaba una llamada a metodo o constructor");
         }
     }

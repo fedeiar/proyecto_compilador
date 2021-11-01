@@ -1,4 +1,4 @@
-///[Error:this|27]
+
 class A {
 
 	public A a0A;
@@ -20,12 +20,18 @@ class B extends A{
 	public int a5B;
 
 	dynamic B m2B(){
-
+		int vl1  = ((3));//ESTA BIEN
+		int vl2 = ((-(3)));//ESTA BIEN
+		B vl3 = ((((this))));//ESTA BIEN
+		C vl4 = (new C()); ////ESTA BIEN
+		(this).a5B = (-4); //ESTA BIEN
+		((this).a5B) = 4; //ESTA MAL
+		(((this)).a5B) = ( (((this).a4B).m1C()) ); //ESTA MAL
+		(s_m3B().m1C()); //ESTA MAL
+		
 	}
 
-	static C s_m3B(){
-		((this).a2B) = true;
-	}
+	static C s_m3B(){}
 }
 
 class C extends B{

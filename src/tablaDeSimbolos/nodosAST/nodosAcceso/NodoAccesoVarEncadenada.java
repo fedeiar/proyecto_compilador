@@ -61,19 +61,19 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         }
     }
 
-    public void esVariable() throws ExcepcionSemantica{
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         } else{
-            // No hacer nada, es correcto
+            return true;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            throw new ExcepcionSemantica(tokenIdVar, "se esperaba una llamada a un metodo o constructor");
+            return false;
         }
     }
 }

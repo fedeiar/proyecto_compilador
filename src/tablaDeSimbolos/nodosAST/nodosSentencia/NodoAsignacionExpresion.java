@@ -18,12 +18,11 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
 
     public void chequear() throws ExcepcionSemantica{ //TODO: preguntar si esta bien 
         Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
-        try{
-            nodoAccesoLadoIzq.esVariable();
-        } catch(ExcepcionSemantica e){
-            throw new ExcepcionSemantica(tokenAsignacion, "el lado izquierdo de una asignacion debe ser una variable"); //TODO: HACER
+
+        if( !nodoAccesoLadoIzq.esAsignable() ){
+            throw new ExcepcionSemantica(tokenAsignacion, "el lado izquierdo de una asignacion debe terminar en una variable");
         }
-        
+
         Tipo tipoExpresion = nodoExpresionLadoDer.chequear();
 
         if(!tipoExpresion.esSubtipo(tipoAcceso)){

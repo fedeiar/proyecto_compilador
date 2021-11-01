@@ -1,5 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
+import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
@@ -20,19 +21,19 @@ public class NodoExpresionParentizada extends NodoPrimario{
         }
     }
 
-    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         }else {
-            nodoExpresion.esVariable();
+            return false;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            nodoExpresion.esLlamada(); //TODO: ESTO ESTA BIEEEN?
+            return false;
         }
     }
 

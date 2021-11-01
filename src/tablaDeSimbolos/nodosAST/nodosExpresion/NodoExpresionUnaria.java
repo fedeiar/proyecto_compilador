@@ -34,12 +34,4 @@ public class NodoExpresionUnaria extends NodoExpresion{
         }
     }
 
-    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
-        throw new ExcepcionSemantica(tokenOperador, "una expresion unaria no es una variable");
-    }
-
-    public void esLlamada() throws ExcepcionSemantica{
-        throw new ExcepcionSemantica(tokenOperador, "una expresion unaria no es una llamada");
-    }
-
 }

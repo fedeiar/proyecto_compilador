@@ -20,7 +20,7 @@ public class NodoReturn extends NodoSentencia{
         this.nodoExpresionRetorno = nodoExpresionRetorno;
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien?
+    public void chequear() throws ExcepcionSemantica{ 
         Tipo tipoMetodo = TablaSimbolos.unidadActual.getTipoUnidad();
         if(nodoExpresionRetorno == null){
             if( !(tipoMetodo.mismoTipo(new TipoVoid())) ){

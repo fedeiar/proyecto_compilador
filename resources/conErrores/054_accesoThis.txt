@@ -20,11 +20,11 @@ class B extends A{
 	public int a5B;
 
 	dynamic B m2B(){
-
+		
 	}
 
 	static C s_m3B(){
-		((this).a2B) = true;
+		B vl1 = this;
 	}
 }
 

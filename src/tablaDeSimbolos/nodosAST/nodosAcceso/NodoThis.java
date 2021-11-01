@@ -19,24 +19,24 @@ public class NodoThis extends NodoPrimario{
         Tipo tipoClaseActual = new TipoClase(TablaSimbolos.claseActual.getTokenIdClase()); // Esto me asegura que ya existe la clase
 
         if(nodoEncadenado != null){
-            return nodoEncadenado.chequearThis(tipoClaseActual); //TODO: esta bien llamar a este en lugar de al chequear() convencional?
+            return nodoEncadenado.chequearThis(tipoClaseActual);
         }
         return tipoClaseActual;
     }
 
-    public void esVariable() throws ExcepcionSemantica{
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         } else{
-            throw new ExcepcionSemantica(tokenThis, "el lado izquierdo de una asignacion debe ser una variable");
+            return false;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){ //TODO: esta bien?
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            throw new ExcepcionSemantica(tokenThis, "se esperaba una llamada a un metodo o constructor");
+            return false;
         }
     }
     

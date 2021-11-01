@@ -1,4 +1,4 @@
-///[Error:this|27]
+///[Error:=|23]
 class A {
 
 	public A a0A;
@@ -20,12 +20,10 @@ class B extends A{
 	public int a5B;
 
 	dynamic B m2B(){
-
+		(a3B == a1B) = false;
 	}
 
-	static C s_m3B(){
-		((this).a2B) = true;
-	}
+	static C s_m3B(){}
 }
 
 class C extends B{

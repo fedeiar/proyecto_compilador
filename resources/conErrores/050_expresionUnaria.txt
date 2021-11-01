@@ -1,4 +1,4 @@
-///[Error:!|22]
+///[Error:-|22]
 class A {
 
 	public A a0A;

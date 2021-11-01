@@ -106,7 +106,6 @@ public class Clase {
         
         for(Metodo metodo : metodos.values()){
             if(metodo.getTokenIdMet().getLexema().equals(nombreMetodo) && metodo.conformanParametros(listaTiposParametrosActuales)){
-                
                 return metodo;
             }
         }
@@ -228,7 +227,6 @@ public class Clase {
     // Chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
-      
         TablaSimbolos.claseActual = this; // Ya que para algunos chequeos (como el constructor de Constructor) necesitamos saber la clase actual que estamos chequeando.
 
         if(!this.tokenIdClase.getLexema().equals("Object") && !TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){

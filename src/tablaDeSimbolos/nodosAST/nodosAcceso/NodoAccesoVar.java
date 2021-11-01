@@ -51,46 +51,19 @@ public class NodoAccesoVar extends NodoPrimario{
         return tipoVariable;
     }
 
-    /*
-    public boolean esVariable(){ //TODO: preg si está bien
-        // hace falta chequear todo lo que esta comentado aca abajo?
-        
-        NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
-        if(nodoVarLocal == null){
-            ParametroFormal parametroFormal = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
-            if(parametroFormal == null){
-                Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
-                if(atributo == null){
-                    throw new ExcepcionSemantica(tokenIdVar, "la variable "+tokenIdVar.getLexema()+" no fue declarada");
-                }else{
-                    if(!TablaSimbolos.unidadActual.esDinamico()){
-                        throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica");
-                    }
-                }
-            }
-        }
-        //hasta aca
-
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            return nodoEncadenado.esVariable(); 
-        }
-        return true;
-    }
-*/
-
-    public void esVariable() throws ExcepcionSemantica{
-        if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         } else{
-            // No hacer nada, es correcto.
+            return true;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            throw new ExcepcionSemantica(tokenIdVar, "se esperaba una llamada a un metodo o constructor");
+            return false;
         }
     }
 }

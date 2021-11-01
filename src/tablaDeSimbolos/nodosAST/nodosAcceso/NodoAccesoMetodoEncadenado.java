@@ -46,19 +46,19 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         return chequear(tipoIzquierda);
     }
 
-    public void esVariable() throws ExcepcionSemantica{
+    public boolean esAsignable(){
         if(nodoEncadenado != null){
-            nodoEncadenado.esVariable();
+            return nodoEncadenado.esAsignable();
         } else{
-            throw new ExcepcionSemantica(tokenIdMet, "el lado izquierdo de una asignacion debe ser una variable");
+            return false;
         }
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien?
+    public boolean esLlamable(){ 
         if(nodoEncadenado != null){
-            nodoEncadenado.esLlamada();
+            return nodoEncadenado.esLlamable();
         } else{
-            // No hacer nada, es correcto
+            return true;
         }
     }
 

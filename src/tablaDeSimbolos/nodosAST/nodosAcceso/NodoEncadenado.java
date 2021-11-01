@@ -15,7 +15,7 @@ public abstract class NodoEncadenado {
 
     public abstract Tipo chequearThis(Tipo tipo) throws ExcepcionSemantica; //TODO: esta bien?
 
-    public abstract void esVariable() throws ExcepcionSemantica;
+    public abstract boolean esAsignable();
 
-    public abstract void esLlamada() throws ExcepcionSemantica;
+    public abstract boolean esLlamable();
 }

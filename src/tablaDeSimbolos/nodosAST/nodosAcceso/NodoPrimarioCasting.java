@@ -18,17 +18,17 @@ public class NodoPrimarioCasting extends NodoAcceso{
         tipoCasting.verificarExistenciaTipo();
         Tipo tipoNodoPrimario = nodoPrimario.chequear();
         if(! tipoCasting.esSubtipo(tipoNodoPrimario)){
-            throw new ExcepcionSemantica(tokenIdClaseCasting, "casting invalido: la clase "+tokenIdClaseCasting.getLexema()+" debe ser un subtipo del acceso");
+            throw new ExcepcionSemantica(tokenIdClaseCasting, "casting invalido: la clase "+tokenIdClaseCasting.getLexema()+" debe ser un subtipo de la expresion a derecha");
         }
 
         return tipoCasting;
     }
 
-    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        nodoPrimario.esVariable();
+    public boolean esAsignable(){
+        return nodoPrimario.esAsignable();
     }
 
-    public void esLlamada() throws ExcepcionSemantica{ //TODO: esta bien asi?
-        nodoPrimario.esLlamada();
+    public boolean esLlamable(){
+        return nodoPrimario.esLlamable();
     }
 }

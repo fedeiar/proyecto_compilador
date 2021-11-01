@@ -17,11 +17,5 @@ public class NodoFalse extends NodoBoolean{
         return new TipoBoolean();
     }
 
-    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
-        throw new ExcepcionSemantica(tokenFalse, "una literal no es una variable");
-    }
 
-    public void esLlamada() throws ExcepcionSemantica{
-        throw new ExcepcionSemantica(tokenFalse, "una literal no es una llamada");
-    }
 }

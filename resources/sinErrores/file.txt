@@ -17,9 +17,25 @@ class B extends A{
 	public boolean a2B;
 	public B a3B;
 	public C a4B;
+	public int a5B;
+	public A a6B;
 
 	dynamic B m2B(){
-		A vl1 = this.a1B;
+		B vl1 = (B) new A();
+		C vl2 = (D) a3B;
+		A vl3 = (B) this.a4B.m2C(7);
+		A vl4 = (B) (this.a4B.m2C(7));
+		
+		A vl5 = new B();
+		((B)vl5).s_m3B();
+
+		A vl6 = new C();
+		C vl7 = (C) vl6;
+
+		A vl8 = new D();
+		B vl9 = (C) vl8;
+
+		C vl10 = (D) new A();
 	}
 
 	static C s_m3B(){}
@@ -27,7 +43,10 @@ class B extends A{
 
 class C extends B{
 
+	public boolean a1C;	
+
 	dynamic int m1C(){}
+	dynamic A m2C(int p1){}
 }
 
 class D extends C{

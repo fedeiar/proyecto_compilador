@@ -16,11 +16,5 @@ public class NodoEntero extends NodoOperando{
         return new TipoInt();
     }
 
-    public void esVariable() throws ExcepcionSemantica{ //TODO: esta bien?
-        throw new ExcepcionSemantica(tokenLitEntero, "una literal no es una variable");
-    }
 
-    public void esLlamada() throws ExcepcionSemantica{
-        throw new ExcepcionSemantica(tokenLitEntero, "una literal no es una llamada");
-    }
 }

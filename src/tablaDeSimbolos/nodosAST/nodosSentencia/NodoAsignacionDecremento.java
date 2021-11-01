@@ -17,11 +17,11 @@ public class NodoAsignacionDecremento extends NodoAsignacion{
     public void chequear() throws ExcepcionSemantica{ //TODO: esta bien?
         Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
 
-        try{
-            nodoAccesoLadoIzq.esVariable();
-        } catch(ExcepcionSemantica e){
-            throw new ExcepcionSemantica(tokenDecremento, "el lado izquierdo de un decremento debe ser una variable");
+        
+        if( !nodoAccesoLadoIzq.esAsignable() ){
+            throw new ExcepcionSemantica(tokenDecremento, "el lado izquierdo de un decremento debe terminar en una variable");
         }
+        
           
         if(!tipoAcceso.mismoTipo(new TipoInt())){
             throw new ExcepcionSemantica(tokenDecremento, "el tipo de la variable debe ser entero");

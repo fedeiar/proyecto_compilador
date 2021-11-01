@@ -4,6 +4,7 @@ import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.TipoBoolean;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 
 public class NodoFor extends NodoSentencia{
     
@@ -21,13 +22,19 @@ public class NodoFor extends NodoSentencia{
         this.nodoSentencia = nodoSentencia;
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien? esta bien el token en error de la excepcion?
-        nodoVarLocal.chequear(); //TODO: no nos interesa el tipo?
+    public void chequear() throws ExcepcionSemantica{ //TODO: probarlo
+        NodoBloque nodoBloqueFor = new NodoBloque();
+        TablaSimbolos.apilarBloqueActual(nodoBloqueFor);
+        
+        nodoVarLocal.chequear();
         if(! nodoExpresionBooleana.chequear().mismoTipo(new TipoBoolean())){
             throw new ExcepcionSemantica(tokenFor, "la expresión de condicion del for debe ser de tipo boolean");
         }
         nodoAsignacion.chequear();
         nodoSentencia.chequear();
+
+        TablaSimbolos.desapilarBloqueActual();
+        
     }
 
     
