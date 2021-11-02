@@ -29,6 +29,7 @@ class B extends A{
 		(s_m3B()).m1C();
 		(new A()).m1A();
 		((new B()).s_m3B()).m1C();
+		(((new B()).s_m3B())).m1C();
 		
 	}
 

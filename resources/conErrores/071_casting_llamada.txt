@@ -1,4 +1,4 @@
-
+///[Error:;|24]
 class A {
 
 	public A a0A;
@@ -20,39 +20,20 @@ class B extends A{
 	public int a5B;
 	public A a6B;
 
-	dynamic B m2B(String p1, A p2){
-		A v2;
-		System v3 = new System();
-		Object v4 = new Object();
-
-		p1 = "hola";
-		p2 = new B();
-		p2 = a4B;
-		a4B = new C();
-		a6B = a3B;
-		a3A = (C) p2;
-		a1B = s_m3B().m3C().m4C();
-
-		v2 = new C();
-		v4 = v3;
-		v4 = v2.m1A().a3A;
+	dynamic B m2B(){
+		(D)(new C());
 	}
 
-	static C s_m3B(){
-		
-	}
+	static C s_m3B(){}
 }
 
 class C extends B{
 
 	public boolean a1C;	
 
-	dynamic int m1C(A p1){
-		a0A = p1;
-	}
-	dynamic A m2C(int p1){}
+	dynamic int m1C(){}
+	dynamic A m2C(){}
 	dynamic C m3C(){}
-	dynamic D m4C(){}
 	
 }
 

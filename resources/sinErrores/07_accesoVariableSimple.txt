@@ -8,6 +8,7 @@ class A {
 	public C a6A;
 	public String a7A;
 	public char a8A;
+	public B a9A;  // tapado en B
 } 
 
 class B extends A{
@@ -19,6 +20,8 @@ class B extends A{
 	private D a2B;
 	private Object a3B;
 	public int a4B;
+	public A a9A;
+	
 
 	dynamic void m1B(A p1, B p2, C p3){}
 	dynamic void m2B(int p1, char p2, String p3){}
@@ -68,7 +71,13 @@ class C extends B{
 
 }
 
-class D extends C{}
+class D extends C{
+	
+	dynamic void m0D(){
+		a9A = new A();
+	}
+	
+}
 
 class Init{
     static void main()

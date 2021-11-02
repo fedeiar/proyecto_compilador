@@ -1,4 +1,4 @@
-
+///[Error:=|24]
 class A {
 
 	public A a0A;
@@ -21,26 +21,7 @@ class B extends A{
 	public A a6B;
 
 	dynamic B m2B(){
-		B vl1 = (B) new A();
-		C vl2 = (D) a3B;
-		A vl3 = (B) this.a4B.m2C(7);
-		A vl4 = (B) (this.a4B.m2C(7));
-		
-		A vl5 = new B();
-		((B)vl5).s_m3B();
-		(B)vl5.m1A();
-
-		A vl6 = new C();
-		C vl7 = (C) vl6;
-
-		A vl8 = new D();
-		B vl9 = (C) vl8;
-
-		C vl10 = (D) new A();
-
-		(C)new B();
-		((D)new A()).a2D();
-		((D)new A()).a2D = 7;
+		D vl1 = (C) new A();
 	}
 
 	static C s_m3B(){}
@@ -52,12 +33,16 @@ class C extends B{
 
 	dynamic int m1C(){}
 	dynamic A m2C(int p1){}
+	dynamic C m3C(){}
+	
 }
 
 class D extends C{
 
 	public A a1D;
 	public int a2D;
+
+	dynamic D a1D(){}
 
 	static B a2D(){}
 }

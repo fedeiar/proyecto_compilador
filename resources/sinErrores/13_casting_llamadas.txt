@@ -1,0 +1,96 @@
+
+class A {
+
+	public A a0A;
+	public int a1A;
+	public char a2A;
+	public C a3A;
+	
+	dynamic A m1A(){}
+
+	static void s_m1A(){}
+} 
+
+class B extends A{
+
+	private D a1B;
+	public boolean a2B;
+	public B a3B;
+	public C a4B;
+	public int a5B;
+	public A a6B;
+
+	dynamic B m2B(){
+		B vl1 = (B) new A();
+		A vll1 = (C) new A();
+		C vl2 = (D) a3B;
+		A vl3 = (B) this.a4B.m2C(7);
+		A vl4 = (B) (this.a4B.m2C(7));
+		D vll4 = (D) ((C)new B()) ;	
+		A vll5 = (C) (new C().m2C(7));	
+
+		A vl5 = new B();
+		((B)vl5).s_m3B();
+
+		(B)vl5.m1A(); 		//ojo, en java es incorrecto
+
+		A vl6 = new C();
+		C vl7 = (C) vl6;
+
+		A vl8 = new D();
+		B vl9 = (C) vl8;
+
+		C vl10 = (D) new A();
+
+		(C)new B();		 //ojo, en java es incorrecto
+		(C)new B().m2B();
+		((C)new B().m2B()).m3C();
+		(D)((C)new B().m2B()).m2C(4);
+
+		((D)new A()).a2D();
+		((D)new A()).a2D = 7;
+
+		(vl3.a0A).m1A();
+		((vl3.a0A)).m1A();
+		((C)(vl3.a0A)).m1C();
+		(((C)vl3.a0A)).m1C();
+		(B)(vl3.a0A).m1A();	//ojo, en java es incorrecto
+		
+		((D)((C)new B().m2B())).a1D();
+		((D)((C)((B)new B().m2B()))).a1D();
+
+		(D)s_m3B();
+		(C)m2B();
+	}
+
+	static C s_m3B(){
+		(D)s_m3B();
+	}
+}
+
+class C extends B{
+
+	public boolean a1C;	
+
+	dynamic int m1C(){}
+	dynamic A m2C(int p1){}
+	dynamic C m3C(){}
+	
+}
+
+class D extends C{
+
+	public A a1D;
+	public int a2D;
+
+	dynamic D a1D(){}
+
+	static B a2D(){}
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

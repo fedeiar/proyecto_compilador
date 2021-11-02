@@ -20,7 +20,7 @@ class B extends A{
 	public int a5B;
 
 	dynamic B m2B(){
-		(new A()) = 4;
+		(new A()) = new A();
 	}
 
 	static C s_m3B(){}

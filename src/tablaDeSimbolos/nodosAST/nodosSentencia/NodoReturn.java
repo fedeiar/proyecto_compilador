@@ -31,7 +31,9 @@ public class NodoReturn extends NodoSentencia{
                 throw new ExcepcionSemantica(tokenReturn, "las unidades con tipo void no pueden retornar valores");
             }
             Tipo tipoExpresion = nodoExpresionRetorno.chequear();
-            tipoExpresion.esSubtipo(tipoMetodo);
+            if(!tipoExpresion.esSubtipo(tipoMetodo)){
+                throw new ExcepcionSemantica(tokenReturn, "el tipo de la expresion de retorno no conforma con el tipo de retorno del metodo que es "+tipoMetodo.getNombreTipo());
+            }
         }
     }
 }
