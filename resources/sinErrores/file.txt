@@ -6,9 +6,20 @@ class A {
 	public char a2A;
 	public C a3A;
 	
-	dynamic A m1A(){}
+	dynamic A m1A(){
+		return (D) a3A;
+	}
 
-	static D s_m1A(){}
+	dynamic void m2A(){
+		return;
+	}
+
+	static D s_m1A(){
+		C v1 = new D();
+		return (D) v1;
+	}
+
+	
 } 
 
 class B extends A{
@@ -21,57 +32,14 @@ class B extends A{
 	public A a6B;
 
 	dynamic B m2B(A p2){
-		int v1;
-		if( ( (3 + 8) < (9 % 5) ) && true || (!false && (3 <= 8)) ){
-			v1 = 3;
-			A v2;
-			if(v2 == new B())
-				A v4 = new A();
-			else
-				B v5;
-			C v3;
-			v2 = new A();
-			v1 = 8;
-			boolean v5;
-			System v7;
-			if(new D() != new A()){
-				String v4;
-				v4 = "hola";
-				if(new Object() == a3A)
-					Object v6 = p2;
-				Object v6 = new System();
-				a2B = !true;
-				v1 = -3;
-				v5 = this.a4B.a1C;
-				v7 = new System();
-			}
-			B v4 = (C) a0A;
-		
-		} else{
-			int v2;
-			
-		}
-		if(true)
-			int v4;
-		else
-			int v4;
-		int v4;
-		if(false)
-			if(true)
-				if(true)
-					char v5 = 'f';
-				else
-					char v5 = 'e';
-			else
-				char v5 = 'd';
-		else
-			char v5 = 'e';
-		char v5 = 'i';
-		C v3 = this.a4B;
-		
+		return new C();
 	}
 
 	dynamic C m3B(){}
+
+	dynamic void m4B(){
+		
+	}
 
 	static C s_m3B(A p1, B p2){
 		

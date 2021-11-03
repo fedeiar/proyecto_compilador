@@ -4,11 +4,11 @@ import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.tipos.*;
-public class NodoThis extends NodoPrimario{
+public class NodoAccesoThis extends NodoPrimario{
 
     private Token tokenThis;
 
-    public NodoThis(Token tokenThis){
+    public NodoAccesoThis(Token tokenThis){
         this.tokenThis = tokenThis;
     }
 

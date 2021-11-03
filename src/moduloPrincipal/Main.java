@@ -31,7 +31,7 @@ public class Main {
                 TablaSimbolos.getInstance().consolidar();
 
                 // Chequeo de sentencias
-                TablaSimbolos.getInstance().chequeoSentencias(); //TODO: con esto ya alcanza?
+                TablaSimbolos.getInstance().chequeoSentencias();
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");
 

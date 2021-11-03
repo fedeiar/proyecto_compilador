@@ -792,7 +792,7 @@ public class AnalizadorSintactico {
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_this){
             Token tokenThis = tokenActual;
             match(TipoDeToken.pr_this, "this");
-            return new NodoThis(tokenThis);
+            return new NodoAccesoThis(tokenThis);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_new){
             return accesoConstructor();
         } else{
