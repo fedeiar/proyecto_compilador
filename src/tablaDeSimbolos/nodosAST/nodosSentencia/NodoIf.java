@@ -20,7 +20,7 @@ public class NodoIf extends NodoSentencia{
 
 
     public void insertarSentenciaElse(NodoSentencia nodoSentenciaElse){
-        nodoSentenciaElse = this.nodoSentenciaElse;
+        this.nodoSentenciaElse = nodoSentenciaElse;
     }
 
     public void chequear() throws ExcepcionSemantica{

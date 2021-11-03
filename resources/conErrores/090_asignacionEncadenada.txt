@@ -1,4 +1,4 @@
-
+///[Error:a3B|31]
 class A {
 
 	public A a0A;
@@ -8,7 +8,7 @@ class A {
 	
 	dynamic A m1A(){}
 
-	static D s_m1A(){}
+	static B s_m1A(){}
 } 
 
 class B extends A{
@@ -21,27 +21,14 @@ class B extends A{
 	public A a6B;
 
 	dynamic B m2B(A p2){
-		int v1;
-		if( ( (3 + 8) < (9 % 5) ) && true || (!false && (3 <= 8)) ){
-			v1 = 3;
-			A v2;
-			if(v2 == new B())
-				A v4 = new A();
-			else
-				B v5;
-
-			C v3;
 		
-		} else{
-			int v2;
-		}
 		
 	}
 
 	dynamic C m3B(){}
 
 	static C s_m3B(A p1, B p2){
-		
+		a3B.a5B = 8;
 	}
 }
 
@@ -49,11 +36,8 @@ class C extends B{
 
 	public boolean a1C;
 	public C a2C;	
-	
 
-	dynamic int m1C(A p1){
-		a0A = p1;
-	}
+	dynamic int m1C(A p1){}
 	dynamic A m2C(){}
 	dynamic C m3C(){}
 	dynamic D m4C(){}

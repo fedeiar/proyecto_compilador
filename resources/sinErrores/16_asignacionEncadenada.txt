@@ -1,0 +1,91 @@
+
+class A {
+
+	public A a0A;
+	public int a1A;
+	public char a2A;
+	public C a3A;
+	
+	dynamic A m1A(){}
+
+	static D s_m1A(){}
+} 
+
+class B extends A{
+
+	private D a1B;
+	public boolean a2B;
+	public B a3B;
+	public C a4B;
+	public int a5B;
+	public A a6B;
+
+	dynamic B m2B(A p2){
+		A v2;
+		System v3 = new System();
+		Object v4 = new Object();
+		
+		p2.a0A = new B();
+		p2.a0A.a3A = a4B;
+		a4B.m3C().m3B().a2C = new C();
+		(((a4B).m3C()).m3B()).a2C = new D();
+		((D)(a6B.a3A).m2C()).a2C = new D();
+		
+		a6B.a1A++;
+		a1B.a1D().a1A++;
+		a1B.a1D().a1A--;
+		this.a5B = 8;
+		this.a6B.a2A = 'c';
+		this.a1B.a1D = this;
+		this.a1B.a1D = this.a0A;
+		this.a1B.a1D = this.a0A.a3A;
+		(C)this.a6B = new C();
+		((C)this).a6B = new C();
+		((D)((C)this).a0A).a1D = new D();
+
+
+		new A().a2A = 'b';
+		new A().a3A.a5B = 8;
+	}
+
+	dynamic C m3B(){}
+
+	static C s_m3B(A p1, B p2){
+		p1.a2A = 'a';
+		p2.a3B.a4B = new C();
+		((D)s_m3B(new A(), new D()).a2C).a1C = true;
+		s_m1A().a1D().a2D().a5B = 9;
+	}
+}
+
+class C extends B{
+
+	public boolean a1C;
+	public C a2C;	
+	
+
+	dynamic int m1C(A p1){
+		a0A = p1;
+	}
+	dynamic A m2C(){}
+	dynamic C m3C(){}
+	dynamic D m4C(){}
+	
+}
+
+class D extends C{
+
+	public A a1D;
+	public int a2D;
+
+	dynamic D a1D(){}
+
+	static B a2D(){}
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+

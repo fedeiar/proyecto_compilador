@@ -1,10 +1,11 @@
-
+///[Error:a5B|29]
 class A {
 
 	public A a0A;
 	public int a1A;
 	public char a2A;
 	public C a3A;
+	private int a4A;
 	
 	dynamic A m1A(){}
 
@@ -20,44 +21,12 @@ class B extends A{
 	public int a5B;
 	public A a6B;
 
-	dynamic B m2B(String p1, A p2, int p3){
-		int v1;
-		A v2;
-		System v3 = new System();
-		Object v4 = new Object();
-
-		p1 = "hola";
-		p2 = new B();
-		p2 = a4B;
-		a4B = new C();
-		a6B = a3B;
-		a3A = (C) p2;
-		a1B = s_m3B(v2, (B)a6B).m3C().m4C();
-
-		v1 = 5;
-		v1 = -9;
-		v1 = (3 * 5) % 7;
-		v2 = new C();
-		v4 = v3;
-		v4 = v2.m1A().a3A;
-
-		(B)v2 = new B();
-		((B)a0A).a4B = new D();
-
-		v1++;
-		v1--;
-		a1A++;
-		a1A--;
-		p3++;
-		p3--;
+	dynamic B m2B(String p1, A p2){
 		
 	}
 
 	static C s_m3B(A p1, B p2){
-		p1 = p2;
-		A v1 = new A();
-		v1 = p1;
-		v1 = p2;
+		a5B++;
 	}
 }
 
@@ -65,9 +34,7 @@ class C extends B{
 
 	public boolean a1C;	
 
-	dynamic int m1C(A p1){
-		a0A = p1;
-	}
+	dynamic int m1C(A p1){}
 	dynamic A m2C(int p1){}
 	dynamic C m3C(){}
 	dynamic D m4C(){}

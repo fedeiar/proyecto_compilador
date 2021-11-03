@@ -30,7 +30,14 @@ class B extends A{
 		d.s_m3A(3, new A()).s_m2A().s_m1A().s_m2A().m1C();
     	}
 
-	dynamic void m3B(int a, int b){}
+	dynamic void m3B(int a, int b){
+		Object o;
+		o.debugPrint(1);
+		System s;
+		s.printB(true);
+		int v1 = s.read();
+		s.printSln("hola");
+	}
 	dynamic void m4B(A p1, B p2, C p3, D p4){}
 
 	static void s_m5B(){
