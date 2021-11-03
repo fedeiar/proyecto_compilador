@@ -577,7 +577,7 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoFor for_forEach(Token tokenFor, NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
+    private NodoSentencia for_forEach(Token tokenFor, NodoVarLocal nodoVarLocal) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_varLocalFactorizada.contains(tokenActual.getTipoDeToken()) || TipoDeToken.punt_puntoYComa == tokenActual.getTipoDeToken()){
             varLocalFactorizada(nodoVarLocal);
             match(TipoDeToken.punt_puntoYComa, ";");
@@ -592,7 +592,7 @@ public class AnalizadorSintactico {
             expresion();
             match(TipoDeToken.punt_parentDer, ")");
             sentencia();
-            return null; //TODO: en realidad devuelve el nodoForEach, pero necesitamos genericidad.
+            return new NodoSentenciaVacia(); //TODO: en realidad devuelve el nodoForEach, pero necesitamos genericidad.
         } else {
             throw new ExcepcionSintactica("un = un ; o un :", tokenActual);
         }

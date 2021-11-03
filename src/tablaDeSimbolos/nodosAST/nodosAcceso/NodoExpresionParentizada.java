@@ -1,6 +1,5 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
-import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;

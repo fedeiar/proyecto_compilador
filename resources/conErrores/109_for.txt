@@ -1,4 +1,4 @@
-
+///[Error:+|41]
 class A {
 
 	public A a0A;
@@ -6,26 +6,11 @@ class A {
 	public char a2A;
 	public C a3A;
 	
-	dynamic A m1A(){
-		return (D) a3A;
-	}
+	dynamic A m1A(){}
+	dynamic void m2A(){}
+	static D s_m1A(){}
+	static void s_m2A(){}
 
-	dynamic void m2A(){
-		return;
-	}
-
-	static D s_m1A(){
-		C v1 = new D();
-		return (D) v1;
-	}
-
-	static void s_m2A(){
-		int v1 = 3;
-		return;
-		char c2;
-	}
-
-	
 } 
 
 class B extends A{
@@ -37,21 +22,12 @@ class B extends A{
 	public int a5B;
 	public A a6B;
 
-	dynamic B m2B(A p2){
-		return new C();
-	}
-
-	dynamic int m3B(){
-		return a5B;
-	}
-
-	dynamic B m4B(){
-		return (D) a6B;
-	}
-
-	static C s_m3B(A p1, B p2){
-		return null;
-	}
+	dynamic B m2B(A p2){}
+	dynamic int m3B(){}
+	dynamic B m4B(){}
+	dynamic C m5B(A p1){}
+	static C s_m3B(A p1, B p2){}
+	
 }
 
 class C extends B{
@@ -61,7 +37,13 @@ class C extends B{
 	
 
 	dynamic int m1C(A p1){
-		a0A = p1;
+		int v1;
+		for(int v2; v1 + (5 < 9); v1 = v1 + 1){
+		}
+		
+		
+
+		
 	}
 	dynamic A m2C(){}
 	dynamic C m3C(){}
