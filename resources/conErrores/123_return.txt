@@ -1,42 +1,22 @@
-
+///[Error:return|9]
 class A {
 
 	public A a0A;
 	public int a1A;
 	public char a2A;
-	public C a3A;
-	private int a4A;
 
-	A(){
-		if(a4A < 5)
-			return;
-		else
-			this.a1A = 5;
-			if(a2A != 'b'){
-				a2A = 'c';
-				return;
-			}
-		a0A = this;
-	}
-	
-	dynamic A m1A(){
-		return (D) a3A;
+	dynamic B m1A(A p1){
+		return p1;
 	}
 
 	dynamic void m2A(){
-		return;
+		
 	}
 
 	static D s_m1A(){
-		C v1 = new D();
-		return (D) v1;
+		
 	}
 
-	static void s_m2A(){
-		int v1 = 3;
-		return;
-		char c2;
-	}
 
 	
 } 
@@ -62,16 +42,8 @@ class B extends A{
 		return (D) a6B;
 	}
 
-	dynamic A m5B(C p1){
-		return p1;
-	}
-
 	static C s_m3B(A p1, B p2){
-		return null;
-	}
-
-	static Object s_m4B(){
-		return new System();
+		
 	}
 }
 

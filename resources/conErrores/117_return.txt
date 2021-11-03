@@ -1,26 +1,20 @@
-
+///[Error:return|10]
 class A {
 
 	public A a0A;
 	public int a1A;
 	public char a2A;
 	public C a3A;
-	private int a4A;
 
 	A(){
-		if(a4A < 5)
-			return;
-		else
-			this.a1A = 5;
-			if(a2A != 'b'){
-				a2A = 'c';
-				return;
-			}
-		a0A = this;
+		return null;
 	}
 	
 	dynamic A m1A(){
-		return (D) a3A;
+		if(a1A > 0)
+			return (D) a3A;
+		else
+			return new A();
 	}
 
 	dynamic void m2A(){
@@ -62,16 +56,8 @@ class B extends A{
 		return (D) a6B;
 	}
 
-	dynamic A m5B(C p1){
-		return p1;
-	}
-
 	static C s_m3B(A p1, B p2){
-		return null;
-	}
-
-	static Object s_m4B(){
-		return new System();
+		
 	}
 }
 
