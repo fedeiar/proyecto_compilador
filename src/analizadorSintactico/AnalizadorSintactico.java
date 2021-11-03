@@ -442,7 +442,7 @@ public class AnalizadorSintactico {
     private NodoSentencia sentencia() throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(tokenActual.getTipoDeToken() == TipoDeToken.punt_puntoYComa){
             match(TipoDeToken.punt_puntoYComa, ";");
-            return null; 
+            return new NodoSentenciaVacia(); 
         } else if(primeros_acceso.contains(tokenActual.getTipoDeToken())){
             NodoAcceso nodoAcceso = acceso();
             return asignacion_llamada(nodoAcceso);

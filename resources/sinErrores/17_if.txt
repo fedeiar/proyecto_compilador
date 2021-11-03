@@ -79,7 +79,10 @@ class B extends A{
 			}
 		}
 		
-		
+		if(true)
+			;
+		else
+			;
 	}
 
 	dynamic C m3B(){}

@@ -20,9 +20,7 @@ public class NodoBloque extends NodoSentencia{
     }
 
     public void insertarSentencia(NodoSentencia sentencia){
-        if(sentencia != null){
-            sentencias.add(sentencia);
-        }
+        sentencias.add(sentencia);
     }
 
     public NodoVarLocal getVarLocalBloque(String nombreVarLocal){
