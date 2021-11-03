@@ -56,9 +56,9 @@ class B extends A{
 		else
 			int v4;
 		int v4;
-		if(false)
-			if(true)
-				if(true)
+		if(new A() == new D())
+			if(new D() == new A())
+				if(a0A != a3B)
 					char v5 = 'f';
 				else
 					char v5 = 'e';
@@ -68,6 +68,17 @@ class B extends A{
 			char v5 = 'e';
 		char v5 = 'i';
 		C v3 = this.a4B;
+		if(3 == 5){
+			if(a2B == true){
+			
+			} else{
+				boolean v8 = 'a' != 'b';
+				v8 = "hola" != "chau";
+				v8 = a6B == null;
+				a2B = (v3 != null) == (a1B != v3);
+			}
+		}
+		
 		
 	}
 

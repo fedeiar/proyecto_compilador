@@ -23,7 +23,7 @@ public class NodoFor extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{ //TODO: probarlo
-        NodoBloque nodoBloqueFor = new NodoBloque();
+        NodoBloque nodoBloqueFor = new NodoBloque(); // Idem a If, la declaración de la varLocal se insertará aca asi luego no es visible fuera del for.
         TablaSimbolos.apilarBloqueActual(nodoBloqueFor);
         
         nodoVarLocal.chequear();
