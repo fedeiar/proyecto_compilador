@@ -14,24 +14,21 @@ public class NodoExpresionUnaria extends NodoExpresion{
         this.nodoOperando = nodoOperando;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{
-        if(tokenOperador != null){
-            if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
-                if(nodoOperando.chequear().mismoTipo(new TipoInt())){
-                    return new TipoInt();
-                }else{
-                    throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo int");
-                }
-            } else{ // Si no el operador es un !
-                if(nodoOperando.chequear().mismoTipo(new TipoBoolean())){
-                    return new TipoBoolean();
-                } else{
-                    throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo boolean");
-                }
+    public Tipo chequear() throws ExcepcionSemantica{ // El tokenOperador nunca va a ser nulo ya que si se crea una expresión unaria es porque hay operador unario. Si no se crea solo el literal.
+        if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
+            if(nodoOperando.chequear().mismoTipo(new TipoInt())){
+                return new TipoInt();
+            }else{
+                throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo int");
             }
-        } else{
-            return nodoOperando.chequear();
+        } else{ // Si no el operador es un !
+            if(nodoOperando.chequear().mismoTipo(new TipoBoolean())){
+                return new TipoBoolean();
+            } else{
+                throw new ExcepcionSemantica(tokenOperador, "el operador unario "+ tokenOperador.getLexema() +" esperaba algo de tipo boolean");
+            }
         }
+       
     }
 
 }
