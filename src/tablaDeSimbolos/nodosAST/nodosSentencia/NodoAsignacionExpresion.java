@@ -16,7 +16,7 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
         this.nodoExpresionLadoDer = nodoExpresionLadoDer;
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: preguntar si esta bien 
+    public void chequear() throws ExcepcionSemantica{ 
         Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
 
         if( !nodoAccesoLadoIzq.esAsignable() ){

@@ -14,7 +14,7 @@ public class NodoAsignacionDecremento extends NodoAsignacion{
         this.tokenDecremento = tokenDecremento;
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien?
+    public void chequear() throws ExcepcionSemantica{ 
         Tipo tipoAcceso = nodoAccesoLadoIzq.chequear();
 
         
