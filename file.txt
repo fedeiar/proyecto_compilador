@@ -1,20 +1,36 @@
-// Prueba un lado izquierdo simple
 
-class A {
-    public int a1;
-   
-    
-    dynamic void m1(){
-        a1 = 4;
-        
-    }
-    
-}    
+class A{
+	
+	private int v1, v2;
+	private String v3;
+	public boolean v4;
+	char v5, v6;
+	
+}
 
+class B extends A{
+
+	public boolean v3;
+	
+}
+
+
+class C extends B{
+	
+	public System v1, v2;
+	private B v4;
+
+}
+
+class D extends C{
+
+	public Object v3;
+	public A v4;
+	public A v6;
+	public int v7;
+}
 
 class Init{
     static void main()
     { }
 }
-
-

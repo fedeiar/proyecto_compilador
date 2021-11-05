@@ -336,7 +336,7 @@ public class AnalizadorSintactico {
     private void listaDecAtrs(TipoDeToken visibilidad, TipoConcreto tipoAtributo) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         Token tokenIdVar = tokenActual;
         match(TipoDeToken.id_metVar, "identificador de metodo o variable");
-        Atributo atributo = new Atributo(tokenIdVar, visibilidad, tipoAtributo);
+        Atributo atributo = new Atributo(tokenIdVar, visibilidad, tipoAtributo, TablaSimbolos.claseActual.getTokenIdClase());
         TablaSimbolos.claseActual.insertarAtributo(tokenIdVar.getLexema(), atributo);
         listaDecAtrsFactorizada(visibilidad, tipoAtributo);
     }

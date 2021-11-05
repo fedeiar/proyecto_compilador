@@ -4,6 +4,7 @@ import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
 
+import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -157,7 +158,13 @@ public class TablaSimbolos {
 
     public void consolidar() throws ExcepcionSemantica{
         for(Clase clase : clases.values()){
+            System.out.println("estoy en "+clase.getTokenIdClase().getLexema());
             clase.consolidar();
+
+            for(String a : clase.getHashAtributos().keySet()){
+                System.out.println(a);
+            }
+            
         }
     }
 

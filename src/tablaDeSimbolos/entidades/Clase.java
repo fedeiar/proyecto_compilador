@@ -276,6 +276,8 @@ public class Clase {
             if(!claseAncestro.estaConsolidado()){
                 claseAncestro.consolidar();
             }
+            //TODO: en este lugar la clase actual ya puede poner sus offsets en base al ultimoOfssetDisponible del padre. la cantidad de lugares que tengo que dejar para poner
+            //el offset, es la cantidad de atributos del padre + 1 (+ 1 por la V-Table)
             consolidarAtributos(claseAncestro);
             consolidarMetodos(claseAncestro);
             estaConsolidado = true;
@@ -284,16 +286,18 @@ public class Clase {
 
     private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{
         // En esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
-        for(Entry<String,Atributo> atributoAncestro : claseAncestro.getHashAtributos().entrySet()){
-            String nombreAtributoAncestro = atributoAncestro.getKey();
+        /*Los '#' solamente los usamos para indicar que un atributo heredado no debe ser accesible, ya sea porque es privado o porque se duplica su nombre en la clase actual.
+          Si se quiere saber si un atributo es privado o a que clase pertenece, se consulta directamente al atributo a través de su interfaz*/
+        for(Entry<String,Atributo> entryAtributoAncestro : claseAncestro.getHashAtributos().entrySet()){
+            String nombreAtributoAncestro = entryAtributoAncestro.getKey();
             Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);
             if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){
-                if(atributoAncestro.getValue().esPublic())
-                    this.insertarAtributo(atributoAncestro.getKey(), atributoAncestro.getValue());
+                if(entryAtributoAncestro.getValue().esPublic())
+                    this.insertarAtributo(entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue());
                 else
-                    this.insertarAtributo("$"+atributoAncestro.getKey(), atributoAncestro.getValue()); // El $ quiere decir que no podemos usarlo ya que es privado
+                    this.insertarAtributo("#"+entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue()); // El $ quiere decir que no podemos usarlo ya que es privado
             } else{
-                this.insertarAtributo("#"+atributoAncestro.getKey(), atributoAncestro.getValue());
+                this.insertarAtributo("#"+entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue());
             }
         }
     }
