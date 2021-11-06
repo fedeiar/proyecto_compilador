@@ -9,13 +9,16 @@ public class Atributo{
     private Token tokenClaseContenedora; 
     private TipoDeToken visibilidadAtributo;
     private TipoConcreto tipoAtributo;
+    private int offset;
     
     
     public Atributo(Token idVar, TipoDeToken visibilidadAtributo, TipoConcreto tipoAtributo, Token tokenClaseContenedora){
         this.tokenIdVar = idVar;
         this.tipoAtributo = tipoAtributo;
         this.visibilidadAtributo = visibilidadAtributo;
-        this.tokenClaseContenedora = tokenClaseContenedora; 
+        this.tokenClaseContenedora = tokenClaseContenedora;
+
+        this.offset = -1; // Ya que inicialmente no conocemos el offset.
     }
 
     public Token getTokenIdVar(){
@@ -36,6 +39,18 @@ public class Atributo{
 
     public TipoConcreto getTipo(){
         return tipoAtributo;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
+    }
+
+    public int getOffset(){
+        return offset;
+    }
+
+    public boolean tieneOffsetAsignado(){
+        return offset != -1;
     }
 
 

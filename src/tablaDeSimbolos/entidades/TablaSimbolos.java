@@ -40,6 +40,7 @@ public class TablaSimbolos {
             metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), false, new TipoVoid(), tokenObject);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseObject.insertarMetodo(metodo); 
+            claseObject.agregarOffsetMetodoEnVT(metodo); // Como object es la raíz de todos, es el unico que puede agregar su offset sin considerar a su padre.
 
             //Creando System
             Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
@@ -158,11 +159,15 @@ public class TablaSimbolos {
 
     public void consolidar() throws ExcepcionSemantica{
         for(Clase clase : clases.values()){
-            System.out.println("estoy en "+clase.getTokenIdClase().getLexema());
+            System.out.println("\n----estoy en "+clase.getTokenIdClase().getLexema()+"----\n");
             clase.consolidar();
-
-            for(String a : clase.getHashAtributos().keySet()){
-                System.out.println(a);
+            /*
+            for(Map.Entry<String,Atributo> atr : clase.getHashAtributos().entrySet()){
+                System.out.println(atr.getKey()+" "+atr.getValue().getOffset());
+            }
+            */
+            for(Metodo metodo : clase.getMetodos()){
+                System.out.println(metodo.toString()+" "+metodo.getOffset());
             }
             
         }

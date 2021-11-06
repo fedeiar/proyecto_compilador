@@ -9,7 +9,7 @@ public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Token tokenClaseContenedora;
-
+    private int offset;
 
     public Metodo(Token tokenIdMet, boolean esDinamico, Tipo tipoMetodo, Token claseContenedora){
         super();
@@ -17,6 +17,8 @@ public class Metodo extends Unidad{
         this.esDinamico = esDinamico;
         this.tipoUnidad = tipoMetodo;
         this.tokenClaseContenedora = claseContenedora;
+        
+        this.offset = -1; // Ya que inicialmente no conocemos el offset
     }
 
     public Token getTokenIdMet(){
@@ -25,6 +27,18 @@ public class Metodo extends Unidad{
 
     public Token getTokenClaseContenedora(){
         return tokenClaseContenedora;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
+    }
+
+    public int getOffset(){
+        return offset;
+    }
+
+    public boolean tieneOffsetAsignado(){
+        return offset != -1;
     }
 
     public boolean equalsSignatura(Metodo metodo){

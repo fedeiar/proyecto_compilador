@@ -27,6 +27,9 @@ public class Clase {
     private boolean estaConsolidado;
     private boolean estaVerificadoHerenciaCircular;
 
+    private int offsetDisponibleCIR; // El primer número de offset disponible en el CIR
+    private int offsetDisponibleVT; // El primer número de offset disponible en la VT
+
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
         constructores = new HashMap<>();
@@ -42,6 +45,8 @@ public class Clase {
         if(tokenIdClase.getLexema().equals("Object")){
             estaConsolidado = true; 
             estaVerificadoHerenciaCircular = true;
+            offsetDisponibleCIR = 1; // Ya que el 0 lo ocupa la VT
+            offsetDisponibleVT = 0; // Cuando se agregue debugPrint() se incrementará.
         }
     }
 
@@ -221,6 +226,24 @@ public class Clase {
         }
     }
 
+    public int getOffsetDisponibleEnCIR(){
+        return offsetDisponibleCIR;
+    }
+
+    public int getOffsetDisponibleEnVT(){
+        return offsetDisponibleVT;
+    }
+
+    public void agregarOffsetMetodoEnVT(Metodo metodo){
+        metodo.setOffset(offsetDisponibleVT);
+        offsetDisponibleVT++;
+    }
+
+    public void agregarOffsetAtributoEnCIR(Atributo atributo){
+        atributo.setOffset(offsetDisponibleCIR);
+        offsetDisponibleCIR++;
+    }
+
     
     // -----Chequeos semanticos-----
 
@@ -276,8 +299,7 @@ public class Clase {
             if(!claseAncestro.estaConsolidado()){
                 claseAncestro.consolidar();
             }
-            //TODO: en este lugar la clase actual ya puede poner sus offsets en base al ultimoOfssetDisponible del padre. la cantidad de lugares que tengo que dejar para poner
-            //el offset, es la cantidad de atributos del padre + 1 (+ 1 por la V-Table)
+
             consolidarAtributos(claseAncestro);
             consolidarMetodos(claseAncestro);
             estaConsolidado = true;
@@ -300,6 +322,14 @@ public class Clase {
                 this.insertarAtributo("#"+entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue());
             }
         }
+
+        this.offsetDisponibleCIR = claseAncestro.getOffsetDisponibleEnCIR();
+        
+        for(Atributo atributo : atributos.values()){
+            if(!atributo.tieneOffsetAsignado()){
+                this.agregarOffsetAtributoEnCIR(atributo);
+            }
+        }
     }
 
     private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{
@@ -309,11 +339,17 @@ public class Clase {
                 this.insertarMetodo(metodoAncestro);
             } else{
                 if(metodo_en_clase.redefineCorrectamente(metodoAncestro)){
-                    //no hacer nada, ya que lo redefine
+                    metodo_en_clase.setOffset(metodoAncestro.getOffset()); // Ya que los metodos redefinidos deben tener el mismo offset que en el padre.
                 } else{
                     throw new ExcepcionSemantica(metodo_en_clase.getTokenIdMet(), "la clase "+this.tokenIdClase.getLexema()+" redefine mal el metodo "+metodo_en_clase.getTokenIdMet().getLexema());
                 }
             }
+        }
+
+        this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();
+        for(Metodo metodo : metodos.values()){
+            if(!metodo.tieneOffsetAsignado()) // De esta forma, no tocamos a los redefinidos ya que les pusimos offset en el for anterior.
+                this.agregarOffsetMetodoEnVT(metodo);
         }
     }
 
