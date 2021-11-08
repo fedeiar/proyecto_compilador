@@ -30,7 +30,7 @@ public class Clase {
     private int offsetDisponibleCIR; // El primer número de offset disponible en el CIR
     private int offsetDisponibleVT; // El primer número de offset disponible en la VT
     private Map<Integer, Atributo> mapeoAtributosPorOffset; //TODO: estan bien?
-    private Map<Integer, Metodo> mapeoMetodosPorOffset;
+    private Map<Integer, Metodo> mapeoMetodosPorOffset;  //TODO: estan bien?
     
 
     public Clase(Token idClase){
@@ -76,19 +76,12 @@ public class Clase {
         return atributos;
     }
 
-    public Constructor getConstructorQueConformaParametros(List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{
-        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
-        for(NodoExpresion parametroActual : listaParametrosActuales){
-            listaTiposParametrosActuales.add(parametroActual.chequear());
-        }
-        
+    public Constructor getConstructorQueConformaParametros(List<Tipo> listaTiposParametrosActuales)  throws ExcepcionSemantica{
         for(Constructor constructor : constructores.values()){
-            
             if(constructor.conformanParametros(listaTiposParametrosActuales)){
                 return constructor;
             }
         }
-
         return null;
     }
 
@@ -109,18 +102,12 @@ public class Clase {
         return metodos.values();
     }
 
-    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{
-        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
-        for(NodoExpresion parametroActual : listaParametrosActuales){
-            listaTiposParametrosActuales.add(parametroActual.chequear());
-        }
-        
+    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<Tipo> listaTiposParametrosActuales)  throws ExcepcionSemantica{
         for(Metodo metodo : metodos.values()){
             if(metodo.getTokenIdMet().getLexema().equals(nombreMetodo) && metodo.conformanParametros(listaTiposParametrosActuales)){
                 return metodo;
             }
         }
-
         return null;
     }
 
@@ -306,7 +293,9 @@ public class Clase {
                 claseAncestro.consolidar();
             }
             consolidarAtributos(claseAncestro);
+            offsetAtributos(claseAncestro); //TODO: esta bien?
             consolidarMetodos(claseAncestro);
+            offsetMetodos(claseAncestro); //TODO: esta bien?
             estaConsolidado = true;
         }
     }
@@ -329,8 +318,9 @@ public class Clase {
                 this.insertarAtributo("#"+nombreAtributoAncestro, atributoAncestro);
             }
         }
+    }
 
-        //TODO: esta bien?
+    private void offsetAtributos(Clase claseAncestro){ //TODO: esta bien?
         this.offsetDisponibleCIR = claseAncestro.getOffsetDisponibleEnCIR();
         for(Atributo atributo : atributos.values()){
             if(!atributo.tieneOffsetAsignado()){ // Si no tiene offset asignado, significa que es un atributo declarado en esta clase y debemos ponerle un offset.
@@ -353,10 +343,10 @@ public class Clase {
                 }
             }
         }
+    }
 
-        //TODO: esta bien?
-        this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();
-        
+    private void offsetMetodos(Clase claseAncestro){  //TODO: esta bien?
+        this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();  
         for(Metodo metodo : metodos.values()){
             // Los metodos estaticos no van a estar en la VT asi que no se les asigna un offset
             if(metodo.esDinamico()){
@@ -367,6 +357,7 @@ public class Clase {
             }
         }
     }
+
 
     // Chequeo de sentencias
 

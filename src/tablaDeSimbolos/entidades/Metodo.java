@@ -9,7 +9,7 @@ public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Token tokenClaseContenedora;
-    private int offset;
+    private int offset; // TODO: esta bien?
 
     public Metodo(Token tokenIdMet, boolean esDinamico, Tipo tipoMetodo, Token claseContenedora){
         super();

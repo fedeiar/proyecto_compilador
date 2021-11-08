@@ -1,5 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import analizadorLexico.Token;
@@ -25,7 +26,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida
         if(clase != null){
             //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
-            Metodo metodo = clase.getMetodoQueConformaParametros(tokenIdMet.getLexema(), listaParametrosActuales);
+            Metodo metodo = clase.getMetodoQueConformaParametros(tokenIdMet.getLexema(), getListaTipos());
             if(metodo != null){
                 tipoMetodo = metodo.getTipoUnidad();
             }else {
@@ -40,6 +41,14 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         } else{
             return tipoMetodo;
         }
+    }
+
+    private List<Tipo> getListaTipos() throws ExcepcionSemantica{
+        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
+        for(NodoExpresion parametroActual : listaParametrosActuales){
+            listaTiposParametrosActuales.add(parametroActual.chequear());
+        }
+        return listaTiposParametrosActuales;
     }
 
     public Tipo chequearThis(Tipo tipoIzquierda) throws ExcepcionSemantica{
