@@ -31,4 +31,11 @@ public class NodoPrimarioCasting extends NodoAcceso{
     public boolean esLlamable(){
         return nodoPrimario.esLlamable();
     }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
 }

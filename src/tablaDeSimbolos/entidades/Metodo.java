@@ -9,7 +9,7 @@ public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Token tokenClaseContenedora;
-    private int offset; // TODO: esta bien?
+    private int offset; 
 
     public Metodo(Token tokenIdMet, boolean esDinamico, Tipo tipoMetodo, Token claseContenedora){
         super();
@@ -39,6 +39,10 @@ public class Metodo extends Unidad{
 
     public boolean tieneOffsetAsignado(){
         return offset != -1;
+    }
+
+    public boolean perteneceAClase(Token tokenIdClase){
+        return tokenClaseContenedora.getLexema().equals(tokenIdClase.getLexema());
     }
 
     public boolean equalsSignatura(Metodo metodo){
@@ -74,7 +78,7 @@ public class Metodo extends Unidad{
         return signaturaMetodo;
     }
 
-    public String toStringLabel(){
+    public String toStringLabel(){ //TODO: sacarle los () y las ,
         return "l" + this.toString() + this.getTokenClaseContenedora().getLexema();
     }
 
@@ -85,14 +89,12 @@ public class Metodo extends Unidad{
         TablaSimbolos.instruccionesMaquina.add("LOADSP");
         TablaSimbolos.instruccionesMaquina.add("STOREFP");
 
-        // TODO: aca habría que pedirle al NodoBloque que genereCodigo()?
+        // TODO: aca habría que pedirle al NodoBloque que genereCodigo()? Si, llamar a nodoBloque.generarCodigo()
 
         if(this.esDinamico){
-
+            //TODO: hacer
         } else{ // Es estatico
-            if(!tipoUnidad.mismoTipo(new TipoVoid())){
-                TablaSimbolos.instruccionesMaquina.add("STORE "+ lista_parametrosFormales.size() + 2); // + 2 por el PR y ED (no tiene this)
-            }
+            
             TablaSimbolos.instruccionesMaquina.add("STOREPF");
             TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); 
         }

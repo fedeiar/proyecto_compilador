@@ -31,4 +31,10 @@ public class NodoExpresionUnaria extends NodoExpresion{
        
     }
 
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
+
 }

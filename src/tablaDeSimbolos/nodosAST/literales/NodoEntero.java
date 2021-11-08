@@ -17,4 +17,9 @@ public class NodoEntero extends NodoOperando{
     }
 
 
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
 }

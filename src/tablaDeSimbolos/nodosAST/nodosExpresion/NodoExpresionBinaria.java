@@ -16,4 +16,9 @@ public abstract class NodoExpresionBinaria extends NodoExpresion{
         this.nodoExpresionLadoDer = nodoLadoDer;
     }
     
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO: ojo, capaz haya que hacerlo en cada uno de los hijos.
+    }
 }

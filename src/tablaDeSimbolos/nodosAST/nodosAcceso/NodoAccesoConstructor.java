@@ -66,5 +66,9 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
         }
     }
 
+    // Generacion de codigo intermedio
 
+    public void generarCodigo(){
+        // TODO
+    }
 }

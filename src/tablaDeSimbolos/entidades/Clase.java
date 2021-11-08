@@ -29,9 +29,9 @@ public class Clase {
 
     private int offsetDisponibleCIR; // El primer número de offset disponible en el CIR
     private int offsetDisponibleVT; // El primer número de offset disponible en la VT
-    private Map<Integer, Atributo> mapeoAtributosPorOffset; //TODO: estan bien?
-    private Map<Integer, Metodo> mapeoMetodosPorOffset;  //TODO: estan bien?
-    
+    private Map<Integer, Atributo> mapeoAtributosPorOffset;
+    private Map<Integer, Metodo> mapeoMetodosPorOffset;
+
 
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
@@ -227,15 +227,16 @@ public class Clase {
         return offsetDisponibleVT;
     }
 
+    public void agregarOffsetAtributoEnCIR(Atributo atributo){
+        atributo.setOffset(offsetDisponibleCIR);
+        offsetDisponibleCIR++;
+    }
+
     public void agregarOffsetMetodoEnVT(Metodo metodo){
         metodo.setOffset(offsetDisponibleVT);
         offsetDisponibleVT++;
     }
 
-    public void agregarOffsetAtributoEnCIR(Atributo atributo){
-        atributo.setOffset(offsetDisponibleCIR);
-        offsetDisponibleCIR++;
-    }
 
     
     // -----Chequeos semanticos-----
@@ -293,9 +294,9 @@ public class Clase {
                 claseAncestro.consolidar();
             }
             consolidarAtributos(claseAncestro);
-            offsetAtributos(claseAncestro); //TODO: esta bien?
+            offsetAtributos(claseAncestro);
             consolidarMetodos(claseAncestro);
-            offsetMetodos(claseAncestro); //TODO: esta bien?
+            offsetMetodos(claseAncestro);
             estaConsolidado = true;
         }
     }
@@ -320,7 +321,7 @@ public class Clase {
         }
     }
 
-    private void offsetAtributos(Clase claseAncestro){ //TODO: esta bien?
+    private void offsetAtributos(Clase claseAncestro){
         this.offsetDisponibleCIR = claseAncestro.getOffsetDisponibleEnCIR();
         for(Atributo atributo : atributos.values()){
             if(!atributo.tieneOffsetAsignado()){ // Si no tiene offset asignado, significa que es un atributo declarado en esta clase y debemos ponerle un offset.
@@ -345,7 +346,7 @@ public class Clase {
         }
     }
 
-    private void offsetMetodos(Clase claseAncestro){  //TODO: esta bien?
+    private void offsetMetodos(Clase claseAncestro){  
         this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();  
         for(Metodo metodo : metodos.values()){
             // Los metodos estaticos no van a estar en la VT asi que no se les asigna un offset
@@ -367,7 +368,7 @@ public class Clase {
             constructor.chequearSentencias();
         }
         for(Metodo metodo: metodos.values()){
-            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){
+            if(metodo.perteneceAClase(this.tokenIdClase)){
                 metodo.chequearSentencias();
             }
         }
@@ -376,27 +377,30 @@ public class Clase {
 
     // Generación de codigo intermedio
 
-    public void generarCodigo(){ // TODO: aca hacer las VT? esta bien hecho?
+    public void generarCodigo(){ 
 
         System.out.println("ESTOY EN: "+ tokenIdClase.getLexema());
         
-        // Creacion de la VT. Si no tiene métodos dinámicos, entonces no hay que crear VT.
-        if(mapeoMetodosPorOffset.size() != 0){ 
-            TablaSimbolos.instruccionesMaquina.add(".DATA");
-            String etiquetasVT = "VT " + tokenIdClase.getLexema() + ": DW ";
+        // Creacion de la VT. Si no tiene métodos dinámicos, entonces hay que hacer una VT que tenga una etiqueta vacía (NOP)
+        TablaSimbolos.instruccionesMaquina.add(".DATA");
+        String etiquetasVT;
+        if(mapeoMetodosPorOffset.size() != 0){
+            etiquetasVT = "VT " + tokenIdClase.getLexema() + ": DW ";
             for(int offset = 0; offset < mapeoMetodosPorOffset.size(); offset++){
                 Metodo metodo = mapeoMetodosPorOffset.get(offset);
                 etiquetasVT += metodo.toStringLabel() + ",";
             }
             etiquetasVT = etiquetasVT.substring(0, etiquetasVT.length() - 1); // Sacamos la ultima ","
-            TablaSimbolos.instruccionesMaquina.add(etiquetasVT);
+        } else{
+            etiquetasVT = "VT " + tokenIdClase.getLexema() + ": NOP";
         }
+        TablaSimbolos.instruccionesMaquina.add(etiquetasVT);
 
         // Codigo intermedio de los constructores y de los metodos (estaticos y dinamicos)
         TablaSimbolos.instruccionesMaquina.add(".CODE");
         String etiquetaCodigoMetodo;
-        for(Metodo metodo : metodos.values()){ //TODO: esta bien traducir todos los metodos (estaticos y dinamicos) en cualquier orden?
-            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){
+        for(Metodo metodo : metodos.values()){
+            if(metodo.perteneceAClase(this.tokenIdClase)){
                 etiquetaCodigoMetodo = metodo.toStringLabel() + ":";
                 TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoMetodo);
                 metodo.generarCodigo();
@@ -404,7 +408,7 @@ public class Clase {
         }
         String etiquetaCodigoConstructor;
         for(Constructor constructor : constructores.values()){
-            etiquetaCodigoConstructor = constructor.toStringLabel();
+            etiquetaCodigoConstructor = constructor.toStringLabel() + ":";
             TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoConstructor);
             constructor.generarCodigo();
         }

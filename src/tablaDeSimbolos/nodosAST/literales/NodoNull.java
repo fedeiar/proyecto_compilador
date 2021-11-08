@@ -17,5 +17,9 @@ public class NodoNull extends NodoOperando{
         return new TipoNull(); 
     }
 
+    // Generacion de codigo intermedio
 
+    public void generarCodigo(){
+        // TODO
+    }
 }

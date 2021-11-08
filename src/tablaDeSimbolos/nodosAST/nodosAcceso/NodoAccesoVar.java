@@ -66,4 +66,11 @@ public class NodoAccesoVar extends NodoPrimario{
             return false;
         }
     }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
 }

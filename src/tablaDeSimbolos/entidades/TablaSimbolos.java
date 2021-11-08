@@ -1,5 +1,6 @@
 package tablaDeSimbolos.entidades;
 
+import tablaDeSimbolos.entidades.metodosPredefinidos.MetodoDebugPrint;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
@@ -34,16 +35,18 @@ public class TablaSimbolos {
         instruccionesMaquina = new ArrayList<>();
 
         try{
-            Metodo metodo; //TODO: habria que tener una clase MetodoDebugPrint para que redefina el generarCodigo()?
+            Metodo metodo; 
 
             //Creando Object
             Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
             Clase claseObject = new Clase(tokenObject); 
             claseObject.set_idClaseAncestro(null); // Object va a ser la unica clase que tenga ancestro null.
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), false, new TipoVoid(), tokenObject);
+            metodo = new MetodoDebugPrint(new Token(TipoDeToken.id_metVar, "debugPrint", 0), false, new TipoVoid(), tokenObject);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseObject.insertarMetodo(metodo); 
+
+            //TODO: hacer las clases particulares para cada Metodo de System que redefina generarCodigo()
 
             //Creando System
             Token tokenSystem = new Token(TipoDeToken.id_clase, "System", 0);
@@ -91,7 +94,7 @@ public class TablaSimbolos {
             insertarClase("Object", claseObject);
             insertarClase("System", claseSystem);
         } catch(ExcepcionSemantica e){
-            //NUNCA DEBERIA SUCEDER ESTE ERROR.
+            // NUNCA DEBERIA SUCEDER ESTE ERROR.
         }
     }
 
@@ -167,15 +170,16 @@ public class TablaSimbolos {
         for(Clase clase : clases.values()){
             System.out.println("\n----ESTOY EN: "+clase.getTokenIdClase().getLexema()+"----\n");
             clase.consolidar();
-            /*
+            
             for(Map.Entry<String,Atributo> atr : clase.getHashAtributos().entrySet()){
                 System.out.println(atr.getKey()+" "+atr.getValue().getOffset());
             }
-            */
+            
+            /*
             for(Metodo metodo : clase.getMetodos()){
                 System.out.println(metodo.toString()+" "+metodo.getOffset());
             }
-            
+            */
         }
     }
 
@@ -201,7 +205,7 @@ public class TablaSimbolos {
         return stackBloqueActual.get(0);
     }
 
-    public static NodoVarLocal getVarLocalUnidadActual(String nombreVarLocal){ //TODO: aca esta bien?
+    public static NodoVarLocal getVarLocalUnidadActual(String nombreVarLocal){
         for(NodoBloque bloque : stackBloqueActual){
             NodoVarLocal varLocal = bloque.getVarLocalBloque(nombreVarLocal);
             if(varLocal != null){
@@ -213,15 +217,13 @@ public class TablaSimbolos {
 
     // Generacion de codigo intermedio
 
-    public static void generarCodigo(){ //TODO: esta bien?
+    public static void generarCodigo(){
         System.out.println("\n-----------------GENERANDO CODIGO----------------\n");
         generarLlamadaMain();
         generarRutinasHeap();
         for(Clase clase : clases.values()){
             clase.generarCodigo(); // Generamos las VT de cada clase
         }
-
-
     }
 
     private static void generarLlamadaMain(){

@@ -70,5 +70,12 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
             return true;
         }
     }
+    
+    // Generacion de codigo intermedio
 
+    public void generarCodigo(){
+        // TODO
+    }
+
+    
 }

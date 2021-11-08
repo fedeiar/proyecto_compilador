@@ -16,4 +16,9 @@ public class NodoCaracter extends NodoOperando{
         return new TipoChar();
     }
 
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
 }

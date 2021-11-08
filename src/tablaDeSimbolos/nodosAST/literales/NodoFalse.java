@@ -17,5 +17,9 @@ public class NodoFalse extends NodoBoolean{
         return new TipoBoolean();
     }
 
+    // Generacion de codigo intermedio
 
+    public void generarCodigo(){
+        // TODO
+    }
 }

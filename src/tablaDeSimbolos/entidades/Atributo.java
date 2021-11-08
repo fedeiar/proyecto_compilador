@@ -53,6 +53,7 @@ public class Atributo{
         return offset != -1;
     }
 
+    // Chequeo de declaraciones
 
     public void estaBienDeclarado() throws ExcepcionSemantica{
         tipoAtributo.verificarExistenciaTipo();

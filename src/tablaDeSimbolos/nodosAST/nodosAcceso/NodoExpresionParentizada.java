@@ -36,4 +36,10 @@ public class NodoExpresionParentizada extends NodoPrimario{
         }
     }
 
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        // TODO
+    }
 }

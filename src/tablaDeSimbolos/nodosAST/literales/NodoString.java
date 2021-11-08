@@ -18,5 +18,9 @@ public class NodoString extends NodoOperando{
         return new TipoString();
     }
 
+    // Generacion de codigo intermedio
 
+    public void generarCodigo(){
+        // TODO
+    }
 }

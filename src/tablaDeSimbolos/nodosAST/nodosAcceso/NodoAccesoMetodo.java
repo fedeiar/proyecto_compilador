@@ -19,7 +19,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         this.tokenIdMet = tokenIdMet;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ 
+    public Tipo chequear() throws ExcepcionSemantica{
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
         metodoLlamado = TablaSimbolos.claseActual.getMetodoQueConformaParametros(tokenIdMet.getLexema(), getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodoLlamado == null){
@@ -64,9 +64,9 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){ 
         if(metodoLlamado.esDinamico()){ // Es dinamico
-
+            //TODO:
         } else{ // Es estatico
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
                 TablaSimbolos.instruccionesMaquina.add("RMEM 1"); // Reservo lugar para el retorno
