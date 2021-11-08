@@ -74,4 +74,9 @@ public class Metodo extends Unidad{
         return signaturaMetodo;
     }
 
+
+    public void generarCodigo(){
+        // TODO
+    }
+
 }

@@ -25,12 +25,15 @@ public class TablaSimbolos {
     public static Unidad unidadActual;
     public static List<NodoBloque> stackBloqueActual;
 
+    public static List<String> instruccionesMaquina;
+
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
         stackBloqueActual = new ArrayList<NodoBloque>();
+        instruccionesMaquina = new ArrayList<>();
 
         try{
-            Metodo metodo;
+            Metodo metodo; //TODO: habria que tener una clase MetodoDebugPrint para que redefina el generarCodigo()?
 
             //Creando Object
             Token tokenObject = new Token(TipoDeToken.id_clase, "Object", 0);
@@ -40,7 +43,6 @@ public class TablaSimbolos {
             metodo = new Metodo(new Token(TipoDeToken.id_metVar, "debugPrint", 0), false, new TipoVoid(), tokenObject);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseObject.insertarMetodo(metodo); 
-            claseObject.agregarOffsetMetodoEnVT(metodo); // Como object es la raíz de todos, es el unico que puede agregar su offset sin considerar a su padre.
 
             //Creando System
             Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
@@ -103,6 +105,7 @@ public class TablaSimbolos {
         clases = null;
         claseActual = null;
         unidadActual = null;
+        instruccionesMaquina = null;
     }
 
 
@@ -203,5 +206,15 @@ public class TablaSimbolos {
             }
         }
         return null;
+    }
+
+    // Generacion de codigo intermedio
+
+    public static void generarCodigo(){ //TODO: esta bien?
+        for(Clase clase : clases.values()){
+            clase.generarCodigo(); // Generamos las VT de cada clase
+        }
+
+
     }
 }

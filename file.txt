@@ -1,9 +1,9 @@
 // Redefinición y sobrecarga de metodos en ancestros profundos.
 class A{
 
-	static void met1(){}
+	dynamic void met1(){}
 
-	static A met1(char p1){}
+	dynamic A met1(char p1){}
 	
 }
 
@@ -12,15 +12,15 @@ class B extends A{
 
 	dynamic void met1(int a){} //sobrecarga
 
-	static Object met1(String p1){} //sobrecarga
+	dynamic Object met1(String p1){} //sobrecarga
 
-	static B met1(char p1){} //redefine de A
+	dynamic B met1(char p1){} //redefine de A
 }
 
 class C extends B{
 
 	
-	static int met1(int a, char b){} //sobrecarga
+	dynamic int met1(int a, char b){} //sobrecarga
 
 	dynamic int met1(char p1, char p2){} //sobrecarga
 
@@ -29,29 +29,15 @@ class C extends B{
 
 class D extends C{
 
-	static D met1(String a){} //redefine de B
+	dynamic D met1(String a){} //redefine de B
 	
 }
 
 
 class E extends D{
-
 	
 
 }
-
-
-class A1 extends Object{}
-
-class B1 extends A{}
-
-class C1 extends C{}
-class C2 extends C1{}
-
-class C11 extends C1{}
-
-class D1 extends D{}
-
 
 
 

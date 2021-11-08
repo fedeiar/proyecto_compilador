@@ -111,5 +111,8 @@ public abstract class Unidad {
         TablaSimbolos.unidadActual = this;
         bloque.chequear();
     }
+
+    public abstract void generarCodigo();
+    
     
 }

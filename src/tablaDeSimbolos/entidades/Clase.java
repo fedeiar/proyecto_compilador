@@ -29,6 +29,9 @@ public class Clase {
 
     private int offsetDisponibleCIR; // El primer número de offset disponible en el CIR
     private int offsetDisponibleVT; // El primer número de offset disponible en la VT
+    private Map<Integer, Atributo> mapeoAtributosPorOffset; //TODO: estan bien?
+    private Map<Integer, Metodo> mapeoMetodosPorOffset;
+    
 
     public Clase(Token idClase){
         this.tokenIdClase = idClase;
@@ -39,6 +42,9 @@ public class Clase {
         tiposParametricos = new HashMap<>();
         listaTiposParametricos = new ArrayList<>();
 
+        mapeoAtributosPorOffset = new HashMap<>();
+        mapeoMetodosPorOffset = new HashMap<>();
+
         estaConsolidado = false;
         estaVerificadoHerenciaCircular = false;
 
@@ -46,7 +52,7 @@ public class Clase {
             estaConsolidado = true; 
             estaVerificadoHerenciaCircular = true;
             offsetDisponibleCIR = 1; // Ya que el 0 lo ocupa la VT
-            offsetDisponibleVT = 0; // Cuando se agregue debugPrint() se incrementará.
+            offsetDisponibleVT = 0; // Cuando se agreguen metodos dinamicos en las clases hijas de Object se incremenetara.
         }
     }
 
@@ -299,7 +305,6 @@ public class Clase {
             if(!claseAncestro.estaConsolidado()){
                 claseAncestro.consolidar();
             }
-
             consolidarAtributos(claseAncestro);
             consolidarMetodos(claseAncestro);
             estaConsolidado = true;
@@ -312,23 +317,26 @@ public class Clase {
           Si se quiere saber si un atributo es privado o a que clase pertenece, se consulta directamente al atributo a través de su interfaz*/
         for(Entry<String,Atributo> entryAtributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = entryAtributoAncestro.getKey();
+            Atributo atributoAncestro = entryAtributoAncestro.getValue();
             Atributo atributo_en_clase = this.atributos.get(nombreAtributoAncestro);
+
             if(atributo_en_clase == null && nombreAtributoAncestro.charAt(0) != '#'){
                 if(entryAtributoAncestro.getValue().esPublic())
-                    this.insertarAtributo(entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue());
+                    this.insertarAtributo(nombreAtributoAncestro, atributoAncestro);
                 else
-                    this.insertarAtributo("#"+entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue()); // El $ quiere decir que no podemos usarlo ya que es privado
+                    this.insertarAtributo("#"+nombreAtributoAncestro, atributoAncestro);
             } else{
-                this.insertarAtributo("#"+entryAtributoAncestro.getKey(), entryAtributoAncestro.getValue());
+                this.insertarAtributo("#"+nombreAtributoAncestro, atributoAncestro);
             }
         }
 
+        //TODO: esta bien?
         this.offsetDisponibleCIR = claseAncestro.getOffsetDisponibleEnCIR();
-        
         for(Atributo atributo : atributos.values()){
-            if(!atributo.tieneOffsetAsignado()){
+            if(!atributo.tieneOffsetAsignado()){ // Si no tiene offset asignado, significa que es un atributo declarado en esta clase y debemos ponerle un offset.
                 this.agregarOffsetAtributoEnCIR(atributo);
             }
+            mapeoAtributosPorOffset.put(atributo.getOffset(), atributo);
         }
     }
 
@@ -346,10 +354,17 @@ public class Clase {
             }
         }
 
+        //TODO: esta bien?
         this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();
+        
         for(Metodo metodo : metodos.values()){
-            if(!metodo.tieneOffsetAsignado()) // De esta forma, no tocamos a los redefinidos ya que les pusimos offset en el for anterior.
-                this.agregarOffsetMetodoEnVT(metodo);
+            // Los metodos estaticos no van a estar en la VT asi que no se les asigna un offset
+            if(metodo.esDinamico()){
+                if(!metodo.tieneOffsetAsignado()){ // De esta forma, no tocamos a los redefinidos ya que les pusimos offset en el for anterior.
+                    this.agregarOffsetMetodoEnVT(metodo);
+                }
+                mapeoMetodosPorOffset.put(metodo.getOffset(), metodo);
+            }
         }
     }
 
@@ -368,4 +383,38 @@ public class Clase {
     }
 
 
+    // Generación de codigo intermedio
+
+    public void generarCodigo(){ // TODO: aca hacer las VT? esta bien hecho?
+        
+        // Creacion de la VT. Si no tiene métodos dinámicos, entonces no hay que crear VT.
+        if(mapeoMetodosPorOffset.size() != 0){ 
+            TablaSimbolos.instruccionesMaquina.add(".DATA");
+            String etiquetasVT = "VT " + tokenIdClase.getLexema() + ": DW ";
+            for(int offset = 0; offset < mapeoMetodosPorOffset.size(); offset++){
+                Metodo metodo = mapeoMetodosPorOffset.get(offset);
+                etiquetasVT += "l" + metodo.toString() + metodo.getTokenClaseContenedora().getLexema() + ",";
+            }
+            etiquetasVT = etiquetasVT.substring(0, etiquetasVT.length() - 1); // Sacamos la ultima ","
+            TablaSimbolos.instruccionesMaquina.add(etiquetasVT);
+        }
+
+        // Codigo intermedio de los constructores y de los metodos (estaticos y dinamicos)
+        TablaSimbolos.instruccionesMaquina.add(".CODE");
+        String etiquetaCodigoMetodo;
+        for(Metodo metodo : metodos.values()){ //TODO: esta bien traducir todos los metodos (estaticos y dinamicos) en cualquier orden?
+            if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){
+                etiquetaCodigoMetodo = "l" + metodo.toString() + metodo.getTokenClaseContenedora().getLexema() + ":";
+                TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoMetodo);
+                metodo.generarCodigo();
+            }
+        }
+        String etiquetaCodigoConstructor;
+        for(Constructor constructor : constructores.values()){
+            etiquetaCodigoConstructor = "l" + constructor.toString();
+            TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoConstructor);
+            constructor.generarCodigo();
+        }
+        TablaSimbolos.instruccionesMaquina.add(""); // Separador
+    }
 }

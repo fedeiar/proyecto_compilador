@@ -1,0 +1,7 @@
+class Init{
+
+	static void main(){
+		Object o;
+		o.debugPrint(7);
+	}
+}

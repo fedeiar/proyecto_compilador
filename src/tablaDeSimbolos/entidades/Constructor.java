@@ -39,4 +39,8 @@ public class Constructor extends Unidad{
         return signaturaMetodo;
     }
 
+    public void generarCodigo(){
+        //TODO
+    }
+
 }
