@@ -39,6 +39,10 @@ public class Constructor extends Unidad{
         return signaturaMetodo;
     }
 
+    public String toStringLabel(){
+        return "l" + this.toString();
+    }
+
     public void generarCodigo(){
         //TODO
     }

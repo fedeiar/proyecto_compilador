@@ -74,9 +74,29 @@ public class Metodo extends Unidad{
         return signaturaMetodo;
     }
 
+    public String toStringLabel(){
+        return "l" + this.toString() + this.getTokenClaseContenedora().getLexema();
+    }
 
-    public void generarCodigo(){
-        // TODO
+
+    public void generarCodigo(){ // TODO: esta bien?
+        /*
+        TablaSimbolos.instruccionesMaquina.add("LOADFP");
+        TablaSimbolos.instruccionesMaquina.add("LOADSP");
+        TablaSimbolos.instruccionesMaquina.add("STOREFP");
+
+        // TODO: aca habría que pedirle al NodoBloque que genereCodigo()?
+
+        if(this.esDinamico){
+
+        } else{ // Es estatico
+            if(!tipoUnidad.mismoTipo(new TipoVoid())){
+                TablaSimbolos.instruccionesMaquina.add("STORE "+ lista_parametrosFormales.size() + 2); // + 2 por el PR y ED (no tiene this)
+            }
+            TablaSimbolos.instruccionesMaquina.add("STOREPF");
+            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); 
+        }
+        */
     }
 
 }

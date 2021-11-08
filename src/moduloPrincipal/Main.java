@@ -35,8 +35,8 @@ public class Main {
 
                 // Generacion codigo intermedio
 
-                //TablaSimbolos.generarCodigo();
-                //EscritorArchivoSalida.crearArchivo("output.txt", TablaSimbolos.instruccionesMaquina);
+                TablaSimbolos.generarCodigo();
+                EscritorArchivoSalida.crearArchivo("output.txt", TablaSimbolos.instruccionesMaquina);
 
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");

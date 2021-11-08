@@ -377,6 +377,8 @@ public class Clase {
     // Generación de codigo intermedio
 
     public void generarCodigo(){ // TODO: aca hacer las VT? esta bien hecho?
+
+        System.out.println("ESTOY EN: "+ tokenIdClase.getLexema());
         
         // Creacion de la VT. Si no tiene métodos dinámicos, entonces no hay que crear VT.
         if(mapeoMetodosPorOffset.size() != 0){ 
@@ -384,7 +386,7 @@ public class Clase {
             String etiquetasVT = "VT " + tokenIdClase.getLexema() + ": DW ";
             for(int offset = 0; offset < mapeoMetodosPorOffset.size(); offset++){
                 Metodo metodo = mapeoMetodosPorOffset.get(offset);
-                etiquetasVT += "l" + metodo.toString() + metodo.getTokenClaseContenedora().getLexema() + ",";
+                etiquetasVT += metodo.toStringLabel() + ",";
             }
             etiquetasVT = etiquetasVT.substring(0, etiquetasVT.length() - 1); // Sacamos la ultima ","
             TablaSimbolos.instruccionesMaquina.add(etiquetasVT);
@@ -395,14 +397,14 @@ public class Clase {
         String etiquetaCodigoMetodo;
         for(Metodo metodo : metodos.values()){ //TODO: esta bien traducir todos los metodos (estaticos y dinamicos) en cualquier orden?
             if(metodo.getTokenClaseContenedora().getLexema().equals(this.tokenIdClase.getLexema())){
-                etiquetaCodigoMetodo = "l" + metodo.toString() + metodo.getTokenClaseContenedora().getLexema() + ":";
+                etiquetaCodigoMetodo = metodo.toStringLabel() + ":";
                 TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoMetodo);
                 metodo.generarCodigo();
             }
         }
         String etiquetaCodigoConstructor;
         for(Constructor constructor : constructores.values()){
-            etiquetaCodigoConstructor = "l" + constructor.toString();
+            etiquetaCodigoConstructor = constructor.toStringLabel();
             TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoConstructor);
             constructor.generarCodigo();
         }

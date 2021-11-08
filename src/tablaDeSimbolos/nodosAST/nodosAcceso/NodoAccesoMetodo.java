@@ -12,23 +12,24 @@ import tablaDeSimbolos.tipos.*;
 public class NodoAccesoMetodo extends NodoAccesoUnidad{
     
     protected Token tokenIdMet;
+    protected Metodo metodoLlamado;
 
     public NodoAccesoMetodo(Token tokenIdMet, List<NodoExpresion> listaParametrosActuales){
         super(listaParametrosActuales);
         this.tokenIdMet = tokenIdMet;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ //TODO: esta bien asi?
+    public Tipo chequear() throws ExcepcionSemantica{ 
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
-        Metodo metodo = TablaSimbolos.claseActual.getMetodoQueConformaParametros(tokenIdMet.getLexema(), getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
-        if(metodo == null){
+        metodoLlamado = TablaSimbolos.claseActual.getMetodoQueConformaParametros(tokenIdMet.getLexema(), getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
+        if(metodoLlamado == null){
             throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado o los parametros no conforman");
         }
-        if(!TablaSimbolos.unidadActual.esDinamico() && metodo.esDinamico()){
+        if(!TablaSimbolos.unidadActual.esDinamico() && metodoLlamado.esDinamico()){
             throw new ExcepcionSemantica(tokenIdMet, "no se puede hacer referencia al metodo dinamico "+tokenIdMet.getLexema() +" desde un metodo estatico");
         }
 
-        Tipo tipoMetodo = metodo.getTipoUnidad();
+        Tipo tipoMetodo = metodoLlamado.getTipoUnidad();
         if(nodoEncadenado == null){
             return tipoMetodo;
         } else{
@@ -58,6 +59,29 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             return nodoEncadenado.esLlamable();
         } else{
             return true;
+        }
+    }
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){ //TODO: esta bien?
+        if(metodoLlamado.esDinamico()){ // Es dinamico
+
+        } else{ // Es estatico
+            if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
+                TablaSimbolos.instruccionesMaquina.add("RMEM 1"); // Reservo lugar para el retorno
+            }
+            for(NodoExpresion nodoExpresion : listaParametrosActuales){
+                nodoExpresion.generarCodigo();
+            }
+            TablaSimbolos.instruccionesMaquina.add("PUSH "+metodoLlamado.toStringLabel());
+            TablaSimbolos.instruccionesMaquina.add("CALL");
+
+
+        }
+
+        if(nodoEncadenado != null){
+            nodoEncadenado.generarCodigo();
         }
     }
 

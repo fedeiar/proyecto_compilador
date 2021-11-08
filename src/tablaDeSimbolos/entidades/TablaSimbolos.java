@@ -4,7 +4,6 @@ import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
 
-import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +26,8 @@ public class TablaSimbolos {
 
     public static List<String> instruccionesMaquina;
 
+    private static Metodo metodoMainMiniJava;
+
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
         stackBloqueActual = new ArrayList<NodoBloque>();
@@ -45,44 +46,45 @@ public class TablaSimbolos {
             claseObject.insertarMetodo(metodo); 
 
             //Creando System
-            Clase claseSystem = new Clase(new Token(TipoDeToken.id_clase, "System", 0));
+            Token tokenSystem = new Token(TipoDeToken.id_clase, "System", 0);
+            Clase claseSystem = new Clase(tokenSystem);
             claseSystem.set_idClaseAncestro(tokenObject);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), false, new TipoInt(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "read", 0), false, new TipoInt(), tokenSystem);
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printB", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printB", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printC", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printC", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printI", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printI", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printS", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printS", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "println", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "println", 0), false, new TipoVoid(), tokenSystem);
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printBln", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printBln", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "b", 0), new TipoBoolean()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printCln", 0), false, new TipoVoid(), tokenObject); 
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printCln", 0), false, new TipoVoid(), tokenSystem); 
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "c", 0), new TipoChar()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printIln", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printIln", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseSystem.insertarMetodo(metodo);
 
-            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printSln", 0), false, new TipoVoid(), tokenObject);
+            metodo = new Metodo(new Token(TipoDeToken.id_metVar, "printSln", 0), false, new TipoVoid(), tokenSystem);
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "s", 0), new TipoString()));
             claseSystem.insertarMetodo(metodo);
 
@@ -143,7 +145,7 @@ public class TablaSimbolos {
 
     private void existeMain() throws ExcepcionSemantica{ 
         Metodo metodoMain = new Metodo(new Token(TipoDeToken.id_metVar, "main", 0), false, new TipoVoid(), null);
-        boolean estaMain = false; 
+        boolean estaMain = false;
         Metodo metodoMainOriginal;
         for(Clase clase : clases.values()){
             metodoMainOriginal = clase.getMetodoMismaSignatura(metodoMain);
@@ -152,6 +154,7 @@ public class TablaSimbolos {
             }
             if(metodoMainOriginal != null){
                 estaMain = true;
+                metodoMainMiniJava = metodoMainOriginal;
             }
         }
 
@@ -162,7 +165,7 @@ public class TablaSimbolos {
 
     public void consolidar() throws ExcepcionSemantica{
         for(Clase clase : clases.values()){
-            System.out.println("\n----estoy en "+clase.getTokenIdClase().getLexema()+"----\n");
+            System.out.println("\n----ESTOY EN: "+clase.getTokenIdClase().getLexema()+"----\n");
             clase.consolidar();
             /*
             for(Map.Entry<String,Atributo> atr : clase.getHashAtributos().entrySet()){
@@ -211,10 +214,43 @@ public class TablaSimbolos {
     // Generacion de codigo intermedio
 
     public static void generarCodigo(){ //TODO: esta bien?
+        System.out.println("\n-----------------GENERANDO CODIGO----------------\n");
+        generarLlamadaMain();
+        generarRutinasHeap();
         for(Clase clase : clases.values()){
             clase.generarCodigo(); // Generamos las VT de cada clase
         }
 
 
+    }
+
+    private static void generarLlamadaMain(){
+        instruccionesMaquina.add(".CODE\n");
+        instruccionesMaquina.add("PUSH simple_heap_init \n"+
+        "CALL\n"+
+        "PUSH "+ metodoMainMiniJava.toStringLabel() +"\n"+
+        "CALL\n"+
+        "HALT\n");
+    }
+
+    private static void generarRutinasHeap(){
+        instruccionesMaquina.add("simple_heap_init: \n"+
+        "RET 0 ; Retorna inmediatamente\n");
+    
+        instruccionesMaquina.add("simple_malloc:\n"+
+        "LOADFP	; Inicialización unidad\n"+
+        "LOADSP\n"+
+        "STOREFP ; Finaliza inicialización del RA\n"+
+        "LOADHL	; hl\n"+
+        "DUP	; hl\n"+
+        "PUSH 1	; 1\n"+
+        "ADD	; hl+1\n"+
+        "STORE 4 ; Guarda el resultado (un puntero a la primer celda de la región de memoria)\n"+
+        "LOAD 3	; Carga la cantidad de celdas a alojar (parámetro que debe ser positivo)\n"+
+        "ADD\n"+
+        "STOREHL ; Mueve el heap limit (hl). Expande el heap\n"+
+        "STOREFP\n"+
+        "RET 1	; Retorna eliminando el parámetro\n\n"
+        );
     }
 }
