@@ -3,19 +3,24 @@ package tablaDeSimbolos.nodosAST.nodosSentencia;
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.entidades.TablaSimbolos;
+import tablaDeSimbolos.entidades.IVariable;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.TipoConcreto;
 
-public class NodoVarLocal extends NodoSentencia{
+public class NodoVarLocal extends NodoSentencia implements IVariable{
     
     private Token tokenIdVar;
     private TipoConcreto tipoVarLocal;
     private Token tokenIgual;
     private NodoExpresion nodoExpresion;
 
+    private int offset; // TODO: esta bien?
+
     public NodoVarLocal(Token tokenIdVar, TipoConcreto tipo){
         this.tokenIdVar = tokenIdVar;
         this.tipoVarLocal = tipo;
+
+        this.offset = -1; // Inicialmente no tiene offset
     }
 
     public Token getToken(){
@@ -24,6 +29,14 @@ public class NodoVarLocal extends NodoSentencia{
 
     public TipoConcreto getTipo(){
         return tipoVarLocal;
+    }
+
+    public int getOffset(){
+        return offset;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
     }
 
     public void insertarExpresion(Token tokenIgual, NodoExpresion nodoExpresion){

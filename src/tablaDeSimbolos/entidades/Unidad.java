@@ -1,6 +1,7 @@
 package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.Tipo;
 
 import java.util.List;
@@ -17,11 +18,14 @@ public abstract class Unidad {
     protected NodoBloque bloque;
     protected Tipo tipoUnidad;
 
+    protected int offsetDisponibleRA; //TODO: esta bien?
 
     public Unidad(){
         parametros = new HashMap<>();
         lista_parametrosFormales = new ArrayList<>();
-        bloque = new NodoBloque(); //TODO: esta bien esto? es para el caso de los constructores por defecto.
+        bloque = new NodoBloque();
+
+        // El offset disponible se asigna en Metodo y Constructor segun corresponda.
     }
 
     public List<ParametroFormal> getListaParametros(){
@@ -30,6 +34,10 @@ public abstract class Unidad {
 
     public Tipo getTipoUnidad(){ 
         return tipoUnidad;
+    }
+
+    public int getOffsetDisponibleEnRA(){
+        return offsetDisponibleRA;
     }
 
     public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{
@@ -97,10 +105,15 @@ public abstract class Unidad {
         return esDinamico;
     }
 
-    public void estaBienDeclarado() throws ExcepcionSemantica{
-        for(ParametroFormal p : parametros.values()){
+    public void estaBienDeclarado() throws ExcepcionSemantica{ //TODO: esta bien?
+        int offsetAsignar = lista_parametrosFormales.size() + offsetDisponibleRA; // Ya que como los parametros se apilan, entonces el primer parametro debe tener el ultimo offset y así siguiendo.
+        offsetDisponibleRA = offsetAsignar + 1; // Ya que offsetAsignar tiene la posición del parámetro con mayor offset. Entonces el disponible será el siguiente.
+        for(ParametroFormal p : lista_parametrosFormales){
             p.estaBienDeclarado();
+            p.setOffset(offsetAsignar);
+            offsetAsignar--;
         }
+       
     }
 
     public void insertarBloque(NodoBloque bloque){ 

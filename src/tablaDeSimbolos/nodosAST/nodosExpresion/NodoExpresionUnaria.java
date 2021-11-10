@@ -2,6 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosExpresion;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.tipos.*;
 
 public class NodoExpresionUnaria extends NodoExpresion{
@@ -33,8 +34,13 @@ public class NodoExpresionUnaria extends NodoExpresion{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ // TODO: esta bien?
+        nodoOperando.generarCodigo();
+        if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
+            TablaSimbolos.instruccionesMaquina.add("PUSH NEG");
+        } else{ // Si no el operador es un !
+            TablaSimbolos.instruccionesMaquina.add("PUSH NOT");
+        }
     }
 
 }

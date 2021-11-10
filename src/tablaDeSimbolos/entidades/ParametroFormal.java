@@ -3,14 +3,18 @@ package tablaDeSimbolos.entidades;
 import tablaDeSimbolos.tipos.*;
 import analizadorLexico.Token;
 
-public class ParametroFormal {
+public class ParametroFormal implements IVariable{
     
     private Token tokenIdVar;
     private TipoConcreto tipoParametro;
 
+    private int offset;
+
     public ParametroFormal(Token tokenIdVar, TipoConcreto tipoParametro){
         this.tokenIdVar = tokenIdVar;
         this.tipoParametro = tipoParametro;
+
+        this.offset = -1; // Inicialmente no tiene offset
     }
 
     public Token getTokenIdVar(){
@@ -19,6 +23,14 @@ public class ParametroFormal {
 
     public TipoConcreto getTipo(){
         return tipoParametro;
+    }
+
+    public int getOffset(){
+        return offset;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
     }
 
     public void estaBienDeclarado() throws ExcepcionSemantica{

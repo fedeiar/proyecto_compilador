@@ -2,6 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosExpresion;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.tipos.*;
 
 public class NodoExpresionBinariaAnd extends NodoExpresionBinaria{
@@ -17,5 +18,13 @@ public class NodoExpresionBinariaAnd extends NodoExpresionBinaria{
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador binario "+ tokenOperadorBinario.getLexema()+" solo funciona con tipos booleanos");
         }
+    }
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        nodoExpresionLadoIzq.generarCodigo();
+        nodoExpresionLadoDer.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add("PUSH AND");
     }
 }

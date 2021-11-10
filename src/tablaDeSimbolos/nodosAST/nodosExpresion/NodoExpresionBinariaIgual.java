@@ -2,6 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosExpresion;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.tipos.*;
 
 public class NodoExpresionBinariaIgual extends NodoExpresionBinaria{
@@ -19,5 +20,14 @@ public class NodoExpresionBinariaIgual extends NodoExpresionBinaria{
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador binario "+ tokenOperadorBinario.getLexema()+" solo funciona con tipos conformantes");
         }
+    }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){ //TODO: esta bien asi?
+        nodoExpresionLadoIzq.generarCodigo();
+        nodoExpresionLadoDer.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add("PUSH EQ");
     }
 }

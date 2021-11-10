@@ -13,6 +13,8 @@ public class Constructor extends Unidad{
         this.tokenIdClase = tokenIdClase;
         esDinamico = true;
         tipoUnidad = new TipoVoid();
+
+        offsetDisponibleRA = 4; // Ya que FP esta apuntando a dir(ED) - 1, en 1 esta ED, en 2 esta PR, y en 3 esta this. //TODO: esta bien?
     }
 
     public Token getTokenIdClase(){

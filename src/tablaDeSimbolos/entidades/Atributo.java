@@ -3,7 +3,7 @@ import tablaDeSimbolos.tipos.*;
 import analizadorLexico.TipoDeToken;
 import analizadorLexico.Token;
 
-public class Atributo{
+public class Atributo implements IVariable{
     
     private Token tokenIdVar;
     private Token tokenClaseContenedora; 

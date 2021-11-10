@@ -11,16 +11,24 @@ import java.util.HashMap;
 
 public class NodoBloque extends NodoSentencia{
     
-    private List<NodoSentencia> sentencias;
+    private List<NodoSentencia> listaSentencias;
     private Map<String, NodoVarLocal> varLocales;
 
+    private int offsetDisponibleRA;
+
     public NodoBloque(){
-        sentencias = new ArrayList<>();
+        listaSentencias = new ArrayList<>();
         varLocales = new HashMap<>();
+
+        this.offsetDisponibleRA = -1; // Inicialmente no se sabe el offset disponible, le deberá preguntar a la unidad o bloque que lo contenga.
+    }
+
+    public int getOffsetDisponibleEnRA(){
+        return offsetDisponibleRA;
     }
 
     public void insertarSentencia(NodoSentencia sentencia){
-        sentencias.add(sentencia);
+        listaSentencias.add(sentencia);
     }
 
     public NodoVarLocal getVarLocalBloque(String nombreVarLocal){
@@ -36,12 +44,24 @@ public class NodoBloque extends NodoSentencia{
             throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
         }
         
+        agregarOffsetVarLocalRA(varLocal); // TODO: esta bien?
         varLocales.put(varLocal.toString(), varLocal);
     }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: asi esta bien no hay nada mas que chequear aca?
+    private void agregarOffsetVarLocalRA(NodoVarLocal nodoVarLocal){
+        nodoVarLocal.setOffset(offsetDisponibleRA);
+        offsetDisponibleRA++;
+    }
+
+    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien el tema de los offset?
+        if(TablaSimbolos.hayBloque()){
+            this.offsetDisponibleRA = TablaSimbolos.getBloqueActual().getOffsetDisponibleEnRA();
+        } else{
+            this.offsetDisponibleRA = TablaSimbolos.unidadActual.getOffsetDisponibleEnRA();
+        }
+
         TablaSimbolos.apilarBloqueActual(this); 
-        for(NodoSentencia sentencia : sentencias){
+        for(NodoSentencia sentencia : listaSentencias){
             sentencia.chequear();
         }
         TablaSimbolos.desapilarBloqueActual();
@@ -50,7 +70,7 @@ public class NodoBloque extends NodoSentencia{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){ // TODO: esta bien?
-        for(NodoSentencia sentencia : sentencias){
+        for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }
     }

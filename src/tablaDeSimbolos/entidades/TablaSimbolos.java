@@ -205,6 +205,10 @@ public class TablaSimbolos {
         return stackBloqueActual.get(0);
     }
 
+    public static boolean hayBloque(){
+        return stackBloqueActual.size() > 0;
+    }
+
     public static NodoVarLocal getVarLocalUnidadActual(String nombreVarLocal){
         for(NodoBloque bloque : stackBloqueActual){
             NodoVarLocal varLocal = bloque.getVarLocalBloque(nombreVarLocal);

@@ -1,8 +1,8 @@
 package tablaDeSimbolos.entidades;
 
-import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.tipos.*;
 
+import java.time.OffsetDateTime;
 
 import analizadorLexico.Token;
 
@@ -10,7 +10,9 @@ public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Token tokenClaseContenedora;
-    private int offset; 
+    private int offset;
+
+
 
     public Metodo(Token tokenIdMet, boolean esDinamico, Tipo tipoMetodo, Token claseContenedora){
         super();
@@ -20,6 +22,12 @@ public class Metodo extends Unidad{
         this.tokenClaseContenedora = claseContenedora;
         
         this.offset = -1; // Ya que inicialmente no conocemos el offset
+
+        if(esDinamico){ //TODO: esta bien?
+            offsetDisponibleRA = 4; // Ya que FP esta apuntando a dir(ED) - 1, en 1 esta ED, en 2 esta PR, y en 3 esta this. //TODO: esta bien?
+        } else{
+            offsetDisponibleRA = 3; // Ya que no tiene this.
+        }
     }
 
     public Token getTokenIdMet(){
@@ -30,12 +38,12 @@ public class Metodo extends Unidad{
         return tokenClaseContenedora;
     }
 
-    public void setOffset(int offset){
-        this.offset = offset;
-    }
-
     public int getOffset(){
         return offset;
+    }
+
+    public void setOffset(int offset){
+        this.offset = offset;
     }
 
     public boolean tieneOffsetAsignado(){
@@ -93,20 +101,21 @@ public class Metodo extends Unidad{
     }
 
 
-    public void generarCodigo(){ // TODO: esta bien?
+    public void generarCodigo(){ // TODO: esta bien? queda asi?
         
-        TablaSimbolos.instruccionesMaquina.add("LOADFP");
-        TablaSimbolos.instruccionesMaquina.add("LOADSP");
-        TablaSimbolos.instruccionesMaquina.add("STOREFP");
+        TablaSimbolos.instruccionesMaquina.add("LOADFP"); // Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+        TablaSimbolos.instruccionesMaquina.add("LOADSP"); // Apila el lugar donde comienza el RA de la unidad llamada
+        TablaSimbolos.instruccionesMaquina.add("STOREFP"); // Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
 
         bloque.generarCodigo();
 
-        if(this.esDinamico){
-            //TODO: hacer
+        if(this.esDinamico){ // TODO: esta bien? solo cambia ese +1?
+            TablaSimbolos.instruccionesMaquina.add("STOREFP");
+            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1); // Libera los n parametros de la pila + el this
         } else{ // Es estatico
             
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); 
+            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); // Libera los n parametros de la pila
         }
         
     }

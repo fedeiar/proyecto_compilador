@@ -3,15 +3,17 @@ package tablaDeSimbolos.nodosAST.nodosAcceso;
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.Atributo;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.IVariable;
 import tablaDeSimbolos.entidades.ParametroFormal;
 import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
-import tablaDeSimbolos.tipos.TipoConcreto;
 import tablaDeSimbolos.tipos.Tipo;
 
 public class NodoAccesoVar extends NodoPrimario{
     
     private Token tokenIdVar;
+
+    private IVariable variable;
 
     public NodoAccesoVar(Token tokenIdVar){
         this.tokenIdVar = tokenIdVar;
@@ -21,20 +23,20 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{  
-        TipoConcreto tipoVariable;
-        NodoVarLocal nodoVarLocal = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
-        if(nodoVarLocal != null){
-            tipoVariable = nodoVarLocal.getTipo();
+    public Tipo chequear() throws ExcepcionSemantica{  //TODO: ahora que tenemos IVariable, achicar el codigo de esto.
+        Tipo tipoVariable;
+        variable = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
+        if(variable != null){
+            tipoVariable = variable.getTipo();
         } else{
-            ParametroFormal parametroFormal = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
-            if(parametroFormal != null){
-                tipoVariable = parametroFormal.getTipo();
+            variable = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
+            if(variable != null){
+                tipoVariable = variable.getTipo();
             } else{
-                Atributo atributo = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
-                if(atributo != null){
+                variable = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
+                if(variable != null){
                     if(TablaSimbolos.unidadActual.esDinamico()){
-                        tipoVariable = atributo.getTipo();
+                        tipoVariable = variable.getTipo();
                     }
                     else{
                         throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica");
@@ -70,7 +72,17 @@ public class NodoAccesoVar extends NodoPrimario{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ //TODO: esta bien?
+        if(variable instanceof Atributo){
+            TablaSimbolos.instruccionesMaquina.add("LOAD 3"); // Ponemos this en la pila
+            if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
+                TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()); // Cargo el valor del atributo //TODO: asi esta bien?
+            } else{
+                TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo a el valor de la expresion a asignar en el tope, y al atributo en tope - 1
+                TablaSimbolos.instruccionesMaquina.add("STOREREF "+ variable.getOffset()); // Guardo el valor de la expresión en el atributo
+            }
+        } else if(variable instanceof ParametroFormal || variable instanceof NodoVarLocal){
+
+        }
     }
 }
