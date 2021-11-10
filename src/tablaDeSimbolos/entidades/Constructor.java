@@ -28,23 +28,33 @@ public class Constructor extends Unidad{
     }
 
     public String toString(){
-        String signaturaMetodo = tokenIdClase.getLexema() + "(";
+        String signaturaConstructor = tokenIdClase.getLexema() + "(";
         for(ParametroFormal p : lista_parametrosFormales){
-            signaturaMetodo += p.getTipo().getNombreTipo() + ",";
+            signaturaConstructor += p.getTipo().getNombreTipo() + ",";
         }
-        if(signaturaMetodo.charAt(signaturaMetodo.length() - 1) == ','){
-            signaturaMetodo = signaturaMetodo.substring(0, signaturaMetodo.length() - 1);
+        if(signaturaConstructor.charAt(signaturaConstructor.length() - 1) == ','){
+            signaturaConstructor = signaturaConstructor.substring(0, signaturaConstructor.length() - 1);
         }
-        signaturaMetodo += ")";
-        return signaturaMetodo;
+        signaturaConstructor += ")";
+        return signaturaConstructor;
     }
 
-    public String toStringLabel(){ //TODO: sacarle los () y las ,
-        return "l" + this.toString();
+    public String toStringLabel(){ // Lo hacemos asi ya que @ y $ son los simbolos validos en las etiquetas de CeIVM que no son validos para id's de constructores.
+    String signaturaConstructor = tokenIdClase.getLexema() + "@";
+    for(ParametroFormal p : lista_parametrosFormales){
+        signaturaConstructor += p.getTipo().getNombreTipo() + "$";
     }
+    if(signaturaConstructor.charAt(signaturaConstructor.length() - 1) == '$'){
+        signaturaConstructor = signaturaConstructor.substring(0, signaturaConstructor.length() - 1);
+    }
+    signaturaConstructor += "@";
+
+    return "l" + signaturaConstructor;
+}
 
     public void generarCodigo(){
         //TODO
+        TablaSimbolos.instruccionesMaquina.add("NOP");
     }
 
 }

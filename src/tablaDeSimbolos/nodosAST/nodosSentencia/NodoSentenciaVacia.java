@@ -14,4 +14,10 @@ public class NodoSentenciaVacia extends NodoSentencia{
         // Siempre es correcto, no hacer nada
     }
     
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        
+    }
 }

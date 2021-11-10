@@ -2,7 +2,7 @@
 
 PUSH simple_heap_init 
 CALL
-PUSH lmain()Init
+PUSH lmain@@Init
 CALL
 HALT
 
@@ -25,63 +25,117 @@ STOREFP
 RET 1	; Retorna eliminando el parámetro
 
 
-.DATA
-VT A: DW lmet1()A,lmet1(char)A
-.CODE
-lmet1()A:
-lmet1(char)A:
-lA():
 
 .DATA
-VT B: DW lmet1()A,lmet1(char)B,lmet1(int)B,lmet1(String)B
+VT_Init: NOP
+
 .CODE
-lmet1(int)B:
-lmet1(char)B:
-lmet1(String)B:
-lB():
+lmain@@Init:
+LOADFP
+LOADSP
+STOREFP
+PUSH 7
+PUSH ldebugPrint@int@Object
+CALL
+STOREFP
+RET 0
+
+lInit@@:
+NOP
+
 
 .DATA
-VT Init: NOP
+VT_Object: NOP
+
 .CODE
-lmain()Init:
-lInit():
+ldebugPrint@int@Object:
+LOADFP
+LOADSP
+STOREFP
+LOAD 3
+IPRINT
+STOREFP
+RET 1
+
+lObject@@:
+NOP
+
 
 .DATA
-VT C: DW lmet1()A,lmet1(char)B,lmet1(int)B,lmet1(String)B,lmet1(char,char)C,lmet1(int,char)C
-.CODE
-lmet1(char,char)C:
-lmet1(int,char)C:
-lC():
+VT_System: NOP
 
-.DATA
-VT D: DW lmet1()A,lmet1(char)B,lmet1(int)B,lmet1(String)D,lmet1(char,char)C,lmet1(int,char)C
 .CODE
-lmet1(String)D:
-lD():
+lread@@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 0
 
-.DATA
-VT E: DW lmet1()A,lmet1(char)B,lmet1(int)B,lmet1(String)D,lmet1(char,char)C,lmet1(int,char)C
-.CODE
-lE():
+lprintCln@char@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
 
-.DATA
-VT Object: NOP
-.CODE
-ldebugPrint(int)Object:
-lObject():
+lprintC@char@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
 
-.DATA
-VT System: NOP
-.CODE
-lread()System:
-lprintCln(char)System:
-lprintC(char)System:
-lprintBln(boolean)System:
-lprintI(int)System:
-lprintIln(int)System:
-lprintSln(String)System:
-lprintB(boolean)System:
-lprintS(String)System:
-lprintln()System:
-lSystem():
+lprintBln@boolean@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintI@int@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintIln@int@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintSln@String@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintB@boolean@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintS@String@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 1
+
+lprintln@@System:
+LOADFP
+LOADSP
+STOREFP
+STOREFP
+RET 0
+
+lSystem@@:
+NOP
+
 

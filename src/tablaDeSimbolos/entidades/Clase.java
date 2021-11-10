@@ -385,16 +385,16 @@ public class Clase {
         TablaSimbolos.instruccionesMaquina.add(".DATA");
         String etiquetasVT;
         if(mapeoMetodosPorOffset.size() != 0){
-            etiquetasVT = "VT " + tokenIdClase.getLexema() + ": DW ";
+            etiquetasVT = "VT_" + tokenIdClase.getLexema() + ": DW ";
             for(int offset = 0; offset < mapeoMetodosPorOffset.size(); offset++){
                 Metodo metodo = mapeoMetodosPorOffset.get(offset);
                 etiquetasVT += metodo.toStringLabel() + ",";
             }
             etiquetasVT = etiquetasVT.substring(0, etiquetasVT.length() - 1); // Sacamos la ultima ","
         } else{
-            etiquetasVT = "VT " + tokenIdClase.getLexema() + ": NOP";
+            etiquetasVT = "VT_" + tokenIdClase.getLexema() + ": NOP";
         }
-        TablaSimbolos.instruccionesMaquina.add(etiquetasVT);
+        TablaSimbolos.instruccionesMaquina.add(etiquetasVT+"\n");
 
         // Codigo intermedio de los constructores y de los metodos (estaticos y dinamicos)
         TablaSimbolos.instruccionesMaquina.add(".CODE");
@@ -404,6 +404,7 @@ public class Clase {
                 etiquetaCodigoMetodo = metodo.toStringLabel() + ":";
                 TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoMetodo);
                 metodo.generarCodigo();
+                TablaSimbolos.instruccionesMaquina.add(""); // Separador
             }
         }
         String etiquetaCodigoConstructor;
@@ -411,6 +412,7 @@ public class Clase {
             etiquetaCodigoConstructor = constructor.toStringLabel() + ":";
             TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoConstructor);
             constructor.generarCodigo();
+            TablaSimbolos.instruccionesMaquina.add(""); // Separador
         }
         TablaSimbolos.instruccionesMaquina.add(""); // Separador
     }

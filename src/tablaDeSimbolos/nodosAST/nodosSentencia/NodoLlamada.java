@@ -21,4 +21,12 @@ public class NodoLlamada extends NodoSentencia{
             throw new ExcepcionSemantica(tokenPuntoYComa, "se esperaba una llamada a metodo o constructor");
         }
     }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){ //TODO: esta bien? es solamente eso?
+        //TODO
+        nodoAcceso.generarCodigo();
+    }
 }

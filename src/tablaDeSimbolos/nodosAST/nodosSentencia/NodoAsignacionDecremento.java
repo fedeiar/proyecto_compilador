@@ -27,4 +27,10 @@ public class NodoAsignacionDecremento extends NodoAsignacion{
             throw new ExcepcionSemantica(tokenDecremento, "el tipo de la variable debe ser entero");
         }
     }
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        //TODO
+    }
 }

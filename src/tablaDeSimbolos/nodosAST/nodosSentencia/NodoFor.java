@@ -37,5 +37,11 @@ public class NodoFor extends NodoSentencia{
         
     }
 
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        //TODO
+    }
+
     
 }

@@ -46,4 +46,12 @@ public class NodoVarLocal extends NodoSentencia{
     public String toString(){
         return tokenIdVar.getLexema();
     }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        //TODO
+    }
+    
 }

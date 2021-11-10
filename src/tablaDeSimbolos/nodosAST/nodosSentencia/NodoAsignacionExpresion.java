@@ -29,5 +29,11 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
             throw new ExcepcionSemantica(tokenAsignacion, "la expresión del lado derecho no conforma con el tipo de la variable del lado izquierdo");
         }
     }
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        //TODO
+    }
     
 }

@@ -47,5 +47,13 @@ public class NodoBloque extends NodoSentencia{
         TablaSimbolos.desapilarBloqueActual();
     }
 
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){ // TODO: esta bien?
+        for(NodoSentencia sentencia : sentencias){
+            sentencia.generarCodigo();
+        }
+    }
+
     
 }

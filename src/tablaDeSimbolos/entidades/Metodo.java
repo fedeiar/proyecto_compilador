@@ -1,5 +1,6 @@
 package tablaDeSimbolos.entidades;
 
+import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.tipos.*;
 
 
@@ -78,27 +79,36 @@ public class Metodo extends Unidad{
         return signaturaMetodo;
     }
 
-    public String toStringLabel(){ //TODO: sacarle los () y las ,
-        return "l" + this.toString() + this.getTokenClaseContenedora().getLexema();
+    public String toStringLabel(){ // Lo hacemos asi ya que @ y $ son los simbolos validos en las etiquetas de CeIVM que no son validos para id's de metodos.
+        String signaturaMetodo = tokenIdMet.getLexema() + "@";
+        for(ParametroFormal p : lista_parametrosFormales){
+            signaturaMetodo += p.getTipo().getNombreTipo() + "$";
+        }
+        if(signaturaMetodo.charAt(signaturaMetodo.length() - 1) == '$'){
+            signaturaMetodo = signaturaMetodo.substring(0, signaturaMetodo.length() - 1);
+        }
+        signaturaMetodo += "@";
+
+        return "l" + signaturaMetodo + this.getTokenClaseContenedora().getLexema();
     }
 
 
     public void generarCodigo(){ // TODO: esta bien?
-        /*
+        
         TablaSimbolos.instruccionesMaquina.add("LOADFP");
         TablaSimbolos.instruccionesMaquina.add("LOADSP");
         TablaSimbolos.instruccionesMaquina.add("STOREFP");
 
-        // TODO: aca habría que pedirle al NodoBloque que genereCodigo()? Si, llamar a nodoBloque.generarCodigo()
+        bloque.generarCodigo();
 
         if(this.esDinamico){
             //TODO: hacer
         } else{ // Es estatico
             
-            TablaSimbolos.instruccionesMaquina.add("STOREPF");
+            TablaSimbolos.instruccionesMaquina.add("STOREFP");
             TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); 
         }
-        */
+        
     }
 
 }

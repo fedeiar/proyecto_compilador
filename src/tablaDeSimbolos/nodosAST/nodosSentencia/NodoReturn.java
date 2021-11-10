@@ -36,4 +36,12 @@ public class NodoReturn extends NodoSentencia{
             }
         }
     }
+
+
+    // Generacion de codigo intermedio
+
+    public void generarCodigo(){
+        //TODO
+    }
+    
 }

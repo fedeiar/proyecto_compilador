@@ -1,6 +1,6 @@
 package tablaDeSimbolos.entidades;
 
-import tablaDeSimbolos.entidades.metodosPredefinidos.MetodoDebugPrint;
+import tablaDeSimbolos.metodosPredefinidos.MetodoDebugPrint;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.*;
@@ -252,7 +252,7 @@ public class TablaSimbolos {
         "ADD\n"+
         "STOREHL ; Mueve el heap limit (hl). Expande el heap\n"+
         "STOREFP\n"+
-        "RET 1	; Retorna eliminando el parámetro\n\n"
+        "RET 1	; Retorna eliminando el parámetro\n\n\n"
         );
     }
 }
