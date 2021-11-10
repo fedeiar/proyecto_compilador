@@ -19,7 +19,7 @@ public class NodoCaracter extends NodoOperando{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: va asi con la secuencia de escape y todo?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("PUSH "+tokenLitCaracter.getLexema());
     }
 }

@@ -20,7 +20,7 @@ public class NodoNull extends NodoOperando{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("PUSH "+ 0);
     }
 }

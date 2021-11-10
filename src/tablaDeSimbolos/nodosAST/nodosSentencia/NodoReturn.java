@@ -42,6 +42,8 @@ public class NodoReturn extends NodoSentencia{
 
     public void generarCodigo(){
         //TODO
+
+        //TODO: si retorno algo, pido a la unidadActual el tamaño del RA y le sumo 1.
     }
     
 }

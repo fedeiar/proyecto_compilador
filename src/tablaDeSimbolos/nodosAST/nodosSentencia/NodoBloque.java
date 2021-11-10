@@ -14,17 +14,9 @@ public class NodoBloque extends NodoSentencia{
     private List<NodoSentencia> listaSentencias;
     private Map<String, NodoVarLocal> varLocales;
 
-    private int offsetDisponibleRA;
-
     public NodoBloque(){
         listaSentencias = new ArrayList<>();
         varLocales = new HashMap<>();
-
-        this.offsetDisponibleRA = -1; // Inicialmente no se sabe el offset disponible, le deberá preguntar a la unidad o bloque que lo contenga.
-    }
-
-    public int getOffsetDisponibleEnRA(){
-        return offsetDisponibleRA;
     }
 
     public void insertarSentencia(NodoSentencia sentencia){
@@ -44,22 +36,12 @@ public class NodoBloque extends NodoSentencia{
             throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
         }
         
-        agregarOffsetVarLocalRA(varLocal); // TODO: esta bien?
+        TablaSimbolos.unidadActual.agregarOffsetVarLocal(varLocal);
         varLocales.put(varLocal.toString(), varLocal);
     }
 
-    private void agregarOffsetVarLocalRA(NodoVarLocal nodoVarLocal){
-        nodoVarLocal.setOffset(offsetDisponibleRA);
-        offsetDisponibleRA++;
-    }
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien el tema de los offset?
-        if(TablaSimbolos.hayBloque()){
-            this.offsetDisponibleRA = TablaSimbolos.getBloqueActual().getOffsetDisponibleEnRA();
-        } else{
-            this.offsetDisponibleRA = TablaSimbolos.unidadActual.getOffsetDisponibleEnRA();
-        }
-
+    public void chequear() throws ExcepcionSemantica{
         TablaSimbolos.apilarBloqueActual(this); 
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.chequear();
@@ -69,7 +51,7 @@ public class NodoBloque extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ // TODO: esta bien?
+    public void generarCodigo(){
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }

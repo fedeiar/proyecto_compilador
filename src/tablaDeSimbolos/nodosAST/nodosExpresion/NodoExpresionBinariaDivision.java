@@ -25,6 +25,6 @@ public class NodoExpresionBinariaDivision extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("PUSH DIV");
+        TablaSimbolos.instruccionesMaquina.add("DIV");
     }
 }

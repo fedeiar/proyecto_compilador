@@ -20,7 +20,7 @@ public class NodoFalse extends NodoBoolean{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien asi?
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+ 1);
+    public void generarCodigo(){
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+ 0);
     }
 }

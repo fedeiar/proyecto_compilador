@@ -12,7 +12,7 @@ public class MetodoRead extends Metodo{
     }
 
 
-    public void generarCodigo(){ // TODO: esta bien?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("LOADFP");
         TablaSimbolos.instruccionesMaquina.add("LOADSP");
         TablaSimbolos.instruccionesMaquina.add("STOREFP");

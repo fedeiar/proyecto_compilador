@@ -20,7 +20,7 @@ public class NodoEntero extends NodoOperando{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien es solo esto?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("PUSH "+tokenLitEntero.getLexema());
     }
 }

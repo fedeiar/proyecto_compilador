@@ -20,7 +20,7 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
         this.tokenIdVar = tokenIdVar;
         this.tipoVarLocal = tipo;
 
-        this.offset = -1; // Inicialmente no tiene offset
+        this.offset = 1; // Inicialmente no tiene offset. Es un numero positivo ya que las varLocales comienzan en 0 y se desplazan hacia abajo.
     }
 
     public Token getToken(){
@@ -47,7 +47,7 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
     public void chequear() throws ExcepcionSemantica{ 
         tipoVarLocal.verificarExistenciaTipo();
 
-        TablaSimbolos.getBloqueActual().insertarVarLocal(this); 
+        TablaSimbolos.getBloqueActual().insertarVarLocal(this);
         
         if(nodoExpresion != null){
             if(!nodoExpresion.chequear().esSubtipo(tipoVarLocal)){

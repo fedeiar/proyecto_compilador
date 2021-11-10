@@ -18,14 +18,16 @@ public abstract class Unidad {
     protected NodoBloque bloque;
     protected Tipo tipoUnidad;
 
-    protected int offsetDisponibleRA; //TODO: esta bien?
+    protected int offsetDisponibleParametroFormal; 
+    protected int offsetDisponibleVariableLocal; // Manejando las variables locales aca, tenemos un manejo ineficiente de memoria ya que se liberan recien al salir del metodo. Considerar tenerlo mejor en bloque
 
     public Unidad(){
         parametros = new HashMap<>();
         lista_parametrosFormales = new ArrayList<>();
         bloque = new NodoBloque();
 
-        // El offset disponible se asigna en Metodo y Constructor segun corresponda.
+        // El offsetDisponibleParametroFormal se asigna en Metodo y Constructor segun corresponda.
+        this.offsetDisponibleVariableLocal = 0; // comienza en 0 y luego se desplaza hacia abajo (es decir, se decrementa).
     }
 
     public List<ParametroFormal> getListaParametros(){
@@ -36,8 +38,25 @@ public abstract class Unidad {
         return tipoUnidad;
     }
 
-    public int getOffsetDisponibleEnRA(){
-        return offsetDisponibleRA;
+    public boolean esDinamico(){
+        return esDinamico;
+    }
+
+    public int getOffsetDeRetornoValor(){ 
+        if(esDinamico){
+            return 3 + lista_parametrosFormales.size() + 1; // +3 ya que tiene la ED, el PR y this. +1 ya que FP esta apuntando a la primer varLocal
+        } else{
+            return 2 + lista_parametrosFormales.size() + 1; // +2 ya que no tiene this.
+        }
+    }
+
+    public int getCantVarLocalesALiberar(){
+        return offsetDisponibleVariableLocal * -1;
+    }
+
+    public void agregarOffsetVarLocal(NodoVarLocal nodoVarLocal){
+        nodoVarLocal.setOffset(offsetDisponibleVariableLocal);
+        offsetDisponibleVariableLocal--;
     }
 
     public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{
@@ -97,35 +116,38 @@ public abstract class Unidad {
         } else{
             parametrosConformantes = false;
         }
-        
         return parametrosConformantes;
     }
 
-    public boolean esDinamico(){
-        return esDinamico;
+    // Chequeo de declaraciones
+
+    public void estaBienDeclarado() throws ExcepcionSemantica{
+        // Recorremos la lista en orden inverso ya que el ultimo parametro es el ultimo en apilarse, por lo tanto tendra el menor offset
+        for(int i = lista_parametrosFormales.size() - 1; i > -1; i--){ 
+            ParametroFormal parametro = lista_parametrosFormales.get(i);
+            parametro.estaBienDeclarado();
+            agregarOffsetParametro(parametro);
+        }
     }
 
-    public void estaBienDeclarado() throws ExcepcionSemantica{ //TODO: esta bien?
-        int offsetAsignar = lista_parametrosFormales.size() + offsetDisponibleRA; // Ya que como los parametros se apilan, entonces el primer parametro debe tener el ultimo offset y así siguiendo.
-        offsetDisponibleRA = offsetAsignar + 1; // Ya que offsetAsignar tiene la posición del parámetro con mayor offset. Entonces el disponible será el siguiente.
-        for(ParametroFormal p : lista_parametrosFormales){
-            p.estaBienDeclarado();
-            p.setOffset(offsetAsignar);
-            offsetAsignar--;
-        }
-       
+    private void agregarOffsetParametro(ParametroFormal parametroFormal){
+        parametroFormal.setOffset(offsetDisponibleParametroFormal);
+        offsetDisponibleParametroFormal++;
     }
 
     public void insertarBloque(NodoBloque bloque){ 
         this.bloque = bloque;
     }
 
+    // Chequeo de sentencias
+
     public void chequearSentencias() throws ExcepcionSemantica{
         TablaSimbolos.unidadActual = this;
         bloque.chequear();
     }
 
+    // Generacion de codigo intermedio
+
     public abstract void generarCodigo();
-    
     
 }

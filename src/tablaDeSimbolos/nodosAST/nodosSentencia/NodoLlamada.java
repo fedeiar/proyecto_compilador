@@ -25,8 +25,7 @@ public class NodoLlamada extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien? es solamente eso?
-        //TODO
+    public void generarCodigo(){
         nodoAcceso.generarCodigo();
     }
 }

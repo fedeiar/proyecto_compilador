@@ -25,6 +25,6 @@ public class NodoExpresionBinariaMayorOIgual extends NodoExpresionBinaria{
     public void generarCodigo(){ //TODO: esta bien asi?
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("PUSH GE");
+        TablaSimbolos.instruccionesMaquina.add("GE");
     }
 }

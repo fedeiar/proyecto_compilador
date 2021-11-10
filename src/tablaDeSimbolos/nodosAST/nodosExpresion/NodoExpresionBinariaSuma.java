@@ -26,6 +26,6 @@ public class NodoExpresionBinariaSuma extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("PUSH ADD");
+        TablaSimbolos.instruccionesMaquina.add("ADD");
     }
 }

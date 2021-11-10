@@ -2,16 +2,13 @@ package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.tipos.*;
 
-import java.time.OffsetDateTime;
-
 import analizadorLexico.Token;
 
 public class Metodo extends Unidad{
     
     private Token tokenIdMet;
     private Token tokenClaseContenedora;
-    private int offset;
-
+    private int offsetEnVT;
 
 
     public Metodo(Token tokenIdMet, boolean esDinamico, Tipo tipoMetodo, Token claseContenedora){
@@ -21,12 +18,12 @@ public class Metodo extends Unidad{
         this.tipoUnidad = tipoMetodo;
         this.tokenClaseContenedora = claseContenedora;
         
-        this.offset = -1; // Ya que inicialmente no conocemos el offset
+        this.offsetEnVT = -1; // Ya que inicialmente no conocemos el offset
 
-        if(esDinamico){ //TODO: esta bien?
-            offsetDisponibleRA = 4; // Ya que FP esta apuntando a dir(ED) - 1, en 1 esta ED, en 2 esta PR, y en 3 esta this. //TODO: esta bien?
+        if(esDinamico){ 
+            offsetDisponibleParametroFormal = 4; // Ya que FP esta apuntando a la primer varLocal en SP-1, en 1 esta ED, en 2 esta PR, y en 3 esta this.
         } else{
-            offsetDisponibleRA = 3; // Ya que no tiene this.
+            offsetDisponibleParametroFormal = 3; // Ya que no tiene this.
         }
     }
 
@@ -39,15 +36,15 @@ public class Metodo extends Unidad{
     }
 
     public int getOffset(){
-        return offset;
+        return offsetEnVT;
     }
 
     public void setOffset(int offset){
-        this.offset = offset;
+        this.offsetEnVT = offset;
     }
 
     public boolean tieneOffsetAsignado(){
-        return offset != -1;
+        return offsetEnVT != -1;
     }
 
     public boolean perteneceAClase(Token tokenIdClase){
@@ -113,11 +110,9 @@ public class Metodo extends Unidad{
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
             TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1); // Libera los n parametros de la pila + el this
         } else{ // Es estatico
-            
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
             TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); // Libera los n parametros de la pila
         }
-        
     }
 
 }

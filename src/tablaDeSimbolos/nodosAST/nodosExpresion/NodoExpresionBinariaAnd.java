@@ -25,6 +25,6 @@ public class NodoExpresionBinariaAnd extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("PUSH AND");
+        TablaSimbolos.instruccionesMaquina.add("AND");
     }
 }

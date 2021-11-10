@@ -52,7 +52,7 @@ public class Clase {
             estaConsolidado = true; 
             estaVerificadoHerenciaCircular = true;
             offsetDisponibleCIR = 1; // Ya que el 0 lo ocupa la VT
-            offsetDisponibleVT = 0; // Cuando se agreguen metodos dinamicos en las clases hijas de Object se incremenetara.
+            offsetDisponibleVT = 0; // Cuando se agreguen metodos dinamicos en las clases hijas de Object se incrementara en esas clases.
         }
     }
 
@@ -227,17 +227,6 @@ public class Clase {
         return offsetDisponibleVT;
     }
 
-    public void agregarOffsetAtributoEnCIR(Atributo atributo){
-        atributo.setOffset(offsetDisponibleCIR);
-        offsetDisponibleCIR++;
-    }
-
-    public void agregarOffsetMetodoEnVT(Metodo metodo){
-        metodo.setOffset(offsetDisponibleVT);
-        offsetDisponibleVT++;
-    }
-
-
     
     // -----Chequeos semanticos-----
 
@@ -331,6 +320,11 @@ public class Clase {
         }
     }
 
+    private void agregarOffsetAtributoEnCIR(Atributo atributo){
+        atributo.setOffset(offsetDisponibleCIR);
+        offsetDisponibleCIR++;
+    }
+
     private void consolidarMetodos(Clase claseAncestro) throws ExcepcionSemantica{
         for(Metodo metodoAncestro : claseAncestro.getMetodos()){
             Metodo metodo_en_clase = metodos.get(metodoAncestro.toString());
@@ -359,6 +353,11 @@ public class Clase {
         }
     }
 
+    private void agregarOffsetMetodoEnVT(Metodo metodo){
+        metodo.setOffset(offsetDisponibleVT);
+        offsetDisponibleVT++;
+    }
+
 
     // Chequeo de sentencias
 
@@ -378,8 +377,6 @@ public class Clase {
     // Generación de codigo intermedio
 
     public void generarCodigo(){ 
-
-        System.out.println("ESTOY EN: "+ tokenIdClase.getLexema());
         
         // Creacion de la VT. Si no tiene métodos dinámicos, entonces hay que hacer una VT que tenga una etiqueta vacía (NOP)
         TablaSimbolos.instruccionesMaquina.add(".DATA");

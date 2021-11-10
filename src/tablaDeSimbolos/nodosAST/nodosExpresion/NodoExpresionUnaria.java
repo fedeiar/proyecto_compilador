@@ -36,10 +36,12 @@ public class NodoExpresionUnaria extends NodoExpresion{
 
     public void generarCodigo(){ // TODO: esta bien?
         nodoOperando.generarCodigo();
-        if(tokenOperador.getLexema().equals("+") || tokenOperador.getLexema().equals("-")){
-            TablaSimbolos.instruccionesMaquina.add("PUSH NEG");
+        if(tokenOperador.getLexema().equals("+")){
+            // No hacer nada
+        } else if(tokenOperador.getLexema().equals("-")){
+            TablaSimbolos.instruccionesMaquina.add("NEG");
         } else{ // Si no el operador es un !
-            TablaSimbolos.instruccionesMaquina.add("PUSH NOT");
+            TablaSimbolos.instruccionesMaquina.add("NOT");
         }
     }
 

@@ -34,9 +34,6 @@ lmain@@Init:
 LOADFP
 LOADSP
 STOREFP
-PUSH 7
-PUSH ldebugPrint@int@Object
-CALL
 STOREFP
 RET 0
 

@@ -14,7 +14,7 @@ public class ParametroFormal implements IVariable{
         this.tokenIdVar = tokenIdVar;
         this.tipoParametro = tipoParametro;
 
-        this.offset = -1; // Inicialmente no tiene offset
+        this.offset = -1; 
     }
 
     public Token getTokenIdVar(){
