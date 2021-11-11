@@ -21,6 +21,6 @@ public class NodoNull extends NodoOperando{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+ 0);
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+0+" ; Apilo null");
     }
 }

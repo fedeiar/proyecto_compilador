@@ -1,0 +1,4 @@
+.CODE
+	PUSH '+'
+	CPRINT
+	HALT

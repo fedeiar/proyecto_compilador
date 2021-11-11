@@ -51,7 +51,7 @@ public class NodoBloque extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
+    public void generarCodigo(){ // TODO: para una mejor administracion de la memoria, habría que liberarla aca en luagar de en generarCodigo() de Metodo.
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }

@@ -101,20 +101,20 @@ public class Metodo extends Unidad{
 
     public void generarCodigo(){ // TODO: esta bien? queda asi?
         
-        TablaSimbolos.instruccionesMaquina.add("LOADFP"); // Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-        TablaSimbolos.instruccionesMaquina.add("LOADSP"); // Apila el lugar donde comienza el RA de la unidad llamada
-        TablaSimbolos.instruccionesMaquina.add("STOREFP"); // Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+        TablaSimbolos.instruccionesMaquina.add("LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.");
+        TablaSimbolos.instruccionesMaquina.add("LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada");
+        TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.");
 
         bloque.generarCodigo();
         
         // TODO: Si se quiere manejar la memoria con mayor optimalidad, cada bloque debería liberar las var locales cuando es desapilado?
         TablaSimbolos.instruccionesMaquina.add("FMEM "+this.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas"); //TODO: esta bien esto aca?
-        if(this.esDinamico){ // TODO: esta bien? solo cambia ese +1?
+        if(this.esDinamico){
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1); // Libera los n parametros de la pila + el this
+            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1 +" ; Libera los n parametros de la pila + el this");
         } else{ // Es estatico
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size()); // Libera los n parametros de la pila
+            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() +" ; Libera los n parametros de la pila");
         }
     }
 
