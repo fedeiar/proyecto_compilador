@@ -74,15 +74,19 @@ public class NodoAccesoVar extends NodoPrimario{
 
     public void generarCodigo(){ //TODO: esta bien?
         if(variable instanceof Atributo){
-            TablaSimbolos.instruccionesMaquina.add("LOAD 3"); // Ponemos this en la pila
+            TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Ponemos this en la pila");
             if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
-                TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()); // Cargo el valor del atributo //TODO: asi esta bien?
+                TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()+" ; Apilo el valor del atributo");
             } else{
-                TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo a el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-                TablaSimbolos.instruccionesMaquina.add("STOREREF "+ variable.getOffset()); // Guardo el valor de la expresión en el atributo
+                TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1");
+                TablaSimbolos.instruccionesMaquina.add("STOREREF "+ variable.getOffset()+" ; Guardo el valor de la expresión en el atributo"); 
             }
         } else if(variable instanceof ParametroFormal || variable instanceof NodoVarLocal){
-
+            if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
+                TablaSimbolos.instruccionesMaquina.add("LOAD "+variable.getOffset()+" ; Apilo el valor de la variable local o parametro");
+            } else{
+                TablaSimbolos.instruccionesMaquina.add("STORE "+variable.getOffset()+" Guardo el valor de la expresión en la variable");
+            }
         }
     }
 }

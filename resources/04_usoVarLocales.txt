@@ -2,8 +2,8 @@ class Init{
 
 	static void main(){
 		int a = 3;
-		int b = a;
-		int c = b;
+		int b = 5;
+		int c = 7;
 		debugPrint(a);
 		debugPrint(b);
 		debugPrint(c);

@@ -34,6 +34,25 @@ lmain@@Init:
 LOADFP
 LOADSP
 STOREFP
+RMEM 1 ; Reservamos un lugar para declaracion de variable local
+PUSH 3
+STORE 0 ; almaceno el valor de la expresion en la variable local
+RMEM 1 ; Reservamos un lugar para declaracion de variable local
+LOAD 0 ; Apilo el valor de la variable local o parametro
+STORE -1 ; almaceno el valor de la expresion en la variable local
+RMEM 1 ; Reservamos un lugar para declaracion de variable local
+LOAD -1 ; Apilo el valor de la variable local o parametro
+STORE -2 ; almaceno el valor de la expresion en la variable local
+LOAD 0 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+LOAD -1 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+LOAD -2 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+FMEM 3 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 0
 
@@ -66,6 +85,7 @@ lread@@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 0
 
@@ -73,6 +93,7 @@ lprintCln@char@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -80,6 +101,7 @@ lprintC@char@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -87,6 +109,7 @@ lprintBln@boolean@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -94,6 +117,7 @@ lprintI@int@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -101,6 +125,7 @@ lprintIln@int@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -108,6 +133,7 @@ lprintSln@String@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -115,6 +141,7 @@ lprintB@boolean@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -122,6 +149,7 @@ lprintS@String@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 1
 
@@ -129,6 +157,7 @@ lprintln@@System:
 LOADFP
 LOADSP
 STOREFP
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 0
 

@@ -97,6 +97,7 @@ public class Metodo extends Unidad{
         return "l" + signaturaMetodo + this.getTokenClaseContenedora().getLexema();
     }
 
+    // Generacion de codigo intermedio
 
     public void generarCodigo(){ // TODO: esta bien? queda asi?
         
@@ -105,7 +106,9 @@ public class Metodo extends Unidad{
         TablaSimbolos.instruccionesMaquina.add("STOREFP"); // Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
 
         bloque.generarCodigo();
-
+        
+        // TODO: Si se quiere manejar la memoria con mayor optimalidad, cada bloque debería liberar las var locales cuando es desapilado?
+        TablaSimbolos.instruccionesMaquina.add("FMEM "+this.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas"); //TODO: esta bien esto aca?
         if(this.esDinamico){ // TODO: esta bien? solo cambia ese +1?
             TablaSimbolos.instruccionesMaquina.add("STOREFP");
             TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1); // Libera los n parametros de la pila + el this
