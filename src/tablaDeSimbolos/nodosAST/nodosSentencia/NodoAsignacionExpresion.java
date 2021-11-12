@@ -32,8 +32,10 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        //TODO
+    public void generarCodigo(){ //TODO: esta bien? hay que hacer algo mas?
+        nodoExpresionLadoDer.generarCodigo();
+        nodoAccesoLadoIzq.establecerComoLadoIzquierdo();
+        nodoAccesoLadoIzq.generarCodigo();
     }
 
     

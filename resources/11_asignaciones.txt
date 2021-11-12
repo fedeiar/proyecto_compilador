@@ -1,0 +1,39 @@
+class Init extends System{
+
+	static void main(){
+		int v1;
+		int v2;
+		int v3;
+		char v4;
+
+		v1 = 4;
+		v3 = v1;
+		v2 = v1;
+		v4 = 'e';
+		v3 = met1('a', v4, v1);
+		debugPrint(v1);
+		debugPrint(v2);
+		debugPrint(v3);
+	}
+
+	
+	static int met1(char p1, char p2, int p3){
+		char v1 = p1;
+		char v2 = 'h';
+		char v3 = v1;
+		int v4;
+		int v5 = 50;
+		v1 = v3;
+		v3 = p2;
+		p2 = p1;
+		p1 = p2;
+		v4 = p3;
+		debugPrint(v4);
+		debugPrint(p3);
+		p3 = 100;
+		debugPrint(v4);
+		debugPrint(p3);
+		return v5;		
+	}
+	
+}

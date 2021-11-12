@@ -11,7 +11,7 @@ public abstract class NodoAcceso extends NodoOperando{
     public abstract boolean esLlamable();
 
 
-    public void esLadoIzquierdo(){ //TODO: asi esta bien?
+    public void establecerComoLadoIzquierdo(){ //TODO: asi esta bien?
         esLadoIzquierdoAsignacion = true;
     }
     

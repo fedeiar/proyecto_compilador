@@ -11,7 +11,7 @@ class Init extends System{
 
 	
 	static int met1(char p1, char p2, int p3){
-				
+		return 10;		
 	}
 	
 }

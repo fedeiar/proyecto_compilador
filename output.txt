@@ -34,18 +34,7 @@ lmet1@char$char$int@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de variable local
-LOAD 5 ; Apilo el valor de la variable local o parametro
-STORE 0 ; almaceno el valor de la expresion en la variable local
-RMEM 1 ; Reservamos un lugar para declaracion de variable local
-LOAD 4 ; Apilo el valor de la variable local o parametro
-STORE -1 ; almaceno el valor de la expresion en la variable local
-FMEM 2 ; Liberamos las variables locales utilizadas
-LOAD 3 ; Apilo el valor de la variable local o parametro
-STORE 6 ; Colocamos el valor de la expresion en la locacion reservada para el retorno
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 3 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 2 ; Liberamos las variables locales utilizadas
+FMEM 0 ; Liberamos las variables locales utilizadas
 STOREFP
 RET 3 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -54,38 +43,33 @@ LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
 RMEM 1 ; Reservamos un lugar para declaracion de variable local
-PUSH 'f' ; Apilo un literal caracter
+PUSH 3 ; Apilo un literal entero
 STORE 0 ; almaceno el valor de la expresion en la variable local
 RMEM 1 ; Reservamos un lugar para declaracion de variable local
-RMEM 1
-LOAD 0 ; Apilo el valor de la variable local o parametro
-LOAD 0 ; Apilo el valor de la variable local o parametro
-PUSH 10 ; Apilo un literal entero
-PUSH lmet1@char$char$int@Init
-CALL
+PUSH 'a' ; Apilo un literal caracter
 STORE -1 ; almaceno el valor de la expresion en la variable local
+RMEM 1
 LOAD -1 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object
-CALL
-RMEM 1
-PUSH 'a' ; Apilo un literal caracter
-LOAD 0 ; Apilo el valor de la variable local o parametro
 LOAD -1 ; Apilo el valor de la variable local o parametro
-PUSH lmet1@char$char$int@Init
-CALL
-PUSH ldebugPrint@int@Object
-CALL
-RMEM 1
-PUSH 'a' ; Apilo un literal caracter
 LOAD 0 ; Apilo el valor de la variable local o parametro
+PUSH lmet1@char$char$int@Init
+CALL
+POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .stack
 RMEM 1
-PUSH 'b' ; Apilo un literal caracter
-PUSH '#' ; Apilo un literal caracter
-PUSH 20 ; Apilo un literal entero
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOAD 0 ; Apilo el valor de la variable local o parametro
 PUSH lmet1@char$char$int@Init
 CALL
+POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .stack
+RMEM 1
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOAD 0 ; Apilo el valor de la variable local o parametro
 PUSH lmet1@char$char$int@Init
 CALL
+POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .stack
+PUSH 77 ; Apilo un literal entero
 PUSH ldebugPrint@int@Object
 CALL
 FMEM 2 ; Liberamos las variables locales utilizadas

@@ -85,7 +85,7 @@ public class NodoAccesoVar extends NodoPrimario{
             if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
                 TablaSimbolos.instruccionesMaquina.add("LOAD "+variable.getOffset()+" ; Apilo el valor de la variable local o parametro");
             } else{
-                TablaSimbolos.instruccionesMaquina.add("STORE "+variable.getOffset()+" Guardo el valor de la expresión en la variable");
+                TablaSimbolos.instruccionesMaquina.add("STORE "+variable.getOffset()+" ; Guardo el valor de la expresión en la variable");
             }
         }
     }
