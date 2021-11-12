@@ -74,9 +74,9 @@ public class NodoAccesoVar extends NodoPrimario{
 
     public void generarCodigo(){ //TODO: esta bien?
         if(variable instanceof Atributo){
-            TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Ponemos this en la pila");
+            TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
             if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
-                TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()+" ; Apilo el valor del atributo");
+                TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()+" ; Apilo el valor del atributo en la pila");
             } else{
                 TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1");
                 TablaSimbolos.instruccionesMaquina.add("STOREREF "+ variable.getOffset()+" ; Guardo el valor de la expresión en el atributo"); 

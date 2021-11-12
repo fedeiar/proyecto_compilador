@@ -2,6 +2,7 @@ package tablaDeSimbolos.nodosAST.nodosSentencia;
 
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
+import tablaDeSimbolos.entidades.TablaSimbolos;
 import tablaDeSimbolos.nodosAST.nodosAcceso.NodoAcceso;
 import tablaDeSimbolos.tipos.*;
 
@@ -28,9 +29,11 @@ public class NodoAsignacionDecremento extends NodoAsignacion{
         }
     }
 
-    // Generacion de codigo intermedio
-
-    public void generarCodigo(){
-        //TODO
+    public void generarCodigo(){ //TODO: esta bien?
+        nodoAccesoLadoIzq.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add("PUSH 1 ; agregamos un 1 para incrementar la variable en la pila");
+        TablaSimbolos.instruccionesMaquina.add("SUB ; obtenemos la expresion resultante del incremento");
+        nodoAccesoLadoIzq.establecerComoLadoIzquierdo();
+        nodoAccesoLadoIzq.generarCodigo();
     }
 }
