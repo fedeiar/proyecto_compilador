@@ -42,7 +42,16 @@ public abstract class Unidad {
         return esDinamico;
     }
 
-    public int getOffsetDeRetornoValor(){ 
+    public int getOffsetRetornoUnidad(){ //TODO: esta bien?
+        if(this.esDinamico){
+            return lista_parametrosFormales.size() + 1;
+        } else{
+            return lista_parametrosFormales.size();
+        }
+    }
+
+    // Debe ejecutarse despues de hacer FMEM
+    public int getOffsetStoreValorRetorno(){ 
         if(esDinamico){
             return 3 + lista_parametrosFormales.size() + 1; // +3 ya que tiene la ED, el PR y this. +1 ya que FP esta apuntando a la primer varLocal
         } else{

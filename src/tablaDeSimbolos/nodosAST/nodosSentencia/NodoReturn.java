@@ -3,6 +3,7 @@ package tablaDeSimbolos.nodosAST.nodosSentencia;
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.entidades.TablaSimbolos;
+import tablaDeSimbolos.entidades.Unidad;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
 
@@ -11,6 +12,7 @@ public class NodoReturn extends NodoSentencia{
     private Token tokenReturn;
     private NodoExpresion nodoExpresionRetorno;
     
+    private Unidad unidadContenedora;
 
     public NodoReturn(Token tokenReturn){
         this.tokenReturn = tokenReturn;
@@ -21,7 +23,8 @@ public class NodoReturn extends NodoSentencia{
     }
 
     public void chequear() throws ExcepcionSemantica{ 
-        Tipo tipoMetodo = TablaSimbolos.unidadActual.getTipoUnidad();
+        unidadContenedora = TablaSimbolos.unidadActual;
+        Tipo tipoMetodo = unidadContenedora.getTipoUnidad();
         if(nodoExpresionRetorno == null){
             if( !(tipoMetodo.mismoTipo(new TipoVoid())) ){
                 throw new ExcepcionSemantica(tokenReturn, "debe retornarse algo de tipo "+tipoMetodo.getNombreTipo());
@@ -40,10 +43,20 @@ public class NodoReturn extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        //TODO
+    public void generarCodigo(){ //TODO: esta bien?
 
-        //TODO: si retorno algo, pido a la unidadActual el tamaño del RA y le sumo 1.
+        TablaSimbolos.instruccionesMaquina.add("FMEM "+unidadContenedora.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas"); //TODO: esta bien esto aca?
+        if(unidadContenedora.getTipoUnidad().mismoTipo(new TipoVoid())){
+            TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
+            TablaSimbolos.instruccionesMaquina.add("RET "+unidadContenedora.getOffsetRetornoUnidad()+" ; Retornamos de la unidad liberando n lugares en la pila");
+        } else{ // Devuelve algo y tiene una expresion.
+            nodoExpresionRetorno.generarCodigo();
+            TablaSimbolos.instruccionesMaquina.add("STORE "+unidadContenedora.getOffsetStoreValorRetorno()+ " ; Colocamos el valor de la expresion en la locacion reservada para el retorno");
+            TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
+            TablaSimbolos.instruccionesMaquina.add("RET "+unidadContenedora.getOffsetRetornoUnidad()+ " ; Retornamos de la unidad liberando n lugares en la pila");
+        }
+
+
     }
     
 }

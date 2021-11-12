@@ -100,6 +100,8 @@ public class Metodo extends Unidad{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){ // TODO: esta bien? queda asi?
+        TablaSimbolos.unidadActual = this;
+
         
         TablaSimbolos.instruccionesMaquina.add("LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.");
         TablaSimbolos.instruccionesMaquina.add("LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada");
@@ -109,13 +111,9 @@ public class Metodo extends Unidad{
         
         // TODO: Si se quiere manejar la memoria con mayor optimalidad, cada bloque debería liberar las var locales cuando es desapilado?
         TablaSimbolos.instruccionesMaquina.add("FMEM "+this.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas"); //TODO: esta bien esto aca?
-        if(this.esDinamico){
-            TablaSimbolos.instruccionesMaquina.add("STOREFP");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() + 1 +" ; Libera los n parametros de la pila + el this");
-        } else{ // Es estatico
-            TablaSimbolos.instruccionesMaquina.add("STOREFP");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ lista_parametrosFormales.size() +" ; Libera los n parametros de la pila");
-        }
+        
+        TablaSimbolos.instruccionesMaquina.add("STOREFP");
+        TablaSimbolos.instruccionesMaquina.add("RET "+ this.getOffsetRetornoUnidad() +" ; Retorna de la unidad liberando n lugares en la pila");
     }
 
 }

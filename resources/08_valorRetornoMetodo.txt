@@ -1,0 +1,16 @@
+class Init extends System{
+
+	static void main(){
+		char v0 = 'f';
+		int v1 = met1(v0, v0);
+		debugPrint(v1);
+	}
+
+	
+	static int met1(char p1, char p2){
+		char v0 = p1;
+		char v1 = p2;
+		return 20;
+	}
+	
+}

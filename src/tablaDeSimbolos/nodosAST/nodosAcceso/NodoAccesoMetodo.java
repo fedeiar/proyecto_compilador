@@ -68,7 +68,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         if(metodoLlamado.esDinamico()){ // Es dinamico
             TablaSimbolos.instruccionesMaquina.add("LOAD 3"); // Cargo this
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
-                TablaSimbolos.instruccionesMaquina.add("RMEM 1"); // Reservo lugar para el retorno
+                TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo lugar para el valor retorno de la llamada");
                 TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
             }
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
