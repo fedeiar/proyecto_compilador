@@ -63,7 +63,7 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservamos un lugar para declaracion de variable local");
         if(nodoExpresion != null){
             nodoExpresion.generarCodigo();

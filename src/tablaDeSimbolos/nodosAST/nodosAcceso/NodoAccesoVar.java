@@ -72,7 +72,7 @@ public class NodoAccesoVar extends NodoPrimario{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         if(variable instanceof Atributo){
             TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
             if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){

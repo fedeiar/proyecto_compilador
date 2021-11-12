@@ -33,7 +33,7 @@ public class NodoLlamada extends NodoSentencia{
     public void generarCodigo(){ //TODO: esta bien?
         nodoAcceso.generarCodigo();
         if(!tipoLlamada.mismoTipo(new TipoVoid())){
-            TablaSimbolos.instruccionesMaquina.add("POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .stack"); 
+            TablaSimbolos.instruccionesMaquina.add("POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .STACK"); 
         }
     }
 }

@@ -1,0 +1,32 @@
+class Init extends System{
+
+	static void main(){
+		int v1 = 7;
+		new A(-3, 5, 28);
+		
+	}
+}
+
+class A{
+
+	public int a1, a2, a3, a4;
+	
+	A(int p1, int p2, int p3){ // p1 = -3, p2 = 5, p3 = 28
+		int v1 = 8;
+		int v2 = p2;
+		a1 = 5; // literal
+		a2 = v1; // varLocal
+		int v3;
+		a3 = p3; // Parametro
+		a4 = a1; // Atributo
+
+		debugPrint(a1);
+		debugPrint(a2);
+		debugPrint(a3);
+		debugPrint(a4);
+	}
+
+
+}
+
+

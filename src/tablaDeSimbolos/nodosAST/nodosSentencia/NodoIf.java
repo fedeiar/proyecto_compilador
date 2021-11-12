@@ -52,5 +52,6 @@ public class NodoIf extends NodoSentencia{
 
     public void generarCodigo(){
         //TODO
+        //OJO: puede pasar algo parecido a lo del for con el tema de las variables locales.
     }
 }

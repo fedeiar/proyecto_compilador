@@ -76,8 +76,8 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
                 TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
             }
             TablaSimbolos.instruccionesMaquina.add("DUP"); // Duplico this para no perderlo
-            TablaSimbolos.instruccionesMaquina.add("LOADREF 0"); // Cargo la VT
-            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset()); // Cargo el metodo con su offset en la VT
+            TablaSimbolos.instruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
+            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset()+" ; Cargo el metodo con su offset en la VT");
             TablaSimbolos.instruccionesMaquina.add("CALL"); 
             
         } else{ // Es estatico

@@ -1,4 +1,4 @@
 .CODE
-	READ
-	IPRINT
+	PUSH 'a'
+	CPRINT
 	HALT

@@ -55,6 +55,7 @@ public class NodoBloque extends NodoSentencia{
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }
+        // TODO: aca hacer FMEM de la cant de variables del bloque actual para manejar la memoria mas optimo.
     }
 
     

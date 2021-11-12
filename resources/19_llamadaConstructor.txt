@@ -1,0 +1,29 @@
+class Init extends System{
+
+	static void main(){
+		int v1 = 7;
+		new A(-3, 5, 28);
+		A v2 = new A(v1, 7, v1);
+		new A(-22, v1, -303);
+	}
+}
+
+class A{
+
+	A(int p1, int p2, int p3){
+		int v1 = 9;
+		new B();
+		debugPrint(p1);
+		debugPrint(p2);
+		debugPrint(v1);
+		new B();
+		debugPrint(p3);
+	}
+
+}
+
+
+class B{
+
+
+}

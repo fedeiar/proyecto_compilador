@@ -40,7 +40,11 @@ public class NodoFor extends NodoSentencia{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
+        // Guardar un entero con la cantidad de variables locales disponibles actualmente.
+
         //TODO
+
+        // Despues de cada iteración, hago FMEM de la cantidad total y la cantidad actual.
     }
 
     

@@ -1,19 +1,72 @@
 class Init extends System{
 
 	static void main(){
-		A v1 = new A(-3, 5, 28);
-		A v2 = new A(-22, 457, -303);
+		int v1 = 7;
+		new A();
+		new B();
+		
 	}
 }
 
 class A{
 
-	A(int p1, int p2, int p3){
-		int v1 = 9;
-		debugPrint(p1);
-		debugPrint(p2);
-		debugPrint(v1);
-		debugPrint(p3);
+	public int a1;
+	private int a2;
+
+	A(){ 
+		a1 = 5;
+		a2 = 8;
 	}
 
+	dynamic void met1(){
+		a2 = 20;
+		debugPrint(a2);
+	}
+
+	dynamic void met2(){
+		debugPrint(777);
+	}
+
+	static void met3(){
+		debugPrint(40);
+	}
+
+	static void met4(){
+		debugPrint(888);
+	}
+
+	dynamic void met5(){
+		debugPrint(60);
+	}
+
+
 }
+
+class B extends A{
+
+	public char a2;
+	private int a3;
+
+	B(){
+		a1 = 10;
+		a3 = 30;
+		debugPrint(a1);
+		met1();
+		met2();
+		met3();
+		met4();
+		met5();
+	}
+
+	dynamic void met2(){
+		debugPrint(a3);
+	}
+
+	static void met4(){
+		debugPrint(50);
+	}
+
+	
+}
+
+
