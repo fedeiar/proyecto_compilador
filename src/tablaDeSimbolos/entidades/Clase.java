@@ -76,6 +76,10 @@ public class Clase {
         return atributos;
     }
 
+    public int getCantidadAtributos(){
+        return atributos.size();
+    }
+
     public Constructor getConstructorQueConformaParametros(List<Tipo> listaTiposParametrosActuales)  throws ExcepcionSemantica{
         for(Constructor constructor : constructores.values()){
             if(constructor.conformanParametros(listaTiposParametrosActuales)){
@@ -382,14 +386,14 @@ public class Clase {
         TablaSimbolos.instruccionesMaquina.add(".DATA");
         String etiquetasVT;
         if(mapeoMetodosPorOffset.size() != 0){
-            etiquetasVT = "VT_" + tokenIdClase.getLexema() + ": DW ";
+            etiquetasVT = this.toStringLabelVT() + ": DW ";
             for(int offset = 0; offset < mapeoMetodosPorOffset.size(); offset++){
                 Metodo metodo = mapeoMetodosPorOffset.get(offset);
                 etiquetasVT += metodo.toStringLabel() + ",";
             }
             etiquetasVT = etiquetasVT.substring(0, etiquetasVT.length() - 1); // Sacamos la ultima ","
         } else{
-            etiquetasVT = "VT_" + tokenIdClase.getLexema() + ": NOP";
+            etiquetasVT = this.toStringLabelVT() + ": NOP";
         }
         TablaSimbolos.instruccionesMaquina.add(etiquetasVT+"\n");
 
@@ -412,5 +416,9 @@ public class Clase {
             TablaSimbolos.instruccionesMaquina.add(""); // Separador
         }
         TablaSimbolos.instruccionesMaquina.add(""); // Separador
+    }
+
+    public String toStringLabelVT(){
+        return "VT_" + tokenIdClase.getLexema();
     }
 }

@@ -57,9 +57,6 @@ public class Constructor extends Unidad{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        //TODO
-        TablaSimbolos.instruccionesMaquina.add("NOP");
-    }
+    // Hecho en Unidad (clase padre)
 
 }

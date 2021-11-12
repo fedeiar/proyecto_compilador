@@ -15,6 +15,8 @@ import tablaDeSimbolos.tipos.TipoClase;
 public class NodoAccesoConstructor extends NodoAccesoUnidad{
     
     protected Token tokenIdClase;
+    private Constructor constructor;
+    private Clase claseDelConstructor;
 
     public NodoAccesoConstructor(Token tokenIdClase, List<NodoExpresion> listaParametrosActuales){
         super(listaParametrosActuales);
@@ -22,12 +24,12 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        Clase claseDelConstructor = TablaSimbolos.getClase(tokenIdClase.getLexema());
+        claseDelConstructor = TablaSimbolos.getClase(tokenIdClase.getLexema());
         if(claseDelConstructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada para su instanciacion");
         }
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
-        Constructor constructor = claseDelConstructor.getConstructorQueConformaParametros(getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
+        constructor = claseDelConstructor.getConstructorQueConformaParametros(getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(constructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado o los parametros no conforman");
         }
@@ -68,7 +70,21 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ //TODO: esta bien?
+        TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos");
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+claseDelConstructor.getCantidadAtributos()+" ; Apilamos la cant. de vars. de instancia del CIR para el malloc");
+        TablaSimbolos.instruccionesMaquina.add("PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap");
+        TablaSimbolos.instruccionesMaquina.add("CALL");
+        TablaSimbolos.instruccionesMaquina.add("DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT");
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+claseDelConstructor.toStringLabelVT()+" ; apilamos la direccion del comienzo de la VT");
+        TablaSimbolos.instruccionesMaquina.add("STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)");
+        TablaSimbolos.instruccionesMaquina.add("DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor");
+        for(NodoExpresion nodoExpresion : listaParametrosActuales){ //TODO: esta bien en este orden?
+            nodoExpresion.generarCodigo();
+            TablaSimbolos.instruccionesMaquina.add("SWAP ; Bajamos el this para que quede en el lugar adecuado del RA");
+        }
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+constructor.toStringLabel()+" ; Apilamos la direccion del constructor que se determina en tiempo de compilacion");
+        TablaSimbolos.instruccionesMaquina.add("CALL");
+        
     }
 }
