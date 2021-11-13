@@ -1,7 +1,6 @@
 package tablaDeSimbolos.entidades;
 
 import tablaDeSimbolos.nodosAST.nodosSentencia.NodoBloque;
-import tablaDeSimbolos.nodosAST.nodosSentencia.NodoVarLocal;
 import tablaDeSimbolos.tipos.Tipo;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public abstract class Unidad {
     protected Tipo tipoUnidad;
 
     protected int offsetDisponibleParametroFormal; 
-    protected int offsetDisponibleVariableLocal; // Manejando las variables locales aca, tenemos un manejo ineficiente de memoria ya que se liberan recien al salir del metodo. Considerar tenerlo mejor en bloque
+
 
     public Unidad(){
         parametros = new HashMap<>();
@@ -27,7 +26,6 @@ public abstract class Unidad {
         bloque = new NodoBloque();
 
         // El offsetDisponibleParametroFormal se asigna en Metodo y Constructor segun corresponda.
-        this.offsetDisponibleVariableLocal = 0; // comienza en 0 y luego se desplaza hacia abajo (es decir, se decrementa).
     }
 
     public List<ParametroFormal> getListaParametros(){
@@ -57,15 +55,6 @@ public abstract class Unidad {
         } else{
             return 2 + lista_parametrosFormales.size() + 1; // +2 ya que no tiene this.
         }
-    }
-
-    public int getCantVarLocalesALiberar(){
-        return offsetDisponibleVariableLocal * -1;
-    }
-
-    public void agregarOffsetVarLocal(NodoVarLocal nodoVarLocal){
-        nodoVarLocal.setOffset(offsetDisponibleVariableLocal);
-        offsetDisponibleVariableLocal--;
     }
 
     public void insertarParametro(ParametroFormal parametro) throws ExcepcionSemantica{
@@ -165,9 +154,6 @@ public abstract class Unidad {
         TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.");
 
         bloque.generarCodigo();
-        
-        // TODO: Si se quiere manejar la memoria con mayor optimalidad, cada bloque debería liberar las var locales cuando es desapilado?
-        TablaSimbolos.instruccionesMaquina.add("FMEM "+this.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas");
         
         TablaSimbolos.instruccionesMaquina.add("STOREFP");
         TablaSimbolos.instruccionesMaquina.add("RET "+ this.getOffsetRetornoUnidad() +" ; Retorna de la unidad liberando n lugares en la pila");

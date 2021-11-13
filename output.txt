@@ -27,87 +27,6 @@ RET 1	; Retorna eliminando el parámetro
 
 
 .DATA
-VT_A: DW lmet1@@A,lmet2@@A,lmet5@@A
-
-.CODE
-lmet1@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 20 ; Apilo un literal entero
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-STOREREF 2 ; Guardo el valor de la expresión en el atributo
-LOAD 3 ; Apilo this en la pila
-LOADREF 2 ; Apilo el valor del atributo en la pila
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 777 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet4@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 888 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 0 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet3@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 40 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 0 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet5@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 60 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lA@@:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 5 ; Apilo un literal entero
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-STOREREF 1 ; Guardo el valor de la expresión en el atributo
-PUSH 8 ; Apilo un literal entero
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-STOREREF 2 ; Guardo el valor de la expresión en el atributo
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-
-.DATA
 VT_Init: NOP
 
 .CODE
@@ -115,107 +34,83 @@ lmain@@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de variable local
-PUSH 7 ; Apilo un literal entero
-STORE 0 ; almaceno el valor de la expresion en la variable local
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 3 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
+PUSH 6 ; Apilo un literal entero
+STORE 0 ; almaceno el valor de la expresion en la variable local v1
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
+PUSH 8 ; Apilo un literal entero
+STORE -1 ; almaceno el valor de la expresion en la variable local v2
+LOAD 0 ; Apilo el valor de la variable local o parametro
+LOAD -1 ; Apilo el valor de la variable local o parametro
+PUSH lmet1@int$int@Init
 CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_A ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lA@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .STACK
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 5 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_B ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lB@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .STACK
-FMEM 1 ; Liberamos las variables locales utilizadas
+FMEM 2 ; Liberamos las variables locales utilizadas en la unidad
+STOREFP ; Actualizamos el FP para que apunte al RA del llamador
+RET 0 ; Retornamos de la unidad liberando n lugares en la pila
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
+FMEM 2 ; Liberamos las variables locales utilizadas en el bloque actual
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
+FMEM 2 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 0 ; Retorna de la unidad liberando n lugares en la pila
+
+lmet1@int$int@Init:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
+LOAD 4 ; Apilo el valor de la variable local o parametro
+STORE 0 ; almaceno el valor de la expresion en la variable local v1
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
+PUSH 10 ; Apilo un literal entero
+STORE -1 ; almaceno el valor de la expresion en la variable local v2
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
+PUSH 12 ; Apilo un literal entero
+STORE -2 ; almaceno el valor de la expresion en la variable local v3
+LOAD 0 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v4
+PUSH 14 ; Apilo un literal entero
+STORE -3 ; almaceno el valor de la expresion en la variable local v4
+LOAD -3 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v5
+FMEM 2 ; Liberamos las variables locales utilizadas en el bloque actual
+LOAD -2 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
+LOAD -1 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+FMEM 2 ; Liberamos las variables locales utilizadas en la unidad
+STOREFP ; Actualizamos el FP para que apunte al RA del llamador
+RET 2 ; Retornamos de la unidad liberando n lugares en la pila
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
+PUSH 999 ; Apilo un literal entero
+STORE -2 ; almaceno el valor de la expresion en la variable local v3
+LOAD -2 ; Apilo el valor de la variable local o parametro
+PUSH ldebugPrint@int@Object
+CALL
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v4
+LOAD 4 ; Apilo el valor de la variable local o parametro
+STORE -3 ; almaceno el valor de la expresion en la variable local v4
+FMEM 4 ; Liberamos las variables locales utilizadas en la unidad
+STOREFP ; Actualizamos el FP para que apunte al RA del llamador
+RET 2 ; Retornamos de la unidad liberando n lugares en la pila
+FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v5
+FMEM 4 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 2 ; Retorna de la unidad liberando n lugares en la pila
 
 lInit@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-
-.DATA
-VT_B: DW lmet1@@A,lmet2@@B,lmet5@@A
-
-.CODE
-lmet2@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo en la pila
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet4@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 50 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
-STOREFP
-RET 0 ; Retorna de la unidad liberando n lugares en la pila
-
-lB@@:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 10 ; Apilo un literal entero
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-STOREREF 1 ; Guardo el valor de la expresión en el atributo
-PUSH 30 ; Apilo un literal entero
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1
-STOREREF 4 ; Guardo el valor de la expresión en el atributo
-LOAD 3 ; Apilo this en la pila
-LOADREF 1 ; Apilo el valor del atributo en la pila
-PUSH ldebugPrint@int@Object
-CALL
-LOAD 3
-DUP
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD 3
-DUP
-LOADREF 0 ; Cargo la VT
-LOADREF 1 ; Cargo el metodo con su offset en la VT
-CALL
-PUSH lmet3@@A
-CALL
-PUSH lmet4@@B
-CALL
-LOAD 3
-DUP
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -238,7 +133,7 @@ lObject@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -340,7 +235,7 @@ lSystem@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila
 

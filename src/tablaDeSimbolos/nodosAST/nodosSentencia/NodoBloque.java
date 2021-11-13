@@ -14,9 +14,19 @@ public class NodoBloque extends NodoSentencia{
     private List<NodoSentencia> listaSentencias;
     private Map<String, NodoVarLocal> varLocales;
 
+    protected int offsetDisponibleVariableLocal;
+
     public NodoBloque(){
         listaSentencias = new ArrayList<>();
         varLocales = new HashMap<>();
+    }
+
+    public int getOffsetDisponibleVariableLocal(){
+        return offsetDisponibleVariableLocal;
+    }
+
+    public int getCantVarLocalesEnUnidad(){
+        return offsetDisponibleVariableLocal * -1;
     }
 
     public void insertarSentencia(NodoSentencia sentencia){
@@ -27,21 +37,33 @@ public class NodoBloque extends NodoSentencia{
         return varLocales.get(nombreVarLocal);
     }
 
-    public void insertarVarLocal(NodoVarLocal varLocal) throws ExcepcionSemantica{
-        if(TablaSimbolos.getVarLocalUnidadActual(varLocal.toString()) != null){
-            throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
+    public void insertarVarLocal(NodoVarLocal nodoVarLocal) throws ExcepcionSemantica{
+        if(TablaSimbolos.getVarLocalUnidadActual(nodoVarLocal.toString()) != null){
+            throw new ExcepcionSemantica(nodoVarLocal.getToken(), "la variable "+nodoVarLocal.toString()+" esta duplicada en este bloque o un bloque contenedor");
         }
         
-        if(TablaSimbolos.unidadActual.getParametroFormal(varLocal.toString()) != null){
-            throw new ExcepcionSemantica(varLocal.getToken(), "la variable "+varLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
+        if(TablaSimbolos.unidadActual.getParametroFormal(nodoVarLocal.toString()) != null){
+            throw new ExcepcionSemantica(nodoVarLocal.getToken(), "la variable "+nodoVarLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
         }
         
-        TablaSimbolos.unidadActual.agregarOffsetVarLocal(varLocal);
-        varLocales.put(varLocal.toString(), varLocal);
+
+        agregarOffsetVarLocal(nodoVarLocal);
+        varLocales.put(nodoVarLocal.toString(), nodoVarLocal);
+    }
+
+    private void agregarOffsetVarLocal(NodoVarLocal nodoVarLocal){
+        nodoVarLocal.setOffset(offsetDisponibleVariableLocal);
+        offsetDisponibleVariableLocal--;
     }
 
 
-    public void chequear() throws ExcepcionSemantica{
+    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien como se asignan los offsets?
+        if(TablaSimbolos.hayBloque()){
+            offsetDisponibleVariableLocal = TablaSimbolos.getBloqueActual().getOffsetDisponibleVariableLocal(); // los offset de sus varLocales comienzan desde el offset disponible de su bloque contenedor.
+        } else{
+            offsetDisponibleVariableLocal = 0;
+        }
+
         TablaSimbolos.apilarBloqueActual(this); 
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.chequear();
@@ -51,11 +73,12 @@ public class NodoBloque extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ // TODO: para una mejor administracion de la memoria, habría que liberarla aca en luagar de en generarCodigo() de Metodo.
+    public void generarCodigo(){ // TODO: esta bien como se liberan las varLocales?
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }
-        // TODO: aca hacer FMEM de la cant de variables del bloque actual para manejar la memoria mas optimo.
+        
+        TablaSimbolos.instruccionesMaquina.add("FMEM "+this.varLocales.size()+" ; Liberamos las variables locales utilizadas en el bloque actual");
     }
 
     

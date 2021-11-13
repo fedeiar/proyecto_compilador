@@ -13,6 +13,7 @@ public class NodoReturn extends NodoSentencia{
     private NodoExpresion nodoExpresionRetorno;
     
     private Unidad unidadContenedora;
+    private int cantVarLocalesALiberar;
 
     public NodoReturn(Token tokenReturn){
         this.tokenReturn = tokenReturn;
@@ -38,14 +39,16 @@ public class NodoReturn extends NodoSentencia{
                 throw new ExcepcionSemantica(tokenReturn, "el tipo de la expresion de retorno no conforma con el tipo de retorno del metodo que es "+tipoMetodo.getNombreTipo());
             }
         }
+
+        cantVarLocalesALiberar = TablaSimbolos.getBloqueActual().getCantVarLocalesEnUnidad(); //TODO: esta bien conseguirlas aca? ya que las que declaro después del return no debería contabilizarlas para este return.
     }
 
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){ //TODO: esta bien como se liberan las varLocales?
 
-        TablaSimbolos.instruccionesMaquina.add("FMEM "+unidadContenedora.getCantVarLocalesALiberar()+" ; Liberamos las variables locales utilizadas");
+        TablaSimbolos.instruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad al hacer return");
         if(unidadContenedora.getTipoUnidad().mismoTipo(new TipoVoid())){
             TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
             TablaSimbolos.instruccionesMaquina.add("RET "+unidadContenedora.getOffsetRetornoUnidad()+" ; Retornamos de la unidad liberando n lugares en la pila");
