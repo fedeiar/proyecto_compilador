@@ -88,5 +88,9 @@ public class NodoAccesoVar extends NodoPrimario{
                 TablaSimbolos.instruccionesMaquina.add("STORE "+variable.getOffset()+" ; Guardo el valor de la expresión en la variable");
             }
         }
+
+        if(nodoEncadenado != null){
+            nodoEncadenado.generarCodigo();
+        }
     }
 }

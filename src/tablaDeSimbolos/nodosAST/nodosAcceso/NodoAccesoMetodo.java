@@ -69,25 +69,25 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             TablaSimbolos.instruccionesMaquina.add("LOAD 3"); // Cargo this
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
                 TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo lugar para el valor retorno de la llamada");
-                TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
+                TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");
             }
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
                 TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
             }
-            TablaSimbolos.instruccionesMaquina.add("DUP"); // Duplico this para no perderlo
+            TablaSimbolos.instruccionesMaquina.add("DUP ; Duplico this para no perderlo al hacer LOADREF");
             TablaSimbolos.instruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
             TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset()+" ; Cargo el metodo con su offset en la VT");
             TablaSimbolos.instruccionesMaquina.add("CALL"); 
             
         } else{ // Es estatico
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
-                TablaSimbolos.instruccionesMaquina.add("RMEM 1"); // Reservo lugar para el retorno
+                TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
             }
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
             }
-            TablaSimbolos.instruccionesMaquina.add("PUSH "+metodoLlamado.toStringLabel()); // Pongo la etiqueta del metodo
+            TablaSimbolos.instruccionesMaquina.add("PUSH "+metodoLlamado.toStringLabel()+ " ; Pongo la etiqueta del metodo");
             TablaSimbolos.instruccionesMaquina.add("CALL");
         }
 
