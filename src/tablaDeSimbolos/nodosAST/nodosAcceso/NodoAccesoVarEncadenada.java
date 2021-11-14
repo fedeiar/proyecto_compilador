@@ -10,6 +10,8 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
     
     protected Token tokenIdVar;
 
+    private Atributo atributo;
+
     public NodoAccesoVarEncadenada(Token tokenIdVar){
         this.tokenIdVar = tokenIdVar;
     }
@@ -18,7 +20,7 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         TipoConcreto tipoAtributo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){
-            Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); 
+            atributo = clase.getAtributo(tokenIdVar.getLexema()); 
             if(atributo != null){
                 if(atributo.esPublic()){
                     tipoAtributo = atributo.getTipo();
@@ -44,10 +46,10 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         TipoConcreto tipoAtributo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){
-            Atributo atributo = clase.getAtributo(tokenIdVar.getLexema()); 
+            atributo = clase.getAtributo(tokenIdVar.getLexema()); 
             if(atributo != null){ // Como vengo de this, entonces no controlo si es publico o privado ya que debo poder accederlo igual.
                 tipoAtributo = atributo.getTipo(); 
-            }else{
+            } else{
                 throw new ExcepcionSemantica(tokenIdVar, "el atributo "+tokenIdVar.getLexema()+" no esta declarado o no es accesible en la clase "+clase.getTokenIdClase().getLexema());
             }
         } else{
@@ -80,7 +82,17 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ //TODO: esta bien asi?
+        if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
+            TablaSimbolos.instruccionesMaquina.add("LOADREF " +atributo.getOffset()+" ; Apilo el valor del atributo "+atributo.getTokenIdVar().getLexema()+" en la pila");
+        } else{
+            TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1");
+            TablaSimbolos.instruccionesMaquina.add("STOREREF "+ atributo.getOffset()+" ; Guardo el valor de la expresión en el atributo "+ atributo.getTokenIdVar().getLexema()); 
+        }
+        
+        if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
+            nodoEncadenado.generarCodigo();
+        }
     }
 }

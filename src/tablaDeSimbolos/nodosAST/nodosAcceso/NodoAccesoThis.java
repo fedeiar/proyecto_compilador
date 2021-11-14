@@ -43,7 +43,13 @@ public class NodoAccesoThis extends NodoPrimario{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ //TODO: esta bien?
+        TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
+      
+        if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
+            nodoEncadenado.generarCodigo();
+        }
+        
     }
 }

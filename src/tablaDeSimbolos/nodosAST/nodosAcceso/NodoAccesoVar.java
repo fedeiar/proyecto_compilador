@@ -70,7 +70,7 @@ public class NodoAccesoVar extends NodoPrimario{
     }
 
 
-    // Generacion de codigo intermedio
+    // Generacion de codigo intermedio.
 
     public void generarCodigo(){
         if(variable instanceof Atributo){
@@ -78,7 +78,7 @@ public class NodoAccesoVar extends NodoPrimario{
             if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
                 TablaSimbolos.instruccionesMaquina.add("LOADREF " +variable.getOffset()+" ; Apilo el valor del atributo en la pila");
             } else{
-                TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y al atributo en tope - 1");
+                TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1");
                 TablaSimbolos.instruccionesMaquina.add("STOREREF "+ variable.getOffset()+" ; Guardo el valor de la expresión en el atributo"); 
             }
         } else if(variable instanceof ParametroFormal || variable instanceof NodoVarLocal){
@@ -90,6 +90,7 @@ public class NodoAccesoVar extends NodoPrimario{
         }
 
         if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
             nodoEncadenado.generarCodigo();
         }
     }

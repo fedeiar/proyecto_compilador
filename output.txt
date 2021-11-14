@@ -40,57 +40,77 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_A: DW lmet3A@@A,lmet1A@@A,lmet2A@@A
+VT_A: NOP
 
 .CODE
-lmet3A@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en la unidad al hacer return
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_A ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lA@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE 4 ; Colocamos el valor de la expresion en la locacion reservada para el retorno
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 1 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet1A@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 5 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2A@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 7 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
 lA@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+LOAD 3 ; Apilo this en la pila
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 4 ; Guardo el valor de la expresión en el atributo
+RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
+PUSH 8 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
+PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
+CALL
+DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
+PUSH VT_B ; apilamos la direccion del comienzo de la VT
+STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
+DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
+PUSH lB@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
+CALL
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 5 ; Guardo el valor de la expresión en el atributo a4A
+RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
+PUSH 10 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
+PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
+CALL
+DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
+PUSH VT_C ; apilamos la direccion del comienzo de la VT
+STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
+DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
+PUSH lC@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
+CALL
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 3 ; Guardo el valor de la expresión en el atributo a5A
+LOAD 3 ; Apilo this en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 4 ; Guardo el valor de la expresión en el atributo a3A
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo a4A en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 5 ; Guardo el valor de la expresión en el atributo a4A
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo a5A en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 3 ; Guardo el valor de la expresión en el atributo a5A
+LOAD 3 ; Apilo this en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 4 ; Guardo el valor de la expresión en el atributo a3A
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 5 ; Guardo el valor de la expresión en el atributo a4A
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 3 ; Guardo el valor de la expresión en el atributo a5A
 FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila
@@ -104,9 +124,10 @@ lmain@@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
 RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
+PUSH 6 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
 PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
 CALL
 DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
@@ -115,167 +136,76 @@ STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es e
 DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
 PUSH lA@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
 CALL
-STORE 0 ; almaceno el valor de la expresion en la variable local v1
+STORE -1 ; almaceno el valor de la expresion en la variable local v1
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_B ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lB@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE -1 ; almaceno el valor de la expresion en la variable local v2
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 5 ; Apilo el valor del atributo a4A en la pila
+STORE -2 ; almaceno el valor de la expresion en la variable local v2
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_B ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lB@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE -2 ; almaceno el valor de la expresion en la variable local v3
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v4
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_C ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lC@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE -3 ; almaceno el valor de la expresion en la variable local v4
-LOAD 0 ; Apilo el valor de la variable local o parametro
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 1 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 4 ; Apilo el valor del atributo a3A en la pila
+LOADREF 3 ; Apilo el valor del atributo a5A en la pila
+STORE -3 ; almaceno el valor de la expresion en la variable local v3
+PUSH 8 ; Apilo un literal entero
+LOAD -1 ; Apilo el valor de la variable local o parametro
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 1 ; Guardo el valor de la expresión en el atributo a1A
+PUSH 8 ; Apilo un literal entero
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 4 ; Apilo el valor del atributo a3A en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 1 ; Guardo el valor de la expresión en el atributo a1A
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 4 ; Apilo el valor del atributo a3A en la pila
+LOADREF 1 ; Apilo el valor del atributo a1A en la pila
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 4 ; Apilo el valor del atributo a3A en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 2 ; Guardo el valor de la expresión en el atributo a2A
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 1 ; Apilo el valor del atributo a1A en la pila
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
 CALL
 LOAD -1 ; Apilo el valor de la variable local o parametro
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
+LOADREF 2 ; Apilo el valor del atributo a2A en la pila
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
 CALL
 LOAD 0 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD -1 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD -2 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 3 ; Cargo el metodo con su offset en la VT
-CALL
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
-LOAD -4 ; Apilo el valor de la variable local o parametro
 POP ; Descartamos el valor de la variable cargado con LOAD anteriormente ya que no lo necesitamos para hacer la llamada estatica
 PUSH lprintln@@System ; Pongo la etiqueta del metodo
 CALL
-LOAD -4 ; Apilo el valor de la variable local o parametro
+LOAD 0 ; Apilo el valor de la variable local o parametro
 POP ; Descartamos el valor de la variable cargado con LOAD anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 's' ; Apilo un literal caracter
+PUSH lprintln@@System ; Pongo la etiqueta del metodo
+CALL
+PUSH 'a' ; Apilo un literal caracter
+LOAD -2 ; Apilo el valor de la variable local o parametro
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 6 ; Guardo el valor de la expresión en el atributo a2B
+PUSH 20 ; Apilo un literal entero
+LOAD -3 ; Apilo el valor de la variable local o parametro
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 9 ; Guardo el valor de la expresión en el atributo a2C
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la variable cargado con LOAD anteriormente ya que no lo necesitamos para hacer la llamada estatica
+LOAD -2 ; Apilo el valor de la variable local o parametro
+LOADREF 6 ; Apilo el valor del atributo a2B en la pila
 PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
 CALL
-LOAD -4 ; Apilo el valor de la variable local o parametro
+LOAD 0 ; Apilo el valor de la variable local o parametro
 POP ; Descartamos el valor de la variable cargado con LOAD anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH lprintln@@System ; Pongo la etiqueta del metodo
+LOAD -1 ; Apilo el valor de la variable local o parametro
+LOADREF 5 ; Apilo el valor del atributo a4A en la pila
+LOADREF 6 ; Apilo el valor del atributo a2B en la pila
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
 CALL
 LOAD -3 ; Apilo el valor de la variable local o parametro
-STORE 0 ; Guardo el valor de la expresión en la variable
-LOAD 0 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
+LOADREF 4 ; Apilo el valor del atributo a3A en la pila
+LOADREF 3 ; Apilo el valor del atributo a5A en la pila
+LOADREF 9 ; Apilo el valor del atributo a2C en la pila
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
 CALL
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-LOAD -3 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 6 ; Cargo el metodo con su offset en la VT
-CALL
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 2 ; Cargo el metodo con su offset en la VT
-CALL
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v5
-LOAD -3 ; Apilo el valor de la variable local o parametro
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 6 ; Cargo el metodo con su offset en la VT
-CALL
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-SWAP ; Pongo this en el tope de la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 5 ; Cargo el metodo con su offset en la VT
-CALL
-STORE -5 ; almaceno el valor de la expresion en la variable local v5
-LOAD -5 ; Apilo el valor de la variable local o parametro
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 3 ; Cargo el metodo con su offset en la VT
-CALL
-FMEM 6 ; Liberamos las variables locales utilizadas en el bloque actual
+FMEM 4 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 0 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -289,86 +219,9 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_B: DW lmet3A@@B,lmet1A@@A,lmet2A@@B,lmet1B@@B,lmet2B@@B,lmet3B@@B
+VT_B: NOP
 
 .CODE
-lmet3A@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en la unidad al hacer return
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_B ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lB@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE 4 ; Colocamos el valor de la expresion en la locacion reservada para el retorno
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 1 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet1B@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 9 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2B@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 11 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet3B@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en la unidad al hacer return
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_C ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lC@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE 4 ; Colocamos el valor de la expresion en la locacion reservada para el retorno
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 1 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2A@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 13 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
 lB@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
@@ -379,53 +232,9 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_C: DW lmet3A@@B,lmet1A@@A,lmet2A@@C,lmet1B@@C,lmet2B@@B,lmet3B@@B,lmet1C@@C
+VT_C: NOP
 
 .CODE
-lmet1B@@C:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 15 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet1C@@C:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en la unidad al hacer return
-RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos
-PUSH 1 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc
-PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
-CALL
-DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
-PUSH VT_C ; apilamos la direccion del comienzo de la VT
-STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
-DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor
-PUSH lC@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
-CALL
-STORE 4 ; Colocamos el valor de la expresion en la locacion reservada para el retorno
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 1 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2A@@C:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 17 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
 lC@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
