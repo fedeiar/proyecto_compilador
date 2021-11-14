@@ -239,9 +239,7 @@ public class Clase {
     public void estaBienDeclarado() throws ExcepcionSemantica{
         TablaSimbolos.claseActual = this; // Ya que para algunos chequeos (como el constructor de Constructor) necesitamos saber la clase actual que estamos chequeando.
 
-        if(!this.tokenIdClase.getLexema().equals("Object") && !TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){
-            throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClaseAncestro.getLexema()+" de la cual se intenta heredar no esta declarada");
-        }
+        verificarExistenciaAncestro();
 
         verificarHerenciaCircular(new HashMap<String, Clase>());
 
@@ -260,7 +258,12 @@ public class Clase {
         if(constructores.size() == 0){
             insertarConstructor(new Constructor(new Token(TipoDeToken.id_clase, this.tokenIdClase.getLexema(), 0)));
         } 
+    }
 
+    private void verificarExistenciaAncestro() throws ExcepcionSemantica{
+        if(!this.tokenIdClase.getLexema().equals("Object") && !TablaSimbolos.getInstance().existeClase(this.tokenIdClaseAncestro.getLexema())){
+            throw new ExcepcionSemantica(this.tokenIdClaseAncestro, "la clase "+this.tokenIdClaseAncestro.getLexema()+" de la cual se intenta heredar no esta declarada");
+        }
     }
 
     public void verificarHerenciaCircular(Map<String, Clase> clases_ancestro) throws ExcepcionSemantica{

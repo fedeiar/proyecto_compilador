@@ -77,7 +77,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             }
             TablaSimbolos.instruccionesMaquina.add("DUP ; Duplico this para no perderlo al hacer LOADREF");
             TablaSimbolos.instruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
-            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset()+" ; Cargo el metodo con su offset en la VT");
+            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset() +" ; Cargo el metodo con su offset en la VT");
             TablaSimbolos.instruccionesMaquina.add("CALL"); 
             
         } else{ // Es estatico
@@ -87,7 +87,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
             }
-            TablaSimbolos.instruccionesMaquina.add("PUSH "+metodoLlamado.toStringLabel()+ " ; Pongo la etiqueta del metodo");
+            TablaSimbolos.instruccionesMaquina.add("PUSH "+ metodoLlamado.toStringLabel() + " ; Pongo la etiqueta del metodo");
             TablaSimbolos.instruccionesMaquina.add("CALL");
         }
 

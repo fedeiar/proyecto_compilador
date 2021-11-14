@@ -93,7 +93,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
             if(!tipoMetodo.mismoTipo(new TipoVoid())){
                 TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
             }
-            TablaSimbolos.instruccionesMaquina.add("POP ; Descartamos el valor de la variable cargado con LOAD anteriormente ya que no lo necesitamos para hacer la llamada estatica");
+            TablaSimbolos.instruccionesMaquina.add("POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica");
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
             }

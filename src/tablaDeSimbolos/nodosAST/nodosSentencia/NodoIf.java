@@ -50,8 +50,7 @@ public class NodoIf extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        //TODO
-        //OJO: puede pasar algo parecido a lo del for con el tema de las variables locales.
+    public void generarCodigo(){ //TODO: esta bien?
+        
     }
 }
