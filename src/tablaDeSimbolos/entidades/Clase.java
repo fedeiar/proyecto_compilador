@@ -350,9 +350,8 @@ public class Clase {
     private void offsetMetodos(Clase claseAncestro){  
         this.offsetDisponibleVT = claseAncestro.getOffsetDisponibleEnVT();  
         for(Metodo metodo : metodos.values()){
-            // Los metodos estaticos no van a estar en la VT asi que no se les asigna un offset
-            if(metodo.esDinamico()){
-                if(!metodo.tieneOffsetAsignado()){ // De esta forma, no tocamos a los redefinidos ya que les pusimos offset en el for anterior.
+            if(metodo.esDinamico()){ // Los metodos estaticos no van a estar en la VT asi que no se les asigna un offset
+                if(!metodo.tieneOffsetAsignado()){ // De esta forma no tocamos a los redefinidos ya que les pusimos offset en el for anterior, ni a los que no fueron declarados en esta clase.
                     this.agregarOffsetMetodoEnVT(metodo);
                 }
                 mapeoMetodosPorOffset.put(metodo.getOffset(), metodo);

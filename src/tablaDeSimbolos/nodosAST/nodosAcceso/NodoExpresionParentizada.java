@@ -39,7 +39,12 @@ public class NodoExpresionParentizada extends NodoPrimario{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // TODO
+    public void generarCodigo(){ //TODO: esta bien?
+        nodoExpresion.generarCodigo();
+
+        if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
+            nodoEncadenado.generarCodigo();
+        }
     }
 }

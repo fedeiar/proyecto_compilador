@@ -21,7 +21,7 @@ public class NodoBloque extends NodoSentencia{
         varLocales = new HashMap<>();
     }
 
-    public int getOffsetDisponibleVariableLocal(){
+    public int getOffsetDisponibleVarLocal(){
         return offsetDisponibleVariableLocal;
     }
 
@@ -46,7 +46,6 @@ public class NodoBloque extends NodoSentencia{
             throw new ExcepcionSemantica(nodoVarLocal.getToken(), "la variable "+nodoVarLocal.toString()+" esta duplicada ya que existe un parametro con el mismo nombre");
         }
         
-
         agregarOffsetVarLocal(nodoVarLocal);
         varLocales.put(nodoVarLocal.toString(), nodoVarLocal);
     }
@@ -56,12 +55,13 @@ public class NodoBloque extends NodoSentencia{
         offsetDisponibleVariableLocal--;
     }
 
+    // Chequeo de sentencias
 
     public void chequear() throws ExcepcionSemantica{ //TODO: esta bien como se asignan los offsets?
         if(TablaSimbolos.hayBloque()){
-            offsetDisponibleVariableLocal = TablaSimbolos.getBloqueActual().getOffsetDisponibleVariableLocal(); // los offset de sus varLocales comienzan desde el offset disponible de su bloque contenedor.
+            this.offsetDisponibleVariableLocal = TablaSimbolos.getBloqueActual().getOffsetDisponibleVarLocal(); // Los offset de las varLocales del bloque a agregar comienzan desde el offset disponible de su bloque contenedor.
         } else{
-            offsetDisponibleVariableLocal = 0;
+            this.offsetDisponibleVariableLocal = 0;
         }
 
         TablaSimbolos.apilarBloqueActual(this); 
@@ -74,9 +74,11 @@ public class NodoBloque extends NodoSentencia{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){ // TODO: esta bien como se liberan las varLocales?
+        TablaSimbolos.apilarBloqueActual(this);
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }
+        TablaSimbolos.desapilarBloqueActual();
         
         TablaSimbolos.instruccionesMaquina.add("FMEM "+this.varLocales.size()+" ; Liberamos las variables locales utilizadas en el bloque actual");
     }

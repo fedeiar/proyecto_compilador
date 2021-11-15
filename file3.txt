@@ -2,21 +2,73 @@ class Init extends System{
 
 	static void main(){
 		
+		int v1 = 5;
+		boolean v2 = true;
+		if( true ){
+			int v3 = 3;
+			debugPrint(v3); // 3 
+			debugPrint(v1); // 5
+			int v4 = 7;
+		}
+		
+		int v3 = 7;
+		int v4 = 9;
+
+		if(false){
+			debugPrint(999);
+			debugPrint(999);
+		} else
+			debugPrint(v3); // 7
+		
+		
+		if(true)
+			if(false)
+				int v5;
+			else
+				int v6;
+		else{
+			int v5 = 9;
+			debugPrint(999);
+		}
+
+		
+		int v5 = 9;
+		int v6 = 13;
+		
+		if(true){
+			int v7 = 11;
+			if(true)
+				debugPrint(v5); // 9
+			if(false){
+
+			}else
+				debugPrint(v6 + v7); // 24;
+		}else
+			debugPrint(v6);
+
+		
 	}
 
 }
 
+
 class A{
 
-}
-
-class B extends A{
 	
 
+	
 }
 
-class C extends B{
 
+class B extends A{
+
+	
+	
+}
+
+
+class C extends B{
+	
 	
 }
 

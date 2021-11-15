@@ -71,14 +71,14 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservamos memoria para la referencia al CIR del objeto que crearemos");
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+ (claseDelConstructor.getCantidadAtributos() + 1) +" ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT para el parametro del malloc");
+        TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservamos memoria para el resultado del malloc (la referencia al nuevo CIR del objeto que crearemos)");
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+ (claseDelConstructor.getCantidadAtributos() + 1) +" ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT que sera el parametro del malloc");
         TablaSimbolos.instruccionesMaquina.add("PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap");
         TablaSimbolos.instruccionesMaquina.add("CALL");
         TablaSimbolos.instruccionesMaquina.add("DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT");
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+claseDelConstructor.toStringLabelVT()+" ; apilamos la direccion del comienzo de la VT");
+        TablaSimbolos.instruccionesMaquina.add("PUSH "+ claseDelConstructor.toStringLabelVT() +" ; apilamos la direccion del comienzo de la VT");
         TablaSimbolos.instruccionesMaquina.add("STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)");
-        TablaSimbolos.instruccionesMaquina.add("DUP ; Duplicamos la referencia al objeto. Esta ref sera el this del RA del constructor");
+        TablaSimbolos.instruccionesMaquina.add("DUP ; Duplicamos la referencia al objeto porque sera tanto el resultado del constructor como la referencia a this dentro de la ejecucion del constructor");
         for(NodoExpresion nodoExpresion : listaParametrosActuales){
             nodoExpresion.generarCodigo();
             TablaSimbolos.instruccionesMaquina.add("SWAP ; Bajamos el this para que quede en el lugar adecuado del RA");
