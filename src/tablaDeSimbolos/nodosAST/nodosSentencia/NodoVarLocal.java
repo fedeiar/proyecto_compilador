@@ -14,7 +14,7 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
     private Token tokenIgual;
     private NodoExpresion nodoExpresion;
 
-    private int offset; // TODO: esta bien?
+    private int offset;
 
     public NodoVarLocal(Token tokenIdVar, TipoConcreto tipo){
         this.tokenIdVar = tokenIdVar;

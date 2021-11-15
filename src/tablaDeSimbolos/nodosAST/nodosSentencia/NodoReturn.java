@@ -46,7 +46,7 @@ public class NodoReturn extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien como se liberan las varLocales?
+    public void generarCodigo(){
 
         TablaSimbolos.instruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad al hacer return");
         if(unidadContenedora.getTipoUnidad().mismoTipo(new TipoVoid())){

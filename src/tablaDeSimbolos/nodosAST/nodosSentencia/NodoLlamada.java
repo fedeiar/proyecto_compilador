@@ -30,7 +30,7 @@ public class NodoLlamada extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         nodoAcceso.generarCodigo();
         if(!tipoLlamada.mismoTipo(new TipoVoid())){
             TablaSimbolos.instruccionesMaquina.add("POP ; La llamada devolvio un valor que no fue asignado en ninguna variable, debe descartarse para no afectar el .STACK"); 
