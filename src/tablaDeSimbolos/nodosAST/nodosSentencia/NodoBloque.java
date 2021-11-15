@@ -58,17 +58,21 @@ public class NodoBloque extends NodoSentencia{
     // Chequeo de sentencias
 
     public void chequear() throws ExcepcionSemantica{ //TODO: esta bien como se asignan los offsets?
-        if(TablaSimbolos.hayBloque()){
-            this.offsetDisponibleVariableLocal = TablaSimbolos.getBloqueActual().getOffsetDisponibleVarLocal(); // Los offset de las varLocales del bloque a agregar comienzan desde el offset disponible de su bloque contenedor.
-        } else{
-            this.offsetDisponibleVariableLocal = 0;
-        }
+        this.establecerOffsetDisponibleVarLocal();
 
         TablaSimbolos.apilarBloqueActual(this); 
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.chequear();
         }
         TablaSimbolos.desapilarBloqueActual();
+    }
+
+    public void establecerOffsetDisponibleVarLocal(){
+        if(TablaSimbolos.hayBloque()){
+            this.offsetDisponibleVariableLocal = TablaSimbolos.getBloqueActual().getOffsetDisponibleVarLocal(); // Los offset de las varLocales del bloque a agregar comienzan desde el offset disponible de su bloque contenedor.
+        } else{
+            this.offsetDisponibleVariableLocal = 0;
+        }
     }
 
     // Generacion de codigo intermedio

@@ -42,9 +42,43 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_A: NOP
+VT_A: DW llinea@@A
 
 .CODE
+llinea@@A:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
+PUSH 'l' ; Apilo un literal caracter
+PUSH lprintC@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
+PUSH 'i' ; Apilo un literal caracter
+PUSH lprintC@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
+PUSH 'n' ; Apilo un literal caracter
+PUSH lprintC@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
+PUSH 'e' ; Apilo un literal caracter
+PUSH lprintC@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 0 ; Apilo el valor de la variable local o parametro
+POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
+PUSH 'a' ; Apilo un literal caracter
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
+CALL
+FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
 lA@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
@@ -63,101 +97,49 @@ lmain@@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
 PUSH 0 ; Apilo un literal entero
-STORE -1 ; almaceno el valor de la expresion en la variable local v1
+STORE 0 ; almaceno el valor de la expresion en la variable local v1
 l_comienzoFor0:
-LOAD -1 ; Apilo el valor de la variable local o parametro
+LOAD 0 ; Apilo el valor de la variable local o parametro
 PUSH 5 ; Apilo un literal entero
 LT
 BF l_finFor0
-LOAD -1 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; Apilo un literal entero
-ADD
-STORE -1 ; Guardo el valor de la expresión en la variable
-LOAD -1 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-JUMP l_comienzoFor0
-l_finFor0: NOP
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
-PUSH 10 ; Apilo un literal entero
-STORE -1 ; almaceno el valor de la expresion en la variable local v1
-LOAD -1 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
+PUSH 0 ; Apilo un literal entero
+STORE -1 ; almaceno el valor de la expresion en la variable local v3
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
 PUSH 0 ; Apilo un literal entero
 STORE -2 ; almaceno el valor de la expresion en la variable local v2
 l_comienzoFor1:
 LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH 5 ; Apilo un literal entero
+LOAD 0 ; Apilo el valor de la variable local o parametro
 LT
 BF l_finFor1
 LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH 2 ; Apilo un literal entero
-ADD
-STORE -2 ; Guardo el valor de la expresión en la variable
+PUSH lprintI@int@System ; Pongo la etiqueta del metodo
+CALL
 LOAD -2 ; Apilo el valor de la variable local o parametro
 PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-SUB ; obtenemos la expresion resultante del incremento
+ADD ; obtenemos la expresion resultante del incremento
 STORE -2 ; Guardo el valor de la expresión en la variable
 JUMP l_comienzoFor1
 l_finFor1: NOP
 FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
-PUSH 10 ; Apilo un literal entero
+LOAD -1 ; Apilo el valor de la variable local o parametro
 STORE -2 ; almaceno el valor de la expresion en la variable local v2
-LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local iteraciones
-PUSH 0 ; Apilo un literal entero
-STORE -3 ; almaceno el valor de la expresion en la variable local iteraciones
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
-PUSH 0 ; Apilo un literal entero
-STORE -4 ; almaceno el valor de la expresion en la variable local v3
-l_comienzoFor2:
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 5 ; Apilo un literal entero
-LT
-BF l_finFor2
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -4 ; Guardo el valor de la expresión en la variable
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v4
-PUSH 0 ; Apilo un literal entero
-STORE -5 ; almaceno el valor de la expresion en la variable local v4
-l_comienzoFor3:
-LOAD -5 ; Apilo el valor de la variable local o parametro
-LOAD -4 ; Apilo el valor de la variable local o parametro
-LT
-BF l_finFor3
-LOAD -5 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -5 ; Guardo el valor de la expresión en la variable
-LOAD -3 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -3 ; Guardo el valor de la expresión en la variable
-JUMP l_comienzoFor3
-l_finFor3: NOP
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-JUMP l_comienzoFor2
-l_finFor2: NOP
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
 PUSH lprintln@@System ; Pongo la etiqueta del metodo
 CALL
-LOAD -3 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 4 ; Liberamos las variables locales utilizadas en el bloque actual
+FMEM 2 ; Liberamos las variables locales utilizadas en el bloque actual
+LOAD 0 ; Apilo el valor de la variable local o parametro
+PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
+ADD ; obtenemos la expresion resultante del incremento
+STORE 0 ; Guardo el valor de la expresión en la variable
+JUMP l_comienzoFor0
+l_finFor0: NOP
+FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 0 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -172,7 +154,7 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_B: NOP
+VT_B: DW llinea@@A
 
 .CODE
 lB@@:
@@ -186,7 +168,7 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_C: NOP
+VT_C: DW llinea@@A
 
 .CODE
 lC@@:

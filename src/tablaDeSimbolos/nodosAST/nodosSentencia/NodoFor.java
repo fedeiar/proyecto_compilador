@@ -28,7 +28,7 @@ public class NodoFor extends NodoSentencia{
 
     public void chequear() throws ExcepcionSemantica{ 
         nodoBloqueForFicticio = new NodoBloque(); // Idem a If, la declaración de la varLocal se insertará aca asi luego no es visible fuera del for.
-        nodoBloqueForFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales. // TODO: esta bien?
+        nodoBloqueForFicticio.establecerOffsetDisponibleVarLocal(); // De esta manera, tendra el offset adecuado para las varLocales del bloque (si hay). // TODO: esta bien?
         TablaSimbolos.apilarBloqueActual(nodoBloqueForFicticio);
         
         nodoVarLocal.chequear();
@@ -56,9 +56,9 @@ public class NodoFor extends NodoSentencia{
         TablaSimbolos.instruccionesMaquina.add(etiqueta_ComienzoFor + ":");
         nodoExpresionBooleana.generarCodigo();
         TablaSimbolos.instruccionesMaquina.add("BF "+etiqueta_FinFor);
-        nodoAsignacion.generarCodigo();
-
+        
         nodoSentenciaFor.generarCodigo();
+        nodoAsignacion.generarCodigo();
         TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_ComienzoFor);
         TablaSimbolos.instruccionesMaquina.add(etiqueta_FinFor + ": NOP");
 

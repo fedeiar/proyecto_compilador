@@ -13,7 +13,7 @@ public class NodoIf extends NodoSentencia{
     private NodoSentencia nodoSentenciaIf;
     private NodoSentencia nodoSentenciaElse;
 
-    private NodoBloque nodoBloqueIfFicticio;
+    private NodoBloque nodoBloqueIfFicticio; //TODO: puedo PORFAVOR prohibir las declaraciones de varLocal sin bloque y borrar esto??
     private NodoBloque nodoBloqueElseFicticio;
 
     private static int numeroEtiquetaFinIf = 0;
