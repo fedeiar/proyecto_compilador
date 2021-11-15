@@ -91,7 +91,7 @@ public class Clase {
 
     //TODO: AYUDA
     /*
-    public Constructor getConstructorQueMasConformaParametros(String nombreConstructor, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{ //TODO: asi esta bien?
+    public Constructor getConstructorQueMasConformaParametros(String nombreConstructor, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{
         List<Tipo> listaTiposDeLosParametros = new ArrayList<>();
         for(NodoExpresion parametroActual : listaParametrosActuales){
             listaTiposDeLosParametros.add(parametroActual.chequear());

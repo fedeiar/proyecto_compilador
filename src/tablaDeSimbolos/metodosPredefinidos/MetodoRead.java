@@ -12,13 +12,12 @@ public class MetodoRead extends Metodo{
     }
 
 
-    public void generarCodigo(){ //TODO: preguntar.
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("LOADFP");
         TablaSimbolos.instruccionesMaquina.add("LOADSP");
         TablaSimbolos.instruccionesMaquina.add("STOREFP");
 
         TablaSimbolos.instruccionesMaquina.add("READ    ; Lectura de un valor entero");
-        //TablaSimbolos.instruccionesMaquina.add("PUSH 99");
         TablaSimbolos.instruccionesMaquina.add("STORE 3 ; Ponemos el tope de la pila en la locación reservada. En 1 esta ED y en 2 PR, no hay this ni parametros");
 
         TablaSimbolos.instruccionesMaquina.add("STOREFP");

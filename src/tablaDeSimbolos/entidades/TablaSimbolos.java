@@ -46,8 +46,6 @@ public class TablaSimbolos {
             metodo.insertarParametro(new ParametroFormal(new Token(TipoDeToken.id_metVar, "i", 0), new TipoInt()));
             claseObject.insertarMetodo(metodo); 
 
-            //TODO: hacer las clases particulares para cada Metodo de System que redefina generarCodigo()
-
             //Creando System
             Token tokenSystem = new Token(TipoDeToken.id_clase, "System", 0);
             Clase claseSystem = new Clase(tokenSystem);

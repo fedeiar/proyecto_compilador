@@ -42,43 +42,9 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_A: DW llinea@@A
+VT_A: NOP
 
 .CODE
-llinea@@A:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 'l' ; Apilo un literal caracter
-PUSH lprintC@char@System ; Pongo la etiqueta del metodo
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 'i' ; Apilo un literal caracter
-PUSH lprintC@char@System ; Pongo la etiqueta del metodo
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 'n' ; Apilo un literal caracter
-PUSH lprintC@char@System ; Pongo la etiqueta del metodo
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 'e' ; Apilo un literal caracter
-PUSH lprintC@char@System ; Pongo la etiqueta del metodo
-CALL
-LOAD 0 ; Apilo el valor de la variable local o parametro
-POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica
-PUSH 'a' ; Apilo un literal caracter
-PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
-CALL
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
 lA@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
@@ -97,49 +63,261 @@ lmain@@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
-PUSH 0 ; Apilo un literal entero
-STORE 0 ; almaceno el valor de la expresion en la variable local v1
-l_comienzoFor0:
-LOAD 0 ; Apilo el valor de la variable local o parametro
-PUSH 5 ; Apilo un literal entero
-LT
-BF l_finFor0
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v3
-PUSH 0 ; Apilo un literal entero
-STORE -1 ; almaceno el valor de la expresion en la variable local v3
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
-PUSH 0 ; Apilo un literal entero
-STORE -2 ; almaceno el valor de la expresion en la variable local v2
-l_comienzoFor1:
-LOAD -2 ; Apilo el valor de la variable local o parametro
-LOAD 0 ; Apilo el valor de la variable local o parametro
-LT
-BF l_finFor1
-LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH lprintI@int@System ; Pongo la etiqueta del metodo
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local s
+RMEM 1
+PUSH 67
+PUSH simple_malloc
 CALL
-LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -2 ; Guardo el valor de la expresión en la variable
-JUMP l_comienzoFor1
-l_finFor1: NOP
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local v2
-LOAD -1 ; Apilo el valor de la variable local o parametro
-STORE -2 ; almaceno el valor de la expresion en la variable local v2
+DUP
+PUSH 'a'
+STOREREF 0
+DUP
+PUSH ' '
+STOREREF 1
+DUP
+PUSH 'c'
+STOREREF 2
+DUP
+PUSH 'o'
+STOREREF 3
+DUP
+PUSH 'n'
+STOREREF 4
+DUP
+PUSH 't'
+STOREREF 5
+DUP
+PUSH 'i'
+STOREREF 6
+DUP
+PUSH 'n'
+STOREREF 7
+DUP
+PUSH 'u'
+STOREREF 8
+DUP
+PUSH 'a'
+STOREREF 9
+DUP
+PUSH 'c'
+STOREREF 10
+DUP
+PUSH 'i'
+STOREREF 11
+DUP
+PUSH 'o'
+STOREREF 12
+DUP
+PUSH 'n'
+STOREREF 13
+DUP
+PUSH ' '
+STOREREF 14
+DUP
+PUSH 'v'
+STOREREF 15
+DUP
+PUSH 'i'
+STOREREF 16
+DUP
+PUSH 'e'
+STOREREF 17
+DUP
+PUSH 'n'
+STOREREF 18
+DUP
+PUSH 'e'
+STOREREF 19
+DUP
+PUSH ' '
+STOREREF 20
+DUP
+PUSH 'u'
+STOREREF 21
+DUP
+PUSH 'n'
+STOREREF 22
+DUP
+PUSH ' '
+STOREREF 23
+DUP
+PUSH 's'
+STOREREF 24
+DUP
+PUSH 't'
+STOREREF 25
+DUP
+PUSH 'r'
+STOREREF 26
+DUP
+PUSH 'i'
+STOREREF 27
+DUP
+PUSH 'n'
+STOREREF 28
+DUP
+PUSH 'g'
+STOREREF 29
+DUP
+PUSH ' '
+STOREREF 30
+DUP
+PUSH 'v'
+STOREREF 31
+DUP
+PUSH 'a'
+STOREREF 32
+DUP
+PUSH 'c'
+STOREREF 33
+DUP
+PUSH 'i'
+STOREREF 34
+DUP
+PUSH 'o'
+STOREREF 35
+DUP
+PUSH ','
+STOREREF 36
+DUP
+PUSH ' '
+STOREREF 37
+DUP
+PUSH 'e'
+STOREREF 38
+DUP
+PUSH 's'
+STOREREF 39
+DUP
+PUSH 'p'
+STOREREF 40
+DUP
+PUSH 'e'
+STOREREF 41
+DUP
+PUSH 'r'
+STOREREF 42
+DUP
+PUSH 'e'
+STOREREF 43
+DUP
+PUSH 'm'
+STOREREF 44
+DUP
+PUSH 'o'
+STOREREF 45
+DUP
+PUSH 's'
+STOREREF 46
+DUP
+PUSH ' '
+STOREREF 47
+DUP
+PUSH 'q'
+STOREREF 48
+DUP
+PUSH 'u'
+STOREREF 49
+DUP
+PUSH 'e'
+STOREREF 50
+DUP
+PUSH ' '
+STOREREF 51
+DUP
+PUSH 'n'
+STOREREF 52
+DUP
+PUSH 'o'
+STOREREF 53
+DUP
+PUSH ' '
+STOREREF 54
+DUP
+PUSH 's'
+STOREREF 55
+DUP
+PUSH 'e'
+STOREREF 56
+DUP
+PUSH ' '
+STOREREF 57
+DUP
+PUSH 'r'
+STOREREF 58
+DUP
+PUSH 'o'
+STOREREF 59
+DUP
+PUSH 'm'
+STOREREF 60
+DUP
+PUSH 'p'
+STOREREF 61
+DUP
+PUSH 'a'
+STOREREF 62
+DUP
+PUSH '.'
+STOREREF 63
+DUP
+PUSH '.'
+STOREREF 64
+DUP
+PUSH '.'
+STOREREF 65
+DUP
+PUSH 0
+STOREREF 66
+STORE 0 ; almaceno el valor de la expresion en la variable local s
+LOAD 0 ; Apilo el valor de la variable local o parametro
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
+RMEM 1
+PUSH 1
+PUSH simple_malloc
+CALL
+DUP
+PUSH 0
+STOREREF 0
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
 PUSH lprintln@@System ; Pongo la etiqueta del metodo
 CALL
-FMEM 2 ; Liberamos las variables locales utilizadas en el bloque actual
-LOAD 0 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE 0 ; Guardo el valor de la expresión en la variable
-JUMP l_comienzoFor0
-l_finFor0: NOP
+RMEM 1
+PUSH 9
+PUSH simple_malloc
+CALL
+DUP
+PUSH 'e'
+STOREREF 0
+DUP
+PUSH 'x'
+STOREREF 1
+DUP
+PUSH 'i'
+STOREREF 2
+DUP
+PUSH 't'
+STOREREF 3
+DUP
+PUSH 'o'
+STOREREF 4
+DUP
+PUSH '!'
+STOREREF 5
+DUP
+PUSH '!'
+STOREREF 6
+DUP
+PUSH '!'
+STOREREF 7
+DUP
+PUSH 0
+STOREREF 8
+PUSH lprintS@String@System ; Pongo la etiqueta del metodo
+CALL
 FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 0 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -154,7 +332,7 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_B: DW llinea@@A
+VT_B: NOP
 
 .CODE
 lB@@:
@@ -168,7 +346,7 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_C: DW llinea@@A
+VT_C: NOP
 
 .CODE
 lC@@:
@@ -270,6 +448,8 @@ lprintSln@String@System:
 LOADFP
 LOADSP
 STOREFP
+LOAD 3 ; Cargamos el primer parametro que es una referencia al String en la heap
+SPRINT
 PRNLN
 STOREFP
 RET 1
@@ -287,6 +467,8 @@ lprintS@String@System:
 LOADFP
 LOADSP
 STOREFP
+LOAD 3 ; Cargamos el primer parametro que es una referencia al String en la heap
+SPRINT
 STOREFP
 RET 1
 
