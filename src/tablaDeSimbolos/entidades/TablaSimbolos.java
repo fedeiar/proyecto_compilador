@@ -225,6 +225,8 @@ public class TablaSimbolos {
         System.out.println("\n-----------------GENERANDO CODIGO----------------\n");
         generarLlamadaMain();
         generarRutinasHeap();
+        instruccionesMaquina.add("\n\n"); // Separador
+        
         for(Clase clase : clases.values()){
             clase.generarCodigo(); // Generamos las VT de cada clase
         }
@@ -256,7 +258,7 @@ public class TablaSimbolos {
         "ADD\n"+
         "STOREHL ; Mueve el heap limit (hl). Expande el heap\n"+
         "STOREFP\n"+
-        "RET 1	; Retorna eliminando el parámetro\n\n\n"
+        "RET 1	; Retorna eliminando el parámetro\n"
         );
     }
 }

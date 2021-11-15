@@ -12,40 +12,71 @@ public class NodoFor extends NodoSentencia{
     private NodoVarLocal nodoVarLocal;
     private NodoExpresion nodoExpresionBooleana;
     private NodoAsignacion nodoAsignacion;
-    private NodoSentencia nodoSentencia;
+    private NodoSentencia nodoSentenciaFor;
+
+    private NodoBloque nodoBloqueForFicticio;
+    private static int numeroEtiquetaComienzo = 0;
+    private static int numeroEtiquetaFin = 0;
 
     public NodoFor(Token tokenFor, NodoVarLocal nodoVarLocal, NodoExpresion nodoExpresion, NodoAsignacion nodoAsignacion, NodoSentencia nodoSentencia){
         this.tokenFor = tokenFor;
         this.nodoVarLocal = nodoVarLocal;
         this.nodoExpresionBooleana = nodoExpresion;
         this.nodoAsignacion = nodoAsignacion;
-        this.nodoSentencia = nodoSentencia;
+        this.nodoSentenciaFor = nodoSentencia;
     }
 
     public void chequear() throws ExcepcionSemantica{ 
-        NodoBloque nodoBloqueFor = new NodoBloque(); // Idem a If, la declaración de la varLocal se insertará aca asi luego no es visible fuera del for.
-        TablaSimbolos.apilarBloqueActual(nodoBloqueFor);
+        nodoBloqueForFicticio = new NodoBloque(); // Idem a If, la declaración de la varLocal se insertará aca asi luego no es visible fuera del for.
+        nodoBloqueForFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales. // TODO: esta bien?
+        TablaSimbolos.apilarBloqueActual(nodoBloqueForFicticio);
         
         nodoVarLocal.chequear();
         if(! nodoExpresionBooleana.chequear().mismoTipo(new TipoBoolean())){
             throw new ExcepcionSemantica(tokenFor, "la expresión de condicion del for debe ser de tipo boolean");
         }
         nodoAsignacion.chequear();
-        nodoSentencia.chequear();
+        nodoSentenciaFor.chequear();
+
+        if(nodoSentenciaFor instanceof NodoVarLocal){ //TODO: esta bien? ya que sino es muy dificil permitirlo, java no lo permite, y no tiene sentido permitirlo.
+            throw new ExcepcionSemantica(tokenFor, "no puede declararse una variable local como sentencia de un for");
+        }
 
         TablaSimbolos.desapilarBloqueActual();
-        
     }
+
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){
-        // Guardar un entero con la cantidad de variables locales disponibles actualmente.
+    public void generarCodigo(){ //TODO: esta bien?
+        String etiqueta_ComienzoFor = nuevaEtiquetaComienzoFor();
+        String etiqueta_FinFor = nuevaEtiquetaFinFor();
 
-        //TODO
+        nodoVarLocal.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add(etiqueta_ComienzoFor + ":");
+        nodoExpresionBooleana.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add("BF "+etiqueta_FinFor);
+        nodoAsignacion.generarCodigo();
 
-        // Despues de cada iteración, hago FMEM de la cantidad total y la cantidad actual.
+        nodoSentenciaFor.generarCodigo();
+        TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_ComienzoFor);
+        TablaSimbolos.instruccionesMaquina.add(etiqueta_FinFor + ": NOP");
+
+        nodoBloqueForFicticio.generarCodigo(); // Para liberar la memoria de la variable local declarada en el encabezado del for. //TODO: esta bien?
     }
+
+    private String nuevaEtiquetaComienzoFor(){
+        String nuevaEtiqueta = "l_comienzoFor" + numeroEtiquetaComienzo;
+        numeroEtiquetaComienzo++;
+        return nuevaEtiqueta;
+    }
+
+    private String nuevaEtiquetaFinFor(){
+        String nuevaEtiqueta = "l_finFor" + numeroEtiquetaFin;
+        numeroEtiquetaFin++;
+        return nuevaEtiqueta;
+    }
+
 
     
 }

@@ -417,7 +417,7 @@ public class Clase {
             constructor.generarCodigo();
             TablaSimbolos.instruccionesMaquina.add(""); // Separador
         }
-        TablaSimbolos.instruccionesMaquina.add(""); // Separador
+        TablaSimbolos.instruccionesMaquina.add("\n"); // Separador
     }
 
     public String toStringLabelVT(){

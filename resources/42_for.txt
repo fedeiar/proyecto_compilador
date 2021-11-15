@@ -1,0 +1,38 @@
+class Init extends System{
+
+	static void main(){
+		
+		for(int v1 = 0; v1 < 5; v1++){
+			debugPrint(v1);
+		}
+		
+		
+	}
+}
+
+
+class A{
+
+	
+
+	
+}
+
+
+class B extends A{
+
+	
+	
+}
+
+
+class C extends B{
+	
+	
+}
+
+
+class A1{
+
+
+}

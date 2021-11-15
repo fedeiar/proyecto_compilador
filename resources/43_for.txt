@@ -1,0 +1,55 @@
+class Init extends System{
+
+	static void main(){
+		System s;
+		A a = new C();
+		int v0 = 4;
+		int elems = 0;
+		for(int v1 = 0; v1 < 5; v1++){
+			int v2 = v1;
+			for(int v3 = 0; v3 < 5; v3++){
+				s.printI(v3);
+				s.printC(' ');
+				elems++;
+			}
+			debugPrint(v1 + v0 + 1);
+			a.linea();
+			int v3 = v2;
+		}
+		int v1 = 8 + v0;
+		s.println();
+		debugPrint(elems);
+		s.println();
+		debugPrint(v1 + v0);
+		
+	}
+}
+
+
+class A{
+	dynamic void linea(){
+		System s;
+		s.printC('l');
+		s.printC('i');
+		s.printC('n');
+		s.printC('e');
+		s.printCln('a');
+	}
+}
+
+
+class B extends A{
+	
+}
+
+
+class C extends B{
+	
+	
+}
+
+
+class A1{
+
+
+}

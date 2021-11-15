@@ -34,7 +34,7 @@ public class NodoIf extends NodoSentencia{
 
         if(NodoExpresionCondicion.chequear().mismoTipo(new TipoBoolean())){ 
             nodoBloqueIfFicticio = new NodoBloque(); // Al tener este bloque ficticio, en caso de que el nodoSentenciaIf (o else) sea una declaración de varLocal, se insertará aca y luego quitada.
-            nodoBloqueIfFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.
+            nodoBloqueIfFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.  TODO: esta bien?
             TablaSimbolos.apilarBloqueActual(nodoBloqueIfFicticio);
             
             nodoSentenciaIf.chequear();
@@ -43,7 +43,7 @@ public class NodoIf extends NodoSentencia{
 
             if(nodoSentenciaElse != null){
                 nodoBloqueElseFicticio = new NodoBloque(); // Hacemos un bloque ficticio aparte para el else
-                nodoBloqueElseFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.
+                nodoBloqueElseFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.  TODO: esta bien?
                 TablaSimbolos.apilarBloqueActual(nodoBloqueElseFicticio);
 
                 nodoSentenciaElse.chequear();
