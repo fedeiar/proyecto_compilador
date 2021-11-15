@@ -28,7 +28,7 @@ public class NodoFor extends NodoSentencia{
 
     public void chequear() throws ExcepcionSemantica{ 
         nodoBloqueForFicticio = new NodoBloque(); // Idem a If, la declaración de la varLocal se insertará aca asi luego no es visible fuera del for.
-        nodoBloqueForFicticio.establecerOffsetDisponibleVarLocal(); // De esta manera, tendra el offset adecuado para las varLocales del bloque (si hay). // TODO: esta bien?
+        nodoBloqueForFicticio.establecerOffsetDisponibleVarLocal(); // De esta manera, tendra el offset adecuado para las varLocales del bloque (si hay).
         TablaSimbolos.apilarBloqueActual(nodoBloqueForFicticio);
         
         nodoVarLocal.chequear();
@@ -38,7 +38,7 @@ public class NodoFor extends NodoSentencia{
         nodoAsignacion.chequear();
         nodoSentenciaFor.chequear();
 
-        if(nodoSentenciaFor instanceof NodoVarLocal){ //TODO: esta bien? ya que sino es muy dificil permitirlo, java no lo permite, y no tiene sentido permitirlo.
+        if(nodoSentenciaFor instanceof NodoVarLocal){
             throw new ExcepcionSemantica(tokenFor, "no puede declararse una variable local como sentencia de un for");
         }
 
@@ -48,7 +48,7 @@ public class NodoFor extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         String etiqueta_ComienzoFor = nuevaEtiquetaComienzoFor();
         String etiqueta_FinFor = nuevaEtiquetaFinFor();
 
@@ -62,7 +62,7 @@ public class NodoFor extends NodoSentencia{
         TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_ComienzoFor);
         TablaSimbolos.instruccionesMaquina.add(etiqueta_FinFor + ": NOP");
 
-        nodoBloqueForFicticio.generarCodigo(); // Para liberar la memoria de la variable local declarada en el encabezado del for. //TODO: esta bien?
+        nodoBloqueForFicticio.liberarVarLocales(); // Para liberar la memoria de la variable local declarada en el encabezado del for.
     }
 
     private String nuevaEtiquetaComienzoFor(){

@@ -35,7 +35,7 @@ public class NodoPrimarioCasting extends NodoAcceso{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         nodoPrimario.establecerMismoLado(this.esLadoIzquierdoAsignacion);
         nodoPrimario.generarCodigo();
     }

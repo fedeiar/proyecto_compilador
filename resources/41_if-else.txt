@@ -6,22 +6,26 @@ class Init extends System{
 		if(true){
 			v1 = 5;
 			debugPrint(v1); // 5
-			if(true)
+			if(true){
 				int v3 = 7;
+			}
 			if(false){
 			}
-			else
+			else{
 				int v3;
+			}
 			v2 = 7;
 			int v3 = 8;
 		}else{
 			v2 = 10;
-			if(true)
+			if(true){
 				int v3;
+			}
 			int v3;
 		}
-		if(false)
+		if(false){
 			int v3;
+		}
 		else{
 			int v3 = 9;
 			debugPrint(v1); // 5

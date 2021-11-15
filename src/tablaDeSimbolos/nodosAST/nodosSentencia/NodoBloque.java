@@ -57,7 +57,7 @@ public class NodoBloque extends NodoSentencia{
 
     // Chequeo de sentencias
 
-    public void chequear() throws ExcepcionSemantica{ //TODO: esta bien como se asignan los offsets?
+    public void chequear() throws ExcepcionSemantica{
         this.establecerOffsetDisponibleVarLocal();
 
         TablaSimbolos.apilarBloqueActual(this); 
@@ -77,13 +77,17 @@ public class NodoBloque extends NodoSentencia{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ // TODO: esta bien como se liberan las varLocales?
+    public void generarCodigo(){
         TablaSimbolos.apilarBloqueActual(this);
         for(NodoSentencia sentencia : listaSentencias){
             sentencia.generarCodigo();
         }
         TablaSimbolos.desapilarBloqueActual();
         
+        liberarVarLocales();
+    }
+
+    public void liberarVarLocales(){
         TablaSimbolos.instruccionesMaquina.add("FMEM "+this.varLocales.size()+" ; Liberamos las variables locales utilizadas en el bloque actual");
     }
 

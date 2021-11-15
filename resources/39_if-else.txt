@@ -22,10 +22,12 @@ class Init extends System{
 		
 		
 		if(true)
-			if(false)
+			if(false){
 				int v5;
-			else
+			}
+			else{
 				int v6;
+			}
 		else{
 			int v5 = 9;
 			debugPrint(999);

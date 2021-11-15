@@ -4,12 +4,15 @@ class Init extends System{
 		int v1 = 5;
 		boolean v2 = true;
 		if(v2){
-			if(true)
+			if(true){
 				int v3 = 8;
-			if(false)
+			}
+			if(false){
 				int v3 = 10;
-			else
+			}
+			else{
 				int v3 = 12;
+			}
 		}
 		int v3;
 		if(true){
@@ -21,8 +24,9 @@ class Init extends System{
 			else
 				v3 = 10;
 		}
-		else
+		else{
 			int v4;
+		}
 		int v4 = 15;
 		debugPrint(v3); // 10
 		debugPrint(v4); // 15

@@ -13,9 +13,6 @@ public class NodoIf extends NodoSentencia{
     private NodoSentencia nodoSentenciaIf;
     private NodoSentencia nodoSentenciaElse;
 
-    private NodoBloque nodoBloqueIfFicticio; //TODO: puedo PORFAVOR prohibir las declaraciones de varLocal sin bloque y borrar esto??
-    private NodoBloque nodoBloqueElseFicticio;
-
     private static int numeroEtiquetaFinIf = 0;
     private static int numeroEtiquetaElse = 0;
 
@@ -25,48 +22,42 @@ public class NodoIf extends NodoSentencia{
         this.nodoSentenciaIf = sentenciaIf;
     }
 
-
     public void insertarSentenciaElse(NodoSentencia nodoSentenciaElse){
         this.nodoSentenciaElse = nodoSentenciaElse;
     }
 
     public void chequear() throws ExcepcionSemantica{
+        if(NodoExpresionCondicion.chequear().mismoTipo(new TipoBoolean())){
 
-        if(NodoExpresionCondicion.chequear().mismoTipo(new TipoBoolean())){ 
-            nodoBloqueIfFicticio = new NodoBloque(); // Al tener este bloque ficticio, en caso de que el nodoSentenciaIf (o else) sea una declaración de varLocal, se insertará aca y luego quitada.
-            nodoBloqueIfFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.  TODO: esta bien?
-            TablaSimbolos.apilarBloqueActual(nodoBloqueIfFicticio);
-            
             nodoSentenciaIf.chequear();
-            
-            TablaSimbolos.desapilarBloqueActual(); // Aca se quitan las variables locales declaradas en caso de que la sentencia no sea un bloque.
+            if(nodoSentenciaIf instanceof NodoVarLocal){
+                throw new ExcepcionSemantica(tokenIf, "no puede declararse una variable local como sentencia de un if");
+            }
 
             if(nodoSentenciaElse != null){
-                nodoBloqueElseFicticio = new NodoBloque(); // Hacemos un bloque ficticio aparte para el else
-                nodoBloqueElseFicticio.chequear(); // De esta manera, tendra el offset adecuado para las varLocales.  TODO: esta bien?
-                TablaSimbolos.apilarBloqueActual(nodoBloqueElseFicticio);
 
                 nodoSentenciaElse.chequear();
+                if(nodoSentenciaElse instanceof NodoVarLocal){
+                    throw new ExcepcionSemantica(tokenIf, "no puede declararse una variable local como sentencia de un else");
+                }
 
-                TablaSimbolos.desapilarBloqueActual(); // Aca se quitan las variables locales del else.
             }
         } else{
             throw new ExcepcionSemantica(tokenIf, "se esperaba una expresion de tipo boolean");
         }
-
     }
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         String etiqueta_finIf = nuevaEtiquetaFinIf();
         String etiqueta_else = nuevaEtiquetaElse();
+
         NodoExpresionCondicion.generarCodigo(); // Apila 1 si da true, 0 si da false.
         if(nodoSentenciaElse == null){
             TablaSimbolos.instruccionesMaquina.add("BF "+ etiqueta_finIf);
 
             nodoSentenciaIf.generarCodigo();
-            nodoBloqueIfFicticio.generarCodigo(); // Por si debemos liberar variables locales
             
             TablaSimbolos.instruccionesMaquina.add(etiqueta_finIf + ": NOP");
         } else{
@@ -76,9 +67,8 @@ public class NodoIf extends NodoSentencia{
             TablaSimbolos.instruccionesMaquina.add(etiqueta_else + ":");
             
             nodoSentenciaElse.generarCodigo();
-            nodoBloqueElseFicticio.generarCodigo(); // Por si debemos liberar variables locales.
 
-            TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_finIf); // TODO: no es redundante?
+            TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_finIf); // TODO: no es redundante? se puede sacar, probarlo despues.
             TablaSimbolos.instruccionesMaquina.add(etiqueta_finIf + ": NOP");
         }
     }

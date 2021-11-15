@@ -6,13 +6,13 @@ import tablaDeSimbolos.tipos.Tipo;
 public abstract class NodoEncadenado {
     
     protected NodoEncadenado nodoEncadenado;
-    protected boolean esLadoIzquierdoAsignacion = false; //TODO: asi esta bien?
+    protected boolean esLadoIzquierdoAsignacion = false;
 
     public void insertarNodoEncadenado(NodoEncadenado nodoEncadenado){
         this.nodoEncadenado = nodoEncadenado;
     }
 
-    public void establecerMismoLado(boolean esLadoIzquierdo){ //TODO: asi esta bien?
+    public void establecerMismoLado(boolean esLadoIzquierdo){
         esLadoIzquierdoAsignacion = esLadoIzquierdo;
     }
 
@@ -26,5 +26,4 @@ public abstract class NodoEncadenado {
 
     public abstract void generarCodigo();
 
-    
 }

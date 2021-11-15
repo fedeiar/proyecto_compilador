@@ -40,7 +40,7 @@ public class NodoReturn extends NodoSentencia{
             }
         }
 
-        cantVarLocalesALiberar = TablaSimbolos.getBloqueActual().getCantVarLocalesEnUnidad(); //TODO: esta bien conseguirlas aca? ya que las que declaro después del return no debería contabilizarlas para este return.
+        cantVarLocalesALiberar = TablaSimbolos.getBloqueActual().getCantVarLocalesEnUnidad();
     }
 
 

@@ -21,7 +21,7 @@ public class NodoString extends NodoOperando{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         String string = tokenLitString.getLexema();
         string = string.substring(1, string.length() - 1);
 

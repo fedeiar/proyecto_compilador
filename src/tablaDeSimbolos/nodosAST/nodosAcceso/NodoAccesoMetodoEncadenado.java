@@ -90,10 +90,10 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
             TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodo.getOffset()+" ; Cargo el metodo con su offset en la VT");
             TablaSimbolos.instruccionesMaquina.add("CALL"); 
         } else{ // Es estatico
+            TablaSimbolos.instruccionesMaquina.add("POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica");
             if(!tipoMetodo.mismoTipo(new TipoVoid())){
                 TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
             }
-            TablaSimbolos.instruccionesMaquina.add("POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica");
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
             }

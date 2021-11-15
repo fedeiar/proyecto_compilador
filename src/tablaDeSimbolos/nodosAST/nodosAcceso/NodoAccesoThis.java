@@ -32,7 +32,7 @@ public class NodoAccesoThis extends NodoPrimario{
         }
     }
 
-    public boolean esLlamable(){ //TODO: esta bien?
+    public boolean esLlamable(){
         if(nodoEncadenado != null){
             return nodoEncadenado.esLlamable();
         } else{
@@ -43,7 +43,7 @@ public class NodoAccesoThis extends NodoPrimario{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         TablaSimbolos.instruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
       
         if(nodoEncadenado != null){
