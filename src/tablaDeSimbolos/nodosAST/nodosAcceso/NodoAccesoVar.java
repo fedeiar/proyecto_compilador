@@ -23,29 +23,23 @@ public class NodoAccesoVar extends NodoPrimario{
         return tokenIdVar;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{  //TODO: ahora que tenemos IVariable, achicar el codigo de esto.
-        Tipo tipoVariable;
+    public Tipo chequear() throws ExcepcionSemantica{
         variable = TablaSimbolos.getVarLocalUnidadActual(tokenIdVar.getLexema());
-        if(variable != null){
-            tipoVariable = variable.getTipo();
-        } else{
+        if(variable == null){
             variable = TablaSimbolos.unidadActual.getParametroFormal(tokenIdVar.getLexema());
-            if(variable != null){
-                tipoVariable = variable.getTipo();
-            } else{
+            if(variable == null){
                 variable = TablaSimbolos.claseActual.getAtributo(tokenIdVar.getLexema());
-                if(variable != null){
-                    if(TablaSimbolos.unidadActual.esDinamico()){
-                        tipoVariable = variable.getTipo();
-                    }
-                    else{
-                        throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica");
-                    }
-                } else{
+                if(variable == null){
                     throw new ExcepcionSemantica(tokenIdVar, "la variable "+tokenIdVar.getLexema()+" no fue declarada o no es accesible");
+                } else{
+                    if(!TablaSimbolos.unidadActual.esDinamico()){
+                        throw new ExcepcionSemantica(tokenIdVar, "no se puede acceder a una variable de instancia en una unidad estatica"); 
+                    }
                 }
             }
         }
+
+        Tipo tipoVariable = variable.getTipo();
 
         if(nodoEncadenado != null){
             return nodoEncadenado.chequear(tipoVariable); 
