@@ -22,7 +22,7 @@ public class Main {
                 TablaSimbolos.getInstance();
 
                 // Primer pasada: creación del sintáctico
-                new AnalizadorSintactico(analizadorLexico); 
+                new AnalizadorSintactico(analizadorLexico);
 
                 // Segunda pasada (tiene dos partes)
 

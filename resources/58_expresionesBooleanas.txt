@@ -1,0 +1,74 @@
+class Init extends System{
+
+	static void main(){
+		if( (3 < 3) || (4 < 3) || !(3 < 4) ){
+			printSln("NO!");
+			return;
+		} else{
+			if( (3 <= 3) && (3 <= 4) && !(4 <= 3) ){
+				printSln("YES!");
+			} else{
+				printSln("NO!");
+				return;
+			}
+		}
+		
+		if( ( (4 + 7) > (7 + 4) ) || ( (( 3 * 2) / 6) > ((4 * 2) / 8) ) || !(4 > 3) ){
+			printSln("NO!");
+			return;
+		}else{
+			if( (4 >= 4) && (4 >= 3) && !(3 >= 4) ){
+				printSln("YES_2!");
+			}else
+				printSln("NO!");
+			return;
+		}
+		printSln("NO!");
+			
+		 
+	}
+
+	
+}
+
+
+class A{
+	
+	public int a1A;
+	public A a2A;
+
+	A(){
+		a1A = 5;
+		a2A = this;
+	}
+}
+
+
+class B extends A{
+
+
+	B(){
+		a1A = 10;
+	}
+
+	dynamic int met1B(){
+		return new C().met1C().met2C();
+	}
+}
+
+
+class C extends B{
+		
+	dynamic C met1C(){
+		return this;
+	}
+
+	static int met2C(){
+		return 10;
+	}
+}
+
+
+class A1{
+
+}
