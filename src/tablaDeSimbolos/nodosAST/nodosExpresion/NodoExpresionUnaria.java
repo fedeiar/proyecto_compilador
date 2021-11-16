@@ -34,7 +34,7 @@ public class NodoExpresionUnaria extends NodoExpresion{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ // TODO: esta bien?
+    public void generarCodigo(){
         nodoOperando.generarCodigo();
         if(tokenOperador.getLexema().equals("+")){
             // No hacer nada

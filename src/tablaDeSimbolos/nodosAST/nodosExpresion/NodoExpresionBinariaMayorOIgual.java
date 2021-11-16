@@ -22,7 +22,7 @@ public class NodoExpresionBinariaMayorOIgual extends NodoExpresionBinaria{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien asi?
+    public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
         TablaSimbolos.instruccionesMaquina.add("GE");

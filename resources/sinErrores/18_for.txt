@@ -50,10 +50,12 @@ class C extends B{
 		for(B v2 = this.m5B(p1).a2C; (v2 == p1) && (a2C != null); this.a5B++){
 			int v5;
 			for(A v3 = v2; (v3 != v2) && ( ((A)p1) == (B)new A()); this.a2C = new C()){
-				if((B)v3 == v2)
+				if((B)v3 == v2){
 					char v4;
-				else
+				}
+				else{
 					String v4;
+				}
 				int v4 = 8;
 			}
 			for(A v3 = m1A(); (v2 != a2C); v5--)

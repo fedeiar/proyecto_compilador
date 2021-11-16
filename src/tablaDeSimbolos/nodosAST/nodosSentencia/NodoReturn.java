@@ -48,7 +48,7 @@ public class NodoReturn extends NodoSentencia{
 
     public void generarCodigo(){
 
-        TablaSimbolos.instruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad al hacer return");
+        TablaSimbolos.instruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad hasta el momento de hacer return");
         if(unidadContenedora.getTipoUnidad().mismoTipo(new TipoVoid())){
             TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
             TablaSimbolos.instruccionesMaquina.add("RET "+ unidadContenedora.getOffsetRetornoUnidad() +" ; Retornamos de la unidad liberando n lugares en la pila");

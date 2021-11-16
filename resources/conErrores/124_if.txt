@@ -1,0 +1,19 @@
+///[Error:if|10]
+class A {
+	
+}
+
+class B extends A{
+
+	dynamic B m2B(A p2){
+		int v2;
+		if( 3 < 4 )
+			int v1;
+		
+	}
+}
+
+class Init{
+
+	static void main(){}
+}

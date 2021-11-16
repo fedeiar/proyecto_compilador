@@ -92,6 +92,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         }
 
         if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
             nodoEncadenado.generarCodigo();
         }
     }

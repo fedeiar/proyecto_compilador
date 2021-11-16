@@ -25,10 +25,6 @@ class B extends A{
 		if( ( (3 + 8) < (9 % 5) ) && true || (!false && (3 <= 8)) ){
 			v1 = 3;
 			A v2;
-			if(v2 == new B())
-				A v4 = new A();
-			else
-				B v5;
 			C v3;
 			v2 = new A();
 			v1 = 8;
@@ -37,8 +33,6 @@ class B extends A{
 			if(new D() != new A()){
 				String v4;
 				v4 = "hola";
-				if(new Object() == a3A)
-					Object v6 = p2;
 				Object v6 = new System();
 				a2B = !true;
 				v1 = -3;
@@ -51,21 +45,21 @@ class B extends A{
 			int v2;
 			
 		}
-		if(true)
-			int v4;
-		else
-			int v4;
 		int v4;
 		if(new A() == new D())
 			if(new D() == new A())
-				if(a0A != a3B)
+				if(a0A != a3B){
 					char v5 = 'f';
-				else
+				}
+				else{
 					char v5 = 'e';
-			else
+				}
+			else{
 				char v5 = 'd';
-		else
+			}
+		else{
 			char v5 = 'e';
+		}
 		char v5 = 'i';
 		C v3 = this.a4B;
 		if(3 == 5){

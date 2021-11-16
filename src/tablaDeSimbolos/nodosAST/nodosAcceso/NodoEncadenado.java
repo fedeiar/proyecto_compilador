@@ -6,14 +6,14 @@ import tablaDeSimbolos.tipos.Tipo;
 public abstract class NodoEncadenado {
     
     protected NodoEncadenado nodoEncadenado;
-    protected boolean esLadoIzquierdoAsignacion = false;
+    protected boolean esLadoIzquierdoAsignacion = false; // Por default, el encadenado es una expresión (es decir, un lado derecho)
 
     public void insertarNodoEncadenado(NodoEncadenado nodoEncadenado){
         this.nodoEncadenado = nodoEncadenado;
     }
 
     public void establecerMismoLado(boolean esLadoIzquierdo){
-        esLadoIzquierdoAsignacion = esLadoIzquierdo;
+        this.esLadoIzquierdoAsignacion = esLadoIzquierdo;
     }
 
     public abstract Tipo chequear(Tipo tipo) throws ExcepcionSemantica;

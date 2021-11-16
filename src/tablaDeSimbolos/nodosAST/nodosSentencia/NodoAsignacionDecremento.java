@@ -29,7 +29,7 @@ public class NodoAsignacionDecremento extends NodoAsignacion{
         }
     }
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         nodoAccesoLadoIzq.generarCodigo();
         TablaSimbolos.instruccionesMaquina.add("PUSH 1 ; agregamos un 1 para incrementar la variable en la pila");
         TablaSimbolos.instruccionesMaquina.add("SUB ; obtenemos la expresion resultante del incremento");

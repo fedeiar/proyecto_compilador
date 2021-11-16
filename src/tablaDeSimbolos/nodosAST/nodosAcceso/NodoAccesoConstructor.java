@@ -87,6 +87,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
         TablaSimbolos.instruccionesMaquina.add("CALL");
         
         if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
             nodoEncadenado.generarCodigo();
         }
     }

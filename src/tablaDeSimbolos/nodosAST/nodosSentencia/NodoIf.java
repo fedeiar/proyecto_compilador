@@ -68,7 +68,6 @@ public class NodoIf extends NodoSentencia{
             
             nodoSentenciaElse.generarCodigo();
 
-            TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_finIf); // TODO: no es redundante? se puede sacar, probarlo despues.
             TablaSimbolos.instruccionesMaquina.add(etiqueta_finIf + ": NOP");
         }
     }

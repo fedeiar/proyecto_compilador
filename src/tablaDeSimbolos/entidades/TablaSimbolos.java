@@ -164,20 +164,9 @@ public class TablaSimbolos {
         }
     }
 
-    public void consolidar() throws ExcepcionSemantica{ //TODO: borrar todos los println despues
+    public void consolidar() throws ExcepcionSemantica{ 
         for(Clase clase : clases.values()){
-            //System.out.println("\n----ESTOY EN: "+clase.getTokenIdClase().getLexema()+"----\n");
             clase.consolidar();
-            /*
-            for(Map.Entry<String,Atributo> atr : clase.getHashAtributos().entrySet()){
-                System.out.println(atr.getKey()+" "+atr.getValue().getOffset());
-            }
-            */
-            /*
-            for(Metodo metodo : clase.getMetodos()){
-                System.out.println(metodo.toString()+" "+metodo.getOffset());
-            }
-            */
         }
     }
 

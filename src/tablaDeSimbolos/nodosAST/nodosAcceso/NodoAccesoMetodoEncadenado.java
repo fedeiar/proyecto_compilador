@@ -102,6 +102,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         }
 
         if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
             nodoEncadenado.generarCodigo();
         }
     }
