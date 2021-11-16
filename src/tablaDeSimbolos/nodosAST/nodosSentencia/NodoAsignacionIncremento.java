@@ -32,8 +32,8 @@ public class NodoAsignacionIncremento extends NodoAsignacion{
 
     public void generarCodigo(){
         nodoAccesoLadoIzq.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("PUSH 1 ; agregamos un 1 para incrementar la variable en la pila");
-        TablaSimbolos.instruccionesMaquina.add("ADD ; obtenemos la expresion resultante del incremento");
+        TablaSimbolos.listaInstruccionesMaquina.add("PUSH 1 ; agregamos un 1 para incrementar la variable en la pila");
+        TablaSimbolos.listaInstruccionesMaquina.add("ADD ; obtenemos la expresion resultante del incremento");
         nodoAccesoLadoIzq.establecerComoLadoIzquierdo();
         nodoAccesoLadoIzq.generarCodigo();
     }

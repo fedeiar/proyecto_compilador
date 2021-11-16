@@ -20,6 +20,6 @@ public class NodoCaracter extends NodoOperando{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+tokenLitCaracter.getLexema()+" ; Apilo un literal caracter");
+        TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+tokenLitCaracter.getLexema()+" ; Apilo un literal caracter");
     }
 }

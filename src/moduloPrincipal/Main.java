@@ -14,6 +14,7 @@ public class Main {
         
         try{
             String filename = args[0];
+            String output_file = args[1];
 
             try {
                 AnalizadorLexico analizadorLexico = new AnalizadorLexico(new GestorDeArchivo(filename));
@@ -36,7 +37,7 @@ public class Main {
                 // Generacion codigo intermedio
 
                 TablaSimbolos.generarCodigo();
-                EscritorArchivoSalida.crearArchivo("output.txt", TablaSimbolos.instruccionesMaquina);
+                EscritorArchivoSalida.crearArchivo(output_file, TablaSimbolos.listaInstruccionesMaquina);
 
 
                 System.out.println("Compilacion exitosa\n\n[SinErrores]");

@@ -21,6 +21,6 @@ public class NodoEntero extends NodoOperando{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+tokenLitEntero.getLexema()+" ; Apilo un literal entero");
+        TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+tokenLitEntero.getLexema()+" ; Apilo un literal entero");
     }
 }

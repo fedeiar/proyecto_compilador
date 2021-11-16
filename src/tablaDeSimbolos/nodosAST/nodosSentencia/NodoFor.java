@@ -53,14 +53,14 @@ public class NodoFor extends NodoSentencia{
         String etiqueta_FinFor = nuevaEtiquetaFinFor();
 
         nodoVarLocal.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add(etiqueta_ComienzoFor + ":");
+        TablaSimbolos.listaInstruccionesMaquina.add(etiqueta_ComienzoFor + ":");
         nodoExpresionBooleana.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("BF "+etiqueta_FinFor);
+        TablaSimbolos.listaInstruccionesMaquina.add("BF "+etiqueta_FinFor);
         
         nodoSentenciaFor.generarCodigo();
         nodoAsignacion.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_ComienzoFor);
-        TablaSimbolos.instruccionesMaquina.add(etiqueta_FinFor + ": NOP");
+        TablaSimbolos.listaInstruccionesMaquina.add("JUMP "+ etiqueta_ComienzoFor);
+        TablaSimbolos.listaInstruccionesMaquina.add(etiqueta_FinFor + ": NOP");
 
         nodoBloqueForFicticio.liberarVarLocales(); // Para liberar la memoria de la variable local declarada en el encabezado del for.
     }

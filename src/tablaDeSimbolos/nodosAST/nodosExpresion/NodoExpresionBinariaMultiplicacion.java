@@ -25,6 +25,6 @@ public class NodoExpresionBinariaMultiplicacion extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("MUL");
+        TablaSimbolos.listaInstruccionesMaquina.add("MUL");
     }
 }

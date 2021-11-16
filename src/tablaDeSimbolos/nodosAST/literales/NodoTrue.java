@@ -20,6 +20,6 @@ public class NodoTrue extends NodoBoolean{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("PUSH "+1+" ; Apilo true");
+        TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+1+" ; Apilo true");
     }
 }

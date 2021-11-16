@@ -55,20 +55,20 @@ public class NodoIf extends NodoSentencia{
 
         NodoExpresionCondicion.generarCodigo(); // Apila 1 si da true, 0 si da false.
         if(nodoSentenciaElse == null){
-            TablaSimbolos.instruccionesMaquina.add("BF "+ etiqueta_finIf);
+            TablaSimbolos.listaInstruccionesMaquina.add("BF "+ etiqueta_finIf);
 
             nodoSentenciaIf.generarCodigo();
             
-            TablaSimbolos.instruccionesMaquina.add(etiqueta_finIf + ": NOP");
+            TablaSimbolos.listaInstruccionesMaquina.add(etiqueta_finIf + ": NOP");
         } else{
-            TablaSimbolos.instruccionesMaquina.add("BF "+ etiqueta_else);
+            TablaSimbolos.listaInstruccionesMaquina.add("BF "+ etiqueta_else);
             nodoSentenciaIf.generarCodigo();
-            TablaSimbolos.instruccionesMaquina.add("JUMP "+ etiqueta_finIf);
-            TablaSimbolos.instruccionesMaquina.add(etiqueta_else + ":");
+            TablaSimbolos.listaInstruccionesMaquina.add("JUMP "+ etiqueta_finIf);
+            TablaSimbolos.listaInstruccionesMaquina.add(etiqueta_else + ":");
             
             nodoSentenciaElse.generarCodigo();
 
-            TablaSimbolos.instruccionesMaquina.add(etiqueta_finIf + ": NOP");
+            TablaSimbolos.listaInstruccionesMaquina.add(etiqueta_finIf + ": NOP");
         }
     }
 

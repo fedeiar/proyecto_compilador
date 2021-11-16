@@ -25,7 +25,7 @@ public class NodoExpresionBinariaMayor extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("GT");
+        TablaSimbolos.listaInstruccionesMaquina.add("GT");
     }
 
 }

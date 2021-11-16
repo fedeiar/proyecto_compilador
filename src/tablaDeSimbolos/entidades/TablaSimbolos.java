@@ -25,14 +25,14 @@ public class TablaSimbolos {
     public static Unidad unidadActual;
     public static List<NodoBloque> stackBloqueActual;
 
-    public static List<String> instruccionesMaquina;
+    public static List<String> listaInstruccionesMaquina;
 
     private static Metodo metodoMainMiniJava;
 
     private TablaSimbolos(){
         clases = new HashMap<String, Clase>();
         stackBloqueActual = new ArrayList<NodoBloque>();
-        instruccionesMaquina = new ArrayList<>();
+        listaInstruccionesMaquina = new ArrayList<>();
 
         try{
             Metodo metodo; 
@@ -108,7 +108,7 @@ public class TablaSimbolos {
         clases = null;
         claseActual = null;
         unidadActual = null;
-        instruccionesMaquina = null;
+        listaInstruccionesMaquina = null;
     }
 
 
@@ -212,7 +212,7 @@ public class TablaSimbolos {
         System.out.println("\n-----------------GENERANDO CODIGO----------------\n");
         generarLlamadaMain();
         generarRutinasHeap();
-        instruccionesMaquina.add("\n\n"); // Separador
+        listaInstruccionesMaquina.add("\n\n"); // Separador
         
         for(Clase clase : clases.values()){
             clase.generarCodigo(); // Generamos las VT de cada clase
@@ -220,8 +220,8 @@ public class TablaSimbolos {
     }
 
     private static void generarLlamadaMain(){
-        instruccionesMaquina.add(".CODE\n");
-        instruccionesMaquina.add("PUSH simple_heap_init \n"+
+        listaInstruccionesMaquina.add(".CODE\n");
+        listaInstruccionesMaquina.add("PUSH simple_heap_init \n"+
         "CALL\n"+
         "PUSH "+ metodoMainMiniJava.toStringLabel() +"\n"+
         "CALL\n"+
@@ -229,10 +229,10 @@ public class TablaSimbolos {
     }
 
     private static void generarRutinasHeap(){
-        instruccionesMaquina.add("simple_heap_init: \n"+
+        listaInstruccionesMaquina.add("simple_heap_init: \n"+
         "RET 0 ; Retorna inmediatamente\n");
     
-        instruccionesMaquina.add("simple_malloc:\n"+
+        listaInstruccionesMaquina.add("simple_malloc:\n"+
         "LOADFP	; Inicialización unidad\n"+
         "LOADSP\n"+
         "STOREFP ; Finaliza inicialización del RA\n"+

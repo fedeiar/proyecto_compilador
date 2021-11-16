@@ -88,7 +88,7 @@ public class NodoBloque extends NodoSentencia{
     }
 
     public void liberarVarLocales(){
-        TablaSimbolos.instruccionesMaquina.add("FMEM "+this.varLocales.size()+" ; Liberamos las variables locales utilizadas en el bloque actual");
+        TablaSimbolos.listaInstruccionesMaquina.add("FMEM "+this.varLocales.size()+" ; Liberamos las variables locales utilizadas en el bloque actual");
     }
 
     

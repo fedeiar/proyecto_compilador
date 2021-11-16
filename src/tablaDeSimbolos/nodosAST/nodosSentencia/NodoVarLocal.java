@@ -64,10 +64,10 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservamos un lugar para declaracion de la variable local " + tokenIdVar.getLexema());
+        TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservamos un lugar para declaracion de la variable local " + tokenIdVar.getLexema());
         if(nodoExpresion != null){
             nodoExpresion.generarCodigo();
-            TablaSimbolos.instruccionesMaquina.add("STORE "+this.getOffset()+" ; almaceno el valor de la expresion en la variable local "+ tokenIdVar.getLexema()); 
+            TablaSimbolos.listaInstruccionesMaquina.add("STORE "+this.getOffset()+" ; almaceno el valor de la expresion en la variable local "+ tokenIdVar.getLexema()); 
         }
     }
     

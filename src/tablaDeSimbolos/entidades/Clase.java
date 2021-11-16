@@ -385,7 +385,7 @@ public class Clase {
     public void generarCodigo(){ 
         TablaSimbolos.claseActual = this;
         // Creacion de la VT. Si no tiene métodos dinámicos, entonces hay que hacer una VT que tenga una etiqueta vacía (NOP)
-        TablaSimbolos.instruccionesMaquina.add(".DATA");
+        TablaSimbolos.listaInstruccionesMaquina.add(".DATA");
         String etiquetasVT;
         if(mapeoMetodosPorOffset.size() != 0){
             etiquetasVT = this.toStringLabelVT() + ": DW ";
@@ -397,27 +397,27 @@ public class Clase {
         } else{
             etiquetasVT = this.toStringLabelVT() + ": NOP";
         }
-        TablaSimbolos.instruccionesMaquina.add(etiquetasVT+"\n");
+        TablaSimbolos.listaInstruccionesMaquina.add(etiquetasVT+"\n");
 
         // Codigo intermedio de los constructores y de los metodos (estaticos y dinamicos)
-        TablaSimbolos.instruccionesMaquina.add(".CODE");
+        TablaSimbolos.listaInstruccionesMaquina.add(".CODE");
         String etiquetaCodigoMetodo;
         for(Metodo metodo : metodos.values()){
             if(metodo.perteneceAClase(this.tokenIdClase)){
                 etiquetaCodigoMetodo = metodo.toStringLabel() + ":";
-                TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoMetodo);
+                TablaSimbolos.listaInstruccionesMaquina.add(etiquetaCodigoMetodo);
                 metodo.generarCodigo();
-                TablaSimbolos.instruccionesMaquina.add(""); // Separador
+                TablaSimbolos.listaInstruccionesMaquina.add(""); // Separador
             }
         }
         String etiquetaCodigoConstructor;
         for(Constructor constructor : constructores.values()){
             etiquetaCodigoConstructor = constructor.toStringLabel() + ":";
-            TablaSimbolos.instruccionesMaquina.add(etiquetaCodigoConstructor);
+            TablaSimbolos.listaInstruccionesMaquina.add(etiquetaCodigoConstructor);
             constructor.generarCodigo();
-            TablaSimbolos.instruccionesMaquina.add(""); // Separador
+            TablaSimbolos.listaInstruccionesMaquina.add(""); // Separador
         }
-        TablaSimbolos.instruccionesMaquina.add("\n"); // Separador
+        TablaSimbolos.listaInstruccionesMaquina.add("\n"); // Separador
     }
 
     public String toStringLabelVT(){

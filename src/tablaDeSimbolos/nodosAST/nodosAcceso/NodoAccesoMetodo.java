@@ -66,29 +66,29 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
 
     public void generarCodigo(){ 
         if(metodoLlamado.esDinamico()){ // Es dinamico
-            TablaSimbolos.instruccionesMaquina.add("LOAD 3"); // Cargo this
+            TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3"); // Cargo this
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
-                TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo lugar para el valor retorno de la llamada");
-                TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");
+                TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo lugar para el valor retorno de la llamada");
+                TablaSimbolos.listaInstruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");
             }
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
-                TablaSimbolos.instruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
+                TablaSimbolos.listaInstruccionesMaquina.add("SWAP"); // Pongo this en el tope de la pila
             }
-            TablaSimbolos.instruccionesMaquina.add("DUP ; Duplico this para no perderlo al hacer LOADREF");
-            TablaSimbolos.instruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
-            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset() +" ; Cargo el metodo con su offset en la VT");
-            TablaSimbolos.instruccionesMaquina.add("CALL"); 
+            TablaSimbolos.listaInstruccionesMaquina.add("DUP ; Duplico this para no perderlo al hacer LOADREF");
+            TablaSimbolos.listaInstruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
+            TablaSimbolos.listaInstruccionesMaquina.add("LOADREF "+ metodoLlamado.getOffset() +" ; Cargo el metodo con su offset en la VT");
+            TablaSimbolos.listaInstruccionesMaquina.add("CALL"); 
             
         } else{ // Es estatico
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
-                TablaSimbolos.instruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
+                TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
             }
             for(NodoExpresion nodoExpresion : listaParametrosActuales){
                 nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
             }
-            TablaSimbolos.instruccionesMaquina.add("PUSH "+ metodoLlamado.toStringLabel() + " ; Pongo la etiqueta del metodo");
-            TablaSimbolos.instruccionesMaquina.add("CALL");
+            TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+ metodoLlamado.toStringLabel() + " ; Pongo la etiqueta del metodo");
+            TablaSimbolos.listaInstruccionesMaquina.add("CALL");
         }
 
         if(nodoEncadenado != null){

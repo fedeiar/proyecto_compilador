@@ -84,10 +84,10 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
 
     public void generarCodigo(){ //TODO: esta bien asi?
         if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
-            TablaSimbolos.instruccionesMaquina.add("LOADREF "+ atributo.getOffset() +" ; Apilo el valor del atributo "+atributo.getTokenIdVar().getLexema()+" en la pila");
+            TablaSimbolos.listaInstruccionesMaquina.add("LOADREF "+ atributo.getOffset() +" ; Apilo el valor del atributo "+atributo.getTokenIdVar().getLexema()+" en la pila");
         } else{
-            TablaSimbolos.instruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1");
-            TablaSimbolos.instruccionesMaquina.add("STOREREF "+ atributo.getOffset() +" ; Guardo el valor de la expresión en el atributo "+ atributo.getTokenIdVar().getLexema()); 
+            TablaSimbolos.listaInstruccionesMaquina.add("SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1");
+            TablaSimbolos.listaInstruccionesMaquina.add("STOREREF "+ atributo.getOffset() +" ; Guardo el valor de la expresión en el atributo "+ atributo.getTokenIdVar().getLexema()); 
         }
         
         if(nodoEncadenado != null){

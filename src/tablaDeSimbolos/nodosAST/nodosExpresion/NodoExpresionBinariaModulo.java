@@ -25,6 +25,6 @@ public class NodoExpresionBinariaModulo extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("MOD");
+        TablaSimbolos.listaInstruccionesMaquina.add("MOD");
     }
 }

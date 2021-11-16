@@ -28,6 +28,6 @@ public class NodoExpresionBinariaIgual extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("EQ");
+        TablaSimbolos.listaInstruccionesMaquina.add("EQ");
     }
 }

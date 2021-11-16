@@ -48,15 +48,15 @@ public class NodoReturn extends NodoSentencia{
 
     public void generarCodigo(){
 
-        TablaSimbolos.instruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad hasta el momento de hacer return");
+        TablaSimbolos.listaInstruccionesMaquina.add("FMEM "+ cantVarLocalesALiberar +" ; Liberamos las variables locales utilizadas en la unidad hasta el momento de hacer return");
         if(unidadContenedora.getTipoUnidad().mismoTipo(new TipoVoid())){
-            TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ unidadContenedora.getOffsetRetornoUnidad() +" ; Retornamos de la unidad liberando n lugares en la pila");
+            TablaSimbolos.listaInstruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
+            TablaSimbolos.listaInstruccionesMaquina.add("RET "+ unidadContenedora.getOffsetRetornoUnidad() +" ; Retornamos de la unidad liberando n lugares en la pila");
         } else{ // Devuelve algo y tiene una expresion.
             nodoExpresionRetorno.generarCodigo();
-            TablaSimbolos.instruccionesMaquina.add("STORE "+ unidadContenedora.getOffsetStoreValorRetorno() +" ; Colocamos el valor de la expresion en la locacion reservada para el retorno");
-            TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
-            TablaSimbolos.instruccionesMaquina.add("RET "+ unidadContenedora.getOffsetRetornoUnidad() +" ; Retornamos de la unidad liberando n lugares en la pila");
+            TablaSimbolos.listaInstruccionesMaquina.add("STORE "+ unidadContenedora.getOffsetStoreValorRetorno() +" ; Colocamos el valor de la expresion en la locacion reservada para el retorno");
+            TablaSimbolos.listaInstruccionesMaquina.add("STOREFP ; Actualizamos el FP para que apunte al RA del llamador");
+            TablaSimbolos.listaInstruccionesMaquina.add("RET "+ unidadContenedora.getOffsetRetornoUnidad() +" ; Retornamos de la unidad liberando n lugares en la pila");
         }
 
 

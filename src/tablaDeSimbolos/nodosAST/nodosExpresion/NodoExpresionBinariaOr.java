@@ -25,6 +25,6 @@ public class NodoExpresionBinariaOr extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("OR");
+        TablaSimbolos.listaInstruccionesMaquina.add("OR");
     }
 }

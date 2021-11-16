@@ -27,7 +27,7 @@ public class NodoExpresionBinariaNotIgual extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("NE");
+        TablaSimbolos.listaInstruccionesMaquina.add("NE");
     }
 
 

@@ -148,14 +148,14 @@ public abstract class Unidad {
     public void generarCodigo(){ 
         TablaSimbolos.unidadActual = this;
 
-        TablaSimbolos.instruccionesMaquina.add("LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.");
-        TablaSimbolos.instruccionesMaquina.add("LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada");
-        TablaSimbolos.instruccionesMaquina.add("STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.");
+        TablaSimbolos.listaInstruccionesMaquina.add("LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.");
+        TablaSimbolos.listaInstruccionesMaquina.add("LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada");
+        TablaSimbolos.listaInstruccionesMaquina.add("STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.");
 
         bloque.generarCodigo();
         
-        TablaSimbolos.instruccionesMaquina.add("STOREFP");
-        TablaSimbolos.instruccionesMaquina.add("RET "+ this.getOffsetRetornoUnidad() +" ; Retorna de la unidad liberando n lugares en la pila");
+        TablaSimbolos.listaInstruccionesMaquina.add("STOREFP");
+        TablaSimbolos.listaInstruccionesMaquina.add("RET "+ this.getOffsetRetornoUnidad() +" ; Retorna de la unidad liberando n lugares en la pila");
     }
     
 }

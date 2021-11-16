@@ -39,9 +39,9 @@ public class NodoExpresionUnaria extends NodoExpresion{
         if(tokenOperador.getLexema().equals("+")){
             // No hacer nada
         } else if(tokenOperador.getLexema().equals("-")){
-            TablaSimbolos.instruccionesMaquina.add("NEG");
+            TablaSimbolos.listaInstruccionesMaquina.add("NEG");
         } else{ // Si no el operador es un !
-            TablaSimbolos.instruccionesMaquina.add("NOT");
+            TablaSimbolos.listaInstruccionesMaquina.add("NOT");
         }
     }
 

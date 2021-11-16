@@ -13,13 +13,13 @@ public class MetodoPrintln extends Metodo{
 
 
     public void generarCodigo(){
-        TablaSimbolos.instruccionesMaquina.add("LOADFP");
-        TablaSimbolos.instruccionesMaquina.add("LOADSP");
-        TablaSimbolos.instruccionesMaquina.add("STOREFP");
+        TablaSimbolos.listaInstruccionesMaquina.add("LOADFP");
+        TablaSimbolos.listaInstruccionesMaquina.add("LOADSP");
+        TablaSimbolos.listaInstruccionesMaquina.add("STOREFP");
 
-        TablaSimbolos.instruccionesMaquina.add("PRNLN"); // Lo consumimos y lo imprimimos
+        TablaSimbolos.listaInstruccionesMaquina.add("PRNLN"); // Lo consumimos y lo imprimimos
 
-        TablaSimbolos.instruccionesMaquina.add("STOREFP");
-        TablaSimbolos.instruccionesMaquina.add("RET "+ 0 +" ; +0 ya que no tiene this y no tiene parametros formales");
+        TablaSimbolos.listaInstruccionesMaquina.add("STOREFP");
+        TablaSimbolos.listaInstruccionesMaquina.add("RET "+ 0 +" ; +0 ya que no tiene this y no tiene parametros formales");
     }
 }

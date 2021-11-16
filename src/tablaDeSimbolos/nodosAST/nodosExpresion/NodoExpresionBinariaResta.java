@@ -25,6 +25,6 @@ public class NodoExpresionBinariaResta extends NodoExpresionBinaria{
     public void generarCodigo(){
         nodoExpresionLadoIzq.generarCodigo();
         nodoExpresionLadoDer.generarCodigo();
-        TablaSimbolos.instruccionesMaquina.add("SUB");
+        TablaSimbolos.listaInstruccionesMaquina.add("SUB");
     }
 }
