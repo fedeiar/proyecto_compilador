@@ -1,45 +1,21 @@
 .CODE
-	PUSH simple_heap_init
-	CALL
-	RMEM 1
-	PUSH 5
-	PUSH simple_malloc
-	CALL
-	DUP
-	PUSH 'h'
-	STOREREF 0
-	DUP
-	PUSH 'o'
-	STOREREF 1
-	DUP
-	PUSH 'l'
-	STOREREF 2
-	DUP
-	PUSH 'a'
-	STOREREF 3
-	DUP
-	PUSH 0
-	STOREREF 4
-	SPRINT
+	READ
+	PUSH 48
+	SUB
+	IPRINT
+	PRNLN
+	READ
+	READ
+	
+
+	READ
+	PUSH 48
+	SUB
+	IPRINT
+	PRNLN
+	READ
+	READ
+	
+	
+	
 	HALT
-
-
-
-
-simple_heap_init:
-	RET 0	; Retorna inmediatamente
-
-simple_malloc:
-	LOADFP	; Inicialización unidad	
-	LOADSP
-	STOREFP ; Finaliza inicialización del RA
-	LOADHL	; hl
-	DUP	; hl
-	PUSH 1	; 1
-	ADD	; hl+1
-	STORE 4 ; Guarda el resultado (un puntero a la primer celda de la región de memoria)
- 	LOAD 3	; Carga la cantidad de celdas a alojar (parámetro que debe ser positivo)
-	ADD
-	STOREHL ; Mueve el heap limit (hl). Expande el heap
-	STOREFP
-	RET 1	; Retorna eliminando el parámetro
