@@ -42,9 +42,36 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_A: NOP
+VT_A: DW lmet1A@@A
 
 .CODE
+lmet1A@@A:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+PUSH 8 ; Apilo un literal entero
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 1 ; Guardo el valor de la expresión en el atributo
+PUSH 10 ; Apilo un literal entero
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 2 ; Guardo el valor de la expresión en el atributo
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 1 ; Apilo el valor del atributo en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 2 ; Apilo el valor del atributo en la pila
+ADD
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
+CALL
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
 lA@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
@@ -63,851 +90,24 @@ lmain@@Init:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local a
-PUSH 0 ; Apilo un literal entero
-STORE 0 ; almaceno el valor de la expresion en la variable local a
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local b
-PUSH 1 ; Apilo un literal entero
-STORE -1 ; almaceno el valor de la expresion en la variable local b
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local c
-PUSH 1 ; Apilo un literal entero
-STORE -2 ; almaceno el valor de la expresion en la variable local c
-RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
-PUSH 148 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
-PUSH simple_malloc
+RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
+RMEM 1 ; Reservamos memoria para el resultado del malloc (la referencia al nuevo CIR del objeto que crearemos)
+PUSH 8 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT que sera el parametro del malloc
+PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
 CALL
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 0 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 1 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'g' ; apilo la letra i-esima del string en HEAP
-STOREREF 2 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 3 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 4 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 5 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 6 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 7 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'l' ; apilo la letra i-esima del string en HEAP
-STOREREF 8 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 9 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 10 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 11 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 12 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 13 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 14 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 15 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 16 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 17 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 18 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 19 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 20 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 21 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 22 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 23 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 24 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'g' ; apilo la letra i-esima del string en HEAP
-STOREREF 25 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 26 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 27 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 28 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 29 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 30 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 31 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 32 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'l' ; apilo la letra i-esima del string en HEAP
-STOREREF 33 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 34 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 35 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 36 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 37 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 38 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 39 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 40 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 41 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '(' ; apilo la letra i-esima del string en HEAP
-STOREREF 42 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 43 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 44 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 45 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 46 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 47 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 48 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 49 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'q' ; apilo la letra i-esima del string en HEAP
-STOREREF 50 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 51 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 52 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 53 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 54 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 55 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 56 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 57 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '9' ; apilo la letra i-esima del string en HEAP
-STOREREF 58 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 59 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 60 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 61 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 62 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 63 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 64 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 65 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 66 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ')' ; apilo la letra i-esima del string en HEAP
-STOREREF 67 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ',' ; apilo la letra i-esima del string en HEAP
-STOREREF 68 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 69 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'y' ; apilo la letra i-esima del string en HEAP
-STOREREF 70 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 71 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 72 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 73 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 74 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 75 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 76 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 77 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 78 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 79 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 80 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 81 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 82 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 83 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 84 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 85 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 86 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 87 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'l' ; apilo la letra i-esima del string en HEAP
-STOREREF 88 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 89 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 90 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 91 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 92 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 93 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 94 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 95 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 96 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 97 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 98 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 99 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 100 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 101 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 102 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 103 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'g' ; apilo la letra i-esima del string en HEAP
-STOREREF 104 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 105 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 106 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 107 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 108 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ',' ; apilo la letra i-esima del string en HEAP
-STOREREF 109 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 110 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'p' ; apilo la letra i-esima del string en HEAP
-STOREREF 111 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 112 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 113 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 114 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 115 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'j' ; apilo la letra i-esima del string en HEAP
-STOREREF 116 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 117 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 118 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'p' ; apilo la letra i-esima del string en HEAP
-STOREREF 119 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'l' ; apilo la letra i-esima del string en HEAP
-STOREREF 120 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 121 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ',' ; apilo la letra i-esima del string en HEAP
-STOREREF 122 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 123 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'p' ; apilo la letra i-esima del string en HEAP
-STOREREF 124 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 125 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 126 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 127 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 128 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 129 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'l' ; apilo la letra i-esima del string en HEAP
-STOREREF 130 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 131 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '1' ; apilo la letra i-esima del string en HEAP
-STOREREF 132 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '2' ; apilo la letra i-esima del string en HEAP
-STOREREF 133 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 134 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 135 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 136 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'g' ; apilo la letra i-esima del string en HEAP
-STOREREF 137 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 138 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 139 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 140 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 141 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 142 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 143 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '2' ; apilo la letra i-esima del string en HEAP
-STOREREF 144 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '1' ; apilo la letra i-esima del string en HEAP
-STOREREF 145 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '2' ; apilo la letra i-esima del string en HEAP
-STOREREF 146 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 0 ; Apilo el caracter terminador
-STOREREF 147 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
-PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
+PUSH VT_C ; apilamos la direccion del comienzo de la VT
+STOREREF 0 ; Guardamos la referencia a la VT en el CIR que creamos (siempre es en offset 0)
+DUP ; Duplicamos la referencia al objeto porque sera tanto el resultado del constructor como la referencia a this dentro de la ejecucion del constructor
+PUSH lC@@ ; Apilamos la direccion del constructor que se determina en tiempo de compilacion
 CALL
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local cantDig
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-PUSH lread@@System ; Pongo la etiqueta del metodo
-CALL
-STORE -3 ; almaceno el valor de la expresion en la variable local cantDig
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local n
-PUSH 0 ; Apilo un literal entero
-STORE -4 ; almaceno el valor de la expresion en la variable local n
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local i
-PUSH 0 ; Apilo un literal entero
-STORE -5 ; almaceno el valor de la expresion en la variable local i
-l_comienzoFor0:
-LOAD -5 ; Apilo el valor de la variable local o parametro
-LOAD -3 ; Apilo el valor de la variable local o parametro
-LT
-BF l_finFor0
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local digito
-RMEM 1 ; Reservo un lugar para el valor de retorno del metodo
-PUSH lread@@System ; Pongo la etiqueta del metodo
-CALL
-STORE -6 ; almaceno el valor de la expresion en la variable local digito
-LOAD -4 ; Apilo el valor de la variable local o parametro
-LOAD -6 ; Apilo el valor de la variable local o parametro
-ADD
-STORE -4 ; Guardo el valor de la expresión en la variable
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 10 ; Apilo un literal entero
-MUL
-STORE -4 ; Guardo el valor de la expresión en la variable
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-LOAD -5 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -5 ; Guardo el valor de la expresión en la variable
-JUMP l_comienzoFor0
-l_finFor0: NOP
-FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 10 ; Apilo un literal entero
-DIV
-STORE -4 ; Guardo el valor de la expresión en la variable
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 0 ; Apilo un literal entero
-EQ
-BF l_else0
-RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
-PUSH 27 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
-PUSH simple_malloc
-CALL
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 0 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 1 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 2 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 3 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 4 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 5 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 6 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 7 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 8 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 9 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 10 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 11 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 12 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'f' ; apilo la letra i-esima del string en HEAP
-STOREREF 13 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 14 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'b' ; apilo la letra i-esima del string en HEAP
-STOREREF 15 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 16 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 17 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 18 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 19 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 20 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 21 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 22 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 23 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 24 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ':' ; apilo la letra i-esima del string en HEAP
-STOREREF 25 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 0 ; Apilo el caracter terminador
-STOREREF 26 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
-PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
-CALL
-PUSH 0 ; Apilo un literal entero
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 5 ; Liberamos las variables locales utilizadas en la unidad hasta el momento de hacer return
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 0 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-JUMP l_finIf0
-l_else0:
-LOAD -4 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; Apilo un literal entero
-GE
-BF l_finIf1
-RMEM 1 ; Reservamos un lugar para declaracion de la variable local i
-PUSH 1 ; Apilo un literal entero
-STORE -5 ; almaceno el valor de la expresion en la variable local i
-l_comienzoFor1:
-LOAD -5 ; Apilo el valor de la variable local o parametro
-LOAD -4 ; Apilo el valor de la variable local o parametro
-LT
-BF l_finFor1
+STORE 0 ; almaceno el valor de la expresion en la variable local v1
 LOAD 0 ; Apilo el valor de la variable local o parametro
-LOAD -1 ; Apilo el valor de la variable local o parametro
-ADD
-STORE -2 ; Guardo el valor de la expresión en la variable
-LOAD -1 ; Apilo el valor de la variable local o parametro
-STORE 0 ; Guardo el valor de la expresión en la variable
-LOAD -2 ; Apilo el valor de la variable local o parametro
-STORE -1 ; Guardo el valor de la expresión en la variable
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-LOAD -5 ; Apilo el valor de la variable local o parametro
-PUSH 1 ; agregamos un 1 para incrementar la variable en la pila
-ADD ; obtenemos la expresion resultante del incremento
-STORE -5 ; Guardo el valor de la expresión en la variable
-JUMP l_comienzoFor1
-l_finFor1: NOP
+DUP ; Duplico this para no perderlo al hacer LOADREF
+LOADREF 0 ; Cargo la VT
+LOADREF 2 ; Cargo el metodo con su offset en la VT
+CALL
 FMEM 1 ; Liberamos las variables locales utilizadas en el bloque actual
-RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
-PUSH 27 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
-PUSH simple_malloc
-CALL
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 0 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 1 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 2 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 3 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 4 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 5 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 6 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 7 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 8 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 9 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'd' ; apilo la letra i-esima del string en HEAP
-STOREREF 10 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 11 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 12 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'f' ; apilo la letra i-esima del string en HEAP
-STOREREF 13 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 14 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'b' ; apilo la letra i-esima del string en HEAP
-STOREREF 15 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 16 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 17 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 18 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 19 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'c' ; apilo la letra i-esima del string en HEAP
-STOREREF 20 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 21 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 22 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 23 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 24 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ':' ; apilo la letra i-esima del string en HEAP
-STOREREF 25 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 0 ; Apilo el caracter terminador
-STOREREF 26 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
-PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
-CALL
-LOAD -2 ; Apilo el valor de la variable local o parametro
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
-FMEM 5 ; Liberamos las variables locales utilizadas en la unidad hasta el momento de hacer return
-STOREFP ; Actualizamos el FP para que apunte al RA del llamador
-RET 0 ; Retornamos de la unidad liberando n lugares en la pila
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-l_finIf1: NOP
-l_finIf0: NOP
-RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
-PUSH 38 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
-PUSH simple_malloc
-CALL
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'E' ; apilo la letra i-esima del string en HEAP
-STOREREF 0 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 1 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 2 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 3 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 4 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH '!' ; apilo la letra i-esima del string en HEAP
-STOREREF 5 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 6 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'S' ; apilo la letra i-esima del string en HEAP
-STOREREF 7 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 8 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 9 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 10 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 11 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'p' ; apilo la letra i-esima del string en HEAP
-STOREREF 12 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 13 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 14 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 15 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'b' ; apilo la letra i-esima del string en HEAP
-STOREREF 16 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'a' ; apilo la letra i-esima del string en HEAP
-STOREREF 17 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 18 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 19 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 20 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 21 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'n' ; apilo la letra i-esima del string en HEAP
-STOREREF 22 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'u' ; apilo la letra i-esima del string en HEAP
-STOREREF 23 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'm' ; apilo la letra i-esima del string en HEAP
-STOREREF 24 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'e' ; apilo la letra i-esima del string en HEAP
-STOREREF 25 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'r' ; apilo la letra i-esima del string en HEAP
-STOREREF 26 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 27 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH ' ' ; apilo la letra i-esima del string en HEAP
-STOREREF 28 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'p' ; apilo la letra i-esima del string en HEAP
-STOREREF 29 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 30 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 's' ; apilo la letra i-esima del string en HEAP
-STOREREF 31 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 32 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 't' ; apilo la letra i-esima del string en HEAP
-STOREREF 33 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'i' ; apilo la letra i-esima del string en HEAP
-STOREREF 34 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'v' ; apilo la letra i-esima del string en HEAP
-STOREREF 35 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 'o' ; apilo la letra i-esima del string en HEAP
-STOREREF 36 ; Guardo la letra apilada
-DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
-PUSH 0 ; Apilo el caracter terminador
-STOREREF 37 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
-PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
-CALL
-FMEM 5 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 0 ; Retorna de la unidad liberando n lugares en la pila
 
@@ -922,9 +122,65 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_B: NOP
+VT_B: DW lmet1A@@A,lmet1B@@B
 
 .CODE
+lmet1B@@B:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+PUSH 'b' ; Apilo un literal caracter
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 6 ; Guardo el valor de la expresión en el atributo
+RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
+PUSH 8 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
+PUSH simple_malloc
+CALL
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'b' ; apilo la letra i-esima del string en HEAP
+STOREREF 0 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'u' ; apilo la letra i-esima del string en HEAP
+STOREREF 1 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'e' ; apilo la letra i-esima del string en HEAP
+STOREREF 2 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'n' ; apilo la letra i-esima del string en HEAP
+STOREREF 3 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'a' ; apilo la letra i-esima del string en HEAP
+STOREREF 4 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 's' ; apilo la letra i-esima del string en HEAP
+STOREREF 5 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH '!' ; apilo la letra i-esima del string en HEAP
+STOREREF 6 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 0 ; Apilo el caracter terminador
+STOREREF 7 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 3 ; Guardo el valor de la expresión en el atributo
+LOAD 3
+DUP ; Duplico this para no perderlo al hacer LOADREF
+LOADREF 0 ; Cargo la VT
+LOADREF 0 ; Cargo el metodo con su offset en la VT
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 6 ; Apilo el valor del atributo en la pila
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
+CALL
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
 lB@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
@@ -936,9 +192,55 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_C: NOP
+VT_C: DW lmet1A@@A,lmet1B@@B,lmet1C@@C
 
 .CODE
+lmet1C@@C:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+PUSH 'a' ; Apilo un literal caracter
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 5 ; Guardo el valor de la expresión en el atributo
+RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
+PUSH 6 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
+PUSH simple_malloc
+CALL
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'c' ; apilo la letra i-esima del string en HEAP
+STOREREF 0 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'h' ; apilo la letra i-esima del string en HEAP
+STOREREF 1 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'a' ; apilo la letra i-esima del string en HEAP
+STOREREF 2 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'u' ; apilo la letra i-esima del string en HEAP
+STOREREF 3 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH '!' ; apilo la letra i-esima del string en HEAP
+STOREREF 4 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 0 ; Apilo el caracter terminador
+STOREREF 5 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
+STOREREF 7 ; Guardo el valor de la expresión en el atributo
+LOAD 3
+DUP ; Duplico this para no perderlo al hacer LOADREF
+LOADREF 0 ; Cargo la VT
+LOADREF 1 ; Cargo el metodo con su offset en la VT
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 7 ; Apilo el valor del atributo en la pila
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
 lC@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
