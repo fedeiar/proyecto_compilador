@@ -1,6 +1,0 @@
-class Init{
-
-	static void main(){
-		debugPrint(7);
-	}
-}

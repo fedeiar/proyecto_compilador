@@ -1,63 +1,45 @@
 class Init extends System{
 
 	static void main(){
-		C v1 = new C();
-		v1.met1C();
-		
+		printS("HOLA");
 	}
-
 }
 
-class A extends System{
+class A{
 
-	public int a1A;
-	private int a2A;
-	public String a3A;
-	public boolean a4A;
-	
+	private int a1, a2;
+
 
 	dynamic void met1A(){
-		a1A = 8;
-		a2A = 10;
-		printSln(a3A);
-		debugPrint(a1A + a2A); // 18
-		
 	}
 
+	static void met2A(){
+	}
+
+	dynamic void met3A(){
+	}
+
+	static void met4A(){
+	}
 }
 
 
 class B extends A{
-	
-	public char a1A, a2A;
-	
+
+	private int a3;
+
+	dynamic void met1A(){ // redefine
+	}
+
+	static void met2A(){ // redefine
+	}
 
 	dynamic void met1B(){
-		a2A = 'b';
-		a3A = "buenas!";
-		met1A();
-		printCln(a1A);
-		printCln(a2A);
 	}
-	
+
 }
 
 
 class C extends B{
-
-	public String a2A;
-
-	dynamic void met1C(){
-		a1A = 'a';
-		a2A = "chau!";
-		met1B();
-		printSln(a2A);
-	}
-
-}
-
-
-class A1{
-
 
 }

@@ -382,7 +382,7 @@ public class Clase {
 
     // Generación de codigo intermedio
 
-    public void generarCodigo(){ 
+    public void generarCodigo(){
         TablaSimbolos.claseActual = this;
         // Creacion de la VT. Si no tiene métodos dinámicos, entonces hay que hacer una VT que tenga una etiqueta vacía (NOP)
         TablaSimbolos.listaInstruccionesMaquina.add(".DATA");

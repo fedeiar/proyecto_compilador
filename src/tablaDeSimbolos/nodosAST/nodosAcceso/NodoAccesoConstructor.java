@@ -1,8 +1,6 @@
 package tablaDeSimbolos.nodosAST.nodosAcceso;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.Clase;
 import tablaDeSimbolos.entidades.Constructor;
@@ -29,7 +27,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             throw new ExcepcionSemantica(tokenIdClase, "la clase "+tokenIdClase.getLexema()+" no esta declarada para su instanciacion");
         }
         //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
-        constructor = claseDelConstructor.getConstructorQueConformaParametros(getListaTipos()); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
+        constructor = claseDelConstructor.getConstructorQueConformaParametros(NodoAccesoUnidad.getListaTipos(listaParametrosActuales)); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(constructor == null){
             throw new ExcepcionSemantica(tokenIdClase, "el constructor "+tokenIdClase.getLexema()+" no esta declarado o los parametros no conforman");
         }
@@ -42,14 +40,6 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             return nodoEncadenado.chequear(tipoConstructor);
         }
 
-    }
-
-    private List<Tipo> getListaTipos() throws ExcepcionSemantica{
-        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
-        for(NodoExpresion parametroActual : listaParametrosActuales){
-            listaTiposParametrosActuales.add(parametroActual.chequear());
-        }
-        return listaTiposParametrosActuales;
     }
 
     public boolean esAsignable(){
