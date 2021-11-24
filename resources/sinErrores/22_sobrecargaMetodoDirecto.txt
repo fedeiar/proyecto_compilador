@@ -1,0 +1,51 @@
+///[Error:=|14]
+
+
+class A {
+
+} 
+
+class B extends A{
+
+   	dynamic void m1(int a1){
+		m2(7, new C(), null);
+		m2(7, new B(), new A());
+		m2(7, new C(), new B());
+		m2(7, null, null);
+		m2(7, 7, new C());
+		m2(null, null, 9);
+		m2(new C(), new C(), new C());
+   	}
+
+	dynamic void m2(int p1, A a1, A a2){}
+   	dynamic void m2(int p1, B a, A b){}
+	dynamic void m2(int p1, C a, A b){}
+	dynamic void m2(int p1, int p2, B b2){}
+	dynamic void m2(C p1, A p2, int p3){}
+	dynamic void m2(A p1, C p2, A p3){}
+
+	dynamic void m3(A p1, A p2){}
+	dynamic void m3(A p1, B p2){}
+	dynamic void m3(A p1, C p2){}
+
+	dynamic void m3_1(A p1, C p2){}
+	dynamic void m3_1(B p1, A p2){}
+	dynamic void m3_1(B p1, C p2){}
+
+	dynamic void m4(A a){}
+	dynamic void m4(B b){}
+
+	dynamic void m5(){}
+}
+
+class C extends B{
+
+
+}
+
+
+class Init{
+	static void main(){}
+}
+
+

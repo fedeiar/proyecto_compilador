@@ -26,8 +26,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
     public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida
         if(clase != null){
-            //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
-            metodo = clase.getMetodoQueConformaParametros(tokenIdMet.getLexema(), NodoAccesoUnidad.getListaTipos(listaParametrosActuales));
+            metodo = clase.getMetodoQueMasConformaParametros(tokenIdMet, NodoAccesoUnidad.getListaTipos(listaParametrosActuales));
             if(metodo != null){
                 tipoMetodo = metodo.getTipoUnidad();
             }else {

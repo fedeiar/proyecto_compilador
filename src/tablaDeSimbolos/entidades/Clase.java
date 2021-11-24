@@ -89,18 +89,64 @@ public class Clase {
         return null;
     }
 
-    //TODO: AYUDA
-    /*
-    public Constructor getConstructorQueMasConformaParametros(String nombreConstructor, List<NodoExpresion> listaParametrosActuales) throws ExcepcionSemantica{
-        List<Tipo> listaTiposDeLosParametros = new ArrayList<>();
-        for(NodoExpresion parametroActual : listaParametrosActuales){
-            listaTiposDeLosParametros.add(parametroActual.chequear());
+    public Constructor getConstructorQueMasConformaParametros(Token tokenIdClase, List<Tipo> listaTiposParametrosActuales) throws ExcepcionSemantica{
+        List<Constructor> listaConstructoresConformantes = new ArrayList<>();
+        for(Constructor constructor : constructores.values()){
+            if(constructor.getTokenIdClase().getLexema().equals(tokenIdClase.getLexema()) && constructor.conformanParametros(listaTiposParametrosActuales)){
+                listaConstructoresConformantes.add(constructor);
+            }
         }
 
+        if(listaConstructoresConformantes.size() == 0){
+            return null;
+        } else if(listaConstructoresConformantes.size() == 1){
+            System.out.println(listaConstructoresConformantes.get(0).toString());
+            return listaConstructoresConformantes.get(0);
+        } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
+            // Como tenemos solo metodos conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
+            int posicionParametro = 0;
+            int masProfundo;
+            List<Constructor> listaConstructoresGanadoresParaPos = new ArrayList<>();
+            List<Constructor> listaConstructoresGanadores = new ArrayList<>();
+            for(Constructor constructor : listaConstructoresConformantes){ // Inicialmente, todos comienzan en la lista de ganadores, después van a ir siendo derrotados hasta que quede 1 solo.
+                listaConstructoresGanadores.add(constructor);
+            }
+            
+            // Este recorrido es equivalente a recorrer una matriz por columnas.
+            // Descartamos metodos de la lista de ganadores en base a los parametros de las otras posiciones, para quedarnos con el que mas conforma.
+            while(posicionParametro < listaTiposParametrosActuales.size()){
+                masProfundo = -1;
+                for(Constructor constructor : listaConstructoresConformantes){
+                    Tipo tipoFormal = constructor.getParametroFormal(posicionParametro).getTipo();
+                    int profundidad = tipoFormal.nivelDeProfundidad();
+                    if(profundidad > masProfundo){ // Hay una victoria en esa posicion, es un posible ganador, hay que agregarlo a la lista
+                        masProfundo = profundidad;
+                        listaConstructoresGanadoresParaPos.clear(); // Derroto a todos los demas, asi que hay que borrarlos
+                        listaConstructoresGanadoresParaPos.add(constructor);
+                    } else if(profundidad == masProfundo){ // Hay un empate en esa posicion, es un posible ganador, hay que agregarlo a la lista
+                        listaConstructoresGanadoresParaPos.add(constructor);
+                    } else{ // El metodo fue derrotado, no lo agregamos a la lista
+                    }
+                }
+                // Hay que quitar de la listaMetodosGanadores a los metodos que no quedaron en los ganadores de esa posicion.
+                List<Constructor> listaAuxiliarGanadores = new ArrayList<>();
+                for(Constructor constructor : listaConstructoresGanadores){
+                    if(listaConstructoresGanadoresParaPos.contains(constructor)){
+                        listaAuxiliarGanadores.add(constructor);
+                    }
+                }
+                listaConstructoresGanadoresParaPos.clear();
+                listaConstructoresGanadores = listaAuxiliarGanadores;
+                posicionParametro++;
+            }
 
-
+            if(listaConstructoresGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
+                throw new ExcepcionSemantica(tokenIdClase, "la llamada al metodo "+tokenIdClase.getLexema()+" es ambigua");
+            }
+            System.out.println(listaConstructoresGanadores.get(0).toString());
+            return listaConstructoresGanadores.get(0);
+        }
     }
-    */
 
     public Collection<Metodo> getMetodos(){
         return metodos.values();
@@ -115,7 +161,7 @@ public class Clase {
         return null;
     }
 
-    //TODO: preguntar
+    // Faltaria chequear que en caso de que el tipoActual de la pos i-esima sea null, entonces todos los tiposFormales de la pos i-esima esten relacionados en por herencia, sino error.
     public Metodo getMetodoQueMasConformaParametros(Token tokenIdMet, List<Tipo> listaTiposParametrosActuales) throws ExcepcionSemantica{
         List<Metodo> listaMetodosConformantes = new ArrayList<>();
         for(Metodo metodo : metodos.values()){
@@ -127,6 +173,7 @@ public class Clase {
         if(listaMetodosConformantes.size() == 0){
             return null;
         } else if(listaMetodosConformantes.size() == 1){
+            System.out.println(listaMetodosConformantes.get(0).toString());
             return listaMetodosConformantes.get(0);
         } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
             // Como tenemos solo metodos conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
@@ -134,7 +181,7 @@ public class Clase {
             int masProfundo;
             List<Metodo> listaMetodosGanadoresParaPos = new ArrayList<>();
             List<Metodo> listaMetodosGanadores = new ArrayList<>();
-            for(Metodo metodo : listaMetodosConformantes){
+            for(Metodo metodo : listaMetodosConformantes){ // Inicialmente, todos comienzan en la lista de ganadores, después van a ir siendo derrotados hasta que quede 1 solo.
                 listaMetodosGanadores.add(metodo);
             }
             
@@ -145,24 +192,25 @@ public class Clase {
                 for(Metodo metodo : listaMetodosConformantes){
                     Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
                     int profundidad = tipoFormal.nivelDeProfundidad();
-                    if(profundidad > masProfundo){ // Si gano, hay que agregarlo a la lista
+                    if(profundidad > masProfundo){ // Hay una victoria en esa posicion, es un posible ganador, hay que agregarlo a la lista
                         masProfundo = profundidad;
-                        listaMetodosGanadoresParaPos.clear(); // derroto a todos los demas, asi que hay que borrarlos
+                        listaMetodosGanadoresParaPos.clear(); // Derroto a todos los demas, asi que hay que borrarlos
                         listaMetodosGanadoresParaPos.add(metodo);
                     } else if(profundidad == masProfundo){ // Hay un empate en esa posicion, es un posible ganador, hay que agregarlo a la lista
                         listaMetodosGanadoresParaPos.add(metodo);
-                    } else{ // El metodo fue derrotado
+                    } else{ // El metodo fue derrotado, no lo agregamos a la lista
                     }
                 }
                 // Hay que quitar de la listaMetodosGanadores a los metodos que no quedaron en los ganadores de esa posicion.
                 List<Metodo> listaAuxiliarGanadores = new ArrayList<>();
                 for(Metodo metodo : listaMetodosGanadores){
-                    if(listaMetodosGanadoresParaPos.contains(metodo))
+                    if(listaMetodosGanadoresParaPos.contains(metodo)){
                         listaAuxiliarGanadores.add(metodo);
+                    }
                 }
                 listaMetodosGanadoresParaPos.clear();
                 listaMetodosGanadores = listaAuxiliarGanadores;
-                posicionParametro++; 
+                posicionParametro++;
             }
 
             if(listaMetodosGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.

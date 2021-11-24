@@ -18,7 +18,6 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        //TODO: cambiar el getConstructor en caso de hacer sobrecarga etapa 4.
         metodoLlamado = TablaSimbolos.claseActual.getMetodoQueMasConformaParametros(tokenIdMet, NodoAccesoUnidad.getListaTipos(listaParametrosActuales)); // Si no encuentra nada, es porque no coincidieron o en nombre, o en la lista de parametros.
         if(metodoLlamado == null){
             throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado o los parametros no conforman");

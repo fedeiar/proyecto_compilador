@@ -1,0 +1,31 @@
+///[Error:m2|13]
+
+
+class A {
+
+} 
+
+class B extends A{
+
+   	dynamic void m1(int a1){
+		m2(new A(), new B(), new C());
+		m2(new B(), new B(), new B());
+		m2(new B(), new B(), new C());
+   	}
+
+	dynamic void m2(A p1, A p2, C p3){}
+   	dynamic void m2(B p1, A p2, B p3){}
+	
+}
+
+class C extends B{
+
+
+}
+
+
+class Init{
+	static void main(){}
+}
+
+
