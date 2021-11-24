@@ -18,14 +18,15 @@ public abstract class Tipo {
         return this.getClass() == superTipo.getClass();
     }
 
-    // Este metodo es para calcular la conformidad de la lista de parametros
+    // Calcula la conformidad de la lista de parametros.
 
-    /* Devuelve -1 si no estan relacionados, 0 si son el mismo tipo, y n donde n es la cantidad de niveles (cantidad de arcos) de herencia que separan al ancestro del hijo */ 
-    public int distanciaPadre(Tipo superTipo){ // Redefinido solamente TipoClase y TipoNull
-        if(this.getClass() == superTipo.getClass()){
-            return 0;
-        } else{
-            return -1;
-        }
+    /* Devuelve -1 si es un tipo primitivo, o n si es un TipoClase, donde n es la distancia del tipoClase hasta Object. */ 
+    public int nivelDeProfundidad(){ // Redefinido solamente en TipoClase
+        return -1;
+    }
+
+    /* Devuelve true si algun tipo es subtipo del otro, false caso contrario */
+    public boolean estanRelacionados(Tipo tipo){
+        return this.soySubtipo(tipo) || tipo.soySubtipo(this);
     }
 }

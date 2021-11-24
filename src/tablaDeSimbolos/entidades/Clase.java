@@ -133,22 +133,21 @@ public class Clase {
             return null;
         } else if(listaMetodosConformantes.size() == 1){
             return listaMetodosConformantes.get(0);
-        } else{ // Hay que decidir quien sera el mas conformante (como minimo tienen todos 1 parametro si o si)
+        } else{ // Hay que decidir quien sera el mas conformante (como minimo tienen todos 1 parametro si o si, y por lo menos en una posición son TipoClase)
             // Como tenemos solo metodos conformantes, entonces conformidad nunca sera -1.
             int posicionParametro = 0;
-            int masConforme = Integer.MAX_VALUE;
+            int masProfundo;
             Metodo metodoMasConformeParaPosParametro = null;
             Metodo metodoMasConforme = null;
             // Este recorrido es equivalente a recorrer una matriz por columnas.
             while(posicionParametro < listaParametrosActuales.size()){
+                Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
+                masProfundo = -1;
                 for(Metodo metodo : listaMetodosConformantes){
                     Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
-                    Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
-                    int conformidad = tipoActual.distanciaPadre(tipoFormal);
-                    if(conformidad == masConforme){
-                        metodoMasConformeParaPosParametro = null; // Si empatan, entonces aun no podemos decidir el posible metodo mas conforme.
-                    }else if(conformidad < masConforme){
-                        masConforme = conformidad;
+                    int profundidad = tipoFormal.nivelDeProfundidad();
+                    if(profundidad > masProfundo){
+                        masProfundo = profundidad;
                         metodoMasConformeParaPosParametro = metodo;
                     }
                 }
@@ -158,7 +157,6 @@ public class Clase {
                     throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
                 }
                 posicionParametro++;
-                masConforme = Integer.MAX_VALUE;
             }
 
             if(metodoMasConforme == null){ // Quiere decir que los mejores empataron en todos sus parametros.

@@ -22,13 +22,4 @@ public class TipoNull extends TipoConcreto{
         return superTipo instanceof TipoClase;
     }
 
-    public int distanciaPadre(Tipo superTipo){ //TODO: preguntar que calcular
-        if(superTipo instanceof TipoClase){
-            TipoClase superTipoClase = (TipoClase) superTipo;
-            return 0; // Cambiar
-        } else{
-            return -1;
-        }
-    }
-
 }

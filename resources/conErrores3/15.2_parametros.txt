@@ -1,0 +1,21 @@
+///[Error:C|5]
+// no existe el TipoClase de uno de los parametros.
+class A{
+	
+	static B m1(int v1, B v2, C v3, boolean v4){
+
+	}
+
+	
+}
+
+
+class B{
+
+}
+
+
+class Init{
+    static void main()
+    { }
+}

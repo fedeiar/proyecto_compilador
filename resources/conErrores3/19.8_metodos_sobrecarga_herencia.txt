@@ -1,0 +1,60 @@
+///[Error:idmetvar1|40]
+// Redefinición incorrecta en D: tipos incompatibles
+class A{
+	
+	public A idmetvar1;
+
+	static void met1(){}
+
+	dynamic D met2(B p1){}
+
+	static A idmetvar1(B var){}
+
+	dynamic int idmetvar2(int var1, D var2, B var3, C var4, int var5){}
+
+	dynamic B metE1(E p1, D p2){}
+
+}
+
+class B extends A{
+
+	dynamic Object met3(System p1){}
+}
+
+class C extends B{
+
+	dynamic void met1(int p1){} //sobrecarga
+
+	dynamic B met2(){}  //sobrecarga
+
+	dynamic int idmetvar2(int p1, D p2, B p3, int var4, C p5){} //sobrecarga
+
+}
+
+class D extends C{
+
+	static void met1(){} //redefine el de A
+
+	dynamic void met1(int p1){} //redefine el de B
+
+	static Object idmetvar1(B var){} //redefine mal idmetvar1 de A.
+
+	dynamic int idmetvar2(int var1, D var2, B var3, C var4, int var5, char var6){} //sobrecarga el de A y C
+
+	dynamic System met3(System p1){} //redefine al de B
+}
+
+
+class E extends D{
+
+	dynamic E metE1(E p1, D p2){}
+
+}
+
+
+
+
+class Init{
+    static void main()
+    { }
+}

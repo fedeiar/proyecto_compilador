@@ -1,0 +1,14 @@
+///[Error:A|4]
+// herencia circular basica.
+class A 
+extends A{
+	
+	
+}
+
+
+
+class Init{
+    static void main()
+    { }
+}

@@ -105,7 +105,6 @@ public abstract class Unidad {
                 Tipo tipoActual = listaTiposParametrosActuales.get(i);
                 i++;
                 if(!tipoActual.soySubtipo(tipoFormal)){
-                    
                     parametrosConformantes = false;
                     break;
                 }

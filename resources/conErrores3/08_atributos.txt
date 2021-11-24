@@ -1,0 +1,17 @@
+///[Error:B|7]
+// atributo de un tipoClase sin declarar.
+class A{
+	
+	private int v1, v2;
+	private String v3;
+	private B verr;
+	public boolean v4;
+	char v5;
+}
+
+
+
+class Init{
+    static void main()
+    { }
+}

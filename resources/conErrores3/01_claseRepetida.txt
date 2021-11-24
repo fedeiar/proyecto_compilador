@@ -1,0 +1,26 @@
+///[Error:A|15]
+// 
+class A{
+
+}
+
+class B extends A{
+
+}
+
+class C{
+
+}
+
+class A{
+
+}
+
+class A{
+
+}
+
+class Init{
+    static void main()
+    { }
+}

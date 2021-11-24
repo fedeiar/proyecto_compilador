@@ -1,0 +1,36 @@
+///[Error:idmetvar2|27]
+// metodo en la clase ancestro mal redefinido: no coincide el formaMetodo.
+class A{
+	
+	public A idmetvar1;
+
+	static void met1(){}
+
+	dynamic C1 met2(B p1){}
+
+	static A idmetvar1(B var){}
+
+	dynamic int idmetvar2(int var1, C1 var2, B var3, C var4, int var5){}
+
+}
+
+class B{}
+
+class C extends A{
+
+	dynamic void met1(int p1){} //sobrecarga
+
+	dynamic B met2(){}  //sobrecarga
+
+	static A idmetvar1(B p1){}  //redefine
+
+	static int idmetvar2(int p1, C1 p2, B p3, C var4, int p5){} //error: redefine mal
+
+}
+
+class C1{}
+
+class Init{
+    static void main()
+    { }
+}

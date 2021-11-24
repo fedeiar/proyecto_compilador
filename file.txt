@@ -11,7 +11,7 @@ class B extends A{
     public A a3;
     
     dynamic void m1(int a1){
-        //A a4 = new A();
+        A a4 = new A();
     }
 
     dynamic void m2(A a){

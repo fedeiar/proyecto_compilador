@@ -1,0 +1,28 @@
+// Redefinición de metodos.
+
+class A{
+	
+	dynamic void main(){}
+
+}
+
+class C extends A{
+}
+
+class E{
+
+	static void main(int var){}
+
+}
+
+class J{
+
+	static int main(){}
+	
+}
+
+
+class Init{
+    static void main()
+    { }
+}
