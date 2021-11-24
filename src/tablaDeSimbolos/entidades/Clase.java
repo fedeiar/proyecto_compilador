@@ -115,16 +115,11 @@ public class Clase {
         return null;
     }
 
-    //TODO: AYUDA 
-    public Metodo getMetodoQueMasConformaParametros(Token tokenIdMet, List<NodoExpresion> listaParametrosActuales)  throws ExcepcionSemantica{ //TODO: asi esta bien?
-        List<Tipo> listaTiposParametrosActuales = new ArrayList<>();
-        for(NodoExpresion parametroActual : listaParametrosActuales){
-            listaTiposParametrosActuales.add(parametroActual.chequear());
-        }
-
+    //TODO: preguntar
+    public Metodo getMetodoQueMasConformaParametros(Token tokenIdMet, List<Tipo> listaTiposParametrosActuales) throws ExcepcionSemantica{
         List<Metodo> listaMetodosConformantes = new ArrayList<>();
         for(Metodo metodo : metodos.values()){
-            if(metodo.conformanParametros(listaTiposParametrosActuales)){
+            if(metodo.getTokenIdMet().getLexema().equals(tokenIdMet.getLexema()) && metodo.conformanParametros(listaTiposParametrosActuales)){
                 listaMetodosConformantes.add(metodo);
             }
         }
@@ -133,37 +128,48 @@ public class Clase {
             return null;
         } else if(listaMetodosConformantes.size() == 1){
             return listaMetodosConformantes.get(0);
-        } else{ // Hay que decidir quien sera el mas conformante (como minimo tienen todos 1 parametro si o si, y por lo menos en una posición son TipoClase)
-            // Como tenemos solo metodos conformantes, entonces conformidad nunca sera -1.
+        } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
+            // Como tenemos solo metodos conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
             int posicionParametro = 0;
             int masProfundo;
-            Metodo metodoMasConformeParaPosParametro = null;
-            Metodo metodoMasConforme = null;
+            List<Metodo> listaMetodosGanadoresParaPos = new ArrayList<>();
+            List<Metodo> listaMetodosGanadores = new ArrayList<>();
+            for(Metodo metodo : listaMetodosConformantes){
+                listaMetodosGanadores.add(metodo);
+            }
+            
             // Este recorrido es equivalente a recorrer una matriz por columnas.
-            while(posicionParametro < listaParametrosActuales.size()){
-                Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
+            // Descartamos metodos de la lista de ganadores en base a los parametros de las otras posiciones, para quedarnos con el que mas conforma.
+            while(posicionParametro < listaTiposParametrosActuales.size()){
                 masProfundo = -1;
                 for(Metodo metodo : listaMetodosConformantes){
                     Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
                     int profundidad = tipoFormal.nivelDeProfundidad();
-                    if(profundidad > masProfundo){
+                    if(profundidad > masProfundo){ // Si gano, hay que agregarlo a la lista
                         masProfundo = profundidad;
-                        metodoMasConformeParaPosParametro = metodo;
+                        listaMetodosGanadoresParaPos.clear(); // derroto a todos los demas, asi que hay que borrarlos
+                        listaMetodosGanadoresParaPos.add(metodo);
+                    } else if(profundidad == masProfundo){ // Hay un empate en esa posicion, es un posible ganador, hay que agregarlo a la lista
+                        listaMetodosGanadoresParaPos.add(metodo);
+                    } else{ // El metodo fue derrotado
                     }
                 }
-                if(metodoMasConforme == null){ // Si estamos revisando la primer columna
-                    metodoMasConforme = metodoMasConformeParaPosParametro;
-                } else if(metodoMasConformeParaPosParametro != metodoMasConforme){ // Hay una ambiguedad: un metodo gana en un parametro, pero otro metodo gana en otro parametro
-                    throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
+                // Hay que quitar de la listaMetodosGanadores a los metodos que no quedaron en los ganadores de esa posicion.
+                List<Metodo> listaAuxiliarGanadores = new ArrayList<>();
+                for(Metodo metodo : listaMetodosGanadores){
+                    if(listaMetodosGanadoresParaPos.contains(metodo))
+                        listaAuxiliarGanadores.add(metodo);
                 }
-                posicionParametro++;
+                listaMetodosGanadoresParaPos.clear();
+                listaMetodosGanadores = listaAuxiliarGanadores;
+                posicionParametro++; 
             }
 
-            if(metodoMasConforme == null){ // Quiere decir que los mejores empataron en todos sus parametros.
+            if(listaMetodosGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
                 throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
             }
-
-            return metodoMasConforme;
+            System.out.println(listaMetodosGanadores.get(0).toString());
+            return listaMetodosGanadores.get(0);
         }
     }
     

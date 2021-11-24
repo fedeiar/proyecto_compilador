@@ -13,7 +13,6 @@ class B extends A{
    	dynamic void m1(int a1){
   	     m2(new B(), new B(), new B());
 	     m3(new B(), new B());
-	     m4(null);
    	}
 
 	dynamic void m2(A a0, A a1, A a2){
@@ -35,8 +34,6 @@ class B extends A{
 	dynamic void m3(A p1, A p2){}
 
 	dynamic void m3(A p1, B p2){}
-
-	dynamic void m4(A a){}
 }
 
 class C extends B{

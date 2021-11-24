@@ -79,7 +79,7 @@ public class TipoClase extends TipoConcreto{
         }
     }
 
-    public int nivelDeProfundidad(){ //TODO: preguntar si esta bien.
+    public int nivelDeProfundidad(){
         Token tokenClasePadre = TablaSimbolos.getClase(this.tokenIdClase.getLexema()).getTokenIdClaseAncestro();
         int nivelDeProfundidad = 0;
         while(tokenClasePadre != null){

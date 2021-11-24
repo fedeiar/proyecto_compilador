@@ -1,0 +1,23 @@
+// testeamos llamadas a metodoo simple, sin herencia y sin sobrecarga.
+
+
+class A{
+
+	static void s_m5(){}
+
+	static System s_m1(){}
+
+    	static System s_m2(Object p1, Object p2, A p3){
+		Object vl1 = s_m1();
+	}
+
+	static A s_m3(int p1, A p2){}
+
+}
+
+class Init{
+    static void main()
+    { }
+}
+
+
