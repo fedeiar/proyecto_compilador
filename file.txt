@@ -1,45 +1,36 @@
-class Init extends System{
-
-	static void main(){
-		printS("HOLA");
-	}
-}
-
-class A{
-
-	private int a1, a2;
+///[Error:=|14]
 
 
-	dynamic void met1A(){
-	}
-
-	static void met2A(){
-	}
-
-	dynamic void met3A(){
-	}
-
-	static void met4A(){
-	}
-}
-
+class A {
+    public B a1;
+    public int a2;
+    private int a3;
+} 
 
 class B extends A{
+    public A a3;
+    
+    dynamic void m1(int a1){
+        //A a4 = new A();
+    }
 
-	private int a3;
+    dynamic void m2(A a){
 
-	dynamic void met1A(){ // redefine
-	}
-
-	static void met2A(){ // redefine
-	}
-
-	dynamic void met1B(){
-	}
-
+    }
 }
-
 
 class C extends B{
 
+    dynamic void m2(B a){
+
+    }
+
 }
+
+
+class Init{
+    static void main()
+    { }
+}
+
+

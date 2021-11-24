@@ -47,37 +47,56 @@ public class TipoClase extends TipoConcreto{
         }
     }
 
-    public boolean mismoTipo(TipoClase tipo){
-        return this.tokenIdClase.getLexema().equals(tipo.getTokenIdClase().getLexema());
+    public boolean mismoTipo(Tipo tipo){
+        if(tipo instanceof TipoClase){
+            TipoClase tipoClase = (TipoClase) tipo;
+            return this.tokenIdClase.getLexema().equals(tipoClase.getTokenIdClase().getLexema());
+        } else{
+            return false;
+        }  
     }
 
-    public boolean esSubtipo(Tipo tipoDelAncestro){
-        return tipoDelAncestro.visitarEsSubtipo(this);
+    public boolean soySubtipo(Tipo superTipo){
+        if(superTipo instanceof TipoClase){
+            TipoClase superTipoClase = (TipoClase) superTipo;
+            return superTipoClase.esSubtipo(this);
+        } else{
+            return false;
+        }
     }
 
-    public boolean visitarEsSubtipo(TipoClase subtipo){ 
+    private boolean esSubtipo(TipoClase subtipo){ 
         if(this.tokenIdClase.getLexema().equals(subtipo.getTokenIdClase().getLexema())){
             return true;
         } else {
             Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
             Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
             if(tokenClasePadreDelSubtipo != null){
-                return visitarEsSubtipo(new TipoClase(tokenClasePadreDelSubtipo));
+                return esSubtipo(new TipoClase(tokenClasePadreDelSubtipo));
             }else{
                 return false;
             }
         }
     }
 
-    public int profundidadDelHijo(TipoClase subtipo){ //TODO: preguntar si esta bien.
+    public int distanciaPadre(Tipo superTipo){ //TODO: preguntar si esta bien.
+        if(superTipo instanceof TipoClase){
+            TipoClase superTipoClase = (TipoClase) superTipo;
+            return superTipoClase.distanciaHijo(this);
+        } else{
+            return -1;
+        }
+    }
+
+    private int distanciaHijo(TipoClase subtipo){
         if(this.tokenIdClase.getLexema().equals(subtipo.getTokenIdClase().getLexema())){
             return 0;
-        } else {
+        } else{
             Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
             Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
             if(tokenClasePadreDelSubtipo != null){
-                return 1 + profundidadDelHijo(new TipoClase(tokenClasePadreDelSubtipo));
-            }else{
+                return 1 + distanciaHijo(new TipoClase(tokenClasePadreDelSubtipo));
+            } else{
                 return -1;
             }
         }

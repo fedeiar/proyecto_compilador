@@ -61,7 +61,7 @@ public class Metodo extends Unidad{
 
     public boolean redefineCorrectamente(Metodo metodoAncestro){
         boolean mismaFormaMetodo = this.esDinamico == metodoAncestro.esDinamico();
-        boolean mismoTipo = this.tipoUnidad.esSubtipo(metodoAncestro.getTipoUnidad());
+        boolean mismoTipo = this.tipoUnidad.soySubtipo(metodoAncestro.getTipoUnidad());
         boolean mismoNombre = this.tokenIdMet.getLexema().equals(metodoAncestro.getTokenIdMet().getLexema());
         boolean mismosParametros = this.mismosParametros(metodoAncestro);
         return mismaFormaMetodo && mismoNombre && mismoTipo && mismosParametros;

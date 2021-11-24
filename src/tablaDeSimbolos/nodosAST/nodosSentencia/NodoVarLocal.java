@@ -50,7 +50,7 @@ public class NodoVarLocal extends NodoSentencia implements IVariable{
         TablaSimbolos.getBloqueActual().insertarVarLocal(this);
         
         if(nodoExpresion != null){
-            if(!nodoExpresion.chequear().esSubtipo(tipoVarLocal)){
+            if(!nodoExpresion.chequear().soySubtipo(tipoVarLocal)){
                 throw new ExcepcionSemantica(tokenIgual, "el tipo de la expresion no conforma con el tipo de la declaracion de la variable local");
             }
         }

@@ -18,17 +18,17 @@ public class TipoNull extends TipoConcreto{
         return tipo instanceof TipoClase;
     }
 
-    public boolean esSubtipo(Tipo tipoDelAncestro){
-        return tipoDelAncestro instanceof TipoClase;
+    public boolean soySubtipo(Tipo superTipo){
+        return superTipo instanceof TipoClase;
     }
 
-    public int profundidadDelHijo(TipoClase subtipo){ //TODO: preguntar si esta bien.
-        Clase claseDelSubtipo = TablaSimbolos.getClase(subtipo.getTokenIdClase().getLexema());
-        Token tokenClasePadreDelSubtipo = claseDelSubtipo.getTokenIdClaseAncestro();
-        if(tokenClasePadreDelSubtipo != null){
-            return 1 + profundidadDelHijo(new TipoClase(tokenClasePadreDelSubtipo));
-        }else{
-            return 0;
+    public int distanciaPadre(Tipo superTipo){ //TODO: preguntar que calcular
+        if(superTipo instanceof TipoClase){
+            TipoClase superTipoClase = (TipoClase) superTipo;
+            return 0; // Cambiar
+        } else{
+            return -1;
         }
     }
+
 }

@@ -25,7 +25,7 @@ public class NodoAsignacionExpresion extends NodoAsignacion{
 
         Tipo tipoExpresion = nodoExpresionLadoDer.chequear();
 
-        if(!tipoExpresion.esSubtipo(tipoAcceso)){
+        if(!tipoExpresion.soySubtipo(tipoAcceso)){
             throw new ExcepcionSemantica(tokenAsignacion, "la expresión del lado derecho no conforma con el tipo de la variable del lado izquierdo");
         }
     }

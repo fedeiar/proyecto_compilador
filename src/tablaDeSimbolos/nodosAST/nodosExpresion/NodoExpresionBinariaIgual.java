@@ -15,7 +15,7 @@ public class NodoExpresionBinariaIgual extends NodoExpresionBinaria{
     public TipoConcreto chequear() throws ExcepcionSemantica{
         Tipo tipoExpresionLadoIzq = nodoExpresionLadoIzq.chequear();
         Tipo tipoExpresionLadoDer = nodoExpresionLadoDer.chequear();
-        if(tipoExpresionLadoIzq.esSubtipo(tipoExpresionLadoDer) || tipoExpresionLadoDer.esSubtipo(tipoExpresionLadoIzq)){
+        if(tipoExpresionLadoIzq.soySubtipo(tipoExpresionLadoDer) || tipoExpresionLadoDer.soySubtipo(tipoExpresionLadoIzq)){
             return new TipoBoolean();
         } else{
             throw new ExcepcionSemantica(tokenOperadorBinario, "el operador binario "+ tokenOperadorBinario.getLexema()+" solo funciona con tipos conformantes");

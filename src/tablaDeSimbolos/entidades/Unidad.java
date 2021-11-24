@@ -81,7 +81,7 @@ public abstract class Unidad {
             for(ParametroFormal p1 : lista_parametrosFormales){
                 ParametroFormal p2 = lista_parametrosFormales_unidad2.get(i);
                 i++;
-                if(!p1.mismoTipo(p2)){
+                if(!p1.getTipo().mismoTipo(p2.getTipo())){
                     mismosParametros = false;
                     break;
                 }
@@ -104,7 +104,7 @@ public abstract class Unidad {
             for(Tipo tipoFormal : listaTiposParametrosFormales){
                 Tipo tipoActual = listaTiposParametrosActuales.get(i);
                 i++;
-                if(!tipoActual.esSubtipo(tipoFormal)){
+                if(!tipoActual.soySubtipo(tipoFormal)){
                     
                     parametrosConformantes = false;
                     break;

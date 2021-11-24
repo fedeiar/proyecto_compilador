@@ -80,7 +80,7 @@ public class Clase {
         return atributos.size();
     }
 
-    public Constructor getConstructorQueConformaParametros(List<Tipo> listaTiposParametrosActuales)  throws ExcepcionSemantica{
+    public Constructor getConstructorQueConformaParametros(List<Tipo> listaTiposParametrosActuales){
         for(Constructor constructor : constructores.values()){
             if(constructor.conformanParametros(listaTiposParametrosActuales)){
                 return constructor;
@@ -106,7 +106,7 @@ public class Clase {
         return metodos.values();
     }
 
-    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<Tipo> listaTiposParametrosActuales)  throws ExcepcionSemantica{
+    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<Tipo> listaTiposParametrosActuales){
         for(Metodo metodo : metodos.values()){
             if(metodo.getTokenIdMet().getLexema().equals(nombreMetodo) && metodo.conformanParametros(listaTiposParametrosActuales)){
                 return metodo;
@@ -144,7 +144,7 @@ public class Clase {
                 for(Metodo metodo : listaMetodosConformantes){
                     Tipo tipoFormal = metodo.getParametroFormal(posicionParametro).getTipo();
                     Tipo tipoActual = listaTiposParametrosActuales.get(posicionParametro);
-                    int conformidad = tipoFormal.profundidadDelHijo(tipoActual);
+                    int conformidad = tipoActual.distanciaPadre(tipoFormal);
                     if(conformidad == masConforme){
                         metodoMasConformeParaPosParametro = null; // Si empatan, entonces aun no podemos decidir el posible metodo mas conforme.
                     }else if(conformidad < masConforme){

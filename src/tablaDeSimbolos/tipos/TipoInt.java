@@ -9,12 +9,5 @@ public class TipoInt extends TipoPrimitivo{
     public String getNombreTipo(){
         return "int";
     }
-
-    public boolean esSubtipo(Tipo tipoDelAncestro){
-        return tipoDelAncestro.visitarEsSubtipo(this);
-    }
-
-    public boolean visitarEsSubtipo(TipoInt tipo){
-        return true;
-    }
+    
 }

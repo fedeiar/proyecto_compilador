@@ -37,10 +37,6 @@ public class ParametroFormal implements IVariable{
         tipoParametro.verificarExistenciaTipo();
     }
 
-    public boolean mismoTipo(ParametroFormal parametroFormal){
-        return tipoParametro.mismoTipo(parametroFormal.getTipo());
-    }
-
     public String toString(){
         return tokenIdVar.getLexema();
     }

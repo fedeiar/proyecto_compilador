@@ -10,11 +10,4 @@ public class TipoChar extends TipoPrimitivo{
         return "char";
     }
 
-    public boolean esSubtipo(Tipo tipoDelAncestro){
-        return tipoDelAncestro.visitarEsSubtipo(this);
-    }
-
-    public boolean visitarEsSubtipo(TipoChar tipo){
-        return true;
-    }
 }
