@@ -80,19 +80,10 @@ public class Clase {
         return atributos.size();
     }
 
-    public Constructor getConstructorQueConformaParametros(List<Tipo> listaTiposParametrosActuales){
-        for(Constructor constructor : constructores.values()){
-            if(constructor.conformanParametros(listaTiposParametrosActuales)){
-                return constructor;
-            }
-        }
-        return null;
-    }
-
     public Constructor getConstructorQueMasConformaParametros(Token tokenIdClase, List<Tipo> listaTiposParametrosActuales) throws ExcepcionSemantica{
         List<Constructor> listaConstructoresConformantes = new ArrayList<>();
         for(Constructor constructor : constructores.values()){
-            if(constructor.getTokenIdClase().getLexema().equals(tokenIdClase.getLexema()) && constructor.conformanParametros(listaTiposParametrosActuales)){
+            if(constructor.conformanParametros(listaTiposParametrosActuales)){
                 listaConstructoresConformantes.add(constructor);
             }
         }
@@ -103,7 +94,7 @@ public class Clase {
             System.out.println(listaConstructoresConformantes.get(0).toString());
             return listaConstructoresConformantes.get(0);
         } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
-            // Como tenemos solo metodos conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
+            // Como tenemos solo constructores conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
             int posicionParametro = 0;
             int masProfundo;
             List<Constructor> listaConstructoresGanadoresParaPos = new ArrayList<>();
@@ -111,9 +102,8 @@ public class Clase {
             for(Constructor constructor : listaConstructoresConformantes){ // Inicialmente, todos comienzan en la lista de ganadores, después van a ir siendo derrotados hasta que quede 1 solo.
                 listaConstructoresGanadores.add(constructor);
             }
-            
             // Este recorrido es equivalente a recorrer una matriz por columnas.
-            // Descartamos metodos de la lista de ganadores en base a los parametros de las otras posiciones, para quedarnos con el que mas conforma.
+            // Descartamos constructores de la lista de ganadores en base a los parametros de las otras posiciones, para quedarnos con el que mas conforma.
             while(posicionParametro < listaTiposParametrosActuales.size()){
                 masProfundo = -1;
                 for(Constructor constructor : listaConstructoresConformantes){
@@ -128,7 +118,7 @@ public class Clase {
                     } else{ // El metodo fue derrotado, no lo agregamos a la lista
                     }
                 }
-                // Hay que quitar de la listaMetodosGanadores a los metodos que no quedaron en los ganadores de esa posicion.
+                // Hay que quitar de la listaConstructoresGanadores a los constructores que no quedaron en los ganadores de esa posicion.
                 List<Constructor> listaAuxiliarGanadores = new ArrayList<>();
                 for(Constructor constructor : listaConstructoresGanadores){
                     if(listaConstructoresGanadoresParaPos.contains(constructor)){
@@ -139,7 +129,6 @@ public class Clase {
                 listaConstructoresGanadores = listaAuxiliarGanadores;
                 posicionParametro++;
             }
-
             if(listaConstructoresGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
                 throw new ExcepcionSemantica(tokenIdClase, "la llamada al metodo "+tokenIdClase.getLexema()+" es ambigua");
             }
@@ -150,15 +139,6 @@ public class Clase {
 
     public Collection<Metodo> getMetodos(){
         return metodos.values();
-    }
-
-    public Metodo getMetodoQueConformaParametros(String nombreMetodo, List<Tipo> listaTiposParametrosActuales){
-        for(Metodo metodo : metodos.values()){
-            if(metodo.getTokenIdMet().getLexema().equals(nombreMetodo) && metodo.conformanParametros(listaTiposParametrosActuales)){
-                return metodo;
-            }
-        }
-        return null;
     }
 
     // Faltaria chequear que en caso de que el tipoActual de la pos i-esima sea null, entonces todos los tiposFormales de la pos i-esima esten relacionados en por herencia, sino error.
@@ -184,7 +164,6 @@ public class Clase {
             for(Metodo metodo : listaMetodosConformantes){ // Inicialmente, todos comienzan en la lista de ganadores, después van a ir siendo derrotados hasta que quede 1 solo.
                 listaMetodosGanadores.add(metodo);
             }
-            
             // Este recorrido es equivalente a recorrer una matriz por columnas.
             // Descartamos metodos de la lista de ganadores en base a los parametros de las otras posiciones, para quedarnos con el que mas conforma.
             while(posicionParametro < listaTiposParametrosActuales.size()){
@@ -212,7 +191,6 @@ public class Clase {
                 listaMetodosGanadores = listaAuxiliarGanadores;
                 posicionParametro++;
             }
-
             if(listaMetodosGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
                 throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
             }

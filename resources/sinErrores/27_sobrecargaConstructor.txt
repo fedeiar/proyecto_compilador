@@ -1,5 +1,3 @@
-///[Error:B|12]
-
 class A {
 
 } 
@@ -9,7 +7,12 @@ class B extends A{
 	private B a1;
 
    	dynamic void m1(){
-		new B(new B(), new C(), new B());
+		B v1 = new B(null, 7, null, null);
+		new B(new A(), new B());
+		new B(new C(), new C());
+		new B(new C(), new A());
+		new B(null, null, null);
+		new B(new A(), null, null);
 		
    	}
 

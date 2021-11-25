@@ -1,0 +1,49 @@
+class A {
+
+} 
+
+class B extends A{
+
+	private B a1;
+
+   	dynamic void m1(){
+		B v1 = new B();
+		v1.met().m2(7, new System(), new C(), new B());
+		
+		
+   	}
+
+	static void m2(int p1, Object p2, A p3, C p4){}
+   	static void m2(int p1, Object p2, C p3, A p4){}
+	static void m2(int p1, A p2, A p3, A p4){}
+	static void m2(int p1, A p2, C p3, C p4){}
+
+	static void m3(A p1, A p2){}
+	static void m3(A p1, B p2){}
+	static void m3(A p1, C p2){}
+
+	static void m3_1(A p1, C p2){}
+	static void m3_1(B p1, A p2){}
+	static void m3_1(B p1, C p2){}
+
+	static void m4(A a){}
+	static void m4(B b){}
+
+	static void m5(){}
+
+	dynamic B met(){
+		return this;
+	}
+}
+
+class C extends B{
+
+
+}
+
+
+class Init{
+	static void main(){}
+}
+
+

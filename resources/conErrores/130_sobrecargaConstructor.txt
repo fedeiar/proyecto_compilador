@@ -9,7 +9,7 @@ class B extends A{
 	private B a1;
 
    	dynamic void m1(){
-		new B(new B(), new C(), new B());
+		new B(new B(), null, null);
 		
    	}
 

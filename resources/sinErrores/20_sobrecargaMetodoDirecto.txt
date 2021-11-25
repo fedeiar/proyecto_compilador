@@ -1,6 +1,3 @@
-///[Error:=|14]
-
-
 class A {
     public B a1;
     public int a2;

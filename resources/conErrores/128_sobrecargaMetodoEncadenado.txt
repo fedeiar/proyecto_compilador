@@ -1,3 +1,6 @@
+///[Error:m2|15]
+
+
 class A {
 
 } 
@@ -8,29 +11,14 @@ class B extends A{
 
    	dynamic void m1(){
 		B v1 = new B();
-		v1.m2(null, null, null);
-		v1.met().m2(null, new C(), new A());
-		a1.m2(new C(), new C(), new C());
-		a1.met().m2(new A(), new B(), null);
-
-		met().m3(null, null);
-		v1.m3(new A(), new A());
-		new B().m3(new A(), new B());
-		new B().met().m3(new A(), new C());
-
-		a1.m3_1(null, null);
-		m3_1(new B(), new B());
-
-		m4(null);
-		m4(new A());
-
-		m5();
+		v1.met().m2(null, new A(), new B());
+		v1.m2(null, null, new C());
+		
    	}
 
 	static void m2(A a0, A a1, A a2){}
    	static void m2(A a0, B a, A b){}
-	static void m2(A a0, C a, A b){}
-	static void m2(A a0, C b1, B b2){}
+	static void m2(A a0, A a, C b){}
 
 	static void m3(A p1, A p2){}
 	static void m3(A p1, B p2){}
