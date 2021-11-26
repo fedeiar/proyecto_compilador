@@ -77,7 +77,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
             }
             TablaSimbolos.listaInstruccionesMaquina.add("DUP ; Duplico this para no perderlo al hacer LOADREF");
             TablaSimbolos.listaInstruccionesMaquina.add("LOADREF 0 ; Cargo la VT");
-            TablaSimbolos.listaInstruccionesMaquina.add("LOADREF "+ metodo.getOffset()+" ; Cargo el metodo con su offset en la VT");
+            TablaSimbolos.listaInstruccionesMaquina.add("LOADREF "+ metodo.getOffset() +" ; Cargo el metodo con su offset en la VT");
             TablaSimbolos.listaInstruccionesMaquina.add("CALL"); 
         } else{ // Es estatico
             TablaSimbolos.listaInstruccionesMaquina.add("POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica");
@@ -97,5 +97,36 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         }
     }
 
-    
+    public void generarCodigoSuper( ){
+        // TODO: el metodo ya si o si es el del padre, porque en el chequear() el tipoIzquierda es el tipo q devuelve super.
+        if(metodo.esDinamico()){
+            if(!tipoMetodo.mismoTipo(new TipoVoid())){
+                TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
+                TablaSimbolos.listaInstruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");
+            }
+            for(NodoExpresion nodoExpresion : listaParametrosActuales){
+                nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
+                TablaSimbolos.listaInstruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");
+            }
+            TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+ metodo.toStringLabel() +" ; Pongo la etiqueta del metodo definido en el padre");
+            TablaSimbolos.listaInstruccionesMaquina.add("CALL");
+        } else{
+            TablaSimbolos.listaInstruccionesMaquina.add("POP ; Descartamos el valor de la referencia cargada anteriormente ya que no lo necesitamos para hacer la llamada estatica");
+            if(!tipoMetodo.mismoTipo(new TipoVoid())){
+                TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");
+            }
+            for(NodoExpresion nodoExpresion : listaParametrosActuales){
+                nodoExpresion.generarCodigo(); // Computo la expresion del parametro actual i-esimo
+            }
+            TablaSimbolos.listaInstruccionesMaquina.add("PUSH "+metodo.toStringLabel()+ " ; Pongo la etiqueta del metodo");
+            TablaSimbolos.listaInstruccionesMaquina.add("CALL");
+        }
+
+        if(nodoEncadenado != null){
+            nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
+            nodoEncadenado.generarCodigo();
+        }
+    }
+
+
 }

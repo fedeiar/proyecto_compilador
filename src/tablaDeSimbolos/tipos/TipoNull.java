@@ -1,8 +1,5 @@
 package tablaDeSimbolos.tipos;
 
-import analizadorLexico.Token;
-import tablaDeSimbolos.entidades.Clase;
-import tablaDeSimbolos.entidades.TablaSimbolos;
 
 public class TipoNull extends TipoConcreto{
     

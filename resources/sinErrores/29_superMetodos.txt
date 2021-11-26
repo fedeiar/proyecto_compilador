@@ -1,25 +1,23 @@
+///[Error:super|37]
+
 class Init extends System{
 
 	static void main(){
-		C v1 = new C();
-		v1.met1();
-		//v1.met1B(); // 3, 'a', 7
 	}
 }
 
-class A extends System{
+class A{
 
 	public int a1;
 	private int a2;
 	public int a3;
-	public A a4;
 
 	dynamic void met1(){
-		debugPrint(a1); // 3
+	
 	}
 
 	dynamic int met2(){
-		
+		return 5;
 	}
 }
 
@@ -29,25 +27,14 @@ class B extends A{
 
 	public char a1;
 	public boolean a2;
-	
-	B(){
-		a4 = this;
-	}
+	public C a4;
 
 	dynamic void met1(){
-		super.a4.a1 = 3;
-		//this.a1 = 'a';
-	}
-
-	dynamic void met1B(){
-		super.a4.met1();
-		printC(this.a1); // 'a'
-		super.a4.a1 = super.a4.a1 + 4;
-		debugPrint(super.a4.a1); // 7
+		super.met1();
 	}
 
 	dynamic int met2(){
-		
+		return super.met2();
 	}
 
 }
@@ -59,6 +46,8 @@ class C extends B{
 	private String a3;
 	public B a4;
 
-	
+	dynamic void met1(){
+		
+	}
 
 }

@@ -16,9 +16,9 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         this.tokenIdVar = tokenIdVar;
     }
 
-    public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: asi esta bien?
+    public Tipo chequear(Tipo tipoIzquierda) throws ExcepcionSemantica{
         TipoConcreto tipoAtributo;
-        Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
+        Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo());
         if(clase != null){
             atributo = clase.getAtributo(tokenIdVar.getLexema()); 
             if(atributo != null){
@@ -82,7 +82,7 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
 
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien asi?
+    public void generarCodigo(){
         if(!esLadoIzquierdoAsignacion || nodoEncadenado != null){
             TablaSimbolos.listaInstruccionesMaquina.add("LOADREF "+ atributo.getOffset() +" ; Apilo el valor del atributo "+atributo.getTokenIdVar().getLexema()+" en la pila");
         } else{
@@ -94,5 +94,9 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
             nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
             nodoEncadenado.generarCodigo();
         }
+    }
+
+    public void generarCodigoSuper(){
+        generarCodigo();
     }
 }

@@ -1,0 +1,40 @@
+///[Error:super|37]
+
+class Init extends System{
+
+	static void main(){
+	}
+}
+
+class A{
+
+	public int a1;
+	private int a2;
+	public int a3;
+}
+
+
+class B extends A{
+
+	public char a1;
+	public boolean a2;
+	public C a4;
+
+	dynamic void met1(){
+		
+	}
+
+}
+
+class C extends B{
+
+	public String a1;
+	private char a2;
+	private String a3;
+	public B a4;
+
+	dynamic void met1C(){
+		this.a4 = super;
+	}
+
+}

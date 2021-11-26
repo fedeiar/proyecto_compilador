@@ -13,7 +13,7 @@ public class NodoAccesoThis extends NodoPrimario{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        if( ! TablaSimbolos.unidadActual.esDinamico()){
+        if( !TablaSimbolos.unidadActual.esDinamico() ){
             throw new ExcepcionSemantica(tokenThis, "no se puede hacer referencia a this en un metodo estatico");
         }
         Tipo tipoClaseActual = new TipoClase(TablaSimbolos.claseActual.getTokenIdClase()); // Esto me asegura que ya existe la clase

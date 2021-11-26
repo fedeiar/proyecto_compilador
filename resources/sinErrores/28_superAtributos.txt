@@ -16,6 +16,7 @@ class B extends A{
 
 	public char a1;
 	public boolean a2;
+	public C a4;
 
 	dynamic void met1(){
 		a1 = 'a';
@@ -36,6 +37,7 @@ class C extends B{
 	public String a1;
 	private char a2;
 	private String a3;
+	public B a4;
 
 	dynamic void met1C(){
 		a1 = "hola";
@@ -45,10 +47,13 @@ class C extends B{
 		a2 = 'a';
 		this.a2 = 'a';
 		super.a2 = true;
+		this.a2 = super.a1;
 
 		a3 = "hola";
 		this.a3 = "hola";
 		super.a3 = 5;
+
+		this.a4 = super.a4;
 	}
 
 }

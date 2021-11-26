@@ -15,15 +15,17 @@ public class NodoAccesoSuper extends NodoPrimario{
     }
 
     public Tipo chequear() throws ExcepcionSemantica{
-        if( ! TablaSimbolos.unidadActual.esDinamico()){
+        if( !TablaSimbolos.unidadActual.esDinamico() ){
             throw new ExcepcionSemantica(tokenSuper, "no se puede hacer referencia a super en un metodo estatico");
         }
+
         Tipo tipoClaseAncestro = new TipoClase(TablaSimbolos.claseActual.getTokenIdClaseAncestro());
 
         if(nodoEncadenado != null){
-            return nodoEncadenado.chequear(tipoClaseAncestro); // TODO: probar si chequear() esta bien, o debemos hacer un chequearSuper().
+            return nodoEncadenado.chequear(tipoClaseAncestro);
+        } else{
+            throw new ExcepcionSemantica(tokenSuper, "super no es una expresion valida");
         }
-        return tipoClaseAncestro;
     }
 
     public boolean esAsignable(){
@@ -45,6 +47,10 @@ public class NodoAccesoSuper extends NodoPrimario{
     // Generacion de codigo intermedio
 
     public void generarCodigo(){
-        // TODO
+        TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
+        
+        // El nodoEncadenado no-nulo ya que sino no habría pasado el chequeo de sentencias
+        nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
+        nodoEncadenado.generarCodigoSuper(); 
     }
 }

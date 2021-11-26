@@ -26,4 +26,6 @@ public abstract class NodoEncadenado {
 
     public abstract void generarCodigo();
 
+    public abstract void generarCodigoSuper();
+
 }

@@ -770,7 +770,7 @@ public class AnalizadorSintactico {
             Token tokenThis = tokenActual;
             match(TipoDeToken.pr_this, "this");
             return new NodoAccesoThis(tokenThis);
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ // TODO: esta bien?
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ // TODO: esta bien? si, pero falta hacer la parte del constructor , es decir super()
             Token tokenSuper = tokenActual;
             match(TipoDeToken.pr_super, "super");
             return new NodoAccesoSuper(tokenSuper);
