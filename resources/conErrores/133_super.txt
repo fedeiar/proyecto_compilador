@@ -1,4 +1,4 @@
-///[Error:a3|35]
+///[Error:super|27]
 
 class Init extends System{
 
@@ -10,7 +10,7 @@ class A{
 
 	public int a1;
 	private int a2;
-	private int a3;
+	public int a3;
 }
 
 
@@ -23,6 +23,10 @@ class B extends A{
 		
 	}
 
+	static void met2(){
+		super.a1 = 3; // Error ya que el metodo es estatico.
+	}
+
 }
 
 class C extends B{
@@ -32,7 +36,7 @@ class C extends B{
 	private String a3;
 
 	dynamic void met1C(){
-		super.a3 = 8; // El atributo a3 del padre (de B) es privado (privado en A).
+		
 	}
 
 }

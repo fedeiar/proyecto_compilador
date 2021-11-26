@@ -18,6 +18,7 @@ public enum TipoDeToken{
     pr_for,
     pr_return,
     pr_this,
+    pr_super,
     pr_new,
     pr_null,
     pr_true,

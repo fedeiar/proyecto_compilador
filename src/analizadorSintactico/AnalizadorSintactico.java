@@ -23,12 +23,10 @@ public class AnalizadorSintactico {
     private AnalizadorLexico analizadorLexico;
     private Token tokenActual;
 
-    //Primeros
+    // Primeros
 
-    private final List<TipoDeToken> primeros_miembro = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.id_clase, TipoDeToken.pr_static, TipoDeToken.pr_dynamic,
-                                                       TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String);
-    private final List<TipoDeToken> primeros_atributo = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, 
-                                                        TipoDeToken.pr_String);
+    private final List<TipoDeToken> primeros_miembro = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.id_clase, TipoDeToken.pr_static, TipoDeToken.pr_dynamic, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String);
+    private final List<TipoDeToken> primeros_atributo = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String);
     private final List<TipoDeToken> primeros_metodo = Arrays.asList(TipoDeToken.pr_static, TipoDeToken.pr_dynamic);
     private final List<TipoDeToken> primeros_visibilidad = Arrays.asList(TipoDeToken.pr_public, TipoDeToken.pr_private);
     private final List<TipoDeToken> primeros_tipoPrimitivo = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String);
@@ -37,32 +35,24 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_argsFormales = Arrays.asList(TipoDeToken.punt_parentIzq);
     private final List<TipoDeToken> primeros_argFormal = primeros_tipo;
     private final List<TipoDeToken> primeros_listaArgsFormales = primeros_argFormal;
-    private final List<TipoDeToken> primeros_sentencia = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new,
-                                                         TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, 
-                                                         TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq);
-    private final List<TipoDeToken> primeros_acceso = Arrays.asList(TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
+    private final List<TipoDeToken> primeros_sentencia = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq);
+    private final List<TipoDeToken> primeros_acceso = Arrays.asList(TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_varLocal = Arrays.asList(TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase);
     private final List<TipoDeToken> primeros_varLocalFactorizada = Arrays.asList(TipoDeToken.op_asignacion); // ojo! contiene a vacio
     private final List<TipoDeToken> primeros_tipoDeAsignacion = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento);
-    private final List<TipoDeToken> primeros_expresion = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false,
-                                                         TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, 
-                                                         TipoDeToken.pr_this, TipoDeToken.pr_new);
-    private final List<TipoDeToken> primeros_operadorBinario = Arrays.asList(TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, 
-                                                               TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos,
-                                                               TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo);
+    private final List<TipoDeToken> primeros_expresion = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not, TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
+    private final List<TipoDeToken> primeros_operadorBinario = Arrays.asList(TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo);
     private final List<TipoDeToken> primeros_operadorUnario = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not);
-    private final List<TipoDeToken> primeros_operando = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter,
-                                                        TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
-    private final List<TipoDeToken> primeros_literal = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, 
-                                                       TipoDeToken.lit_string);
-    private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
+    private final List<TipoDeToken> primeros_operando = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
+    private final List<TipoDeToken> primeros_literal = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string);
+    private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_expresionParentizada = primeros_expresion;
     private final List<TipoDeToken> primeros_argsActuales = Arrays.asList(TipoDeToken.punt_parentIzq);
     private final List<TipoDeToken> primeros_listaExps = primeros_expresion;
     private final List<TipoDeToken> primeros_tipoParametricoOVacio = Arrays.asList(TipoDeToken.op_menor); //ojo! contiene a vacio
     private final List<TipoDeToken> primeros_tipoParametrico = Arrays.asList(TipoDeToken.id_clase);
 
-    //Siguientes
+    // Siguientes
 
     private final List<TipoDeToken> siguientes_listaClasesFactorizada = Arrays.asList(TipoDeToken.EOF);
     private final List<TipoDeToken> siguientes_herencia = Arrays.asList(TipoDeToken.punt_llaveIzq);
@@ -73,26 +63,13 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> siguientes_listaSentencias = Arrays.asList(TipoDeToken.punt_llaveDer);
     private final List<TipoDeToken> siguientes_varLocalFactorizada = Arrays.asList(TipoDeToken.punt_puntoYComa);
     private final List<TipoDeToken> siguientes_expresionOVacio = Arrays.asList(TipoDeToken.punt_puntoYComa);
-    private final List<TipoDeToken> siguientes_ifFactorizado = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new,
-                                                               TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, 
-                                                               TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq, TipoDeToken.pr_else, TipoDeToken.punt_llaveDer); 
+    private final List<TipoDeToken> siguientes_ifFactorizado = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new, TipoDeToken.pr_boolean, TipoDeToken.pr_char, TipoDeToken.pr_int, TipoDeToken.pr_String, TipoDeToken.id_clase, TipoDeToken.pr_return, TipoDeToken.pr_if, TipoDeToken.pr_for, TipoDeToken.punt_llaveIzq, TipoDeToken.pr_else, TipoDeToken.punt_llaveDer); 
     private final List<TipoDeToken> siguientes_expresionRecursiva = Arrays.asList(TipoDeToken.punt_puntoYComa, TipoDeToken.punt_coma,TipoDeToken.punt_parentDer);
-    private final List<TipoDeToken> siguientes_accesoVar_accesoMetodo = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, 
-                                                                        TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, 
-                                                                        TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, 
-                                                                        TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division,TipoDeToken.op_modulo, TipoDeToken.punt_coma, 
-                                                                        TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_accesoVar_accesoMetodo = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division,TipoDeToken.op_modulo, TipoDeToken.punt_coma, TipoDeToken.punt_parentDer);
     private final List<TipoDeToken> siguientes_listaExpsOVacio = Arrays.asList(TipoDeToken.punt_parentDer);
     private final List<TipoDeToken> siguientes_listaExpsFactorizada = Arrays.asList(TipoDeToken.punt_parentDer);
-    private final List<TipoDeToken> siguientes_encadenado = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, TipoDeToken.punt_puntoYComa, TipoDeToken.op_or,
-                                                            TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual,
-                                                            TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, 
-                                                            TipoDeToken.op_modulo, TipoDeToken.punt_coma, TipoDeToken.punt_parentDer); 
-    private final List<TipoDeToken> siguientes_varOMetodoEncadenado = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, 
-                                                                      TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, 
-                                                                      TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, 
-                                                                      TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo, TipoDeToken.punt_coma, 
-                                                                      TipoDeToken.punt_parentDer);
+    private final List<TipoDeToken> siguientes_encadenado = Arrays.asList(TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo, TipoDeToken.punt_coma, TipoDeToken.punt_parentDer); 
+    private final List<TipoDeToken> siguientes_varOMetodoEncadenado = Arrays.asList(TipoDeToken.punt_punto, TipoDeToken.op_asignacion, TipoDeToken.op_incremento, TipoDeToken.op_decremento, TipoDeToken.punt_puntoYComa, TipoDeToken.op_or, TipoDeToken.op_and, TipoDeToken.op_igualdad, TipoDeToken.op_notIgual, TipoDeToken.op_menor, TipoDeToken.op_mayor, TipoDeToken.op_menorOIgual, TipoDeToken.op_mayorOIgual, TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_multiplicacion, TipoDeToken.op_division, TipoDeToken.op_modulo, TipoDeToken.punt_coma, TipoDeToken.punt_parentDer);
 
     public AnalizadorSintactico(AnalizadorLexico analizadorLexico) throws IOException, ExcepcionLexica, ExcepcionSintactica, ExcepcionSemantica{
         this.analizadorLexico = analizadorLexico;
@@ -793,6 +770,10 @@ public class AnalizadorSintactico {
             Token tokenThis = tokenActual;
             match(TipoDeToken.pr_this, "this");
             return new NodoAccesoThis(tokenThis);
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ // TODO: esta bien?
+            Token tokenSuper = tokenActual;
+            match(TipoDeToken.pr_super, "super");
+            return new NodoAccesoSuper(tokenSuper);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_new){
             return accesoConstructor();
         } else{

@@ -17,6 +17,7 @@ public class Clase {
     
     private Token tokenIdClase;
     private Token tokenIdClaseAncestro;
+
     private Map<String, Constructor> constructores;
     private Map<String, Atributo> atributos;
     private Map<String, Metodo> metodos;
@@ -29,7 +30,6 @@ public class Clase {
 
     private int offsetDisponibleCIR; // El primer número de offset disponible en el CIR
     private int offsetDisponibleVT; // El primer número de offset disponible en la VT
-    private Map<Integer, Atributo> mapeoAtributosPorOffset;
     private Map<Integer, Metodo> mapeoMetodosPorOffset;
 
 
@@ -42,7 +42,6 @@ public class Clase {
         tiposParametricos = new HashMap<>();
         listaTiposParametricos = new ArrayList<>();
 
-        mapeoAtributosPorOffset = new HashMap<>();
         mapeoMetodosPorOffset = new HashMap<>();
 
         estaConsolidado = false;
@@ -91,7 +90,6 @@ public class Clase {
         if(listaConstructoresConformantes.size() == 0){
             return null;
         } else if(listaConstructoresConformantes.size() == 1){
-            System.out.println(listaConstructoresConformantes.get(0).toString());
             return listaConstructoresConformantes.get(0);
         } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
             // Como tenemos solo constructores conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
@@ -132,7 +130,6 @@ public class Clase {
             if(listaConstructoresGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
                 throw new ExcepcionSemantica(tokenIdClase, "la llamada al metodo "+tokenIdClase.getLexema()+" es ambigua");
             }
-            System.out.println(listaConstructoresGanadores.get(0).toString());
             return listaConstructoresGanadores.get(0);
         }
     }
@@ -153,7 +150,6 @@ public class Clase {
         if(listaMetodosConformantes.size() == 0){
             return null;
         } else if(listaMetodosConformantes.size() == 1){
-            System.out.println(listaMetodosConformantes.get(0).toString());
             return listaMetodosConformantes.get(0);
         } else{ // Hay que decidir quien sera el mas conformante (todos tienen al menos 1 parametro si o si, y por lo menos en una posición son TipoClase)
             // Como tenemos solo metodos conformantes (es decir, todos los parametros actuales conforman con los formales), solo nos interesa la profundidad del parametro formal.
@@ -194,7 +190,6 @@ public class Clase {
             if(listaMetodosGanadores.size() != 1){ // Significa que no hubo un ganador, error de ambiguedad.
                 throw new ExcepcionSemantica(tokenIdMet, "la llamada al metodo "+tokenIdMet.getLexema()+" es ambigua");
             }
-            System.out.println(listaMetodosGanadores.get(0).toString());
             return listaMetodosGanadores.get(0);
         }
     }
@@ -328,9 +323,8 @@ public class Clase {
     }
 
     private void consolidarAtributos(Clase claseAncestro) throws ExcepcionSemantica{
-        // En esta aproximación, lo que me dice la cantidad de '#' de una variable es la ultima clase que hace uso de la version #'enesima de la variable
-        /*Los '#' solamente los usamos para indicar que un atributo heredado no debe ser accesible, ya sea porque es privado o porque se duplica su nombre en la clase actual.
-          Si se quiere saber si un atributo es privado o a que clase pertenece, se consulta directamente al atributo a través de su interfaz*/
+        /* Los '#' solamente los usamos para indicar que un atributo heredado no debe ser accesible, ya sea porque es privado o porque se duplica su nombre en la clase actual.
+          Si se quiere saber si un atributo es privado o a que clase pertenece, se consulta directamente al atributo a través de su interfaz */
         for(Entry<String,Atributo> entryAtributoAncestro : claseAncestro.getHashAtributos().entrySet()){
             String nombreAtributoAncestro = entryAtributoAncestro.getKey();
             Atributo atributoAncestro = entryAtributoAncestro.getValue();
@@ -353,7 +347,6 @@ public class Clase {
             if(!atributo.tieneOffsetAsignado()){ // Si no tiene offset asignado, significa que es un atributo declarado en esta clase y debemos ponerle un offset.
                 this.agregarOffsetAtributoEnCIR(atributo);
             }
-            mapeoAtributosPorOffset.put(atributo.getOffset(), atributo);
         }
     }
 

@@ -42,7 +42,7 @@ public class NodoAccesoVarEncadenada extends NodoEncadenado{
         
     }
 
-    public Tipo chequearThis(Tipo tipoIzquierda) throws ExcepcionSemantica{ //TODO: esta bien?
+    public Tipo chequearThis(Tipo tipoIzquierda) throws ExcepcionSemantica{
         TipoConcreto tipoAtributo;
         Clase clase = TablaSimbolos.getClase(tipoIzquierda.getNombreTipo()); // Con esto ya resolvemos que sea una clase valida?
         if(clase != null){

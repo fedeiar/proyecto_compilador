@@ -23,11 +23,11 @@ public class TokenPalabrasReservadas {
         map.put("for", TipoDeToken.pr_for);
         map.put("return", TipoDeToken.pr_return);
         map.put("this", TipoDeToken.pr_this);
+        map.put("super", TipoDeToken.pr_super);
         map.put("new", TipoDeToken.pr_new);
         map.put("null", TipoDeToken.pr_null);
         map.put("true", TipoDeToken.pr_true);
         map.put("false", TipoDeToken.pr_false);
-
     }
 
     public TipoDeToken getTipoDeToken(String token){

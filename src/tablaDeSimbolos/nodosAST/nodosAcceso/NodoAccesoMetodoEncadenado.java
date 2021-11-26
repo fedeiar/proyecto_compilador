@@ -33,7 +33,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
                 throw new ExcepcionSemantica(tokenIdMet, "el metodo "+tokenIdMet.getLexema()+" no esta declarado en la clase "+clase.getTokenIdClase().getLexema());
             }
         }else{
-            throw new ExcepcionSemantica(tokenIdMet, "el tipo del acceso a izquierda de " +tokenIdMet.getLexema() +" no es una clase valida o no esta declarada"); //que token uso?
+            throw new ExcepcionSemantica(tokenIdMet, "el tipo del acceso a izquierda de " +tokenIdMet.getLexema() +" no es una clase valida o no esta declarada");
         }
 
         if(nodoEncadenado != null){
@@ -65,7 +65,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
     
     // Generacion de codigo intermedio
 
-    public void generarCodigo(){ //TODO: esta bien?
+    public void generarCodigo(){
         if(metodo.esDinamico()){
             if(!tipoMetodo.mismoTipo(new TipoVoid())){
                 TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");

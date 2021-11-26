@@ -155,7 +155,7 @@ public class AnalizadorLexico {
             return e1();
         }else{
             TipoDeToken tipoDeToken = token_pr.getTipoDeToken(lexema);
-            if (tipoDeToken == null){
+            if(tipoDeToken == null){
                 return new Token(TipoDeToken.id_clase, lexema, gestor.nroLinea());
             } else{
                 return new Token(tipoDeToken, lexema, gestor.nroLinea());
@@ -163,7 +163,7 @@ public class AnalizadorLexico {
         }
     }
 
-    //Identificadores de metodos y variables
+    // Identificadores de metodos y variables
 
     private Token e2() throws ExcepcionLexica, IOException{
         if(Character.isLetter(caracterActual) || Character.isDigit(caracterActual) || caracterActual == '_'){
@@ -172,7 +172,7 @@ public class AnalizadorLexico {
             return e2();
         }else{
             TipoDeToken tipoDeToken = token_pr.getTipoDeToken(lexema);
-            if (tipoDeToken == null){
+            if(tipoDeToken == null){
                 return new Token(TipoDeToken.id_metVar, lexema, gestor.nroLinea());
             } else{
                 return new Token(tipoDeToken, lexema, gestor.nroLinea());
@@ -180,7 +180,7 @@ public class AnalizadorLexico {
         }
     }
 
-    //Literales enteros
+    // Literales enteros
 
     private Token e3() throws ExcepcionLexica, IOException{
         if(Character.isDigit(caracterActual)){
@@ -194,7 +194,7 @@ public class AnalizadorLexico {
         }
     }
 
-    //Literales caracter
+    // Literales caracter
 
     private Token e4() throws ExcepcionLexica, IOException{
         if(caracterActual == '\\'){
@@ -234,7 +234,7 @@ public class AnalizadorLexico {
         return new Token(TipoDeToken.lit_caracter, lexema, gestor.nroLinea());
     }
 
-    //Literales String
+    // Literales String
 
     private int comienzoString;
     private String primerLineaStringMultilinea;
@@ -390,7 +390,7 @@ public class AnalizadorLexico {
         return new Token(TipoDeToken.lit_string, lexema, gestor.nroLinea());
     }
 
-    //puntuacion
+    // Puntuacion
 
     private Token e6_1() throws IOException, ExcepcionLexica{
         return new Token(TipoDeToken.punt_parentIzq, lexema, gestor.nroLinea());
@@ -420,7 +420,7 @@ public class AnalizadorLexico {
         return new Token(TipoDeToken.punt_punto, lexema, gestor.nroLinea());
     }
 
-    //operadores y asignacion (menos / que se fusiona con comentarios)
+    // Operadores y asignacion (menos / que se fusiona con comentarios)
 
     private Token e7_1() throws IOException, ExcepcionLexica{
         if(caracterActual == '='){
@@ -535,7 +535,7 @@ public class AnalizadorLexico {
         return new Token(TipoDeToken.op_modulo, lexema, gestor.nroLinea());
     }
     
-    //comentarios (y el operador /)
+    // Comentarios (y el operador /)
 
     private int comienzoDeComentario;
     private String primerLineaComentario;

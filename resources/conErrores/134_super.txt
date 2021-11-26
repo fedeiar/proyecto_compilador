@@ -1,4 +1,4 @@
-///[Error:a3|35]
+///[Error:=|35]
 
 class Init extends System{
 
@@ -10,7 +10,7 @@ class A{
 
 	public int a1;
 	private int a2;
-	private int a3;
+	public int a3;
 }
 
 
@@ -32,7 +32,7 @@ class C extends B{
 	private String a3;
 
 	dynamic void met1C(){
-		super.a3 = 8; // El atributo a3 del padre (de B) es privado (privado en A).
+		super.a1 = 3; // Error: El atributo a1 accedido con super es el de B de tipo char, no el de A.
 	}
 
 }
