@@ -49,7 +49,7 @@ public class NodoAccesoSuper extends NodoPrimario{
     public void generarCodigo(){
         TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
         
-        // El nodoEncadenado no-nulo ya que sino no habría pasado el chequeo de sentencias
+        // El nodoEncadenado es no-nulo ya que sino no habría pasado el chequeo de sentencias
         nodoEncadenado.establecerMismoLado(this.esLadoIzquierdoAsignacion);
         nodoEncadenado.generarCodigoSuper(); 
     }

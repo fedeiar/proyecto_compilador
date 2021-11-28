@@ -55,7 +55,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
 
     public void generarCodigo(){ 
         if(metodoLlamado.esDinamico()){ // Es dinamico
-            TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3"); // Cargo this
+            TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
             if(!metodoLlamado.getTipoUnidad().mismoTipo(new TipoVoid())){
                 TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo lugar para el valor retorno de la llamada");
                 TablaSimbolos.listaInstruccionesMaquina.add("SWAP ; Pongo this en el tope de la pila");

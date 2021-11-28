@@ -28,10 +28,10 @@ RET 1	; Retorna eliminando el parámetro
 
 
 .DATA
-VT_A: DW lmet1@@A,lmet2@@A
+VT_A: DW lmet@@A
 
 .CODE
-lmet1@@A:
+lmet@@A:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
@@ -39,25 +39,44 @@ LOAD 3 ; Apilo this en la pila
 LOADREF 1 ; Apilo el valor del atributo en la pila
 PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
 CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 2 ; Apilo el valor del atributo en la pila
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 3 ; Apilo el valor del atributo en la pila
+PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
+CALL
 FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
-lmet2@@A:
+lA@int$int@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+LOAD 3 ; Apilo this en la pila
+PUSH lSystem@@ ; Apilamos la direccion del constructor a invocar, que se determina en tiempo de compilacion
+CALL
+LOAD 5 ; Apilo el valor de la variable local o parametro
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 1 ; Guardo el valor de la expresión en el atributo a1
+LOAD 4 ; Apilo el valor de la variable local o parametro
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 2 ; Guardo el valor de la expresión en el atributo a2
+LOAD 3 ; Apilo this en la pila
+LOADREF 1 ; Apilo el valor del atributo en la pila
+LOAD 3 ; Apilo this en la pila
+LOADREF 2 ; Apilo el valor del atributo en la pila
+ADD
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 3 ; Guardo el valor de la expresión en el atributo a3
 FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lA@@:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
+RET 3 ; Retorna de la unidad liberando n lugares en la pila
 
 
 
@@ -71,7 +90,7 @@ LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
 RMEM 1 ; Reservamos un lugar para declaracion de la variable local v1
 RMEM 1 ; Reservamos memoria para el resultado del malloc (la referencia al nuevo CIR del objeto que crearemos)
-PUSH 11 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT que sera el parametro del malloc
+PUSH 10 ; Apilamos la cant. de vars. de instancia del CIR  + 1 de la referencia a la VT que sera el parametro del malloc
 PUSH simple_malloc ; Apliamos la direccion de rutina para alojar memoria en el heap
 CALL
 DUP ; Para no perder la referencia al nuevo CIR cuando hagamos STOREREF para asociarle la VT
@@ -101,84 +120,149 @@ RET 1 ; Retorna de la unidad liberando n lugares en la pila
 
 
 .DATA
-VT_B: DW lmet1@@B,lmet2@@B,lmet1B@@B
+VT_B: DW lmet@@B
 
 .CODE
-lmet1@@B:
+lmet@@B:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-PUSH 3 ; Apilo un literal entero
 LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo a4 en la pila
+PUSH lmet@@A ; Pongo la etiqueta del metodo definido en el padre
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 5 ; Apilo el valor del atributo en la pila
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 6 ; Apilo el valor del atributo en la pila
+PUSH lprintBln@boolean@System ; Pongo la etiqueta del metodo
+CALL
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
+lB@int$int$char@:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+LOAD 3 ; Apilo this en la pila
+LOAD 6 ; Apilo el valor de la variable local o parametro
+SWAP ; Bajamos el this para que quede en el lugar adecuado del RA
+LOAD 5 ; Apilo el valor de la variable local o parametro
+SWAP ; Bajamos el this para que quede en el lugar adecuado del RA
+PUSH lA@int$int@ ; Apilamos la direccion del constructor a invocar, que se determina en tiempo de compilacion
+CALL
+LOAD 4 ; Apilo el valor de la variable local o parametro
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 5 ; Guardo el valor de la expresión en el atributo a1
+PUSH 1 ; Apilo true
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 6 ; Guardo el valor de la expresión en el atributo a2
+LOAD 6 ; Apilo el valor de la variable local o parametro
+LOAD 3 ; Apilo this en la pila
 SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
 STOREREF 1 ; Guardo el valor de la expresión en el atributo a1
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet2@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lmet1B@@B:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
 LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo a4 en la pila
-DUP ; Duplico this para no perderlo al hacer LOADREF
-LOADREF 0 ; Cargo la VT
-LOADREF 0 ; Cargo el metodo con su offset en la VT
-CALL
 LOAD 3 ; Apilo this en la pila
-LOADREF 5 ; Apilo el valor del atributo a1 en la pila
-PUSH lprintC@char@System ; Pongo la etiqueta del metodo
-CALL
-LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo a4 en la pila
-LOADREF 1 ; Apilo el valor del atributo a1 en la pila
-PUSH 4 ; Apilo un literal entero
-ADD
-LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo a4 en la pila
 SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
-STOREREF 1 ; Guardo el valor de la expresión en el atributo a1
-LOAD 3 ; Apilo this en la pila
-LOADREF 4 ; Apilo el valor del atributo a4 en la pila
-LOADREF 1 ; Apilo el valor del atributo a1 en la pila
-PUSH ldebugPrint@int@Object ; Pongo la etiqueta del metodo
-CALL
+STOREREF 4 ; Guardo el valor de la expresión en el atributo a4
 FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
-
-lB@@:
-LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
-LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
-STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
-LOAD 3 ; Apilo this en la pila
-LOAD 3 ; Apilo this en la pila
-SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR en tope - 1
-STOREREF 4 ; Guardo el valor de la expresión en el atributo
-FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
-STOREFP
-RET 1 ; Retorna de la unidad liberando n lugares en la pila
+RET 4 ; Retorna de la unidad liberando n lugares en la pila
 
 
 
 .DATA
-VT_C: DW lmet1@@B,lmet2@@B,lmet1B@@B
+VT_C: DW lmet@@C
 
 .CODE
+lmet@@C:
+LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
+LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
+STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+LOAD 3 ; Apilo this en la pila
+LOADREF 7 ; Apilo el valor del atributo en la pila
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+PUSH lmet@@B ; Pongo la etiqueta del metodo definido en el padre
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 8 ; Apilo el valor del atributo en la pila
+PUSH lprintCln@char@System ; Pongo la etiqueta del metodo
+CALL
+LOAD 3 ; Apilo this en la pila
+LOADREF 9 ; Apilo el valor del atributo en la pila
+PUSH lprintSln@String@System ; Pongo la etiqueta del metodo
+CALL
+FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
+STOREFP
+RET 1 ; Retorna de la unidad liberando n lugares en la pila
+
 lC@@:
 LOADFP  ; Guarda en la pila el enlace dinámico al comienzo del RA del llamador.
 LOADSP  ; Apila el lugar donde comienza el RA de la unidad llamada
 STOREFP ; Actualiza el FP para que apunte al comienzo del RA de la unidad llamada.
+LOAD 3 ; Apilo this en la pila
+PUSH 3 ; Apilo un literal entero
+SWAP ; Bajamos el this para que quede en el lugar adecuado del RA
+PUSH 5 ; Apilo un literal entero
+SWAP ; Bajamos el this para que quede en el lugar adecuado del RA
+PUSH 'a' ; Apilo un literal caracter
+SWAP ; Bajamos el this para que quede en el lugar adecuado del RA
+PUSH lB@int$int$char@ ; Apilamos la direccion del constructor a invocar, que se determina en tiempo de compilacion
+CALL
+RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
+PUSH 5 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
+PUSH simple_malloc
+CALL
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'h' ; apilo la letra i-esima del string en HEAP
+STOREREF 0 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'o' ; apilo la letra i-esima del string en HEAP
+STOREREF 1 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'l' ; apilo la letra i-esima del string en HEAP
+STOREREF 2 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'a' ; apilo la letra i-esima del string en HEAP
+STOREREF 3 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 0 ; Apilo el caracter terminador
+STOREREF 4 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 7 ; Guardo el valor de la expresión en el atributo a1
+PUSH 'b' ; Apilo un literal caracter
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 8 ; Guardo el valor de la expresión en el atributo a2
+RMEM 1 ; Reservo memoria para el puntero al comienzo del String que se almacenara en .HEAP
+PUSH 5 ; Parametro del malloc. Reservo n + 1 lugares en el heap, donde n es la cantidad de letras del String y +1 para el caracter terminador (valor 0)
+PUSH simple_malloc
+CALL
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'c' ; apilo la letra i-esima del string en HEAP
+STOREREF 0 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'h' ; apilo la letra i-esima del string en HEAP
+STOREREF 1 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'a' ; apilo la letra i-esima del string en HEAP
+STOREREF 2 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 'u' ; apilo la letra i-esima del string en HEAP
+STOREREF 3 ; Guardo la letra apilada
+DUP ; Duplico la referencia del comienzo del String ya que STOREREF la consumira para almacenar el proximo caracter
+PUSH 0 ; Apilo el caracter terminador
+STOREREF 4 ; Guardo el caracter terminador en el heap. Indica que es el fin del String
+LOAD 3 ; Apilo this en la pila
+SWAP ; Pongo el valor de la expresion a asignar en el tope, y la referencia al CIR del atributo en tope - 1
+STOREREF 9 ; Guardo el valor de la expresión en el atributo a3
 FMEM 0 ; Liberamos las variables locales utilizadas en el bloque actual
 STOREFP
 RET 1 ; Retorna de la unidad liberando n lugares en la pila

@@ -1,0 +1,46 @@
+///[Error:super|29]
+
+class Init extends System{
+
+	static void main(){
+	}
+}
+
+class A extends System{
+
+	A(int p1, int p2){
+		
+	}
+
+	A(){
+
+	}
+	
+	dynamic void met(){
+
+	}
+}
+
+
+
+class B extends A{
+
+	B(int p1, int p2, char p3){
+		super;
+	}
+	
+	dynamic void met(){
+		
+	}
+
+}
+
+class C extends B{
+
+
+	C(){
+	}
+
+	
+
+}

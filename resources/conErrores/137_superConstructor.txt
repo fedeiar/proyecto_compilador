@@ -1,0 +1,37 @@
+///[Error:super|22]
+
+class Init extends System{
+
+	static void main(){
+	}
+}
+
+class A extends System{
+
+	A(int p1, int p2){
+		
+	}
+	
+}
+
+
+
+class B extends A{
+
+	B(int p1, int p2, char p3){
+		super(3, 3, 3);
+	}
+	
+	
+
+}
+
+class C extends B{
+
+
+	C(){
+	}
+
+	
+
+}

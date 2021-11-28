@@ -45,7 +45,7 @@ public class AnalizadorSintactico {
     private final List<TipoDeToken> primeros_operadorUnario = Arrays.asList(TipoDeToken.op_mas, TipoDeToken.op_menos, TipoDeToken.op_not);
     private final List<TipoDeToken> primeros_operando = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string, TipoDeToken.punt_parentIzq, TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_literal = Arrays.asList(TipoDeToken.pr_null, TipoDeToken.pr_true, TipoDeToken.pr_false, TipoDeToken.lit_entero, TipoDeToken.lit_caracter, TipoDeToken.lit_string);
-    private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_super, TipoDeToken.pr_new);
+    private final List<TipoDeToken> primeros_primario = Arrays.asList(TipoDeToken.id_metVar, TipoDeToken.pr_this, TipoDeToken.pr_new);
     private final List<TipoDeToken> primeros_expresionParentizada = primeros_expresion;
     private final List<TipoDeToken> primeros_argsActuales = Arrays.asList(TipoDeToken.punt_parentIzq);
     private final List<TipoDeToken> primeros_listaExps = primeros_expresion;
@@ -733,6 +733,10 @@ public class AnalizadorSintactico {
             NodoEncadenado nodoEncadenado = encadenado();
             nodoPrimario.insertarNodoEncadenado(nodoEncadenado);
             return nodoPrimario;
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ //TODO: esta bien aca? ya que en realidad no puede tener casting, y el super() no es encadenable
+            Token tokenSuper = tokenActual;
+            match(TipoDeToken.pr_super, "super");
+            return accesoSuper(tokenSuper); // TODO: esta bien?
         } else{
             throw new ExcepcionSintactica("el comienzo de un primario o casting", tokenActual);
         }
@@ -770,14 +774,25 @@ public class AnalizadorSintactico {
             Token tokenThis = tokenActual;
             match(TipoDeToken.pr_this, "this");
             return new NodoAccesoThis(tokenThis);
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ // TODO: esta bien? si, pero falta hacer la parte del constructor , es decir super()
-            Token tokenSuper = tokenActual;
-            match(TipoDeToken.pr_super, "super");
-            return new NodoAccesoSuper(tokenSuper);
         } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_new){
             return accesoConstructor();
         } else{
-            throw new ExcepcionSintactica("un identificador de metodo o variable, this, o new", tokenActual);
+            throw new ExcepcionSintactica("un identificador de metodo o variable, this o new", tokenActual);
+        }
+    }
+
+    private NodoAcceso accesoSuper(Token tokenSuper) throws IOException, ExcepcionLexica, ExcepcionSintactica{ // TODO: esta bien?
+        if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
+            List<NodoExpresion> listaParametrosActuales = argsActuales();
+            return new NodoAccesoSuperConstructor(tokenSuper, listaParametrosActuales);  //TODO: esta bien sin encadenados?
+        } else if(siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){ // TODO: puede ser que estos siguientes sirvan?
+            // vacio
+            NodoAccesoSuper nodoAccesoSuper = new NodoAccesoSuper(tokenSuper);
+            NodoEncadenado nodoEncadenado = encadenado(); // TODO: esta bien el encadenado?
+            nodoAccesoSuper.insertarNodoEncadenado(nodoEncadenado);
+            return nodoAccesoSuper;
+        } else{
+            throw new ExcepcionSintactica("alguno de los siguientes simbolos: {(, ., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);
         }
     }
 
@@ -802,8 +817,8 @@ public class AnalizadorSintactico {
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
             List<NodoExpresion> listaParametrosActuales = argsActuales();
             return new NodoAccesoMetodo(tokenIdMetVar, listaParametrosActuales);
-        } else if (siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){
-            //vacio
+        } else if(siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){
+            // vacio
             return new NodoAccesoVar(tokenIdMetVar);
         } else{
             throw new ExcepcionSintactica("alguno de los siguientes simbolos: {(, ., =, ++, --, ;, ||, && , ==, !=, < , > , <=, >= , +, -, *, /, %, ,, )}", tokenActual);

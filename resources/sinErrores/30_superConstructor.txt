@@ -3,7 +3,6 @@ class Init extends System{
 	static void main(){
 		C v1 = new C();
 		v1.met();
-		
 	}
 }
 
@@ -14,17 +13,20 @@ class A extends System{
 	public int a3;
 	public A a4;
 
+	A(){
+
+	}
+
 	A(int p1, int p2){
-		super(); // no hace nada, es el constructor de System
 		this.a1 = p1;
 		this.a2 = p2;
 		this.a3 = a1 + a2;
 	}
 
 	dynamic void met(){
-		debugPrint(a1); // 3
-		debugPrint(a2); // 5
-		debugPrint(a3); // 3+5=8
+		debugPrint(a1);
+		debugPrint(a2);
+		debugPrint(a3);
 	}
 	
 }
@@ -38,16 +40,21 @@ class B extends A{
 
 	B(int p1, int p2, char p3){
 		super(p1, p2);
+		super();
 		this.a1 = p3;
 		this.a2 = true;
 		super.a1 = p1;
 		super.a4 = this;
 	}
+
+	B(int p1){
+		super();
+	}
 	
 	dynamic void met(){
 		super.met();
-		printCln(a1); // a
-		printBln(a2); // true
+		printCln(a1);
+		printBln(a2);
 	}
 
 }
@@ -66,10 +73,10 @@ class C extends B{
 	}
 
 	dynamic void met(){
-		printSln(a1); // hola
+		printSln(a1);
 		super.met();
-		printCln(a2); // b
-		printSln(a3); // chau
+		printCln(a2);
+		printSln(a3);
 	}
 
 }
