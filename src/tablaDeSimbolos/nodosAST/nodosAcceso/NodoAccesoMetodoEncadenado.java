@@ -97,8 +97,7 @@ public class NodoAccesoMetodoEncadenado extends NodoEncadenado{
         }
     }
 
-    public void generarCodigoSuper( ){
-        // TODO: el metodo ya si o si es el del padre, porque en el chequear() el tipoIzquierda es el tipo q devuelve super.
+    public void generarCodigoSuper(){
         if(metodo.esDinamico()){
             if(!tipoMetodo.mismoTipo(new TipoVoid())){
                 TablaSimbolos.listaInstruccionesMaquina.add("RMEM 1 ; Reservo un lugar para el valor de retorno del metodo");

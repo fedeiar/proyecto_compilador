@@ -733,10 +733,10 @@ public class AnalizadorSintactico {
             NodoEncadenado nodoEncadenado = encadenado();
             nodoPrimario.insertarNodoEncadenado(nodoEncadenado);
             return nodoPrimario;
-        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){ //TODO: esta bien aca? ya que en realidad no puede tener casting, y el super() no es encadenable
+        } else if(tokenActual.getTipoDeToken() == TipoDeToken.pr_super){
             Token tokenSuper = tokenActual;
             match(TipoDeToken.pr_super, "super");
-            return accesoSuper(tokenSuper); // TODO: esta bien?
+            return accesoSuper(tokenSuper);
         } else{
             throw new ExcepcionSintactica("el comienzo de un primario o casting", tokenActual);
         }
@@ -781,14 +781,14 @@ public class AnalizadorSintactico {
         }
     }
 
-    private NodoAcceso accesoSuper(Token tokenSuper) throws IOException, ExcepcionLexica, ExcepcionSintactica{ // TODO: esta bien?
+    private NodoAcceso accesoSuper(Token tokenSuper) throws IOException, ExcepcionLexica, ExcepcionSintactica{
         if(primeros_argsActuales.contains(tokenActual.getTipoDeToken())){
             List<NodoExpresion> listaParametrosActuales = argsActuales();
-            return new NodoAccesoSuperConstructor(tokenSuper, listaParametrosActuales);  //TODO: esta bien sin encadenados?
-        } else if(siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){ // TODO: puede ser que estos siguientes sirvan?
+            return new NodoAccesoSuperConstructor(tokenSuper, listaParametrosActuales);
+        } else if(siguientes_accesoVar_accesoMetodo.contains(tokenActual.getTipoDeToken())){
             // vacio
             NodoAccesoSuper nodoAccesoSuper = new NodoAccesoSuper(tokenSuper);
-            NodoEncadenado nodoEncadenado = encadenado(); // TODO: esta bien el encadenado?
+            NodoEncadenado nodoEncadenado = encadenado();
             nodoAccesoSuper.insertarNodoEncadenado(nodoEncadenado);
             return nodoAccesoSuper;
         } else{

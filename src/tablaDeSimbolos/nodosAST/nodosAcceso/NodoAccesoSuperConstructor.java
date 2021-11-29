@@ -5,10 +5,8 @@ import java.util.List;
 import analizadorLexico.Token;
 import tablaDeSimbolos.entidades.ExcepcionSemantica;
 import tablaDeSimbolos.entidades.TablaSimbolos;
-import tablaDeSimbolos.entidades.Unidad;
 import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.Tipo;
-import tablaDeSimbolos.tipos.TipoClase;
 import tablaDeSimbolos.tipos.TipoVoid;
 import tablaDeSimbolos.entidades.Clase;
 import tablaDeSimbolos.entidades.Constructor;
@@ -26,7 +24,7 @@ public class NodoAccesoSuperConstructor extends NodoAcceso{
         this.listaParametrosActuales = listaParametrosActuales;
     }
 
-    public Tipo chequear() throws ExcepcionSemantica{ // TODO: esta bien?
+    public Tipo chequear() throws ExcepcionSemantica{
         if( !(TablaSimbolos.unidadActual instanceof Constructor) ){
             throw new ExcepcionSemantica(tokenSuper, "solo se puede llamar al constructor del padre con super dentro de un constructor");
         }
@@ -43,15 +41,15 @@ public class NodoAccesoSuperConstructor extends NodoAcceso{
         return tipoConstructorSuper;
     }
 
-    public boolean esAsignable(){ //TODO: esta bien?
+    public boolean esAsignable(){
         return false;
     }
 
-    public boolean esLlamable(){ // TODO: esta bien?
+    public boolean esLlamable(){
         return true;
     }
 
-    public void generarCodigo(){ // TODO: esta bien?
+    public void generarCodigo(){
         TablaSimbolos.listaInstruccionesMaquina.add("LOAD 3 ; Apilo this en la pila");
         for(NodoExpresion nodoExpresion : listaParametrosActuales){
             nodoExpresion.generarCodigo();

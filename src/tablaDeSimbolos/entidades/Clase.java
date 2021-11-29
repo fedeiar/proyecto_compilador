@@ -1,6 +1,5 @@
 package tablaDeSimbolos.entidades;
 
-import tablaDeSimbolos.nodosAST.nodosExpresion.NodoExpresion;
 import tablaDeSimbolos.tipos.*;
 
 import java.util.ArrayList;
